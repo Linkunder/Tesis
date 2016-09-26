@@ -1,0 +1,5 @@
+<!DOCTYPE html>
+	<body>
+		<p>Hola<p>
+	</body>
+</html>
