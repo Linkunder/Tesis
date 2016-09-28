@@ -12,7 +12,7 @@ class IndexController
     public function index()
     {
         //La pagina de inicio
-        $this->view->show("inicio.php");
+        $this->view->show("index.php");
     }
 }
 
