@@ -36,14 +36,14 @@
           <div class="caption">
             <h1 class="animated fadeInLeftBig">Bienvenido a <span>MatchDay</span></h1>
             <p class="animated fadeInRightBig">Organiza tu partido</p>
-            <a data-scroll class="btn btn-start animated fadeInUpBig" href="inicio.php">Empezar</a>
+            <a data-scroll class="btn btn-start animated fadeInUpBig" href="?controlador=Index&accion=inicio">Empezar</a>
           </div>
         </div>
         <div class="item" style="background-image: url(assets/images/slider/2.png)">
           <div class="caption">
             <h1 class="animated fadeInLeftBig">¿No encuentras tu <span>cancha</span> favorita?</h1>
             <p class="animated fadeInRightBig">En MatchDay tenemos información de todas</p>
-            <a data-scroll class="btn btn-start animated fadeInUpBig" href="inicio.php">Empezar</a>
+            <a data-scroll class="btn btn-start animated fadeInUpBig" href="?controlador=Index&accion=inicio">Empezar</a>
           </div>
         </div>
         <div class="item" style="background-image: url(assets/images/slider/3.png)">
@@ -51,7 +51,7 @@
             <h1 class="animated fadeInLeftBig">Organiza un <span>Tercer Tiempo</span></h1>
             <p class="animated fadeInRightBig">¿Celebrar el triunfo? ¿Olvidar la derrota? 
               <br/>Da igual el motivo! En MatchDay te recomendamos los mejores lugares</p>
-            <a data-scroll class="btn btn-start animated fadeInUpBig" href="inicio.php">Empezar</a>
+            <a data-scroll class="btn btn-start animated fadeInUpBig" href="?controlador=Index&accion=inicio">Empezar</a>
           </div>
         </div>
       </div>

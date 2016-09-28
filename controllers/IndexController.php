@@ -14,6 +14,9 @@ class IndexController
         //La pagina de inicio
         $this->view->show("index.php");
     }
+    public function inicio(){
+        $this->view->show("inicio.php");
+    }
 }
 
 ?>
