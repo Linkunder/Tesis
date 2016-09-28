@@ -31,7 +31,8 @@ class SesionController{
             $_SESSION['login_user_name'] = $resultado->nombre;
             $_SESSION['login_user_email'] = $resultado->mail;
             $data['login'] = true;
-            header('Location: index.php');
+            // Direccionar a la pantalla de inicio del jugador
+            header('Location: ?controlador=Index&accion=indexJugador');
         }else{
             $data['error_login'] = true;
             $this->view->show("inicio.php", $data);

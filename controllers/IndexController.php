@@ -17,6 +17,10 @@ class IndexController
     public function inicio(){
         $this->view->show("inicio.php");
     }
+
+    public function indexJugador(){
+        $this->view->show("indexJugador.php");
+    }
 }
 
 ?>
