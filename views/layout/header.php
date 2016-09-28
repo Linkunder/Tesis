@@ -63,7 +63,7 @@
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav navbar-right">                 
-            <li class="<?php echo ($page_name=='inicio.php')?'active':'';?>"><a href="inicio.php">Inicio</a></li>
+            <li class="<?php echo ($page_name=='inicio.php')?'active':'';?>"><a href="?controlador=Index&accion=inicio">Inicio</a></li>
             <li class="<?php echo ($page_name=='recintos.php')?'active':'';?>"><a href="?controlador=Recinto&accion=busquedaRecintos&tipo=0">Canchas</a></li>
             <ul class="nav pull-left">
               <li class="dropdown" id="menuLogin">
@@ -71,15 +71,15 @@
                 <div class="dropdown-menu" style="padding:2em;">
 
 
-                  <form class="form" id="formLogin" action="../Logica/controlSesion.php?tipo=iniciar" method="post">
+                  <form class="form" id="formLogin" action="?controlador=Sesion&accion=verificarLogin" method="post">
                     <label class="design-label">¿TIENES CUENTA?</label><br>
-                    <input class="entrada-login" name="username" id="username" type="text" placeholder="Mail"> 
+                    <input class="entrada-login" name="mail" id="mail" type="text" placeholder="Mail"> 
                     <input class="entrada-login" name="password" id="password" type="password" placeholder="Password"><br>
                     <button class="boton-login" type="submit" class="design-button">Iniciar sesión</button>
                   </form>
 
 
-                   <form class="form" id="formLogin" action="formularioRegistro.php" method="post">
+                   <form class="form" id="formLogin" action="?controlador=Usuario&accion=formularioRegistro" method="post">
                     <li role="separator" class="divider"></li>
                     <label class="design-label">¿ERES NUEVO EN MATCH DAY?</label><br>
                     <button class="boton-login" type="submit" class="design-button">&nbsp;&nbsp;&nbsp;Regístrate&nbsp;&nbsp;&nbsp;</button>

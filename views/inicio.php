@@ -121,7 +121,7 @@ if(isset($_GET["accion"])){
             <p>&copy; 2016 Oxygen Theme.</p>
           </div>
           <div class="col-sm-6">
-            <p class="pull-right">Crafted by <a href="http://designscrazed.org/">Allie</a></p>
+            <p class="pull-right">Crafted by <a href="http://designscrazed.org/">S&M</a></p>
           </div>
         </div>
       </div>
