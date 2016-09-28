@@ -19,27 +19,6 @@ if(isset($_GET["jugar"]) ){
         include('layout/header.php'); 
     }
         
-
-include_once('../TO/Recinto.php');
-include_once('../Logica/controlRecintos.php');
-include_once('../TO/Usuario.php');
-include_once('../Logica/controlUsuarios.php');
-include_once('../TO/Comentario.php');
-include_once('../Logica/controlComentarios.php');
-include_once('../Logica/controlPuntuacion.php');
-
-
-$jefeRecinto = controlRecintos::obtenerInstancia();
-$vectorRecintos=$jefeRecinto->obtenerRecintos();
-
-$jefeUsuario = controlUsuarios::obtenerInstancia();
-
-$jefeComentario = controlComentarios::obtenerInstancia();
-
-$jefePuntuacion = controlPuntuacion::obtenerInstancia();
-
-
-
 ?>
 
         <!-- Portfolio section start -->
@@ -87,7 +66,7 @@ $jefePuntuacion = controlPuntuacion::obtenerInstancia();
 
                 <div class="row">
                     <div class="col-md-6 col-md-offset-3">
-                        <form action="recintos.php" method="get">
+                        <form action="?controlador=Recinto&accion=busquedaRecintos&tipo=3" method="GET">
                             <input type="text" class="form-control" placeholder="Busca tu cancha..." name="search"/>
                             <!--Aqui como se "recarga" debemos seguir manteniendo la "seleccion de cancha"-->
                             <?php 
@@ -110,8 +89,8 @@ $jefePuntuacion = controlPuntuacion::obtenerInstancia();
                 <?php
                     $search = '';
                     $cont = 0;
-                    if (isset($_GET['search'])) {
-                      $search = $_GET['search'];
+                    if (isset($vars['search'])) {
+                      $search = $vars['search'];
                     }
                     if ($search!=''){  // if search
 
@@ -126,15 +105,15 @@ $jefePuntuacion = controlPuntuacion::obtenerInstancia();
                 <div id="single-project">
                     <?php
                     } // fin if search
-                    foreach ($vectorRecintos as $key) {   // foreach recintos
-                        if($key->getIdEstado() == 1){
-                        $nombre = $key->getNombre();
+                    foreach ($vars['recintos'] as $key) {   // foreach recintos
+                        if($key['estado'] == 1){
+                        $nombre = $key['nombre'];
                         $pos = strripos($nombre, $search);
-                        $tipo = $key -> getTipo();
+                        $tipo = $key['tipo'];
                         $pos2 = strripos($tipo, $search);
-                        $superficie = $key->getSuperficie();
+                        $superficie = $key['superficie'];
                         $pos3 = strripos($superficie, $search);
-                        $idRecinto = $key->getIdRecinto();
+                        $idRecinto = $key['idRecinto'];
                         if ($pos !== false  ||   $pos2!==false  || $pos3!==false )  {  // if filtro dentro de foreach recintos
                             
                     ?>
@@ -376,12 +355,12 @@ $jefePuntuacion = controlPuntuacion::obtenerInstancia();
                             <div class="comment">
                                 <div class="col-sm-2">
                                     <div class="profile-userpic">
-                                    <img src="images/usuarios/<?php echo $usuario->getRutaFotografia() ?>" alt="" class="img-circle img-responsive" >
+                                    <img src="assets/images/usuarios/<?php echo $usuario['fotografia'] ?>" alt="" class="img-circle img-responsive" >
                                     </div>
                                 </div>
                                 <div class="col-sm-10">
                                     <div class="media-body">
-                                        <strong class="text-success"><?php echo $usuario->getNombre()." ".$usuario->getApellido();?></strong>
+                                        <strong class="text-success"><?php echo $usuario['nombre']." ".$usuario['apellido'];?></strong>
                                         <span class="text-muted">
                                             <small class="text-muted"><?php echo $comentario->getFecha() ?></small>
                                         </span>
@@ -421,20 +400,20 @@ $jefePuntuacion = controlPuntuacion::obtenerInstancia();
             <ul id="portfolio-grid" class="thumbnails row">
                 <?php
                 $cont = 0;
-                foreach ($vectorRecintos as $key) {   // foreach recintos
-                    if($key->getIdEstado() == 1){
-                    $nombre = $key->getNombre();
+                foreach ($vars['recintos'] as $key) {   // foreach recintos
+                    if($key['estado'] == 1){
+                    $nombre = $key['nombre'];
                     $pos = strripos($nombre, $search);
-                    $tipo = $key -> getTipo();
+                    $tipo = $key['tipo'];
                     $pos2 = strripos($tipo, $search);
-                    $superficie = $key->getSuperficie();
+                    $superficie = $key['superficie'];
                     $pos3 = strripos($superficie, $search);
-                    $idRecinto = $key->getIdRecinto();
+                    $idRecinto = $key['idRecinto'];
                     if ($pos !== false  ||   $pos2!==false  || $pos3!==false )  {  // if filtro dentro de foreach recintos            
                     ?>
                 <li class="span4 mix web">
                 <div class="thumbnail">
-                    <img src="images/recintos/<?php echo $key->getRutaFotografia();?>" height='640' width='400' alt="project 1">
+                    <img src="assets/images/recintos/<?php echo $key['fotografia'];?>" height='640' width='400' alt="project 1">
                     <a href="#single-project" class="more show_hide" rel="#slidingDiv<?php echo $cont?>">
                         <i class="icon-plus"></i>
                     </a>
