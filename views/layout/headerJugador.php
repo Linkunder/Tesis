@@ -3,11 +3,31 @@
 <?php
 
 // Obtener datos del usuario de la sesión.
-$idUsuario= $_SESSION['login_user_id'];
-$nombre= $_SESSION['login_user_name'];
-$mail= $_SESSION['login_user_email'];
+if (!isset($_SESSION['login_user_name'])){
+  session_start();
+}
+
+if (isset($_SESSION['login_user_id'])){
+  $idUsuario= $_SESSION['login_user_id'];
+}
+
+if (isset($_SESSION['login_user_name'])){
+  $nombre= $_SESSION['login_user_name'];
+}
+
+if (isset($_SESSION['login_user_email'])){
+  $mail= $_SESSION['login_user_email'];
+}
+
+
+
+//$idUsuario= $_SESSION['login_user_id'];
+//$nombre= $_SESSION['login_user_name'];
+//$mail= $_SESSION['login_user_email'];
 
 ?>
+
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -80,16 +100,16 @@ $mail= $_SESSION['login_user_email'];
             <li class="<?php echo ($page_name=='recintos.php')?'active':'';?>"><a href="recintos.php">Canchas</a></li>
             <li class="<?php echo ($page_name=='recintos.php?jugar=1')?'active':'';?>"><a href="recintos.php?jugar=1">Jugar</a></li> <!--Jugar = 1 para entrar a buscar recintos en el mismo reutilizando-->
             <ul class="nav pull-left">
-              <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $nombre ?> <i class="fa fa-user"></i>
+              <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $nombre?> <i class="fa fa-user"></i>
                 <b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                  <li><a href="perfil.php">Mi Perfil</a></li>
+                  <li><a href="?controlador=Usuario&accion=perfilUsuario">Mi Perfil </a></li>
                   <hr>
                   <li><a href="contactos2.php">Contactos</a></li>
                   <hr>
                   <li><a href="notificarRecinto.php">Notificar recinto</a></li>
                   <hr>
-                   <li><a href="../Logica/controlSesion.php?tipo=salir">Cerrar Sesion</a></li>
+                   <li><a href="?controlador=Sesion&accion=logout">Cerrar Sesion</a></li>
                    <li></li>
                 </ul>
               </li>

@@ -16,10 +16,10 @@ class Usuario{
 	}
 
 	public function getUsuario($idUsuario){
-		echo $idUsuario;
-		$query = $this->db->prepare('SELECT * FROM Usuario WHERE idUsuario = $idUsuario');
+		
+		$query = $this->db->prepare("SELECT * FROM Usuario WHERE idUsuario = '".$idUsuario."'");
 		$query->execute();
-		$resultado = $query->fetchObject();
+		$resultado = $query->fetchAll();
 		return $resultado;
 	}
 
@@ -28,6 +28,17 @@ class Usuario{
 								$perfil, $estado){
 		$sql = "INSERT INTO Usuario (nombre, apellido, nickname, mail, sexo, fotografia, password, telefono, fechaNacimiento, perfil, estado) 
 				VALUES ('$nombre', '$apellido', '$nickname', '$mail', '$sexo', 'no','$password', '$telefono', '$fechaNacimiento', '$perfil', '$estado');";
+		$query = $this->db->prepare($sql);
+		$query->execute();
+	}
+
+	public function updateUsuario($idUsuario, $nickname,$mail,$telefono,$fotografia){
+		$sql = "UPDATE Usuario SET 
+			nickname = '".$nickname."',
+			mail = '".$mail."',
+			telefono = '".$telefono."',
+			fotografia = '".$fotografia."'
+			WHERE idUsuario = '".$idUsuario."'";
 		$query = $this->db->prepare($sql);
 		$query->execute();
 	}

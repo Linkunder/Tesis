@@ -1,11 +1,11 @@
 <?php 
 
-include('layout/header.php'); 
+include('layout/headerJugador.php'); 
 
-// Se debe traer el ID del jugador que tenga la sesión iniciada.
-$idUsuario = 1;
+// Traer usuario desde el controlador.
 
-// Traer Usuario ID = 1
+$usuario = $vars['perfilUsuario'];
+
 
 
 
@@ -14,19 +14,22 @@ $idUsuario = 1;
 
 
 <!-- Aqui empieza la pagina -->
-<link href="css/profile.css" rel="stylesheet">
+<link href="assets/css/profile.css" rel="stylesheet">
 <div class="row">
   <div id="contact-us" class="parallax">
     <div class="container">
       <div class="row profile">
         <div class="col-md-4 col-offset-6 centered">
           <div class="profile-sidebar">
-           
 
+            <?php 
+            foreach ($usuario as $key) {
+              
+            ?>
 
             <!-- SIDEBAR USERPIC -->
             <div class="profile-userpic">
-              <!--img src="images/usuarios/<?php echo $key->getRutaFotografia();?>" class="img-responsive" alt=""-->
+              <!--img src="images/usuarios/<?php //echo $key->getRutaFotografia();?>" class="img-responsive" alt=""-->
             </div>
             <!-- END SIDEBAR USERPIC -->
 
@@ -34,7 +37,8 @@ $idUsuario = 1;
             <div class="profile-usertitle">
               <div class="profile-usertitle-name">
                 <?php
-                  //echo $key->getNombre()." ".$key->getApellido();
+
+                  echo $key['nombre']." ".$key['apellido'];
                 
                 ?>
               </div>
@@ -44,12 +48,12 @@ $idUsuario = 1;
             
             <!-- SIDEBAR BUTTONS -->
             <div class="profile-userbuttons">
-              <!--a href="modificarPerfil.php?idUsuario=<?php echo $key->getIdUsuario();?>"-->
+              <a href="?controlador=Usuario&accion=modificarPerfil">
                 <button type="button" class="btn btn-success btn-sm">Ver información
                   <i class="fa fa-pencil"></i>
                 </button>
               </a>
-              <!--a href="subirImagen.php?idUsuario=<?php echo $key->getIdUsuario();?>"-->
+              <!--a href="subirImagen.php?idUsuario=<?php //echo $key->getIdUsuario();?>"-->
                 <button type="button" class="btn btn-sm btn-warning btn-sm">Cambiar imagen
                   <i class="fa fa-camera"></i>
                 </button>
@@ -61,7 +65,7 @@ $idUsuario = 1;
             <div class="profile-usermenu">
               <ul class="nav">
                 <li >
-                  <!--a href="verCalendarioJugador.php?idUsuario=<?php echo $key->getIdUsuario();?>"-->
+                  <a href="?controlador=Usuario&accion=perfilUsuario">
                   <i class="fa fa-calendar"></i>
                   Ver calendario de partidos</a>
                 </li>
@@ -73,6 +77,10 @@ $idUsuario = 1;
               </ul>
             </div>
             <!-- END MENU -->
+
+            <?php
+            }
+            ?>
 
 
           </div>
@@ -96,7 +104,7 @@ $idUsuario = 1;
     <div class="footer-top wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="300ms">
       <div class="container text-center">
         <div class="footer-logo">
-          <a href="index.html"><img class="img-responsive" src="images/logo.png" alt=""></a>
+          <a href="index.html"><img class="img-responsive" src="assets/images/logo.png" alt=""></a>
         </div>
         <div class="social-icons">
           <ul>
@@ -117,25 +125,27 @@ $idUsuario = 1;
             <p>&copy; 2016 Oxygen Theme.</p>
           </div>
           <div class="col-sm-6">
-            <p class="pull-right">Crafted by <a href="http://designscrazed.org/">Allie</a></p>
+            <p class="pull-right">Crafted by <a href="http://designscrazed.org/">Allie
+
+            </a></p>
           </div>
         </div>
       </div>
     </div>
   </footer>
 
-  <script type="text/javascript" src="js/jquery.js"></script>
-  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="assets/js/jquery.js"></script>
+  <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
 
-  <script type="text/javascript" src="js/jquery.inview.min.js"></script>
-  <script type="text/javascript" src="js/wow.min.js"></script>
-  <script type="text/javascript" src="js/mousescroll.js"></script>
-  <script type="text/javascript" src="js/smoothscroll.js"></script>
-  <script type="text/javascript" src="js/jquery.countTo.js"></script>
-  <script type="text/javascript" src="js/lightbox.min.js"></script>
-  <script type="text/javascript" src="js/main.js"></script>
+  <script type="text/javascript" src="assets/js/jquery.inview.min.js"></script>
+  <script type="text/javascript" src="assets/js/wow.min.js"></script>
+  <script type="text/javascript" src="assets/js/mousescroll.js"></script>
+  <script type="text/javascript" src="assets/js/smoothscroll.js"></script>
+  <script type="text/javascript" src="assets/js/jquery.countTo.js"></script>
+  <script type="text/javascript" src="assets/js/lightbox.min.js"></script>
+  <script type="text/javascript" src="assets/js/main.js"></script>
 
-  <script src="js/fileinput.min.js" type="text/javascript"></script>
+  <script src="assets/js/fileinput.min.js" type="text/javascript"></script>
 
 </body>
 </html>

@@ -1,81 +1,57 @@
-<?php include('layout/header.php'); ?>
-
-<!-- Aqui empieza la pagina -->
+<?php include('layout/header.php'); 
 
 
+/* Se llega a esta pantalla:
 
-<div id="contact-us-inicio" class="parallax">
-<?php
-  
-  if(isset($_GET["inicio"])){
-    $inicio=$_GET["inicio"];
-    if($inicio=="fallido"){
+1. Inicio de sesión fallida (jugador y admin).
+2. Cerrar sesión.
+
+*/
 
 
-    ?>
-    <div class="container">
-  <div class="alert alert-danger fade in">
-    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-    <strong>Error</strong> No has podido iniciar sesión, vuelve a intentarlo
-  </div>
-</div>
-  <?php 
-    }if($inicio =="falloAdmin"){?>
-
-    <div class="container">
-  <div class="alert alert-danger fade in">
-    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-    <strong>Error</strong> Debes loguearte como administrador para ingresar a esta seccion
-  </div>
-</div>
-
-    <?php } ?>
-  <?php 
-    if($inicio =="falloJugador"){?>
-
-    <div class="container">
-  <div class="alert alert-danger fade in">
-    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-    <strong>Error</strong> Debes loguearte como Jugador para ingresar a esta seccion
-  </div>
-  </div>
-  <?php
-        }
-
-    if($inicio =="salir"){?>
-
-    <div class="container">
-  <div class="alert alert-success fade in">
-    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-    <strong>Listo!</strong> Te has deconectado del sistema.
-  </div>
-</div>
-<?php
-      }
-    }
-  ?>
-
-<?php
-if(isset($_GET["accion"])){
-  $accion = $_GET["accion"];  
-  ?>
-  <div class="container">
-  <div class="alert alert-success alert-dismissible fade in" role="alert">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-    <?php
-    if ($accion == "empezar"){ ?>
-   <strong>Listo! </strong>Ya puedes iniciar sesión en MatchDay.
-   <?php } 
-   ?>
- </div>
- </div>
-<?php
-}
 ?>
 
 
+
+
+
+
+
+<!-- Aqui empieza la pagina -->
+<div id="contact-us-inicio" class="parallax">
+
+<?php
+
+if (isset($vars['error_login'])){
+  $inicio_sesion = $vars['error_login'];
+  if ($inicio_sesion){
+    ?>
+    <div class="container">
+      <div class="alert alert-danger fade in">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Error!</strong> No has podido iniciar sesión, vuelve a intentarlo.
+      </div>
+    </div>
+    <?php
+  }
+}
+
+
+if (isset($vars['cerrar_sesion'])){
+  $logout = $vars['cerrar_sesion'];
+  if ($logout){
+    ?>
+    <div class="container">
+      <div class="alert alert-danger fade in">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Listo!</strong> Te has desconectado del sistema.
+      </div>
+    </div>
+    <?php
+  }
+}
+
+?>
 
 
   <div class="container">

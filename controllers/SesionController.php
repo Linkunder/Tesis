@@ -9,6 +9,8 @@ class SesionController{
 		$this->Login = new Login();
 	}
 
+
+
 	public function index(){
 		$this->view->show("");
 	}
@@ -27,6 +29,7 @@ class SesionController{
         $password = $_POST['password'];
         $resultado =  $this->Login->getLogin($mail, $password);    
         if($resultado){
+            session_start();
             $_SESSION['login_user_id'] = $resultado->idUsuario;
             $_SESSION['login_user_name'] = $resultado->nombre;
             $_SESSION['login_user_email'] = $resultado->mail;
@@ -35,17 +38,21 @@ class SesionController{
             $this->view->show('indexJugador.php',$data);
             //header('Location: ?controlador=Index&accion=indexJugador');
         }else{
-            var_dump($resultado);
+            //var_dump($resultado);
             $data['error_login'] = true;
-            //$this->view->show("inicio.php", $data);
+            $this->view->show("inicio.php", $data);
         }
     }
+
+
 
     public function logout(){
         unset($_SESSION['login_user_id']);
         unset($_SESSION['login_user_name']);
         unset($_SESSION['login_user_email']);
-        header('Location: ?');
+        //$data['cerrar_sesion'] = true;
+        //$this->view->show("inicio.php", $data);
+        header('Location: ?controlador=Index&accion=inicio');
     }
 
 }
