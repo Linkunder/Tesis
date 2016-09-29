@@ -1,20 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php
-    
-  if(!isset($sesion)){
-    session_start();
-  }
-   
-    if($_SESSION["sesion"]!="jugador") {
-      header("Location:../Vista/inicio.php?inicio=falloJugador"); 
-    }
 
-/////Usuario de prueba//////
-
-    $user= $_SESSION['user'];
-    $idUsuario= $_SESSION['idUsuario'];
-///////////////////////////////
+// Obtener datos del usuario de la sesión.
+$idUsuario= $_SESSION['login_user_id'];
+$nombre= $_SESSION['login_user_name'];
+$mail= $_SESSION['login_user_email'];
 
 ?>
 <head>
@@ -23,21 +14,21 @@
   <meta name="description" content="">
   <meta name="author" content="">
   <title>MatchDay | A jugar!</title>
-  <link href="css/bootstrap.min.css" rel="stylesheet">
-  <link href="css/animate.min.css" rel="stylesheet"> 
-  <link href="css/font-awesome.min.css" rel="stylesheet">
-  <link href="css/lightbox.css" rel="stylesheet">
-  <link href="css/main.css" rel="stylesheet">
-  <link id="css-preset" href="css/presets/preset1.css" rel="stylesheet">
-  <link href="css/responsive.css" rel="stylesheet">
+  <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/css/animate.min.css" rel="stylesheet"> 
+  <link href="assets/css/font-awesome.min.css" rel="stylesheet">
+  <link href="assets/css/lightbox.css" rel="stylesheet">
+  <link href="assets/css/main.css" rel="stylesheet">
+  <link id="css-preset" href="assets/css/presets/preset1.css" rel="stylesheet">
+  <link href="assets/css/responsive.css" rel="stylesheet">
 
   <!--link rel="stylesheet" type="text/css" href="css/bootstrap.css" /-->
-  <link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.css" />
-  <link rel="stylesheet" type="text/css" href="css/style.css" />
-  <link rel="stylesheet" type="text/css" href="css/pluton.css" />
-  <link rel="stylesheet" type="text/css" href="css/jquery.cslider.css" />
-  <link rel="stylesheet" type="text/css" href="css/jquery.bxslider.css" />
-  <link rel="stylesheet" type="text/css" href="css/animate.css" />
+  <link rel="stylesheet" type="text/css" href="assets/css/bootstrap-responsive.css" />
+  <link rel="stylesheet" type="text/css" href="assets/css/style.css" />
+  <link rel="stylesheet" type="text/css" href="assets/css/pluton.css" />
+  <link rel="stylesheet" type="text/css" href="assets/css/jquery.cslider.css" />
+  <link rel="stylesheet" type="text/css" href="assets/css/jquery.bxslider.css" />
+  <link rel="stylesheet" type="text/css" href="assets/css/animate.css" />
   <!--CARUSEL
   <link rel="stylesheet" type="text/css" href="css/demo.css" />
   <link rel="stylesheet" type="text/css" href="css/elastislide.css" />
@@ -46,14 +37,14 @@
   -->
 
     <!--Para subir la imagen-->
-  <link href="css/fileinput.css" media="all" rel="stylesheet" type="text/css" />
+  <link href="assets/css/fileinput.css" media="all" rel="stylesheet" type="text/css" />
   <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
     <script src="js/respond.min.js"></script>
   <![endif]-->
   
   <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css'>
-  <link rel="shortcut icon" href="images/soccer.ico">
+  <link rel="shortcut icon" href="assets/images/soccer.ico">
 
 
 </head><!--/head-->
@@ -80,7 +71,7 @@
             <span class="icon-bar"></span>
           </button>
           <a class="navbar-brand" href="index.html">
-            <h1><img class="img-responsive" src="images/logo.png" alt="logo"></h1>
+            <h1><img class="img-responsive" src="assets/images/logo.png" alt="logo"></h1>
           </a>                    
         </div>
         <div class="collapse navbar-collapse">
@@ -89,7 +80,7 @@
             <li class="<?php echo ($page_name=='recintos.php')?'active':'';?>"><a href="recintos.php">Canchas</a></li>
             <li class="<?php echo ($page_name=='recintos.php?jugar=1')?'active':'';?>"><a href="recintos.php?jugar=1">Jugar</a></li> <!--Jugar = 1 para entrar a buscar recintos en el mismo reutilizando-->
             <ul class="nav pull-left">
-              <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $user ?> <i class="fa fa-user"></i>
+              <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $nombre ?> <i class="fa fa-user"></i>
                 <b class="caret"></b></a>
                 <ul class="dropdown-menu">
                   <li><a href="perfil.php">Mi Perfil</a></li>
@@ -108,29 +99,32 @@
                 <b class="caret"></b></a>
                 <ul class="dropdown-menu">
                   <?php
+
+                  /*
                   include_once('../TO/Partido.php');
                   include_once('../Logica/controlPartidos.php');
 
                   $controlPartido = controlPartidos::obtenerInstancia();
                   $partidosCapitan = $controlPartido->contarPartidosCapitan($idUsuario);
-
+                  */
 
                   ?>
-                  <li><a href="partidosPendientes.php">Partidos pendientes: <?php echo $partidosCapitan?></a></li>
+                  <li><a href="partidosPendientes.php">Partidos pendientes: <?php //echo $partidosCapitan?></a></li>
                   <hr/>
                   
                   
                   <?php
+                  /*
                   include_once('../TO/Partido.php');
                   include_once('../Logica/controlPartidos.php');
 
                   $controlPartido = controlPartidos::obtenerInstancia();
                   $partidosDisponibles = $controlPartido->contarPartidosDisponibles();
-
+                  */
 
 
                   ?>
-                  <li><a href="partidosDisponibles.php">Partidos MatchDay: <?php echo $partidosDisponibles?></a></li>
+                  <li><a href="partidosDisponibles.php">Partidos MatchDay: <?php// echo $partidosDisponibles?></a></li>
                   <hr/>
                   <li><a href="partidosGestionados.php">Partidos Agendados</a></li>
 

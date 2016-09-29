@@ -36,7 +36,8 @@ class UsuarioController{
 		$telefono= $_POST['telefono'];
 		$password = $_POST['password'];
 		$sexo= $_POST['sexo'];
-		$this->Usuario->setUsuario($nombre,$apellido,$nickname,$fechaNacimiento,$mail,$telefono,$password,$sexo,1,1);
+		$fotografia = "hola";
+		$this->Usuario->setUsuario($nombre,$apellido,$nickname, $mail, $sexo, $fotografia, $password, $telefono, $fechaNacimiento,1,1);
 		header('Location: ?controlador=Index&accion=index');
 	}
 

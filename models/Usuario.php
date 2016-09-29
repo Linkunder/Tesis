@@ -23,7 +23,7 @@ class Usuario{
 		return $resultado;
 	}
 
-	public function setUsuario($nombre, $apellido, $nickname, $mail, $sexo, 
+	public function setUsuario($nombre, $apellido, $nickname, $mail, $sexo, $fotografia,
 								 $password, $telefono, $fechaNacimiento, 
 								$perfil, $estado){
 		$sql = "INSERT INTO Usuario (nombre, apellido, nickname, mail, sexo, fotografia, password, telefono, fechaNacimiento, perfil, estado) 
