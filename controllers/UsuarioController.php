@@ -72,6 +72,12 @@ class UsuarioController{
 		header('Location: ?controlador=Usuario&accion=modificarPerfil');
  	}
 
+ 	public function buscarUsuario(){
+ 		$nickname = $_GET['search'];
+ 		$this->view->show('busquedaJugador.php');
+ 	}
+
+
 }
 
 

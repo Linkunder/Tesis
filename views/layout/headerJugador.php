@@ -105,7 +105,7 @@ if (isset($_SESSION['login_user_email'])){
                 <ul class="dropdown-menu">
                   <li><a href="?controlador=Usuario&accion=perfilUsuario">Mi Perfil </a></li>
                   <hr>
-                  <li><a href="contactos2.php">Contactos</a></li>
+                  <li><a href="?controlador=Contacto&accion=listaContactos">Contactos</a></li>
                   <hr>
                   <li><a href="notificarRecinto.php">Notificar recinto</a></li>
                   <hr>
