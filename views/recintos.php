@@ -66,8 +66,9 @@ if(isset($_GET["jugar"]) ){
 
                 <div class="row">
                     <div class="col-md-6 col-md-offset-3">
-                        <form action="?controlador=Recinto&accion=busquedaRecintos&tipo=3" method="GET">
+                        <form action="?controlador=Recinto&accion=busquedaRecintos" method="POST">
                             <input type="text" class="form-control" placeholder="Busca tu cancha..." name="search"/>
+                            <input type="text" class="fomr-control" hidden name="tipo" value="0"/>
                             <!--Aqui como se "recarga" debemos seguir manteniendo la "seleccion de cancha"-->
                             <?php 
                             if($jugar==1){
@@ -144,7 +145,7 @@ if(isset($_GET["jugar"]) ){
                                 <iframe
                                   width="600"   height="500"  frameborder="5" style="border:0"  maptype="satellite"
                                   src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDR2WyVnnd9GsSTKys5OEkowPu41kMpEUs
-                                    &q=Chile + Chillan + <?php echo $key->getDireccion();?>" allowfullscreen>
+                                    &q=Chile + Chillan + <?php echo $key['direccion'];?>" allowfullscreen>
                                 </iframe>
                                 <br>
                             </div>
@@ -163,27 +164,29 @@ if(isset($_GET["jugar"]) ){
 
                                 <div class="project-info">
                                     <div>
-                                        <span>Precio</span><?php echo $key->getPrecio();?>
+                                        <span>Precio</span><?php echo "PRECIO";?>
                                     </div>
                                     <div>
-                                        <span>Telefono</span><?php echo $key->getTelefono();?>
+                                        <span>Telefono</span><?php echo $key['telefono'];?>
                                     </div>
                                     <div>
-                                        <span>Direccion</span><?php echo $key->getDireccion();?>
+                                        <span>Direccion</span><?php echo $key['direccion'];?>
                                     </div>
                                     <div>
-                                        <span>Horario</span><?php echo $key->getHorario();?>
+                                        <span>Horario</span><?php echo "HORARIOS";?>
                                     </div>
                                     <div>
-                                        <span>Superficie</span><?php echo $key->getSuperficie();?>
+                                        <span>Superficie</span><?php echo $key['superficie'];?>
                                     </div>
                                     <div>
                                         <span>Puntuación</span><?php 
-                                        if($jefePuntuacion->calcularPuntuacionRecinto($key->getIdRecinto())==NULL){
+                                        //Configurar Puntuaciones
+                                        if("1"=="2"){
                                             echo "Este recinto no tiene puntuaciones";
                                         }else{
 
-                                        echo " ".round($jefePuntuacion->calcularPuntuacionRecinto($key->getIdRecinto()),1);
+                                       
+                                        echo " ".round($key['puntuacion'],1);
 
 
                                 
@@ -282,8 +285,8 @@ if(isset($_GET["jugar"]) ){
                                 <form method="post" action="../Logica/ingresarComentario.php">
                                     <input class="form-control" name="contenido" placeholder="Escribe tu comentario" rows="2" required></input>
                                     <input type="hidden" name="idUsuario" value="<?php echo $_SESSION['idUsuario'] ?>">
-                                    <input type="hidden" name="idRecinto" value="<?php echo $key->getIdRecinto() ?>">
-                                    <input type="hidden" name="nombre" value="<?php echo $key->getNombre() ?>">
+                                    <input type="hidden" name="idRecinto" value="<?php echo $key['idRecinto'] ?>">
+                                    <input type="hidden" name="nombre" value="<?php echo $key['nombre'] ?>">
                                     <br>
                                     <!--<a class="small pull-left" href="#">Entra y comenta</a>-->
                                     <button type="button submit" class="btn btn-info pull-right" name="action" >Comentar</button>
@@ -346,26 +349,29 @@ if(isset($_GET["jugar"]) ){
                             <ul class="media-list">
                         <li class="media">
                             <?php 
-                            $vectorComentarios= $jefeComentario->leerComentariosRecinto($key->getIdRecinto()); 
-                            if($vectorComentarios != NULL){
-                            foreach($vectorComentarios as $comentario){
-                            $vectorUsuarios= $jefeUsuario->leerUsuario($comentario->getIdUsuario());
-                            $usuario = end($vectorUsuarios);
+                            if($vars['comentarios'] != NULL){
+                            foreach($vars['comentarios'] as $comentario){
+
+                                //$vectorUsuarios= $jefeUsuario->leerUsuario($comentario->getIdUsuario());
+                                //$usuario = end($vectorUsuarios);
+                                
+
+
                             ?>
                             <div class="comment">
                                 <div class="col-sm-2">
                                     <div class="profile-userpic">
-                                    <img src="assets/images/usuarios/<?php echo $usuario['fotografia'] ?>" alt="" class="img-circle img-responsive" >
+                                    <img src="assets/images/usuarios/<?php echo $comentario['idUsuario'] ?>.jpg" alt="" class="img-circle img-responsive" >
                                     </div>
                                 </div>
                                 <div class="col-sm-10">
                                     <div class="media-body">
-                                        <strong class="text-success"><?php echo $usuario['nombre']." ".$usuario['apellido'];?></strong>
+                                      <!--  <strong class="text-success"><?php echo $usuario['nombre']." ".$usuario['apellido'];?></strong> -->
                                         <span class="text-muted">
-                                            <small class="text-muted"><?php echo $comentario->getFecha() ?></small>
+                                            <small class="text-muted"><?php echo $comentario['fecha'] ?></small>
                                         </span>
                                         <p >
-                                            <?php echo $comentario->getContenido() ?>
+                                            <?php echo $comentario['contenido'] ?>
                                         </p>
                                     </div>
                                 </div>
@@ -418,7 +424,7 @@ if(isset($_GET["jugar"]) ){
                         <i class="icon-plus"></i>
                     </a>
                     <h3> <?php echo "$nombre" ?> </h3>
-                    <p>Cancha de <?php echo $key->getTipo(); ?></p>
+                    <p>Cancha de <?php echo $key['tipo']; ?></p>
                     <div class="mask"></div>
                 </div>
                 </li>
@@ -504,7 +510,7 @@ if(isset($_GET["jugar"]) ){
     <div class="footer-top wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="300ms">
       <div class="container text-center">
         <div class="footer-logo">
-          <a href="index.html"><img class="img-responsive" src="images/logo.png" alt=""></a>
+          <a href="index.html"><img class="img-responsive" src="assets/images/logo.png" alt=""></a>
         </div>
         <div class="social-icons">
           <ul>
@@ -537,24 +543,24 @@ if(isset($_GET["jugar"]) ){
 
         <!-- ScrollUp button end -->
         <!-- Include javascript -->
-        <script src="js/jquery.js"></script>
-        <script type="text/javascript" src="js/jquery.mixitup.js"></script>
-        <script type="text/javascript" src="js/bootstrap.js"></script>
-        <script type="text/javascript" src="js/modernizr.custom.js"></script>
-        <script type="text/javascript" src="js/jquery.bxslider.js"></script>
-        <script type="text/javascript" src="js/jquery.cslider.js"></script>
-        <script type="text/javascript" src="js/jquery.placeholder.js"></script>
-        <script type="text/javascript" src="js/jquery.inview.js"></script>
+        <script src="assets/js/jquery.js"></script>
+        <script type="text/javascript" src="assets/js/jquery.mixitup.js"></script>
+        <script type="text/javascript" src="assets/js/bootstrap.js"></script>
+        <script type="text/javascript" src="assets/js/modernizr.custom.js"></script>
+        <script type="text/javascript" src="assets/js/jquery.bxslider.js"></script>
+        <script type="text/javascript" src="assets/js/jquery.cslider.js"></script>
+        <script type="text/javascript" src="assets/js/jquery.placeholder.js"></script>
+        <script type="text/javascript" src="assets/js/jquery.inview.js"></script>
 
         <!-- css3-mediaqueries.js for IE8 or older -->
         <!--[if lt IE 9]>
             <script src="js/respond.min.js"></script>
         <![endif]-->
-        <script type="text/javascript" src="js/app.js"></script>
+        <script type="text/javascript" src="assets/js/app.js"></script>
 
         <!--Puntuacion -->
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-        <script src="js/star-rating.js" type="text/javascript"></script>
+        <script src="assets/js/star-rating.js" type="text/javascript"></script>
 
 
         <script src="http://maps.googleapis.com/maps/api/js"></script>
@@ -589,7 +595,7 @@ if(isset($_GET["jugar"]) ){
                     direction: 'up',
                     newsTickerInterval: 4000,
                     onToDo: function () {
-                        //console.log(this);
+                    
                     }
                 });
             });
