@@ -32,12 +32,13 @@ class Usuario{
 		$query->execute();
 	}
 
-	public function updateUsuario($idUsuario, $nickname,$mail,$telefono,$fotografia){
+	public function updateUsuario($idUsuario, $nickname,$mail,$telefono,$fotografia,$fechaNacimiento){
 		$sql = "UPDATE Usuario SET 
 			nickname = '".$nickname."',
 			mail = '".$mail."',
 			telefono = '".$telefono."',
-			fotografia = '".$fotografia."'
+			fotografia = '".$fotografia."',
+			fechaNacimiento = '".$fechaNacimiento."'
 			WHERE idUsuario = '".$idUsuario."'";
 		$query = $this->db->prepare($sql);
 		$query->execute();

@@ -66,8 +66,9 @@ class UsuarioController{
 		$mail= $_POST['mail'];
 		$telefono= $_POST['telefono'];
 		$fotografia = "actualice foto";
+		$fechaNacimiento = $_POST['fechaNacimiento'];
 		echo $nickname." ".$mail." ".$telefono." ".$fotografia;
-		$this->Usuario->updateUsuario($idUsuario, $nickname,$mail,$telefono,$fotografia);
+		$this->Usuario->updateUsuario($idUsuario, $nickname,$mail,$telefono,$fotografia, $fechaNacimiento);
 		header('Location: ?controlador=Usuario&accion=modificarPerfil');
  	}
 

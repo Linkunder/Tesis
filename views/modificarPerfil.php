@@ -4,9 +4,9 @@ include('layout/headerJugador.php');
 
 // Traer usuario desde el controlador.
 
-if (isset($vars'modificarPerfil')){
+//if (isset($vars'modificarPerfil')){
   $usuario = $vars['modificarPerfil'];
-}
+//}
 
 
 
@@ -64,7 +64,7 @@ if (isset($vars'modificarPerfil')){
                         </tr>
                         <tr>
                           <th>Fecha de nacimiento: </th> 
-                          <th><input class="profile-form-control" readonly="readonly" value="<?php echo $key['fechaNacimiento']?>"></th>
+                          <th><input class="profile-form-control" type="date" name="fechaNacimiento" id="fechaNacimiento" value="<?php echo $key['fechaNacimiento']?>"></th>
                         </tr>
                         <tr>
                           <th>Sexo: </th>
