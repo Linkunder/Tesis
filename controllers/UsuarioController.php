@@ -26,8 +26,7 @@ class UsuarioController{
 		$idUsuario= $_POST['idUsuario'];
 		$usuarios = new Usuario();
 		$usuario = $usuarios->getUsuario($idUsuario);
-		echo end($usuario)['nombre'];
-		echo end($usuario)['nickname'];
+		return $usuario;
 	}
 
 	// Desplegar formulario de registro.

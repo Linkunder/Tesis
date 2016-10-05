@@ -616,7 +616,7 @@ if(isset($_GET["jugar"]) ){
         		idUsuario: 1
         	},
 			function(data){
-				alert("Data: " + data);
+				alert("Data: " + data[0].nombre);
 
 			}        	
 
