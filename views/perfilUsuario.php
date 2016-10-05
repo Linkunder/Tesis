@@ -1,3 +1,4 @@
+
 <?php 
 
 include('layout/headerJugador.php'); 
@@ -29,7 +30,7 @@ $usuario = $vars['perfilUsuario'];
 
             <!-- SIDEBAR USERPIC -->
             <div class="profile-userpic">
-              <!--img src="images/usuarios/<?php //echo $key->getRutaFotografia();?>" class="img-responsive" alt=""-->
+              <!--img src="assets/images/usuarios/<?php //echo $item['fotografia']; ?>"  class="img-responsive" alt=""-->
             </div>
             <!-- END SIDEBAR USERPIC -->
 
@@ -149,3 +150,4 @@ $usuario = $vars['perfilUsuario'];
 
 </body>
 </html>
+

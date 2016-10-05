@@ -1,3 +1,4 @@
+
 <?php
 
 class Usuario{
@@ -42,6 +43,14 @@ class Usuario{
 			WHERE idUsuario = '".$idUsuario."'";
 		$query = $this->db->prepare($sql);
 		$query->execute();
+	}
+
+	public function buscarJugador($nickname){
+		$sql = "SELECT * FROM Usuario WHERE nickname = '".$nickname."';";
+		$query = $this->db->prepare($sql);
+		$query->execute();
+		$result = $query->fetchAll();
+		return $result;
 	}
 
 

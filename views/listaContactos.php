@@ -1,10 +1,12 @@
+
 <?php
 
 include('layout/headerJugador.php'); 
 
 // Se obtiene la lista de contactos del usuario.
+//if (isset($vars['listaContactos'])){
 $contactos = $vars['listaContactos'];
-
+//}
 ?>
 
 <link href="assets/css/profile.css" rel="stylesheet">
@@ -14,8 +16,8 @@ $contactos = $vars['listaContactos'];
       <h2>Mis contactos</h2>
       <p class="centered">Para agregar un nuevo contacto haz click 
         <button href="#" data-toggle="modal" data-target="#modal-1" type="button" class="btn btn-md btn-primary" action="">aquí <i class="fa fa-plus-circle"></i></button>
-        . Para eliminar un contacto de tu lista, haz click en el botón 
-        <button type="button" class="btn btn-md btn-danger" action="">Eliminar <i class="fa fa-trash-o"></i></button></p>
+        . Para agregar a uno de tus contactos a un equipo, haz click en el botón 
+        <button type="button" class="btn btn-md btn-success" action="">Agregar <i class="fa fa-users"></i></button></p>
       <div class="table-responsive">
       <table class="table table-striped table-hover">
         <thead>
@@ -24,7 +26,7 @@ $contactos = $vars['listaContactos'];
             <th>Nombre</th>
             <th>Nickname</th>
             <th>Mail</th>
-            <th>Algo más</th>
+            <th>Equipo(s) en común</th>
             <th></th>
           </tr>
         </thead>
@@ -35,7 +37,7 @@ $contactos = $vars['listaContactos'];
           <tr>
           <td>
             <div class="profile-userpic">
-              <img src="assets/images/usuarios/20.jpg" class="img-responsive" alt="">
+              <!--img src="assets/images/usuarios/20.jpg" class="img-responsive" alt=""-->
             </div>
           </td>
           <td>
@@ -48,9 +50,9 @@ $contactos = $vars['listaContactos'];
             <?php echo $item['mail']?>
           </td>
           <td>
-            <?php echo "Algo más"?>
+            <?php echo "Pendiente"?>
           </td>
-          <td class="centered"><button type="button" class="btn btn-md btn-danger" action="">Eliminar <i class="fa fa-trash-o"></i></button></td>
+          <td class="centered"><button type="button" class="btn btn-md btn-success" action="">Agregar <i class="fa fa-users"></i></button></td>
         </tr>
           <?php
           }
@@ -79,7 +81,7 @@ $contactos = $vars['listaContactos'];
         </div>
         <div class="modal-body">
           <p id="texto-contactos">Para agregar un contacto, búscalo ingresando su nickname.</p>
-          <form action="?buscarUsuario.php" method="get">
+          <form action="?controlador=Usuario&accion=busquedaJugador" method="POST">
             <input type="text" class="form-control partido" placeholder="Ingresa un nickname..." name="search"/>
               <div class="row">
                 <div class="col-md-6 col-md-offset-4">
@@ -90,6 +92,24 @@ $contactos = $vars['listaContactos'];
               </div>          
           </form>
           <hr/>
+
+          <?php
+          $search = '';
+          $cont = 0;
+          if (isset($_GET['search'])){
+            $search = $_GET['search'];
+          }
+          if ($search!=''){
+            ?>
+          
+          <h3>Resultados</h3>
+          <hr/>
+          <?php 
+          }
+          foreach ($variable as $key => $value) {
+            # code...
+          }
+          ?>
 
           <div class="col-sm-6">
             <div class="folio-item wow fadeInRightBig" data-wow-duration="1000ms" data-wow-delay="300ms">
@@ -170,6 +190,3 @@ $contactos = $vars['listaContactos'];
 
 </body>
 </html>
-
-
-

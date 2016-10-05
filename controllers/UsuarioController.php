@@ -80,9 +80,13 @@ class UsuarioController{
 		header('Location: ?controlador=Usuario&accion=modificarPerfil');
  	}
 
- 	public function buscarUsuario(){
- 		$nickname = $_GET['search'];
- 		$this->view->show('busquedaJugador.php');
+ 	public function busquedaJugador(){
+ 		$usuario = new Usuario();
+ 		$nickname = $_POST['search'];
+ 		$data['search'] = $nickname;
+ 		$nuevoContacto = $usuario->buscarJugador($nickname);
+ 		$data['usuarios']=$nuevoContacto;
+ 		$this->view->show('busquedaJugador.php',$data);
  	}
 
 

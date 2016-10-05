@@ -17,14 +17,19 @@ class ContactoController{
 		$this->view->show("");
 	}
 
-	// Entregar lista de contactos de un usuario.
+	// Entregar lista de contactos de un usuario. Caso especial agrega un contacto.
 	public function listaContactos(){
 		$idUsuario = $_SESSION['login_user_id'];
 		$contactos = new Contacto();
+		if (isset($_GET['jugador'])){
+			$idContacto = $_GET['jugador'];
+			$nuevoContacto = $contactos->setContacto($idUsuario,$idContacto);
+		}
 		$listaContactos = $contactos->getContactos($idUsuario);
 		$data['listaContactos'] = $listaContactos;
 		$this->view->show('listaContactos.php',$data); 
 	}
+
 
 
 
