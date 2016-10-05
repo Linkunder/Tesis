@@ -22,6 +22,14 @@ class UsuarioController{
 		$this->view->show('gestionUsuarios.php',$data); // Prueba parcial.
 	}
 
+	public function getUsuario(){
+		$idUsuario= $_POST['idUsuario'];
+		$usuarios = new Usuario();
+		$usuario = $usuarios->getUsuario($idUsuario);
+		echo end($usuario)['nombre'];
+		echo end($usuario)['nickname'];
+	}
+
 	// Desplegar formulario de registro.
 	public function formularioRegistro(){
 		$this->view->show('formularioRegistro.php');

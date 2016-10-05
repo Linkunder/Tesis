@@ -5,7 +5,7 @@ class RecintoController{
 
 	function __construct(){
         $this->view = new View();
-        $this->recinto = new Recinto();
+        $this->Recinto = new Recinto();
     }
 
     public function index()

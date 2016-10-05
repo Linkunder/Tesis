@@ -23,7 +23,7 @@ if(isset($_GET["jugar"]) ){
 
         <!-- Portfolio section start -->
         <!--link rel="stylesheet" type="text/css" href="css/bootstrap.css" /-->
-        <link href="css/profile.css" rel="stylesheet">
+        <link href="assets/css/profile.css" rel="stylesheet">
 
         <div class="section secondary-section" id="contact-us">
              <?php if(isset($_GET["nuevo"])){ 
@@ -349,12 +349,20 @@ if(isset($_GET["jugar"]) ){
                             <ul class="media-list">
                         <li class="media">
                             <?php 
+                            //Traemos los comentarios
                             if($vars['comentarios'] != NULL){
                             foreach($vars['comentarios'] as $comentario){
 
                                 //$vectorUsuarios= $jefeUsuario->leerUsuario($comentario->getIdUsuario());
                                 //$usuario = end($vectorUsuarios);
-                                
+
+
+      
+                            echo "<input type='button' value='Click' onClick='usuarioComentario();' />";
+ 
+
+
+
 
 
                             ?>
@@ -366,7 +374,7 @@ if(isset($_GET["jugar"]) ){
                                 </div>
                                 <div class="col-sm-10">
                                     <div class="media-body">
-                                      <!--  <strong class="text-success"><?php echo $usuario['nombre']." ".$usuario['apellido'];?></strong> -->
+                                     <strong class="text-success"><?php echo $user['nombre']." ".$user['apellido'];?></strong> 
                                         <span class="text-muted">
                                             <small class="text-muted"><?php echo $comentario['fecha'] ?></small>
                                         </span>
@@ -599,6 +607,21 @@ if(isset($_GET["jugar"]) ){
                     }
                 });
             });
+        </script>
+
+        <script type="text/javascript">
+        function usuarioComentario(){
+        	$.post('?controlador=Usuario&accion=getUsuario',
+        	{
+        		idUsuario: 1
+        	},
+			function(data){
+				alert("Data: " + data);
+
+			}        	
+
+        		)
+    	}
         </script>
 
 
