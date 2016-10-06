@@ -33,6 +33,7 @@ class SesionController{
             $_SESSION['login_user_id'] = $resultado->idUsuario;
             $_SESSION['login_user_name'] = $resultado->nombre;
             $_SESSION['login_user_email'] = $resultado->mail;
+            $_SESSION['login_user_estado'] = $resultado->estado;
             $data['login'] = true;
             // Direccionar a la pantalla de inicio del jugador
             $this->view->show('indexJugador.php',$data);
@@ -47,11 +48,13 @@ class SesionController{
 
 
     public function logout(){
+        session_start();
         unset($_SESSION['login_user_id']);
         unset($_SESSION['login_user_name']);
         unset($_SESSION['login_user_email']);
         //$data['cerrar_sesion'] = true;
         //$this->view->show("inicio.php", $data);
+        session_destroy();
         header('Location: ?controlador=Index&accion=inicio');
     }
 

@@ -96,9 +96,9 @@ if (isset($_SESSION['login_user_email'])){
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav navbar-right">                 
-            <li class="<?php echo ($page_name=='inicioJugador.php')?'active':'';?>"><a href="inicioJugador.php">Inicio</a></li>
-            <li class="<?php echo ($page_name=='recintos.php')?'active':'';?>"><a href="recintos.php">Canchas</a></li>
-            <li class="<?php echo ($page_name=='recintos.php?jugar=1')?'active':'';?>"><a href="recintos.php?jugar=1">Jugar</a></li> <!--Jugar = 1 para entrar a buscar recintos en el mismo reutilizando-->
+            <li class="<?php echo ($page_name=='inicioJugador')?'active':'';?>"><a href="inicioJugador.php">Inicio</a></li>
+            <li class="<?php echo ($page_name=='recintos')?'active':'';?>"><a id="myLink2" href="#" onclick="cancha();return false;">Canchas</a></li>
+            <li class="<?php echo ($page_name=='recintos')?'active':'';?>"><a id="myLink" href="#" onclick="partido();return false;">Jugar</a></li> <!--Jugar = 1 para entrar a buscar recintos en el mismo reutilizando-->
             <ul class="nav pull-left">
               <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $nombre?> <i class="fa fa-user"></i>
                 <b class="caret"></b></a>
@@ -159,4 +159,26 @@ if (isset($_SESSION['login_user_email'])){
 
 
   </div>
+  <form action="?controlador=Recinto&accion=busquedaRecintos" method=post name="formulario1"> 
+    <input type="hidden" name="jugar" value="1"> 
+    <input type="hidden" name="tipo" value="1"> 
+</form>
+  <form action="?controlador=Recinto&accion=busquedaRecintos" method=post name="formulario2"> 
+    <input type="hidden" name="jugar" value="0"> 
+    <input type="hidden" name="tipo" value="1"> 
+</form>
+
+  <script>
+  
+   
+      function partido(){
+          document.formulario1.submit()
+      }
+      function cancha(){
+        document.formulario2.submit()
+      }
+    
+    
+
+  </script>
   </header><!-- /Fin Header -->

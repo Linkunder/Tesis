@@ -5,15 +5,15 @@
 $_SESSION['idRecinto']=NULL;
 
 $jugar=0;
-if(isset($_GET["jugar"]) ){
-    $jugar=$_GET["jugar"];
+if(isset($_POST["jugar"]) ){
+    $jugar=$_POST["jugar"];
     }else{
       $jugar=0;
     }
 
 //Comprobamos que el usuario registrado siempre vea el header jugador
-    $sesion= session_start();
-    if(isset($_SESSION['user'])){
+    session_start();
+    if(isset($_SESSION['login_user_id'])){
         include('layout/headerJugador.php');
     }else{
         include('layout/header.php'); 
@@ -68,12 +68,18 @@ if(isset($_GET["jugar"]) ){
                     <div class="col-md-6 col-md-offset-3">
                         <form action="?controlador=Recinto&accion=busquedaRecintos" method="POST">
                             <input type="text" class="form-control" placeholder="Busca tu cancha..." name="search"/>
-                            <input type="text" class="fomr-control" hidden name="tipo" value="0"/>
+
                             <!--Aqui como se "recarga" debemos seguir manteniendo la "seleccion de cancha"-->
                             <?php 
                             if($jugar==1){
                             ?>
-                            <input  name="jugar" class="hide" value="1"/>
+                            <input  name="jugar" hidden value="1"/>
+                            <?php } 
+                            if(isset($_SESSION['login_user_id'])){
+                            ?>
+                            <input type="text" class="fomr-control" hidden name="tipo" value="1"/>
+                            <?php }else{?>
+							<input type="text" class="fomr-control" hidden name="tipo" value="0"/>
                             <?php } ?>
                             <div class="row">
                                 <div class="col-md-6 col-md-offset-4">
@@ -193,13 +199,24 @@ if(isset($_GET["jugar"]) ){
                                     }?>
                            
 
-                                        <br/>
-                                        <?php
-                                          if(isset($_SESSION['estado'])){
-                                                if($_SESSION['estado']=="activo" && $jefePuntuacion->comprobarPuntuacion($_SESSION['idUsuario'] ,$key->getIdRecinto())== 0){?>
+                                    <br/>
+                                    <?php
+                                        if(isset($_SESSION['login_user_estado'])){
+                                        		//Con este if se comprueba que el jusgador tenga un estado activo y no haya comentado en este recinto
+                                        	$contadorPuntuacion=0;
+                                        	foreach ($vars['puntuaciones'] as $puntuacion) {
+
+                                        		if($puntuacion['idRecinto'] = $_SESSION['idRecinto']){
+                                        			$contadorPuntuacion++;
+                                        		}
+                                        	}
+                                        		//Si el contador es 0 significa que no ha puntuado el recinto
+                                                if($_SESSION['login_user_estado']==1 && $contadorPuntuacion == 0){?>
 
                                     
-                                  <?php if($jefePuntuacion->partidoJugado($_SESSION['idUsuario'],$key->getIdRecinto() == $_SESSION['idUsuario'] )){ ?>
+                                  <?php 
+
+                                  if($jefePuntuacion->partidoJugado($_SESSION['idUsuario'],$key->getIdRecinto() == $_SESSION['idUsuario'] )){ ?>
                                      <form method="post" action="../Logica/ingresarPuntuacion.php" >
                                     <input  class ="with-gap" name="puntuacion" type="radio" id="estrella1" value="1" />
                                     <label for="estrella1">1</label>
@@ -319,7 +336,7 @@ if(isset($_GET["jugar"]) ){
                                 <?php }
                                
 
-                                if($jugar==0 && !(isset($_SESSION['user']))){ ?>
+                                if($jugar==0 && !(isset($_SESSION['login_user_id']))){ ?>
                                 
                                 <div class="alert alert-danger alert-dismissible fade in" role="alert">
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -608,21 +625,6 @@ if(isset($_GET["jugar"]) ){
                     }
                 });
             });
-        </script>
-
-        <script type="text/javascript">
-        function usuarioComentario(){
-        	$.post('?controlador=Usuario&accion=getUsuario',
-        	{
-        		idUsuario: 1
-        	},
-			function(data){
-				alert("Data: " + data[0].nombre);
-
-			}        	
-
-        		)
-    	}
         </script>
 
 

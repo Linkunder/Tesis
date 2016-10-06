@@ -6,19 +6,20 @@ class Puntuacion{
 		$this->db = SPDO::singleton();
 	}
 
-	public function getPuntuaciones(){
+	public function getPuntuaciones($idUsuario){
 		$consulta = $this->db->prepare(
-			'SELECT * FROM Puntuacion'
+			"SELECT puntuacion.idRecinto, puntuacion.idUsuario, puntuacion.valoracion FROM puntuacion INNER JOIN usuario ON puntuacion.idUsuario = usuario.idUsuario WHERE puntuacion.idUsuario = $idUsuario "
 			);
 		$consulta->execute();
 		$resultado = $consulta->fetchAll();
 		return $resultado;
 	}
 
+
 	public function getPuntuacionRecinto($idRecinto){
 
 		$consulta = $this->db->prepare(
-			'SELECT * FROM Puntuacion WHERE idRecinto = $idRecinto';
+			'SELECT * FROM Puntuacion WHERE idRecinto = $idRecinto'
 			);
 		$consulta->execute;
 		$resultado = $consulta->fetchAll();
