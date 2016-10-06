@@ -2,12 +2,15 @@
 <?php
 
 include('layout/headerJugador.php');
-$resultados = $vars['usuarios'];
+if (isset($vars['usuarios'])){
+  $resultados = $vars['usuarios'];
+}
 
 
 
 
-if (count($resultados)==0){
+
+if (count($resultados)==0){   // NO SE HAN ENCONTRADO RESULTADOS
 ?>
 
 
@@ -87,7 +90,7 @@ if (count($resultados)==0){
 
 
 <?php
-} else {
+} else {        // SI ESTA EL NICKNAME EN LA BASE DE DATOS
 ?>
 
 
@@ -97,8 +100,23 @@ if (count($resultados)==0){
   	<div class="container">
       <h2>Resultados</h2>
       	<?php
-          foreach ($resultados as $item) {
+        if (isset($vars['contacto'])){
+          $respuesta = $vars['contacto'];
+          $aux = 1;
+        } else {
+          $respuesta = $vars['excepcion'];
+          $aux= 0;
+        }
+        
+        foreach ($resultados as $item) {
+
+
+          if ($aux == 1){
+          if (!$respuesta){           
+
         ?>
+
+
       <p class="centered"> Para agregar a <?php echo $item['nickname']?> a tu lista, haz click en el botón 
         <button type="button" class="btn btn-md btn-success" action="">Agregar <i class="fa fa-plus-circle"></i></button></p>
 
@@ -143,8 +161,115 @@ if (count($resultados)==0){
 
             <!-- END MENU -->
 
-            <?php
-            }
+          <?php
+
+        } else {          // YA ESTA EN LA LISTA DE CONTACTOS
+
+
+          ?>
+
+
+      <p class="centered"> <?php echo $nombre.", ya tienes a ".$item['nickname']?> en tu lista de contactos.</p>
+
+        <div class="row profile">
+        <div class="col-md-4 col-offset-6 centered">
+          <div class="profile-sidebar">
+
+            <!-- SIDEBAR USERPIC -->
+            <div class="profile-userpic">
+              <img src="assets/images/usuarios/<?php echo $item['fotografia']; ?>" class="img-responsive" alt="">
+            </div>
+            <!-- END SIDEBAR USERPIC -->
+
+            <!-- SIDEBAR USER TITLE -->
+            <div class="profile-usertitle">
+              <div class="profile-usertitle-name">
+                <?php
+
+                  echo $item['nombre']." ".$item['apellido'];
+                
+                ?>
+              </div>
+
+            </div>
+            <!-- END SIDEBAR USER TITLE -->
+            
+            <!-- SIDEBAR BUTTONS -->
+            <div class="profile-userbuttons">
+              
+              <a href="?controlador=Contacto&accion=listaContactos">
+                <button type="button" class="btn btn-sm btn-primary btn-sm">Volver
+                  <i class="fa fa-arrow-circle-left"></i>
+                </button>
+              </a>
+            </div>
+            <!-- END SIDEBAR BUTTONS -->
+            
+
+            <!-- END MENU -->
+
+
+        <?php
+        
+
+
+
+
+          }
+
+
+} else {
+
+
+?>
+
+
+
+      <p class="centered"> <?php echo $nombre?>, no te puedes agregar a tu mismo. Sin embargo, esto ven tus amigos cuando te agregan a su lista.</p>
+
+
+        <div class="row profile">
+        <div class="col-md-4 col-offset-6 centered">
+          <div class="profile-sidebar">
+
+            <!-- SIDEBAR USERPIC -->
+            <div class="profile-userpic">
+              <img src="assets/images/usuarios/<?php echo $item['fotografia']; ?>" class="img-responsive" alt="">
+            </div>
+            <!-- END SIDEBAR USERPIC -->
+
+            <!-- SIDEBAR USER TITLE -->
+            <div class="profile-usertitle">
+              <div class="profile-usertitle-name">
+                <?php
+
+                  echo $item['nombre']." ".$item['apellido'];
+                
+                ?>
+              </div>
+
+            </div>
+            <!-- END SIDEBAR USER TITLE -->
+            
+            <!-- SIDEBAR BUTTONS -->
+            <div class="profile-userbuttons">
+              
+              <a href="?controlador=Contacto&accion=listaContactos">
+                <button type="button" class="btn btn-sm btn-primary btn-sm">Volver
+                  <i class="fa fa-arrow-circle-left"></i>
+                </button>
+              </a>
+            </div>
+
+
+<?php
+
+
+}
+
+
+
+          }
             ?>
 
 

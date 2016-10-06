@@ -22,6 +22,25 @@ class Contacto{
 		$query->execute();
 	}
 
+	public function verificarContacto($contacto, $idUsuario){
+		foreach ($contacto as $key) {
+			$idContacto = $key['idUsuario'];
+		}
+		if ($idContacto == $idUsuario){
+			return "3";
+		} else {
+			$query = $this->db->prepare("SELECT * FROM Contacto WHERE idUsuario = '".$idUsuario."' AND idContacto = '".$idContacto."' ;");
+			$query->execute();
+			$resultado = $query->fetchAll();
+			if (count($resultado)!=0){
+				return "2";
+			} else {
+				return "1";	
+			}
+		}
+		
+	}
+
 
 
 }

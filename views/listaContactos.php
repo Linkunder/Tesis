@@ -114,7 +114,7 @@ $contactos = $vars['listaContactos'];
           <div class="col-sm-6">
             <div class="folio-item wow fadeInRightBig" data-wow-duration="1000ms" data-wow-delay="300ms">
               <div class="folio-image">
-                <img class="img-responsive" src="images/usuarios/<?php //echo  $key->getRutaFotografia(); ?>" alt="">
+                <!--img class="img-responsive" src="images/usuarios/<?php //echo  $key->getRutaFotografia(); ?>" alt=""-->
               </div>
               <div class="overlay">
                 <div class="overlay-content">

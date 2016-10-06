@@ -1,6 +1,7 @@
 <?php
 
 require 'models/Usuario.php';
+require 'models/Contacto.php';
 session_start();
 
 class UsuarioController{
@@ -74,17 +75,29 @@ class UsuarioController{
 		$telefono= $_POST['telefono'];
 		$fotografia = "actualice foto";
 		$fechaNacimiento = $_POST['fechaNacimiento'];
-		echo $nickname." ".$mail." ".$telefono." ".$fotografia;
 		$this->Usuario->updateUsuario($idUsuario, $nickname,$mail,$telefono,$fotografia, $fechaNacimiento);
 		header('Location: ?controlador=Usuario&accion=modificarPerfil');
  	}
 
  	public function busquedaJugador(){
  		$usuario = new Usuario();
+ 		$contacto = new Contacto(); 
+ 		$idUsuario = $_SESSION['login_user_id'];
  		$nickname = $_POST['search'];
  		$data['search'] = $nickname;
  		$nuevoContacto = $usuario->buscarJugador($nickname);
- 		$data['usuarios']=$nuevoContacto;
+  		$consulta = $contacto->verificarContacto($nuevoContacto, $idUsuario);
+  		if ($consulta == "3"){
+  			$data['excepcion']= "3";
+  		} else {
+  			if ($consulta == "2"){ // Es true, el contacto ya lo tiene.
+  				$data['contacto']= true;
+	  		} else {
+	  			$data['contacto']= false;
+	  		}
+  		}
+  		
+  		$data['usuarios']=$nuevoContacto;
  		$this->view->show('busquedaJugador.php',$data);
  	}
 
