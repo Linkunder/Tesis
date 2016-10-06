@@ -31,7 +31,6 @@ class RecintoController{
     		if (isset($_POST['search'])) {
                       $search = $_POST['search'];
                       $data['search']=$search;
-                      $comentario->getComentarios();
                       $listadoComentarios = $comentario->getComentarios();
                       $data['comentarios']= $listadoComentarios;
             }

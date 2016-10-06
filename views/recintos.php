@@ -350,47 +350,48 @@ if(isset($_GET["jugar"]) ){
                         <li class="media">
                             <?php 
                             //Traemos los comentarios
+                            $contComentario = 0; 
+
                             if($vars['comentarios'] != NULL){
                             foreach($vars['comentarios'] as $comentario){
 
-                                //$vectorUsuarios= $jefeUsuario->leerUsuario($comentario->getIdUsuario());
-                                //$usuario = end($vectorUsuarios);
+                                
 
-
-      
-                            echo "<input type='button' value='Click' onClick='usuarioComentario();' />";
- 
-
-
-
-
-
-                            ?>
-                            <div class="comment">
-                                <div class="col-sm-2">
-                                    <div class="profile-userpic">
-                                    <img src="assets/images/usuarios/<?php echo $comentario['idUsuario'] ?>.jpg" alt="" class="img-circle img-responsive" >
+                                if ($comentario['idRecinto']==$_SESSION["idRecinto"]) {
+                                    $contComentario++;
+                                ?>
+                                    <div class="comment">
+                                        <div class="col-sm-2">
+                                            <div class="profile-userpic">
+                                            <img src="assets/images/usuarios/<?php echo $comentario['fotografia']; ?>" alt="" class="img-circle img-responsive" >
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-10">
+                                            <div class="media-body">
+                                             <strong class="text-success"><?php echo $comentario['nombre']." ".$comentario['apellido'];?></strong> 
+                                                <span class="text-muted">
+                                                    <small class="text-muted"><?php echo $comentario['fecha'] ?></small>
+                                                </span>
+                                                <p >
+                                                    <?php echo $comentario['contenido'] ?>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix"></div>
                                     </div>
-                                </div>
-                                <div class="col-sm-10">
-                                    <div class="media-body">
-                                     <strong class="text-success"><?php echo $user['nombre']." ".$user['apellido'];?></strong> 
-                                        <span class="text-muted">
-                                            <small class="text-muted"><?php echo $comentario['fecha'] ?></small>
-                                        </span>
-                                        <p >
-                                            <?php echo $comentario['contenido'] ?>
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="clearfix"></div>
-                            </div>
-                            <hr/>
-                            <?php }//FIN FOREACH COMENTARIOS
+                                    <hr/>
 
-                          } else{
-                            echo "Este recinto no tiene comentarios";
-                        }
+                                <?php 
+                                } 
+
+                            }//FIN FOREACH COMENTARIOS
+
+                            if ($contComentario==0){
+                                echo "Este recinto no tiene comentarios.";
+                            }
+
+
+                            } 
                             ?> 
                         </li>
                     </ul>

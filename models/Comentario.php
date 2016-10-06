@@ -17,7 +17,8 @@ class Comentario{
 
 	public function getComentarios(){
 		$consulta = $this->db->prepare('
-			SELECT * FROM Comentario
+			SELECT comentario.idRecinto, comentario.contenido, comentario.fecha, comentario.hora, usuario.nombre, usuario.apellido, usuario.fotografia 
+			FROM comentario INNER JOIN usuario on comentario.idUsuario = usuario.idUsuario
 		');
 		$consulta->execute();
 		$resultado = $consulta->fetchAll();

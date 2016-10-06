@@ -17,8 +17,9 @@ class ComentarioController{
     		$idRecinto = $_GET['idRecinto'];
     		$comentario = new Comentario();
     		$listadoComentarios = $comentario->getComentarios($idRecinto);
+            var_dump($listadoComentarios);
     		$data['comentarios']= $listadoComentarios;
-    	return $data;
+    	    return $data;
     	}
     	
 
