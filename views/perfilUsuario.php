@@ -30,7 +30,7 @@ $usuario = $vars['perfilUsuario'];
 
             <!-- SIDEBAR USERPIC -->
             <div class="profile-userpic">
-              <!--img src="assets/images/usuarios/<?php //echo $item['fotografia']; ?>"  class="img-responsive" alt=""-->
+              <img src="assets/images/usuarios/<?php echo $key['fotografia']; ?>"  class="img-responsive" alt=""-->
             </div>
             <!-- END SIDEBAR USERPIC -->
 
@@ -50,13 +50,13 @@ $usuario = $vars['perfilUsuario'];
             <!-- SIDEBAR BUTTONS -->
             <div class="profile-userbuttons">
               <a href="?controlador=Usuario&accion=modificarPerfil">
-                <button type="button" class="btn btn-success btn-sm">Ver información
+                <button type="button" class="btn btn-success btn-sm">Mi información 
                   <i class="fa fa-pencil"></i>
                 </button>
               </a>
-              <!--a href="subirImagen.php?idUsuario=<?php //echo $key->getIdUsuario();?>"-->
-                <button type="button" class="btn btn-sm btn-warning btn-sm">Cambiar imagen
-                  <i class="fa fa-camera"></i>
+              <a href="?controlador=Usuario&accion=verCalendario">
+                <button type="button" class="btn btn-sm btn-primary btn-sm">Mi calendario 
+                  <i class="fa fa-calendar"></i>
                 </button>
               </a>
             </div>
@@ -67,8 +67,9 @@ $usuario = $vars['perfilUsuario'];
               <ul class="nav">
                 <li >
                   <a href="?controlador=Usuario&accion=perfilUsuario">
-                  <i class="fa fa-calendar"></i>
-                  Ver calendario de partidos</a>
+                  <i class="fa fa-users"></i>
+                  
+                  Ver mis equipos</a>
                 </li>
                 <li>
                   <a href="../Logica/controlSesion.php?tipo=salir">

@@ -64,7 +64,7 @@ include('layout/headerJugador.php');
                         </tr>
                         <tr>
                           <th>Fecha de nacimiento: </th> 
-                          <th><input class="profile-form-control" type="date" name="fechaNacimiento" id="fechaNacimiento" value="<?php echo $key['fechaNacimiento']?>"></th>
+                          <th><input class="profile-form-control" readonly="readonly" type="date" name="fechaNacimiento" id="fechaNacimiento" value="<?php echo $key['fechaNacimiento']?>"></th>
                         </tr>
                         <tr>
                           <th>Sexo: </th>
@@ -72,7 +72,7 @@ include('layout/headerJugador.php');
                         </tr>
                       </table>
                         <div class="col-md-4">
-                        <button type="submit" class="btn btn-lg btn-primary">Actualizar <i class="fa fa-check fa-1x"></i></button>
+                        <button type="submit" class="btn btn-lg btn-primary">Actualizar <i class="fa fa-paper-plane fa-1x"></i></button>
                         </div>
                         <div class="col-md-4">
                         <button type="reset" class="btn btn-lg btn-warning">Reiniciar <i class="fa fa-eraser fa-1x"></i></button>

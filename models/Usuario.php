@@ -28,7 +28,13 @@ class Usuario{
 								 $password, $telefono, $fechaNacimiento, 
 								$perfil, $estado){
 		$sql = "INSERT INTO Usuario (nombre, apellido, nickname, mail, sexo, fotografia, password, telefono, fechaNacimiento, perfil, estado) 
-				VALUES ('$nombre', '$apellido', '$nickname', '$mail', '$sexo', 'no','$password', '$telefono', '$fechaNacimiento', '$perfil', '$estado');";
+				VALUES ('$nombre', '$apellido', '$nickname', '$mail', '$sexo', '$fotografia','$password', '$telefono', '$fechaNacimiento', '$perfil', '$estado');";
+		$query = $this->db->prepare($sql);
+		$query->execute();
+	}
+
+	public function setFotografia($idUsuario, $imagen){
+		$sql = "UPDATE Usuario SET fotografia = '".$imagen."'  WHERE idUsuario = '".$idUsuario."' ";
 		$query = $this->db->prepare($sql);
 		$query->execute();
 	}
@@ -52,6 +58,9 @@ class Usuario{
 		$result = $query->fetchAll();
 		return $result;
 	}
+
+
+
 
 
 
