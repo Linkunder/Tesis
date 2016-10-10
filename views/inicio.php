@@ -57,8 +57,14 @@ if (isset($vars['cerrar_sesion'])){
   <div class="container">
     <div class="row">
       <div class="heading-a text-center">
+
+
         <br/><br/><br/><br/><br/>
         <h1>Bienvenido a MatchDay</h1>
+
+
+
+        
       </div>
       <br/> <br/> <br/> 
     </div>

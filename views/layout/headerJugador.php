@@ -96,7 +96,7 @@ if (isset($_SESSION['login_user_email'])){
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav navbar-right">                 
-            <li class="<?php echo ($page_name=='inicioJugador')?'active':'';?>"><a href="inicioJugador.php">Inicio</a></li>
+            <li class="<?php echo ($page_name=='inicioJugador')?'active':'';?>"><a href="?controlador=Index&accion=indexJugador">Inicio</a></li>
             <li class="<?php echo ($page_name=='recintos')?'active':'';?>"><a id="myLink2" href="#" onclick="cancha();return false;">Canchas</a></li>
             <li class="<?php echo ($page_name=='recintos')?'active':'';?>"><a id="myLink" href="#" onclick="partido();return false;">Jugar</a></li> <!--Jugar = 1 para entrar a buscar recintos en el mismo reutilizando-->
             <ul class="nav pull-left">

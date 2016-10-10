@@ -19,38 +19,107 @@ include('layout/header.php');
 
     <div class="row">
       
-        
+        <div class="col-sm-12 col-sm-offset-3 centered">
      
       <form method="POST" action="index.php?controlador=Usuario&accion=registrarUsuario" enctype="multipart/form-data" class="design-form col-sm-offset-3 centered" >
-        <div class="row">
+  
 
-        <div class="col-md-6">
-         <input type="text" name="nombre" class="form-control" placeholder="Nombre" required="required">
-         <input type="text" name="apellido" class="form-control" placeholder="Apellido" required="required">
-         <input type="text" name="nickname" class="form-control" placeholder="Nickname" required="required">
-         <input type="date" id="fechaNacimiento" name="fechaNacimiento" class="form-control" placeholder="Fecha de nacimiento" required="required" >
-         <input type="mail" name="mail" class="form-control" placeholder="Email" required="required">
-         <input type="text" name="telefono" class="form-control" placeholder="Telefono" >
-         <input type="password" name="password" class="form-control" placeholder="Password" >
-         <label>Selecciona género:&nbsp;</label>
-         <input type="radio" name="sexo" value="M" /> Masculino
-         <input type="radio" name="sexo" value="F" /> Femenino
-          </label>
-        </div> 
-        <div class="col-md-6">
-          <label class="control-label">Selecciona una fotografia para tu perfil</label>
-          <input type="file" id="imagen" name="imagen" required="required">
+                <div class="row">
+                  <div class="col-sm-6 centered">
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <input type="text" name="nombre" class="form-control" placeholder="Nombre" required="required">
+                    </div>
+                  </div>
+                
+
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <input type="text" name="apellido" class="form-control" placeholder="Apellido" required="required">
+                    </div>
+                  </div>
+                </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-sm-6 col-sm-offset-3 centered">
+                    <div class="form-group">
+                      <input type="text" name="nickname" class="form-control" placeholder="Nickname" required="required">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-sm-6 col-sm-offset-3 centered">
+                    <div class="form-group">
+                      <input type="date" name="fechaNacimiento" class="form-control" placeholder="Fecha de nacimiento" required="required">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-sm-6 col-sm-offset-3 centered">
+                    <div class="form-group">
+                      <input type="mail" name="mail" class="form-control" placeholder="Email" required="required">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-sm-6 col-sm-offset-3 centered">
+                    <div class="form-group">
+                      <input type="text" name="telefono" class="form-control" placeholder="Telefono" required="required">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-sm-6 col-sm-offset-3 centered">
+                    <div class="form-group">
+                      <input type="password" name="password" class="form-control" placeholder="Password" required="required">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group">
+                      <label>Selecciona género:&nbsp;</label>
+                        <div class="btn-group" data-toggle="buttons">
+                          <label class="btn btn-default">
+                            <input type="radio" name="sexo" value="Masculino" /> Masculino
+                          </label>
+                          <label class="btn btn-default">
+                              <input type="radio" name="sexo" value="Femenino" /> Femenino
+                          </label>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-sm-6 col-sm-offset-3 centered">
+                    <div class="form-group">
+                      <label class="control-label">Selecciona una fotografia para tu perfil</label>
+                      <input type="file" id="imagen" name="imagen" required="required"  class="file" multiple data-min-file-count="1">
+                    </div>
+                  </div>
+                </div>
+
+
+
+                <div class="row">
+                  <div class="col-sm-6 col-sm-offset-3 centered">
+                  <button type="submit" name="submit" class="btn-submit">Siguiente <i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+                </div>
+             
+                </div>
+      </form>   
         </div>
-      </div>
-        <div class="row">
-        <div class="col-md-3"></div>
-        <div class="col-md-6">
-        <button type="submit" name="submit" class="btn-submit">Siguiente <i class="fa fa-paper-plane" aria-hidden="true"></i></button>
-        </div>
-        <div class="col-md-3"></div>
-        </div>
-     </form>   
-   </div>
+    </div>
+
+
+  
  </div>
 </div>
          

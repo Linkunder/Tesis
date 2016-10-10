@@ -50,12 +50,13 @@ class UsuarioController{
 		$usuarios = $this->Usuario->getUsuarios();
 		$idUsuario = end($usuarios)['idUsuario'];
 		$this->guardarImagen($idUsuario);
-		header('Location: ?controlador=Index&accion=index');
+		//header('Location: ?controlador=Index&accion=index');
 	}
 
 	private function guardarImagen($idUsuario){
 		$target_dir = "assets/images/usuarios/";
 		$target_file = $target_dir.basename($_FILES["imagen"]["name"]);
+		echo $target_file;
 		$uploadOk = 1;
 		$imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
 		// Asignar nuevo nombre: idUsuario.extensionFotografia
