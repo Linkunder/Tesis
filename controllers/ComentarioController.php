@@ -5,7 +5,7 @@ require 'models/Comentario.php';
 class ComentarioController{
 		function __construct(){
         $this->view = new View();
-        $this->comentario = new Comentario();
+        $this->Comentario = new Comentario();
     }
 
     public function index(){
@@ -13,17 +13,21 @@ class ComentarioController{
     }
 
     public function getComentarios(){
-    	if(isset($_GET['idRecinto'])){
     		$idRecinto = $_GET['idRecinto'];
     		$comentario = new Comentario();
     		$listadoComentarios = $comentario->getComentarios($idRecinto);
             var_dump($listadoComentarios);
     		$data['comentarios']= $listadoComentarios;
     	    return $data;
-    	}
-    	
+    }
 
+    public function setComentario(){
+        $idRecinto = $_POST['idRecinto'];
+        $idUsuario = $_POST['idUsuario'];
+        $contenido = $_POST['contenido'];
 
+        $this->Comentario->setComentario($idRecinto, $idUsuario, $contenido);
+        
     }
 }
 ?>

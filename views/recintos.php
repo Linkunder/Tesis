@@ -12,7 +12,11 @@ if(isset($_POST["jugar"]) ){
     }
 
 //Comprobamos que el usuario registrado siempre vea el header jugador
-    session_start();
+    if(!isset($_SESSION)) 
+    { 
+        session_start(); 
+    } 
+
     if(isset($_SESSION['login_user_id'])){
         include('layout/headerJugador.php');
     }else{
@@ -201,36 +205,44 @@ if(isset($_POST["jugar"]) ){
 
                                     <br/>
                                     <?php
+                                     //Con este if se comprueba que el jusgador tenga un estado activo y no haya comentado en este recinto
                                         if(isset($_SESSION['login_user_estado'])){
-                                        		//Con este if se comprueba que el jusgador tenga un estado activo y no haya comentado en este recinto
+        
                                         	$contadorPuntuacion=0;
+                                        	$contadorPartido = 0;
+                                        	foreach ($vars['partidos'] as $partido) {
+                                        		if($partido['idRecinto'] = $_SESSION['idRecinto']){
+                                        			$contadorPartido++;
+                                        		}
+                                        	}
                                         	foreach ($vars['puntuaciones'] as $puntuacion) {
 
                                         		if($puntuacion['idRecinto'] = $_SESSION['idRecinto']){
                                         			$contadorPuntuacion++;
+                                        			$puntuacionUsuario = $puntuacion['valoracion'];
                                         		}
                                         	}
+
                                         		//Si el contador es 0 significa que no ha puntuado el recinto
                                                 if($_SESSION['login_user_estado']==1 && $contadorPuntuacion == 0){?>
 
                                     
                                   <?php 
-
-                                  if($jefePuntuacion->partidoJugado($_SESSION['idUsuario'],$key->getIdRecinto() == $_SESSION['idUsuario'] )){ ?>
-                                     <form method="post" action="../Logica/ingresarPuntuacion.php" >
-                                    <input  class ="with-gap" name="puntuacion" type="radio" id="estrella1" value="1" />
+                                  //Si ha jugado un partido en el recinto deportivo
+                                  if($contadorPartido == 1){ ?>
+                                     <form method="post" action="?controlador=Puntuacion&accion=setPuntuacion" >
+                                    <input  class ="with-gap" name="valoracion" type="radio" id="estrella1" value="1" />
                                     <label for="estrella1">1</label>
-                                    <input class ="with-gap" name="puntuacion" type="radio" id="estrella2" value="2"/>
+                                    <input class ="with-gap" name="valoracion" type="radio" id="estrella2" value="2"/>
                                     <label for="estrella2">2</label>
-                                    <input class ="with-gap" name="puntuacion" type="radio" id="estrella3" value="3" />
+                                    <input class ="with-gap" name="valoracion" type="radio" id="estrella3" value="3" />
                                     <label for="estrella3">3</label>
-                                    <input class ="with-gap" name="puntuacion" type="radio" id="estrella4"  value="4"/>
+                                    <input class ="with-gap" name="valoracion" type="radio" id="estrella4"  value="4"/>
                                     <label for="estrella4">4</label>
-                                    <input class ="with-gap" name="puntuacion" type="radio" id="estrella5" value="5" />
+                                    <input class ="with-gap" name="valoracion" type="radio" id="estrella5" value="5" />
                                     <label for="estrella5">5</label>
-                                    <input type="hidden" name="idUsuario" value="<?php  echo $_SESSION['idUsuario'] ?>" />
-                                    <input type="hidden" name="idRecinto" value="<?php echo $key->getIdRecinto() ?>" />
-                                    <input type="hidden" name="nombreRecinto" value="<?php echo $nombre; ?>" />
+                                    <input type="hidden" name="idUsuario" value="<?php  echo $_SESSION['login_user_id'] ?>" />
+                                    <input type="hidden" name="idRecinto" value="<?php echo $key['idRecinto'] ?>" />
                                     <button class= "btn submit" type="submit" name="action">Puntuar</button>
                                     <?php } else {?>   
 
@@ -238,8 +250,10 @@ if(isset($_POST["jugar"]) ){
                                         <?php }?>
                                 </form>
 
-                                        <?php }else{
-                    $puntuacionUsuario= $jefePuntuacion->valoracionUsuario($_SESSION['idUsuario'],$key->getIdRecinto() );
+                             <?php }else{
+                             		//Si ha jugado se guar
+                    				//$puntuacionUsuario= $jefePuntuacion->valoracionUsuario($_SESSION['idUsuario'],$key->getIdRecinto());
+                             		//
                                             ?>
 
                             <form method="post" action="" >
@@ -291,19 +305,18 @@ if(isset($_POST["jugar"]) ){
                             </div>
                             <!--Comprobar si se puede comentar o no -->
                             <?php 
-                            if(isset($_SESSION['estado'])){
-                            if($_SESSION['estado']=="activo" ){
+                            if(isset($_SESSION['login_user_estado'])){
+                            if($_SESSION['login_user_estado']==1 ){
 
 
-                            if($jefePuntuacion->partidoJugado($_SESSION['idUsuario'],$key->getIdRecinto()) == $_SESSION['idUsuario']){ 
+                            if($contadorPartido == 1){ 
                                 ?>
 
                             <div class="panel-body comments">
-                                <form method="post" action="../Logica/ingresarComentario.php">
+                                <form method="post" action="?controlador=Comentario&accion=setComentario">
                                     <input class="form-control" name="contenido" placeholder="Escribe tu comentario" rows="2" required></input>
-                                    <input type="hidden" name="idUsuario" value="<?php echo $_SESSION['idUsuario'] ?>">
+                                    <input type="hidden" name="idUsuario" value="<?php echo $idUsuario ?>">
                                     <input type="hidden" name="idRecinto" value="<?php echo $key['idRecinto'] ?>">
-                                    <input type="hidden" name="nombre" value="<?php echo $key['nombre'] ?>">
                                     <br>
                                     <!--<a class="small pull-left" href="#">Entra y comenta</a>-->
                                     <button type="button submit" class="btn btn-info pull-right" name="action" >Comentar</button>
@@ -323,7 +336,7 @@ if(isset($_POST["jugar"]) ){
 
                            <?php }
                             }else{ //fin if estado 
-                                if($_SESSION['estado']=="penalizado"){ ?>
+                                if($_SESSION['login_user_estado']==2){ ?>
 
                                 <div class="alert alert-error alert-dismissible fade in" role="alert">
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -347,7 +360,8 @@ if(isset($_POST["jugar"]) ){
                                 <br>
                                 <?php 
                                 }
-                               if( $jefePuntuacion->partidoJugado($_SESSION['idUsuario'],$key->getIdRecinto()) != $_SESSION['idUsuario'] ){ ?>
+                                //Si el jugador no ha jugado en el recinto deportivo
+                              if( $contadorPartido != 1){ ?>
                                 
                                 <div class="alert alert-danger alert-dismissible fade in" role="alert">
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">

@@ -2,6 +2,9 @@
 require 'models/Recinto.php';
 require 'models/Comentario.php';
 require 'models/Puntuacion.php';
+require 'models/Partido.php';
+
+
 class RecintoController{
 
 	function __construct(){
@@ -26,7 +29,8 @@ class RecintoController{
     	//Si es la busqueda sin sesion
     	$recinto = new Recinto();
     	$comentario = new Comentario();
-        $puntuacion = new Puntuacion();
+      $puntuacion = new Puntuacion();
+      $partido =  new Partido();
     	if($tipo == 0){
     		if (isset($_POST['search'])) {
                       $search = $_POST['search'];
@@ -41,15 +45,21 @@ class RecintoController{
     		$this->view->show("recintos.php",$data);
 
     	}else{
+            if(!isset($_SESSION)) 
+            { 
+             session_start(); 
+            } 
+           $idUsuario = $_SESSION['login_user_id'];
             //Si es la busqueda con sesion
                           if (isset($_POST['search'])) {
                           $search = $_POST['search'];
                           $data['search']=$search;
                           $listadoComentarios = $comentario->getComentarios();
                           $data['comentarios'] = $listadoComentarios; 
-                          session_start();
-                          $idUsuario = $_SESSION['login_user_id'];
+
                           $listadoPuntuacion = $puntuacion->getPuntuaciones($idUsuario);
+                          $listadoPartidos = $partido->getPartidosUsuario($idUsuario);
+                          $data['partidos'] = $listadoPartidos;
                           $data['puntuaciones'] = $listadoPuntuacion;
             }
 
