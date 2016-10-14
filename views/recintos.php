@@ -211,13 +211,13 @@ if(isset($_POST["jugar"]) ){
                                         	$contadorPuntuacion=0;
                                         	$contadorPartido = 0;
                                         	foreach ($vars['partidos'] as $partido) {
-                                        		if($partido['idRecinto'] = $_SESSION['idRecinto']){
+                                        		if($partido['idRecinto'] == $idRecinto){
                                         			$contadorPartido++;
                                         		}
                                         	}
                                         	foreach ($vars['puntuaciones'] as $puntuacion) {
 
-                                        		if($puntuacion['idRecinto'] = $_SESSION['idRecinto']){
+                                        		if($puntuacion['idRecinto'] == $idRecinto){
                                         			$contadorPuntuacion++;
                                         			$puntuacionUsuario = $puntuacion['valoracion'];
                                         		}
@@ -315,8 +315,8 @@ if(isset($_POST["jugar"]) ){
                             <div class="panel-body comments">
                                 <form method="post" action="?controlador=Comentario&accion=setComentario">
                                     <input class="form-control" name="contenido" placeholder="Escribe tu comentario" rows="2" required></input>
-                                    <input type="hidden" name="idUsuario" value="<?php echo $idUsuario ?>">
-                                    <input type="hidden" name="idRecinto" value="<?php echo $key['idRecinto'] ?>">
+                                    <input type="hidden" name="idUsuario" value="<?php echo $_SESSION['login_user_id']  ?>">
+                                    <input type="hidden" name="idRecinto" value="<?php echo $idRecinto ?>">
                                     <br>
                                     <!--<a class="small pull-left" href="#">Entra y comenta</a>-->
                                     <button type="button submit" class="btn btn-info pull-right" name="action" >Comentar</button>

@@ -22,11 +22,13 @@ class ComentarioController{
     }
 
     public function setComentario(){
+        $comentario = new Comentario();
         $idRecinto = $_POST['idRecinto'];
         $idUsuario = $_POST['idUsuario'];
         $contenido = $_POST['contenido'];
 
-        $this->Comentario->setComentario($idRecinto, $idUsuario, $contenido);
+        $comentario->setComentario($idRecinto, $idUsuario, $contenido);
+        header('Location: ?controlador=Recinto&accion=busquedaRecintos');
         
     }
 }

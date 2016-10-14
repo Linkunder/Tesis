@@ -107,7 +107,7 @@ if (isset($_SESSION['login_user_email'])){
                   <hr>
                   <li><a href="?controlador=Contacto&accion=listaContactos">Contactos</a></li>
                   <hr>
-                  <li><a href="notificarRecinto.php">Notificar recinto</a></li>
+                  <li><a href="?controlador=Recinto&accion=notificarRecinto">Notificar recinto</a></li>
                   <hr>
                    <li><a href="?controlador=Sesion&accion=logout">Cerrar Sesion</a></li>
                    <li></li>

@@ -71,6 +71,21 @@ class RecintoController{
     	}
     }
 
+    public function notificarRecinto(){
+      $this->view->show("notificarRecinto.php");
+    }
+
+    public function ingresarRecinto(){
+      $recinto = new Recinto();
+      $nombre = $_POST['nombre'];
+      $fono = $_POST['fono'];
+      $direccion = $_POST['direccion'];
+      $idUsuario = $_POST['idUsuario'];
+
+      $recinto->setSolicitud($nombre, $fono, $direccion, $idUsuario);
+
+      header('Location: ?controlador=Recinto&accion=notificarRecinto&1');
+    }
 
 
 

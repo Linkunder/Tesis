@@ -21,6 +21,24 @@ class Recinto{
 		return $resultado;
 
 	}
+	//`idRecinto`, `nombre`, `tipo`, `superficie`, `direccion`, `numeroCanchas`, `telefono`, `fotografia`, `puntuacion`, `estado`, `idUsuario
+	public function setSolicitud($nombre, $fono, $direccion, $idUsuario){
+		$consulta = $this->db->prepare(
+			"INSERT INTO Recinto (
+				nombre,
+				direccion,
+				telefono,
+				estado,
+				idUsuario) 
+				 VALUES (
+				'$nombre',
+				'$direccion',
+				'$fono',
+				'2',
+				'$idUsuario'
+				)");
+		$consulta->execute();
+	}
 	public function setRecinto($nombre,$tipo,$superficie,$direccion,$numeroCanchas,$telefono,$fotografia,$puntuacion,$estado,$idUsuario){
 		$consulta = $this->db->prepare("
 			INSERT INTO Recinto (
