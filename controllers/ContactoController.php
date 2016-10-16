@@ -17,7 +17,7 @@ class ContactoController{
 		$this->view->show("");
 	}
 
-	// Entregar lista de contactos de un usuario. Caso especial agrega un contacto.
+	// Entregar lista de contactos de un usuario. Si agrega un contacto, tambien lo hace mediante esta funcion.
 	public function listaContactos(){
 		$idUsuario = $_SESSION['login_user_id'];
 		$contactos = new Contacto();

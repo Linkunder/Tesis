@@ -1,82 +1,72 @@
-<?php include('layout/header.php'); 
-
-
-/* Se llega a esta pantalla:
-
-1. Inicio de sesión fallida (jugador y admin).
-2. Cerrar sesión.
-
-*/
-
-
+<?php 
+include('layout/headerJugador.php');
 ?>
-
-
-
-
 
 
 
 <!-- Aqui empieza la pagina -->
-<div id="contact-us-inicio" class="parallax">
 
-<?php
-
-if (isset($vars['error_login'])){
-  $inicio_sesion = $vars['error_login'];
-  if ($inicio_sesion){
-    ?>
-    <div class="container">
-      <div class="alert alert-danger fade in">
-        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-        <strong>Error!</strong> No has podido iniciar sesión, vuelve a intentarlo.
-      </div>
-    </div>
-    <?php
-  }
-}
-
-
-if (isset($vars['cerrar_sesion'])){
-  $logout = $vars['cerrar_sesion'];
-  if ($logout){
-    ?>
-    <div class="container">
-      <div class="alert alert-danger fade in">
-        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-        <strong>Listo!</strong> Te has desconectado del sistema.
-      </div>
-    </div>
-    <?php
-  }
-}
-
-?>
-
-
+<div id="contact-us" class="parallax">
   <div class="container">
-    <div class="row">
-      <div class="col-md-12">
-        <br/>
-      <div class="jumbotron my-back">
-        <h2 id="text-black">
-          Bienvenido a MatchDay
-        </h2> 
-        <p id="black-center">
-         En MatchDay, podrás organizar tus encuentros deportivos de una manera única e inigualable. Tendrás acceso a información de las canchas repartidas 
-         por distintos sectores de Chillán. Además, existen muchas funcionalidades para hacer de un partido una experiencia inolvidable. 
-         ¿Qué esperas? ¡Únete a MatchDay!
-        </p>
-        <h2><a class="btn btn-primary btn-large" href="#">Regístrarse</a></h2>
-      </div>
-    </div>
-      <br/> <br/> <br/> 
-    </div>
-  </div>
+
+    <script>
+    $(document).ready(function() {
+      var hoy = new Date();
+      var dd = hoy.getDate();
+      var mm = hoy.getMonth()+1; //hoy es 0!
+      var yyyy = hoy.getFullYear();
+
+      if(dd<10) {
+        dd='0'+dd
+      }
+
+      if(mm<10) {
+        mm='0'+mm
+      } 
+
+      hoy = mm+'-'+dd+'-'+yyyy;
+
+      $('#calendar1').fullCalendar({
+        header: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'month,basicWeek,basicDay'
+        },
+        defaultDate: hoy,
+        editable: false,
+        eventLimit: true, // allow "more" link when too many events
+
+        // Partidos
+        events: [
+        <?php //foreach ($vectorPartidos as $key ) {
+        ?>
+          {
+            title: 'hola',
+            url: 'http://google.com/',
+            start: '2016-09-12T10:30:00',
+          },
+        <?php
+         // }
+        ?>
+        ]
+      });
+    });
+    </script>
+
+    <style>
+#calendar1 {
+    max-width: 800px;
+    margin: 0 auto;
+}
+</style>
+    <hr>
+    <div id='calendar1'></div>
+
+
+  
+ </div>
 </div>
-
-
-
+         
 
 <!-- /Aqui termina la pagina -->
 
@@ -107,13 +97,16 @@ if (isset($vars['cerrar_sesion'])){
             <p>&copy; 2016 Oxygen Theme.</p>
           </div>
           <div class="col-sm-6">
-            <p class="pull-right">Crafted by <a href="http://designscrazed.org/">S&M</a></p>
+            <p class="pull-right">Crafted by <a href="http://designscrazed.org/">Allie</a></p>
           </div>
         </div>
       </div>
     </div>
   </footer>
 
+
+
+  
   <script type="text/javascript" src="assets/js/jquery.js"></script>
   <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
@@ -123,7 +116,10 @@ if (isset($vars['cerrar_sesion'])){
   <script type="text/javascript" src="assets/js/smoothscroll.js"></script>
   <script type="text/javascript" src="assets/js/jquery.countTo.js"></script>
   <script type="text/javascript" src="assets/js/lightbox.min.js"></script>
-  <script type="text/javascript" src="assets/js/main.js"></script>
+
+
+
+  
 
   <script src="assets/js/fileinput.min.js" type="text/javascript"></script>
 

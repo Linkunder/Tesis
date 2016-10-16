@@ -10,6 +10,8 @@ if (isset($vars['usuarios'])){
 
 
 
+
+
 if (count($resultados)==0){   // NO SE HAN ENCONTRADO RESULTADOS
 ?>
 

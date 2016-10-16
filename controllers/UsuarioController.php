@@ -30,7 +30,7 @@ class UsuarioController{
 		return $usuario;
 	}
 
-	// Desplegar formulario de registro.
+	// Desplegar formulario de registro. Opción Registrarse.
 	public function formularioRegistro(){
 		$this->view->show('formularioRegistro.php');
 	}
@@ -53,6 +53,7 @@ class UsuarioController{
 		//header('Location: ?controlador=Index&accion=index');
 	}
 
+	// Subir imagen 
 	private function guardarImagen($idUsuario){
 		$target_dir = "assets/images/usuarios/";
 		$target_file = $target_dir.basename($_FILES["imagen"]["name"]);
@@ -62,7 +63,7 @@ class UsuarioController{
 		// Asignar nuevo nombre: idUsuario.extensionFotografia
 		$newName = $idUsuario.".".$imageFileType;
 		$newDir = $target_dir.$newName;
-		// Check if image file is a actual image or fake image
+		// Chequear si es o no una imagen
 		if(isset($_POST["submit"])) {
 		    $check = getimagesize($_FILES["imagen"]["tmp_name"]);
 		    if($check !== false){
@@ -73,33 +74,33 @@ class UsuarioController{
 		        $uploadOk = 0;
 		    }
 		}
-		// Check if file already exists
+		// Chequear si el archivo existe o no (no deberia)
 		if (file_exists($target_file)) {
 		    $message = "Lo sentimos pero esta imagen ya existe.";
 		    $uploadOk = 0;
 		}
-		// Check file size
+		// Chequear el tamaño de la imagen. 
 		if ($_FILES["imagen"]["size"] > 5000000) {
 		    $message = "Lo sentimos, pero el archivo es muy grande.";
 		    $uploadOk = 0;
 		}
-		// Allow certain file formats
+		// Chequear extension
 		if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
 		&& $imageFileType != "gif" && $imageFileType != "JPG" && $imageFileType != "PNG" && $imageFileType != "JPEG"
 		&& $imageFileType != "GIF") {
 		    $message = "Lo sentimos , solo archivos con JPG, JPEG, PNG & GIF son permitidos.";
 		    $uploadOk = 0;
 		}
-		// Check if $uploadOk is set to 0 by an error
+		// Chequear la variable $uploadOk = 0
 		if ($uploadOk == 0) {
-		    $message =  "Lo sentimos, tu archivo no se pude actualizar.";
-		// if everything is ok, try to upload file
+		    $message =  "Lo sentimos, tu archivo no se puede subir.";
+		// OK, Intenta subir imagen.
 		} else {
 		    if (move_uploaded_file($_FILES["imagen"]["tmp_name"], $newDir)) {
 		    	$this->Usuario->setFotografia($idUsuario,$newName);
-		    	echo "ok";
+		    	//echo "ok";
 		    } else {
-		        $message = "Lo sentimos, hubo un error al subir el archivo.";
+		        $message = "Lo sentimos, hubo un error al subir el archivo."; // No debiese entrar aqui.
 		    }
 		}		
 	}
@@ -107,7 +108,32 @@ class UsuarioController{
 
 
 
+ 	// Busqueda de un usuario mediante nickname.  Opción Agregar Contacto
+ 	public function busquedaJugador(){
+ 		$usuario = new Usuario();
+ 		$contacto = new Contacto(); 
+ 		$idUsuario = $_SESSION['login_user_id'];
+ 		$nickname = $_POST['search'];
+ 		$data['search'] = $nickname;
+ 		$nuevoContacto = $usuario->buscarJugador($nickname);
+ 		if (!count($nuevoContacto)==0){
+	  		$consulta = $contacto->verificarContacto($nuevoContacto, $idUsuario);
+	  		if ($consulta == "3"){
+	  			$data['excepcion']= "3";
+	  		} else {
+	  			if ($consulta == "2"){ // Es true, el contacto ya lo tiene.
+	  				$data['contacto']= true;
+		  		} else {
+		  			$data['contacto']= false;
+		  		}
+	  		}
+ 		}
+  		$data['usuarios']=$nuevoContacto;
+ 		$this->view->show('busquedaJugador.php',$data);
+ 	}
 
+
+ 	// Mostrar perfil del usuario.  Opcion Perfil
 	public function perfilUsuario(){
 		$usuario = new Usuario();
 		$idUsuario = $_SESSION['login_user_id'];
@@ -117,6 +143,7 @@ class UsuarioController{
 	}
 
 
+	// Mostrar formulario para modificar perfil. Opcion Mi información
 	public function modificarPerfil(){
 		$usuario = new Usuario();
 		$idUsuario = $_SESSION['login_user_id'];
@@ -125,6 +152,7 @@ class UsuarioController{
 		$this->view->show('modificarPerfil.php',$data);
  	}
 
+ 	// Actualizar información del usuario en la BD
  	public function actualizarInformacion(){
  		$idUsuario = $_SESSION['login_user_id'];
  		$nickname= $_POST['nickname'];
@@ -136,26 +164,9 @@ class UsuarioController{
 		header('Location: ?controlador=Usuario&accion=modificarPerfil');
  	}
 
- 	public function busquedaJugador(){
- 		$usuario = new Usuario();
- 		$contacto = new Contacto(); 
- 		$idUsuario = $_SESSION['login_user_id'];
- 		$nickname = $_POST['search'];
- 		$data['search'] = $nickname;
- 		$nuevoContacto = $usuario->buscarJugador($nickname);
-  		$consulta = $contacto->verificarContacto($nuevoContacto, $idUsuario);
-  		if ($consulta == "3"){
-  			$data['excepcion']= "3";
-  		} else {
-  			if ($consulta == "2"){ // Es true, el contacto ya lo tiene.
-  				$data['contacto']= true;
-	  		} else {
-	  			$data['contacto']= false;
-	  		}
-  		}
-  		
-  		$data['usuarios']=$nuevoContacto;
- 		$this->view->show('busquedaJugador.php',$data);
+ 	// Desplegar calendario de partidos activos. Opción Mi Calendario
+ 	public function verCalendario(){
+ 		$this->view->show('verCalendario.php');
  	}
 
 

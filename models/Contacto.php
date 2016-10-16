@@ -11,7 +11,8 @@ class Contacto{
 
 	// Obtener contactos de un usuario.
 	public function getContactos($idUsuario){
-		$query = $this->db->prepare("SELECT * FROM Usuario INNER JOIN Contacto ON Usuario.idUsuario = Contacto.idContacto WHERE Contacto.idUsuario = '".$idUsuario."'");
+		$query = $this->db->prepare("SELECT Usuario.idUsuario, Usuario.nombre, Usuario.apellido, Usuario.nickname, Usuario.mail, Usuario.fotografia, Usuario.telefono
+			FROM Usuario INNER JOIN Contacto ON Usuario.idUsuario = Contacto.idContacto WHERE Contacto.idUsuario = '".$idUsuario."'");
 		$query->execute();
 		$resultado = $query->fetchAll();
 		return $resultado;
