@@ -103,14 +103,12 @@ if (isset($_SESSION['login_user_email'])){
               <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $nombre?> <i class="fa fa-user"></i>
                 <b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                  <li><a href="?controlador=Usuario&accion=perfilUsuario">Mi Perfil </a></li>
-                  <hr>
-                  <li><a href="?controlador=Contacto&accion=listaContactos">Contactos</a></li>
-                  <hr>
-                  <li><a href="?controlador=Recinto&accion=notificarRecinto">Notificar recinto</a></li>
-                  <hr>
-                   <li><a href="?controlador=Sesion&accion=logout">Cerrar Sesion</a></li>
-                   <li></li>
+                  <li><a href="?controlador=Usuario&accion=perfilUsuario">Perfil   </a></li><div class="drop-divider"></div>
+                  <li><a href="?controlador=Contacto&accion=listaContactos">Contactos </a></li><div class="drop-divider"></div>
+                  <li><a href="?controlador=Equipo&accion=listaEquipos">Equipos </a></li><div class="drop-divider"></div>
+                  <li><a href="?controlador=Recinto&accion=notificarRecinto">Notificar recinto </a></li><div class="drop-divider"></div>
+                  <li><a href="?controlador=Sesion&accion=logout">Cerrar Sesion <i class="fa fa-sign-out"></i></a></li>
+                   
                 </ul>
               </li>
             </ul>
@@ -130,7 +128,7 @@ if (isset($_SESSION['login_user_email'])){
 
                   ?>
                   <li><a href="partidosPendientes.php">Partidos pendientes: <?php //echo $partidosCapitan?></a></li>
-                  <hr/>
+                  <div class="drop-divider"></div>
                   
                   
                   <?php
@@ -145,7 +143,7 @@ if (isset($_SESSION['login_user_email'])){
 
                   ?>
                   <li><a href="partidosDisponibles.php">Partidos MatchDay: <?php// echo $partidosDisponibles?></a></li>
-                  <hr/>
+                  
                   <li><a href="partidosGestionados.php">Partidos Agendados</a></li>
 
                   
