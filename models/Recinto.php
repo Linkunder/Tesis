@@ -82,5 +82,12 @@ class Recinto{
 		
 		$consulta->execute();
 	}
+
+	public function updatePuntuacionRecinto($idRecinto, $puntuacion){
+		$consulta = $this->db->prepare("
+			UPDATE Recinto SET puntuacion = '$puntuacion' WHERE idRecinto = '$idRecinto';
+			");
+		$consulta->execute();
+	}
 }
 ?>

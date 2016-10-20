@@ -27,16 +27,29 @@ class Puntuacion{
 	}
 
 	public function setPuntuacion($idRecinto,$idUsuario,$valoracion){
-		$consulta = $this->db->prepare('INSERT INTO Puntuacion (
+		$consulta = $this->db->prepare("INSERT INTO Puntuacion (
 				idRecinto,
 				idUsuario,
 				valoracion
 			) VALUES(
-				"'.$idRecinto.'",
-				"'.$idUsuario.'",
-				"'.$valoracion.'"
-			)');
+				'$idRecinto',
+				'$idUsuario',
+				'$valoracion'
+			)");
+		$consulta->execute();
 	}
+
+	public function getPuntuacionTotalRecinto($idRecinto){
+
+		$consulta = $this->db->prepare("
+		SELECT AVG(valoracion) as puntuacion FROM Puntuacion WHERE idRecinto = '$idRecinto'
+			");
+		$consulta->execute();
+		$resultado = $consulta->fetchAll();
+		return $resultado;
+	}
+
+
 }
 
 ?>

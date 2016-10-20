@@ -18,7 +18,7 @@ class Comentario{
 	public function getComentarios(){
 		$consulta = $this->db->prepare('
 			SELECT comentario.idRecinto, comentario.contenido, comentario.fecha, comentario.hora, usuario.nombre, usuario.apellido, usuario.fotografia 
-			FROM comentario INNER JOIN usuario on comentario.idUsuario = usuario.idUsuario
+			FROM comentario INNER JOIN usuario on comentario.idUsuario = usuario.idUsuario ORDER BY idComentario DESC
 		');
 		$consulta->execute();
 		$resultado = $consulta->fetchAll();
@@ -27,7 +27,7 @@ class Comentario{
 
 	public function setComentario($idRecinto, $idUsuario, $contenido){
 
-		$consulta = $this->db->prepare('
+		$consulta = $this->db->prepare("
 			INSERT INTO Comentario (
 				idRecinto,
 				idUsuario,
@@ -35,13 +35,13 @@ class Comentario{
 				fecha,
 				hora
 				)VALUES(
-				$idRecinto,
-				$idUsuario,
-				$contenido,
+				'$idRecinto',
+				'$idUsuario',
+				'$contenido',
 				CURRENT_DATE,
 				CURRENT_TIME
 				) 
-			');
+			");
 		$consulta->execute();
 
 	}
