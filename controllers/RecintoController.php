@@ -31,7 +31,10 @@ class RecintoController{
     	$comentario = new Comentario();
       $puntuacion = new Puntuacion();
       $partido =  new Partido();
-    	if($tipo == 0){
+      if(!isset($_SESSION)) { 
+        session_start(); 
+        } 
+    	if(!isset($_SESSION['login_user_id'])){
     		if (isset($_POST['search'])) {
                       $search = $_POST['search'];
                       $data['search']=$search;

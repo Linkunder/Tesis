@@ -12,10 +12,6 @@ if(isset($_POST["jugar"]) ){
     }
 
 //Comprobamos que el usuario registrado siempre vea el header jugador
-    if(!isset($_SESSION)) 
-    { 
-        session_start(); 
-    } 
 
     if(isset($_SESSION['login_user_id'])){
         include('layout/headerJugador.php');
@@ -190,8 +186,8 @@ if(isset($_POST["jugar"]) ){
                                     </div>
                                     <div>
                                         <span>Puntuación</span><?php 
-                                        //Configurar Puntuaciones
-                                        if("1"=="2"){
+                                        //Si la puntuacion del recinto es 0 significa que no ha recibido puntuaciones por lo tanto debemos mostrar un mensaje, y si es distnto de 0 se muestra la puntuacion
+                                        if($key['puntuacion']== 0 ){
                                             echo "Este recinto no tiene puntuaciones";
                                         }else{
 
