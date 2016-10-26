@@ -82,7 +82,8 @@ class EquipoController{
 			$idMiembro = $miembros[$i];
 			$equipo->agregarMiembroEquipo($idMiembro,$idEquipo);
 		}
-		$this->view->show('listaEquipos.php',$data);
+		$equipo->agregarMiembroEquipo($idUsuario,$idEquipo);
+		$this->listaEquipos();
 	}
 
 

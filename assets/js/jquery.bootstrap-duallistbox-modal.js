@@ -406,7 +406,7 @@
         '     </button>' +
         */
         '   </div>' +
-        '   <select multiple="multiple"></select>' +
+        '   <select oninvalid="this.setCustomValidity(&apos;Selecciona miembros del equipo&apos;)" oninput="setCustomValidity(&apos;&apos;)" multiple="multiple" required ></select>' +
         ' </div>' +
         '</div>')
         .insertBefore(this.element);

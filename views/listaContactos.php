@@ -110,7 +110,7 @@ include('layout/footer.php');
         <div class="modal-body">
           <p id="texto-contactos">Para agregar un contacto, búscalo ingresando su nickname.</p>
           <form action="?controlador=Usuario&accion=busquedaJugador" method="POST">
-            <input type="text" class="form-control partido" placeholder="Ingresa un nickname..." name="search" required="required"/>
+            <input id="text-black" type="text" class="form-control partido" placeholder="Ingresa un nickname..." name="search" required="required"/>
               <div class="row">
                 <div class="col-md-6 col-md-offset-4">
                   <div class="div-btn-a">
@@ -185,13 +185,13 @@ include('layout/footer.php');
           <h4 class="modal-title" id="myModalLabel">Selecciona el equipo al cual deseas incluir a <?php echo $item['nombre']?></h4>
         </div>
         <div class="modal-body">
-          <form action="?controlador=Contacto&accion=agregarMiembro" method="POST">
+          <form  action="?controlador=Contacto&accion=agregarMiembro" method="POST">
               <select class="form-control" id="equipo" name="equipo" title="Selecciona uno de los equipos que administras..">
                 <?php
                 $equipos = $vars['listaEquipos'];
                 foreach ($equipos as $key ) {
                 ?>
-                <option value="<?php echo $key['idEquipo']?>"><?php echo $key['nombre']?></option>
+                <option id="text-black" value="<?php echo $key['idEquipo']?>"><?php echo $key['nombre']?></option>
                 <?php
                 }
                 ?>

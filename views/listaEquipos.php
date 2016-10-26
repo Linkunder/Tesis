@@ -224,20 +224,19 @@ $contactos = $vars['listaContactos'];
       </div>
       <div class="modal-body">
         <h5 class="texto-modal-negro">Ingresa los datos de tu futuro equipo, del cual serás capitán.</h5>
-        <form id="demoform" method="post">
-        <!--form id="demoform" action="?controlador=Equipo&accion=crearEquipo" method="post"-->
+        <form id="demoform" action="?controlador=Equipo&accion=crearEquipo" method="post">
           <div class="container-fluid">
             <div class="row">
               <div class="col-sm-12">
                 <div class="form-group">
                   <label class="texto-modal-negro" for="nombre">Nombre: </label>
-                  <input type="text" name="nombre" placeholder="Ingresa un nombre para tu equipo..." class="form-control partido" required="required" >
+                  <input id="text-black" type="text" name="nombre" placeholder="Ingresa un nombre para tu equipo..." class="form-control partido" required="required" >
                 </div>
               </div>
               <div class="col-sm-12">
                 <div class="form-group">
                   <label class="texto-modal-negro" for="color">Color: </label>
-                  <input type="text" name="color" placeholder="Ingresa un color de vestimenta para tu equipo..." class="form-control partido" required="required" >
+                  <input id="text-black" type="text" name="color" placeholder="Ingresa un color de vestimenta para tu equipo..." class="form-control partido" required="required" >
                 </div>
               </div>
             </div>

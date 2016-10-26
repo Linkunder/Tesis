@@ -493,7 +493,7 @@ $_SESSION['idRecinto']=NULL;
                                 <div class="col-sm-8">
                                     <div class="form-group">
                                         <label class="label-partido" for="fecha">Fecha del partido</label>
-                                        <input type="date" name="fecha" placeholder="Fecha del partido" class="form-control partido" required="required" >
+                                        <input type="date" name="fecha" placeholder="Fecha del partido" class="form-control" id="equipo" required="required" >
                                     </div>
                                 </div>
                             </div>
@@ -501,7 +501,7 @@ $_SESSION['idRecinto']=NULL;
                                 <div class="col-sm-8">
                                     <div class="form-group">
                                         <label class="label-partido" for="hora">Hora</label>
-                                        <input type="time" name="hora" placeholder="Hora" class="form-control partido" required="required" min="09:00:00" max="23:00:00">
+                                        <input type="time" name="hora" placeholder="Hora" class="form-control partido" id="equipo" required="required" min="09:00:00" max="23:00:00">
                                     </div>
                                 </div>
                             </div>
@@ -509,7 +509,7 @@ $_SESSION['idRecinto']=NULL;
                                 <div class="col-sm-8">
                                     <div class="form-group">
                                         <label class="label-partido" for="jugadores">Numero de jugadores</label>
-                                        <input type="int" name="cantidad"  class="form-control partido" required="required" title="Solo puede ingresar hasta 22 jugadores" pattern="^[0|1]\d{1}$|[0-9]|2+[0|1|2]">
+                                        <input type="int" name="cantidad"  class="form-control partido" id="equipo" required="required" title="Solo puede ingresar hasta 22 jugadores" placeholder="Ingresa número de jugadores..." pattern="^[0|1]\d{1}$|[0-9]|2+[0|1|2]">
                                         <input  name="idRecinto" class="hide" value="<?php echo $_SESSION['idRecinto'];?>"/>
                                     </div>
                                 </div>
@@ -518,22 +518,22 @@ $_SESSION['idRecinto']=NULL;
                                 <div class="col-sm-8">
                                     <div class="form-group">
                                         <label class="label-partido" for="color">Color</label>
-                                        <input type="text" name="color"  class="form-control partido" required="required">
+                                        <input type="text" name="color"  class="form-control partido" id="equipo" required="required" placeholder="Ingresa color de vestimenta...">
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-8">
-                                    <div class="form-group">
-                                        <button type="submit" class="btn-submit" >Siguiente</button>
-                                    </div>
-                                </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar <i class="fa fa-times" aria-hidden="true"></i></button>
+                                <button type="submit" class="btn btn-primary">Aceptar <i class="fa fa-check" aria-hidden="true"></i></button>
+                            </div>
+                            </div>
                             </div>
                         </div>
                     </form>   
                 </div>
             </div>
-            <div class="modal-footer"></div>
         </div>
     </div>
 </div>

@@ -21,6 +21,10 @@ include('layout/header.php');
       
         <div class="col-sm-12 col-sm-offset-3 centered">
      
+
+
+
+
       <form method="POST" action="index.php?controlador=Usuario&accion=registrarUsuario" enctype="multipart/form-data" class="design-form col-sm-offset-3 centered" >
   
 
@@ -82,20 +86,17 @@ include('layout/header.php');
                 </div>
 
                 <div class="row">
-                  <div class="col-sm-12">
+                  <div class="col-sm-6 col-sm-offset-3 centered">
                     <div class="form-group">
-                      <label>Selecciona género:&nbsp;</label>
-                        <div class="btn-group" data-toggle="buttons">
-                          <label class="btn btn-default">
-                            <input type="radio" name="sexo" value="Masculino" /> Masculino
-                          </label>
-                          <label class="btn btn-default">
-                              <input type="radio" name="sexo" value="Femenino" /> Femenino
-                          </label>
-                        </div>
+                      <select class="form-control" name="sexo" required title="Choose one of the following...">
+                        <option id="text-black" value="M">Masculino</option>
+                        <option id="text-black" value="F">Femenino</option>
+                      </select>   
                     </div>
                   </div>
                 </div>
+
+
 
                 <div class="row">
                   <div class="col-sm-6 col-sm-offset-3 centered">
@@ -114,7 +115,9 @@ include('layout/header.php');
                 </div>
              
                 </div>
-      </form>   
+
+                
+        </form>   
         </div>
     </div>
 
@@ -125,6 +128,10 @@ include('layout/header.php');
          
 
 <!-- /Aqui termina la pagina -->
+
+<script>
+  document.getElementById("sexo").setAttibute("required","true");
+</script>
 
 
 

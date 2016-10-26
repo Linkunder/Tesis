@@ -1012,6 +1012,10 @@ ul.address {
   height: 1px;
 }
 
+.text-black{
+  color:#323030;
+}
+
 #text-black{
   color:#323030;
 }
@@ -1319,6 +1323,16 @@ ul.address {
   font-weight: bold;
 }
 
+#entrada-texto-fondo-negro{
+  display: inline-block;
+  background-color: #FFFFFF;
+  height: 50px;
+  border-radius: 20;
+  box-shadow: none;
+  color: #000000;
+  font-weight: bold; 
+}
+
 .entrada-login{
   display: inline-block;
   background-color: #fff;
@@ -1545,6 +1559,12 @@ user list
   color: #FFFFFF;
   font-weight: bold;
 }
+
+#equipo{
+  color:#323030;
+}
+
+
 
 
 /* MODAL */
