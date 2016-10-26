@@ -22,6 +22,15 @@ include('layout/headerJugador.php');
   <div id="contact-us" class="parallax">
 
     <div class="container">
+    <ol class="breadcrumb transparent">
+      <li class="breadcrumb-item"><a href="?controlador=Index&accion=indexJugador"> <i class="fa fa-home" aria-hidden="true"></i> Inicio</a></li>
+      <li class="breadcrumb-item"><a href="?controlador=Usuario&accion=perfilUsuario"> <i class="fa fa-user" aria-hidden="true"></i> Perfil</a></li>
+      <li class="breadcrumb-item active">Modificar perfil</li>
+    </ol>
+
+    <div class="page-header">
+          <h2> Modificar perfil <i class="fa fa-user" aria-hidden="true"></i> </h2>
+        </div>
       <div class="row profile">
         <div class="col-md-4 ">
           <div class="profile-sidebar">

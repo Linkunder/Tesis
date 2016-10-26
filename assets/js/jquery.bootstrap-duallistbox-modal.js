@@ -28,7 +28,7 @@
       selectedFilter: '',                                                                 // string, filter the selected options
       infoText: '<span class="label label-success">Mostrando todos {0}</span> ',   // text when all options are visible / false for no info text
       infoTextFiltered: '<span class="label label-warning">Filtrado</span> {0} from {1}', // when not all of the options are visible due to the filter
-      infoTextEmpty: 'Lista vacía',                                                        // when there are no options present in the list
+      infoTextEmpty: '<span class="label label-danger">Lista vacía</span>',                                                       // when there are no options present in the list
       filterOnValues: false,                                                              // filter by selector's values, boolean
       sortByInputOrder: false,
       eventMoveOverride: false,                                                           // boolean, allows user to unbind default event behaviour and run their own instead

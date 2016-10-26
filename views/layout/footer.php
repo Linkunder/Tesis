@@ -3,7 +3,7 @@
     <div class="footer-top wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="300ms">
       <div class="container text-center">
         <div class="footer-logo">
-          <a href="index.html"><img class="img-responsive" src="assets/images/logo.png" alt=""></a>
+          <a href="?controlador=Index&accion=indexJugador"><img class="img-responsive" src="assets/images/logo.png" alt=""></a>
         </div>
         <div class="social-icons">
           <ul>

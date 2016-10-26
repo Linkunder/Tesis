@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <?php
 
 // Obtener datos del usuario de la sesión.

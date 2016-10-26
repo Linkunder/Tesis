@@ -19,6 +19,14 @@ $usuario = $vars['perfilUsuario'];
 <div class="row">
   <div id="contact-us" class="parallax">
     <div class="container">
+    <ol class="breadcrumb transparent">
+      <li class="breadcrumb-item"><a href="?controlador=Index&accion=indexJugador"> <i class="fa fa-home" aria-hidden="true"></i> Inicio</a></li>
+      <li class="breadcrumb-item active">Perfil</li>
+    </ol>
+
+    <div class="page-header">
+          <h2> Mi perfil <i class="fa fa-user" aria-hidden="true"></i> </h2>
+        </div>
       <div class="row profile">
         <div class="col-md-4 col-offset-6 centered">
           <div class="profile-sidebar">
@@ -66,13 +74,13 @@ $usuario = $vars['perfilUsuario'];
             <div class="profile-usermenu">
               <ul class="nav">
                 <li >
-                  <a href="?controlador=Usuario&accion=perfilUsuario">
+                  <a href="?controlador=Equipo&accion=listaEquipos">
                   <i class="fa fa-users"></i>
                   
                   Ver mis equipos</a>
                 </li>
                 <li>
-                  <a href="../Logica/controlSesion.php?tipo=salir">
+                  <a href="?controlador=Sesion&accion=logout">
                   <i class="fa fa-sign-out"></i>
                   Cerrar sesión </a>
                 </li>
@@ -102,53 +110,4 @@ $usuario = $vars['perfilUsuario'];
 
 
 
-  <footer id="footer">
-    <div class="footer-top wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="300ms">
-      <div class="container text-center">
-        <div class="footer-logo">
-          <a href="index.html"><img class="img-responsive" src="assets/images/logo.png" alt=""></a>
-        </div>
-        <div class="social-icons">
-          <ul>
-            <li><a class="envelope" href="#"><i class="fa fa-envelope"></i></a></li>
-            <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li> 
-            <li><a class="dribbble" href="#"><i class="fa fa-dribbble"></i></a></li>
-            <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
-            <li><a class="linkedin" href="#"><i class="fa fa-linkedin"></i></a></li>
-            <li><a class="tumblr" href="#"><i class="fa fa-tumblr-square"></i></a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-6">
-            <p>&copy; 2016 Oxygen Theme.</p>
-          </div>
-          <div class="col-sm-6">
-            <p class="pull-right">Crafted by <a href="http://designscrazed.org/">Allie
-
-            </a></p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </footer>
-
-  <script type="text/javascript" src="assets/js/jquery.js"></script>
-  <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
-
-  <script type="text/javascript" src="assets/js/jquery.inview.min.js"></script>
-  <script type="text/javascript" src="assets/js/wow.min.js"></script>
-  <script type="text/javascript" src="assets/js/mousescroll.js"></script>
-  <script type="text/javascript" src="assets/js/smoothscroll.js"></script>
-  <script type="text/javascript" src="assets/js/jquery.countTo.js"></script>
-  <script type="text/javascript" src="assets/js/lightbox.min.js"></script>
-  <script type="text/javascript" src="assets/js/main.js"></script>
-
-  <script src="assets/js/fileinput.min.js" type="text/javascript"></script>
-
-</body>
-</html>
-
+<?php include('layout/footer.php'); ?>
