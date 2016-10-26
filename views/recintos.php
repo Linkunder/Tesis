@@ -15,8 +15,10 @@ if(isset($_POST["jugar"]) ){
 
     if(isset($_SESSION['login_user_id'])){
         include('layout/headerJugador.php');
+        $jugar=1;
     }else{
-        include('layout/header.php'); 
+        include('layout/header.php');
+        $jugar=0; 
     }
         
 ?>
@@ -253,15 +255,15 @@ if(isset($_POST["jugar"]) ){
                                             ?>
 
                             <form method="post" action="" >
-                                    <input  class ="with-gap" name="puntuacion" type="radio" id="estrella1" value="1" <?php if($puntuacionUsuario==1) echo "checked"?>/>
+                                    <input  class ="with-gap" name="puntuacion" type="radio" id="estrella1" value="1" <?php if($puntuacionUsuario==1) echo "checked disabled" ?>/>
                                     <label for="estrella1">1</label>
-                                    <input class ="with-gap" name="puntuacion" type="radio" id="estrella2" value="2" <?php if($puntuacionUsuario==2) echo "checked"?>/>
+                                    <input class ="with-gap" name="puntuacion" type="radio" id="estrella2" value="2" <?php if($puntuacionUsuario==2) echo "checked disabled"?>/>
                                     <label for="estrella2">2</label>
-                                    <input class ="with-gap" name="puntuacion" type="radio" id="estrella3" value="3" <?php if($puntuacionUsuario==3) echo "checked"?>/>
+                                    <input class ="with-gap" name="puntuacion" type="radio" id="estrella3" value="3" <?php if($puntuacionUsuario==3) echo "checked disabled"?>/>
                                     <label for="estrella3">3</label>
-                                    <input class ="with-gap" name="puntuacion" type="radio" id="estrella4"  value="4" <?php if($puntuacionUsuario==4) echo "checked"?>/>
+                                    <input class ="with-gap" name="puntuacion" type="radio" id="estrella4"  value="4" <?php if($puntuacionUsuario==4) echo "checked disabled"?>/>
                                     <label for="estrella4">4</label>
-                                    <input class ="with-gap" name="puntuacion" type="radio" id="estrella5" value="5" <?php if($puntuacionUsuario==5) echo "checked"?>/>
+                                    <input class ="with-gap" name="puntuacion" type="radio" id="estrella5" value="5" <?php if($puntuacionUsuario==5) echo "checked disabled"?>/>
                                     <label for="estrella5">5</label>
 
                                     

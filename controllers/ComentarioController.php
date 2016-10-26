@@ -28,7 +28,7 @@ class ComentarioController{
         $contenido = $_POST['contenido'];
 
         $comentario->setComentario($idRecinto, $idUsuario, $contenido);
-        header('Location: ?controlador=Recinto&accion=busquedaRecintos');
+        header('Location: ?controlador=Recinto&accion=busquedaRecintos&nuevo=1');
         
     }
 }

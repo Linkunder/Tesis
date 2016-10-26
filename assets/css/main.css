@@ -1536,6 +1536,16 @@ user list
     color:#5bc0de;    
 }
 
+.form-control {
+  display: inline-block;
+  background-color: transparent;
+  height: 50px;
+  border-radius: 20;
+  box-shadow: none;
+  color: #FFFFFF;
+  font-weight: bold;
+}
+
 
 /* MODAL */
 
