@@ -70,7 +70,7 @@ $contactos = $vars['listaContactos'];
               <label class="pull-right">
                 <br/>
                 <!--a href="#" class="btn btn-success btn-xs fa fa-plus-circle" data-toggle="modal" data-target="#myModal" data-id="<?php echo $idContacto?>" title="Agregar"></a-->
-                <a href="#" class="btn btn-success btn-xs fa fa-plus-circle" onclick="setValue(<?php echo $idContacto?>)" title="Agregar">
+                <a href="#" class="btn btn-success btn-xs fa fa-plus-circle" onclick="setValue(<?php echo $idContacto.",'$nombreContacto'";?>)" title="Agregar">
                 </a>
               </label>
               <div class="break"></div>
@@ -180,9 +180,8 @@ include('layout/footer.php');
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          
-
-          <h4 class="modal-title" id="myModalLabel">Selecciona el equipo al cual deseas incluir a <?php echo $item['nombre']?></h4>
+          <?php echo 'Este es = '.$_GET['idContact']; ?>
+          <h4 class="modal-title" id="myModalLabelContact"></h4>
         </div>
         <div class="modal-body">
           <form  action="?controlador=Contacto&accion=agregarMiembro" method="POST">
@@ -216,11 +215,33 @@ include('layout/footer.php');
 
 
 <script type="text/javascript">
-function setValue(id){
-  var idContact = id
+var idContact="0";
+var nombreContacto="";
+function setValue(id,nombre){
+  idContact= id;
   document.getElementById("id_contacto").value = idContact;
-  $('#myModal').modal('show'); 
+  nombreContacto = nombre;
+  window.location.href="?controlador=Contacto&accion=listaContactos&idContact="+id+"&n="+nombreContacto;
 }
+
+  window.onload = function() {
+          function getParameterByName(name) {
+            name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+            var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+            results = regex.exec(location.search);
+            return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+        }
+       var a = getParameterByName('idContact');
+       var n = getParameterByName('n');
+       if(a == ""){
+       }else{
+        document.getElementById("id_contacto").value = a;
+
+        document.getElementById("myModalLabelContact").innerHTML="Selecciona el equipo al cual deseas incluir a "+n;
+         $('#myModal').modal();
+       }
+};
+
 </script>
 
 

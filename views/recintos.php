@@ -477,7 +477,7 @@ $_SESSION['idRecinto']=NULL;
 </div>
         <!-- Portfolio section end -->
 
-
+        
 <div class="container">
     <div class="modal fade" id="modal-1">
         <div class="modal-dialog modal-lg">
