@@ -238,7 +238,7 @@ $_SESSION['idRecinto']=NULL;
                                     <label for="estrella5">5</label>
                                     <input type="hidden" name="idUsuario" value="<?php  echo $_SESSION['login_user_id'] ?>" />
                                     <input type="hidden" name="idRecinto" value="<?php echo $key['idRecinto'] ?>" />
-                                    <button class= "btn submit" type="submit" name="action">Puntuar</button>
+                                    <button class= "btn btn-success" type="submit" name="action">Puntuar</button>
                                     <?php } else {?>   
 
                                
