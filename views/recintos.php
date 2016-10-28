@@ -22,7 +22,7 @@ $_SESSION['idRecinto']=NULL;
         <!--link rel="stylesheet" type="text/css" href="css/bootstrap.css" /-->
         <link href="assets/css/profile.css" rel="stylesheet">
 
-        <div class="section secondary-section" id="contact-us">
+        <div id="contact-us" class="parallax">
              <?php if(isset($_GET["nuevo"])){ 
                         if($_GET["nuevo"]==1){   ?>
 
@@ -48,22 +48,24 @@ $_SESSION['idRecinto']=NULL;
                 ?>
 
             <div class="container">
-                <div class="title">
                     <?php 
                     if($jugar==1){  
                     ?>
-                    <h2>Elige la cancha para el partido<h2>
+                    <div class="page-header">
+                      <h2> Elige la cancha para el partido <i class="fa fa-futbol-o" aria-hidden="true"></i> </h2>
+                    </div>
                     <?php    
                     } else {
                     ?>
-                    <h2>Busca tu cancha ideal</h2>
+                    <div class="page-header">
+                      <h2> Busca tu cancha ideal <i class="fa fa-futbol-o" aria-hidden="true"></i> </h2>
+                    </div>
                     <?php           
                     }?>
-                </div>
 
                 <div class="row">
                     <div class="col-md-6 col-md-offset-3">
-                        <form action="?controlador=Recinto&accion=busquedaRecintos" method="POST">
+                        <form action="?controlador=Recinto&accion=busquedaRecintos" method="POST" class="form-wrapper">
                             <input type="text" class="form-control" placeholder="Busca tu cancha..." name="search" />
 
                             <!--Aqui como se "recarga" debemos seguir manteniendo la "seleccion de cancha"-->
@@ -307,7 +309,7 @@ $_SESSION['idRecinto']=NULL;
 
                             <div class="panel-body comments">
                                 <form method="post" action="?controlador=Comentario&accion=setComentario">
-                                    <input class="form-control" name="contenido" placeholder="Escribe tu comentario" rows="2" required></input>
+                                    <input class="form-control" name="contenido" placeholder="Escribe tu comentario" rows="2" required id="texto-input-white"></input>
                                     <input type="hidden" name="idUsuario" value="<?php echo $_SESSION['login_user_id']  ?>">
                                     <input type="hidden" name="idRecinto" value="<?php echo $idRecinto ?>">
                                     <br>

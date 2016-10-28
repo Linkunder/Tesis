@@ -42,7 +42,7 @@ include('layout/header.php');
               </div>
               <div class="form-group">
                 <label class="sr-only" for="form-last-name">Fecha de nacimiento</label>
-                <input type="date" name="fechaNacimiento" class="datepicker form-control">
+                <input type="date" name="fechaNacimiento" class="form-last-name form-control" required>
               </div>
               <div class="form-group">
                 <label class="sr-only" for="form-last-name">Teléfono</label>

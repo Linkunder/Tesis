@@ -220,12 +220,20 @@ foreach ($equipos as $equipo ) {
                   }
                 }
                 $resultado = array_diff($arrayEquipos2, $arrayEquiposMiembro);
+                if (count($resultado)==0){
+                  ?>
+                  <option id="text-black" ><?php echo "El jugador está en todos tus equipos."?></option>
+                  <?php
+                } else {
+
+
 
                 foreach ($resultado as $key => $value ) {
                  
                 ?>
                   <option id="text-black" value="<?php echo $key?>"><?php echo $value?></option>
                 <?php
+                }
                 }
                 ?>
 

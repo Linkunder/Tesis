@@ -32,6 +32,7 @@ $equipo = $vars['equipo'];
         foreach ($equipo as $key) {
             $partidosDisputados = $key['partidosDisputados'];
             $partidosCancelados = $key['partidosCancelados'];
+            $partidos = $partidosDisputados + $partidosCancelados;
             $idEquipo = $key['idEquipo'];
             $_SESSION['idEquipo'] = $idEquipo;
         ?>
@@ -91,7 +92,14 @@ $equipo = $vars['equipo'];
             <div class="page-header">
               <h3> Estadísticas <i class="fa fa-bar-chart" aria-hidden="true"></i> </h3>
             </div>
-            <div class="container">
+            <?php
+            if ($partidos == 0){
+                ?>
+                <p class="centered">Tu equipo no ha jugado partidos.</p>
+                <?php
+            } else {
+                ?>
+                            <div class="container">
                 <div class="row">
                     <div class="col-md-6">
                         <div class="panel-heading">
@@ -131,6 +139,10 @@ $equipo = $vars['equipo'];
                     </div>
                 </div>
             </div>
+                <?php
+            }
+            ?>
+
         </div>
 
 

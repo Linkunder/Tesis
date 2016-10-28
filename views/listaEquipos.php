@@ -146,9 +146,32 @@ $contactos = $vars['listaContactos'];
                   </h4></a>
                 </div>
                 <div id="collapse<?php echo $item['idEquipo']?>" class="panel-collapse collapse">
-                  <div class="row">
+                  <div class="container">
                     <div class="col-sm-12">
                       <!-- MOSTRAR JUGADORES -->
+                      <div class="row">
+                        <br>
+                          <div class="col-md-3 portfolio-item">
+                              <a href="#">
+                                  <img class="img-responsive" src="http://placehold.it/400x400" alt="">  <br>
+                              </a>
+                          </div>
+                          <div class="col-md-3 portfolio-item">
+                              <a href="#">
+                                  <img class="img-responsive" src="http://placehold.it/400x400" alt="">  <br>
+                              </a>
+                          </div>
+                          <div class="col-md-3 portfolio-item">
+                              <a href="#">
+                                  <img class="img-responsive" src="http://placehold.it/400x400" alt="">  <br>  
+                              </a>
+                          </div>
+                          <div class="col-md-3 portfolio-item">
+                              <a href="#">
+                                  <img class="img-responsive" src="http://placehold.it/400x400" alt="">    <br>
+                              </a>
+                          </div>
+                      </div>
                       <?php
                       $miembrosEquipo = $vars['listaMiembrosEquipo'.$item['idEquipo']];
                       foreach($miembrosEquipo as $key){
