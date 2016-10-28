@@ -65,8 +65,8 @@ $_SESSION['idRecinto']=NULL;
 
                 <div class="row">
                     <div class="col-md-6 col-md-offset-3">
-                        <form action="?controlador=Recinto&accion=busquedaRecintos" method="POST" class="form-wrapper">
-                            <input type="text" class="form-control" placeholder="Busca tu cancha..." name="search" />
+                        <form action="?controlador=Recinto&accion=busquedaRecintos" method="POST" >
+                            <input type="text" class="form-control" placeholder="Busca tu cancha..." name="search" id="texto-input-white"/>
 
                             <!--Aqui como se "recarga" debemos seguir manteniendo la "seleccion de cancha"-->
                             <?php 
