@@ -67,7 +67,7 @@ if (isset($vars['cerrar_sesion'])){
          por distintos sectores de Chillán. Además, existen muchas funcionalidades para hacer de un partido una experiencia inolvidable. 
          ¿Qué esperas? ¡Únete a MatchDay!
         </p>
-        <h2><a class="btn btn-primary btn-large" href="#">Regístrarse</a></h2>
+        <h2><a class="btn btn-primary btn-large" href="?controlador=Usuario&accion=formularioRegistro">Regístrarse</a></h2>
       </div>
     </div>
       <br/> <br/> <br/> 

@@ -149,11 +149,13 @@ $contactos = $vars['listaContactos'];
                   <div class="row">
                     <div class="col-sm-12">
                       <!-- MOSTRAR JUGADORES -->
-                      <?php 
-                      $contador = 0;
+                      <?php
                       $miembrosEquipo = $vars['listaMiembrosEquipo'.$item['idEquipo']];
                       foreach($miembrosEquipo as $key){
                       echo $key['nombre']." ".$key['apellido'];
+                      ?>
+                      <img src="assets/images/usuarios/<?php echo $key['fotografia']?>">
+                      <?php
                       }
                       ?>
                     </div>                    

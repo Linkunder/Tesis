@@ -34,7 +34,7 @@ class Usuario{
 	}
 
 	public function setFotografia($idUsuario, $imagen){
-		$sql = "UPDATE Usuario SET fotografia = '".$imagen."'  WHERE idUsuario = '".$idUsuario."' ";
+		$sql = "UPDATE Usuario SET fotografia = '".$imagen."' WHERE idUsuario = '".$idUsuario."' ";
 		$query = $this->db->prepare($sql);
 		$query->execute();
 	}

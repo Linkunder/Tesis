@@ -52,7 +52,7 @@ h3 {
 .parallax input[type="password"],
 .parallax input[type="password"]:hover{
   font-weight: bold;
-  color: #FFFFFF;
+  color: #313030;
 }
 
 
@@ -1556,8 +1556,12 @@ user list
   height: 50px;
   border-radius: 20;
   box-shadow: none;
-  color: #FFFFFF;
+  color: #313030;
   font-weight: bold;
+}
+
+.form-control a{
+  color: #FFFFFF;
 }
 
 #equipo{

@@ -57,7 +57,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="index.html">
+          <a class="navbar-brand" href="?controlador=Index&accion=inicio">
             <h1><img class="img-responsive" src="assets/images/logo.png" alt="logo"></h1>
           </a>                    
         </div>

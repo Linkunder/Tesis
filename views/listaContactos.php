@@ -7,12 +7,17 @@ include('layout/headerJugador.php');
 //if (isset($vars['listaContactos'])){
 $contactos = $vars['listaContactos'];
 //}
+
+
+
+
 ?>
 <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
 <link href="assets/css/profile.css" rel="stylesheet">
 
   <div id="contact-us" class="parallax">
     <div class="container">
+
       <br/>
       <ol class="breadcrumb transparent">
       <li class="breadcrumb-item"><a href="?controlador=Index&accion=indexJugador"> <i class="fa fa-home" aria-hidden="true"></i> Inicio</a></li>
@@ -172,6 +177,27 @@ include('layout/footer.php');
 
 
 
+<?php
+$equipos = $vars['listaEquipos'];
+$miembrosEquiposJugador = $vars['listaMiembrosEquiposJugador'];
+$arrayEquipos = array();
+$arrayEquipos2 = array();
+$arrayEquiposMiembro = array();
+
+foreach ($equipos as $equipo) {
+  $arrayEquipos[] = "".$equipo['nombre'];
+}
+
+
+foreach ($equipos as $equipo ) {
+  $arrayEquipos2[$equipo['idEquipo']] = $equipo['nombre'];
+}
+
+
+
+?>
+
+
 
 
 <div class="container">
@@ -180,22 +206,36 @@ include('layout/footer.php');
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <?php echo 'Este es = '.$_GET['idContact']; ?>
+          <?php $contactoActual = $_GET['idContact']; ?>
           <h4 class="modal-title" id="myModalLabelContact"></h4>
         </div>
         <div class="modal-body">
           <form  action="?controlador=Contacto&accion=agregarMiembro" method="POST">
               <select class="form-control" id="equipo" name="equipo" title="Selecciona uno de los equipos que administras..">
                 <?php
-                $equipos = $vars['listaEquipos'];
-                foreach ($equipos as $key ) {
+                foreach ($miembrosEquiposJugador as $miembrosEquipos) {
+                  if ($miembrosEquipos['idUsuario'] == $contactoActual){
+                    $equipoUsuario = $miembrosEquipos['nombre'];
+                    $arrayEquiposMiembro[$miembrosEquipos['idEquipo']] = $miembrosEquipos['nombre'];
+                  }
+                }
+                $resultado = array_diff($arrayEquipos2, $arrayEquiposMiembro);
+
+                foreach ($resultado as $key => $value ) {
+                 
                 ?>
-                <option id="text-black" value="<?php echo $key['idEquipo']?>"><?php echo $key['nombre']?></option>
+                  <option id="text-black" value="<?php echo $key?>"><?php echo $value?></option>
                 <?php
                 }
                 ?>
+
+
+
+
+
+
                 </select>   
-                <input type="text" id="id_contacto" name="contacto"/>
+                <input type="text" id="id_contacto" name="contacto" hidden/>
               <div class="modal-footer">
             <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar <i class="fa fa-times" aria-hidden="true"></i></button>
             <button type="submit" class="btn btn-primary">Aceptar <i class="fa fa-check" aria-hidden="true"></i></button>

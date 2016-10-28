@@ -19,6 +19,7 @@ $usuario = $vars['perfilUsuario'];
 <div class="row">
   <div id="contact-us" class="parallax">
     <div class="container">
+      <br/>
     <ol class="breadcrumb transparent">
       <li class="breadcrumb-item"><a href="?controlador=Index&accion=indexJugador"> <i class="fa fa-home" aria-hidden="true"></i> Inicio</a></li>
       <li class="breadcrumb-item active">Perfil</li>

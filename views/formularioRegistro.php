@@ -1,6 +1,9 @@
 <?php 
 include('layout/header.php');
 ?>
+<link rel="stylesheet" href="assets/css/style-f.css">
+
+<!--DATEPICKER-->
 
 
 
@@ -9,120 +12,104 @@ include('layout/header.php');
 <div id="contact-us" class="parallax">
   <div class="container">
     <div class="row">
-      <div class="heading text-center">
-        <h2>Únete a MatchDay</h2>
-        <p>En MatchDay, podrás agendar tus partidos, comentar tus canchas favoritas y agendar un tercer tiempo con tus amigos.</p>
-        <h4>Paso 1: Completa el siguiente formulario</h4>
+      <div class="page-header">
+          <h2> Únete a MatchDay </h2>
+      </div>
+      <p>En MatchDay, podrás agendar tus partidos, comentar tus canchas favoritas y agendar un tercer tiempo con tus amigos.</p>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6 col-sm-offset-3 form-box">
+        <form role="form" action="?controlador=Usuario&accion=registrarUsuario" method="post" class="registration-form" enctype="multipart/form-data">
+          <fieldset>
+            <div class="form-top">
+              <div class="form-top-left">
+                <h3>Paso 1 / 3</h3>
+                <p>Ingresa tu información personal:</p>
+              </div>
+              <div class="form-top-right">
+                <i class="fa fa-user"></i>
+              </div>
+            </div>
+            <div class="form-bottom">
+              <div class="form-group">
+                <label class="sr-only" for="form-first-name">Nombre</label>
+                <input type="text" name="nombre" placeholder="Ingresa tu nombre" class="form-first-name form-control" >
+              </div>
+              <div class="form-group">
+                <label class="sr-only" for="form-last-name">Apellido</label>
+                <input type="text" name="apellido" placeholder="Ingresa tu apellido" class="form-last-name form-control" >
+              </div>
+              <div class="form-group">
+                <label class="sr-only" for="form-last-name">Fecha de nacimiento</label>
+                <input type="date" name="fechaNacimiento" class="datepicker form-control">
+              </div>
+              <div class="form-group">
+                <label class="sr-only" for="form-last-name">Teléfono</label>
+                <input type="text" name="telefono" placeholder="Ingresa tu teléfono" class="form-last-name form-control" >
+              </div>
+              <div class="form-group">
+                <label class="sr-only" for="form-about-yourself">Selecciona tu sexo</label>
+                <select class="form-last-name form-control" name="sexo" required>
+                        <option selected disabled>Selecciona sexo</option>
+                        <option id="text-black" value="M">Masculino</option>
+                        <option id="text-black" value="F">Femenino</option>
+                      </select>  
+              </div>
+              <button type="button" class="btn btn-primary btn-next">Siguiente <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></button>
+            </div>
+          </fieldset>
+          <fieldset>
+            <div class="form-top">
+              <div class="form-top-left">
+                <h3>Paso 2 / 3</h3>
+                <p>Ingresa los datos de tu cuenta:</p>
+              </div>
+              <div class="form-top-right">
+                <i class="fa fa-key"></i>
+              </div>
+            </div>
+            <div class="form-bottom">
+              <div class="form-group">
+                <label class="sr-only" for="form-email">Mail</label>
+                <input type="text" name="mail" placeholder="Ingresa tu mail" class="form-email form-control" >
+              </div>
+              <div class="form-group">
+                <label class="sr-only" for="form-password">Password</label>
+                <input type="password" name="password" placeholder="Ingresa tu password" class="form-password form-control" >
+              </div>
+              <div class="form-group">
+                <label class="sr-only" for="form-first-name">Nickname</label>
+                <input type="text" name="nickname" placeholder="Elige un nickname" class="form-first-name form-control" >
+              </div>
+              <button type="button" class="btn btn-warning btn-previous"> <i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Atrás</button>
+              <button type="button" class="btn btn-primary btn-next">Siguiente <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></button>
+            </div>
+          </fieldset>
+          <fieldset>
+            <div class="form-top">
+              <div class="form-top-left">
+                <h3>Paso 3 / 3</h3>
+                <p>Selecciona una foto de perfil:</p>
+              </div>
+              <div class="form-top-right">
+                <i class="fa fa-camera"></i>
+              </div>
+            </div>
+            <div class="form-bottom">
+              <div class="form-group">
+                <label class="sr-only" for="imagen"></label>
+                <input type="file" id="imagen" name="imagen" required="required"  class="file" multiple data-min-file-count="1">
+              </div>
+              <button type="button" class="btn btn-warning btn-previous"> <i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Atrás</button>
+              <button type="submit" class="btn btn-primary">Finalizar <i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+            </div>
+          </fieldset>
+        </form>
       </div>
     </div>
 
-
-    <div class="row">
       
-        <div class="col-sm-12 col-sm-offset-3 centered">
-     
-
-
-
-
-      <form method="POST" action="index.php?controlador=Usuario&accion=registrarUsuario" enctype="multipart/form-data" class="design-form col-sm-offset-3 centered" >
-  
-
-                <div class="row">
-                  <div class="col-sm-6 centered">
-                  <div class="col-sm-6">
-                    <div class="form-group">
-                      <input type="text" name="nombre" class="form-control" placeholder="Nombre" required="required">
-                    </div>
-                  </div>
-                
-
-                  <div class="col-sm-6">
-                    <div class="form-group">
-                      <input type="text" name="apellido" class="form-control" placeholder="Apellido" required="required">
-                    </div>
-                  </div>
-                </div>
-                </div>
-
-                <div class="row">
-                  <div class="col-sm-6 col-sm-offset-3 centered">
-                    <div class="form-group">
-                      <input type="text" name="nickname" class="form-control" placeholder="Nickname" required="required">
-                    </div>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col-sm-6 col-sm-offset-3 centered">
-                    <div class="form-group">
-                      <input type="date" name="fechaNacimiento" class="form-control" placeholder="Fecha de nacimiento" required="required">
-                    </div>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col-sm-6 col-sm-offset-3 centered">
-                    <div class="form-group">
-                      <input type="mail" name="mail" class="form-control" placeholder="Email" required="required">
-                    </div>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col-sm-6 col-sm-offset-3 centered">
-                    <div class="form-group">
-                      <input type="text" name="telefono" class="form-control" placeholder="Telefono" required="required">
-                    </div>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col-sm-6 col-sm-offset-3 centered">
-                    <div class="form-group">
-                      <input type="password" name="password" class="form-control" placeholder="Password" required="required">
-                    </div>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col-sm-6 col-sm-offset-3 centered">
-                    <div class="form-group">
-                      <select class="form-control" name="sexo" required title="Choose one of the following...">
-                        <option id="text-black" value="M">Masculino</option>
-                        <option id="text-black" value="F">Femenino</option>
-                      </select>   
-                    </div>
-                  </div>
-                </div>
-
-
-
-                <div class="row">
-                  <div class="col-sm-6 col-sm-offset-3 centered">
-                    <div class="form-group">
-                      <label class="control-label">Selecciona una fotografia para tu perfil</label>
-                      <input type="file" id="imagen" name="imagen" required="required"  class="file" multiple data-min-file-count="1">
-                    </div>
-                  </div>
-                </div>
-
-
-
-                <div class="row">
-                  <div class="col-sm-6 col-sm-offset-3 centered">
-                  <button type="submit" name="submit" class="btn-submit">Siguiente <i class="fa fa-paper-plane" aria-hidden="true"></i></button>
-                </div>
-             
-                </div>
-
-                
-        </form>   
-        </div>
-    </div>
-
-
-  
  </div>
 </div>
          
@@ -139,7 +126,7 @@ include('layout/header.php');
     <div class="footer-top wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="300ms">
       <div class="container text-center">
         <div class="footer-logo">
-          <a href="index.html"><img class="img-responsive" src="assets/images/logo.png" alt=""></a>
+          <a href="?controlador=Index&accion=inicio"><img class="img-responsive" src="assets/images/logo.png" alt=""></a>
         </div>
         <div class="social-icons">
           <ul>
@@ -170,21 +157,26 @@ include('layout/header.php');
 
 
   
-  <script type="text/javascript" src="assets/js/jquery.js"></script>
-  <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
-  <script type="text/javascript" src="assets/js/jquery.inview.min.js"></script>
-  <script type="text/javascript" src="assets/js/wow.min.js"></script>
-  <script type="text/javascript" src="assets/js/mousescroll.js"></script>
-  <script type="text/javascript" src="assets/js/smoothscroll.js"></script>
-  <script type="text/javascript" src="assets/js/jquery.countTo.js"></script>
-  <script type="text/javascript" src="assets/js/lightbox.min.js"></script>
+  <script src="assets/js/jquery.js"></script>
+  <script src="assets/js/bootstrap.min.js"></script>
+  <script src="assets/js/jquery.inview.min.js"></script>
+  <script src="assets/js/wow.min.js"></script>
+  <script src="assets/js/mousescroll.js"></script>
+  <script src="assets/js/smoothscroll.js"></script>
+  <script src="assets/js/jquery.countTo.js"></script>
+  <script src="assets/js/lightbox.min.js"></script>
 
-
-
-  
-
-  <script src="assets/js/fileinput.min.js" type="text/javascript"></script>
 
 </body>
 </html>
+
+
+
+
+
+<script src="assets/js/fileinput.min.js"></script>
+<script src="assets/js/jquery-1.11.1.min.js"></script>
+<script src="assets/js/jquery.backstretch.min.js"></script>
+<script src="assets/js/retina-1.1.0.min.js"></script>
+<script src="assets/js/scripts.js"></script>
+

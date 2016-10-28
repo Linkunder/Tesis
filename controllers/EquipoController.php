@@ -39,7 +39,7 @@ class EquipoController{
 		$this->view->show('listaEquipos.php',$data);
 	}
 
-	// Entregar datos del equipo, y además los contactos del usuario.
+	// Entregar datos del equipo, y además los contactos del usuario.	
 	public function gestionarEquipo(){
 		$equipo = new Equipo();
 		$idUsuario = $_SESSION['login_user_id'];

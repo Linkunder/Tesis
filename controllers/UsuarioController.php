@@ -35,6 +35,10 @@ class UsuarioController{
 		$this->view->show('formularioRegistro.php');
 	}
 
+	public function formularioRegistro2(){
+		$this->view->show('testform.php');
+	}
+
 	// Registrar usuario en la base de datos. Queda pendiente subir fotografia.
 	public function registrarUsuario(){
 		$nombre = $_POST['nombre'];
@@ -50,7 +54,7 @@ class UsuarioController{
 		$usuarios = $this->Usuario->getUsuarios();
 		$idUsuario = end($usuarios)['idUsuario'];
 		$this->guardarImagen($idUsuario);
-		//header('Location: ?controlador=Index&accion=index');
+		header('Location: ?controlador=Index&accion=inicio');
 	}
 
 	// Subir imagen 
