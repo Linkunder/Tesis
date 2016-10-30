@@ -98,6 +98,7 @@ if (isset($_SESSION['login_user_email'])){
           <ul class="nav navbar-nav navbar-right">                 
             <li class="<?php echo ($page_name=='inicioJugador')?'active':'';?>"><a href="?controlador=Index&accion=indexJugador">Inicio</a></li>
             <li class="<?php echo ($page_name=='recintos')?'active':'';?>"><a id="myLink" href="#" onclick="partido();return false;">Jugar</a></li> <!--Jugar = 1 para entrar a buscar recintos en el mismo reutilizando-->
+            <li class="<?php echo ($page_name=='desafios')?'active':'';?>"><a href="?controlador=Desafio&accion=listaDesafios">Desafios</a></li>
             <ul class="nav pull-left">
               <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $nombre?> <i class="fa fa-user"></i>
                 <b class="caret"></b></a>
@@ -117,31 +118,16 @@ if (isset($_SESSION['login_user_email'])){
                 <ul class="dropdown-menu">
                   <?php
 
-                  /*
-                  include_once('../TO/Partido.php');
-                  include_once('../Logica/controlPartidos.php');
-
-                  $controlPartido = controlPartidos::obtenerInstancia();
-                  $partidosCapitan = $controlPartido->contarPartidosCapitan($idUsuario);
-                  */
 
                   ?>
-                  <li><a href="partidosPendientes.php">Partidos pendientes: <?php //echo $partidosCapitan?></a></li>
+                  <li><a href="partidosPendientes.php">Partidos pendientes: </a></li>
                   <div class="drop-divider"></div>
                   
                   
                   <?php
-                  /*
-                  include_once('../TO/Partido.php');
-                  include_once('../Logica/controlPartidos.php');
-
-                  $controlPartido = controlPartidos::obtenerInstancia();
-                  $partidosDisponibles = $controlPartido->contarPartidosDisponibles();
-                  */
-
 
                   ?>
-                  <li><a href="partidosDisponibles.php">Partidos MatchDay: <?php// echo $partidosDisponibles?></a></li>
+                  <li><a href="partidosDisponibles.php">Partidos MatchDay:</a></li>
                   
                   <li><a href="partidosGestionados.php">Partidos Agendados</a></li>
 
@@ -149,6 +135,7 @@ if (isset($_SESSION['login_user_email'])){
                 </ul>
               </li>
             </ul>
+
           </ul>
         </div>
       </div>

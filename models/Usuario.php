@@ -59,6 +59,13 @@ class Usuario{
 		return $result;
 	}
 
+	public function getNombreApellido($idUsuario){
+		$query = $this->db->prepare("SELECT nombre,apellido FROM Usuario WHERE idUsuario = '".$idUsuario."'");
+		$query->execute();
+		$resultado = $query->fetchAll();
+		return $resultado;
+	}
+
 
 
 

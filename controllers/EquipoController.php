@@ -15,7 +15,7 @@ class EquipoController{
 		$this->view->show("");
 	}
 
-	// Entregar lista de equipos de un usuario. Si agrega un equipo, tambien viene a esta funcion
+	// Entregar lista de equipos de un usuario. Si agrega un equipo, termina en esta funcion
 	public function listaEquipos(){
 		$idUsuario = $_SESSION['login_user_id'];
 		$equipos = new Equipo();
@@ -55,17 +55,22 @@ class EquipoController{
 	//	Actualizar información del equipo (nombre, color, jugadores)
 	public function updateEquipo(){
 		$equipo = new Equipo();
-		$miembros = $_POST["arrayContactos"];
+		$nombre = $_POST["nombre"];
+		$color = $_POST["color"];
 		$idEquipo =  $_SESSION['idEquipo'];
-		for ($i=0; $i<count($miembros) ; $i++) {
-			$idMiembro = $miembros[$i];
-			$resultado = $equipo->verificarMiembro($idMiembro,$idEquipo);
-			$respuesta = count($resultado);
-			if ($respuesta == 0){
-				$equipo->agregarMiembroEquipo($idMiembro,$idEquipo);
+		$equipo->updateEquipo($idEquipo,$nombre,$color);
+		if (isset($_POST["arrayContactos"])){
+			$miembros = $_POST["arrayContactos"];
+			for ($i=0; $i<count($miembros) ; $i++) {
+				$idMiembro = $miembros[$i];
+				$resultado = $equipo->verificarMiembro($idMiembro,$idEquipo);
+				$respuesta = count($resultado);
+				if ($respuesta == 0){
+					$equipo->agregarMiembroEquipo($idMiembro,$idEquipo);
+				}
 			}
 		}
-		$this->view->show('listaEquipos.php',$data);
+		header('Location: ?controlador=Equipo&accion=listaEquipos');
 	}
 
 	//	Desplegar formulario para crear el equipo (nombre, color, jugadores)
@@ -83,8 +88,11 @@ class EquipoController{
 			$equipo->agregarMiembroEquipo($idMiembro,$idEquipo);
 		}
 		$equipo->agregarMiembroEquipo($idUsuario,$idEquipo);
-		$this->listaEquipos();
+		header('Location: ?controlador=Equipo&accion=listaEquipos');
 	}
+
+
+	
 
 
 

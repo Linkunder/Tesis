@@ -20,11 +20,19 @@
     <div class="footer-bottom">
       <div class="container">
         <div class="row">
-          <div class="col-sm-6">
-            <p>&copy; 2016 Oxygen Theme.</p>
-          </div>
-          <div class="col-sm-6">
-            <p class="pull-right">Crafted by <a href="http://designscrazed.org/">Allie</a></p>
+          <div class="col-md-4 col-md-offset-4">
+            <table class="table">
+              <tr>
+                <th style="border-top:transparent; text-align:center;">
+                  <img style="width: 35px; height: 53px;"  src="assets/images/logoubio.png">
+                </th>
+              </tr>
+              <tr>
+                <th style="border-top:transparent; text-align:center;">
+                  Proyecto de título
+                </th>
+              </tr>
+            </table>
           </div>
         </div>
       </div>

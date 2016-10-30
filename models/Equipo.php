@@ -25,6 +25,15 @@ class Equipo{
 		return $resultado;
 	}
 
+	// Actualizar información de un determinado equipo.
+	public function updateEquipo($idEquipo,$nombre,$color){
+		$sql = "UPDATE Equipo SET nombre = '".$nombre."' , color = '".$color."' WHERE idEquipo = '".$idEquipo."' ";
+		$query = $this->db->prepare($sql);
+		$query->execute();
+	}
+
+	
+
 	// Obtener equipos de un usuario. (Como Capitán) - MODULO LISTAR EQUIPOS
 	public function getEquiposJugador($idUsuario){
 		$query = $this->db->prepare("SELECT * FROM Equipo WHERE Equipo.idCapitan = '".$idUsuario."'");
@@ -54,7 +63,7 @@ class Equipo{
 
 	// Obtener miembros de un determinado equipo. - MODULO MODIFICAR EQUIPO
 	public function getMiembrosEquipo($idEquipo){
-		$query = $this->db->prepare("SELECT Usuario.idUsuario, Usuario.nombre, Usuario.apellido, Usuario.fotografia FROM Usuario INNER JOIN MiembrosEquipo ON Usuario.idUsuario = MiembrosEquipo.idUsuario WHERE MiembrosEquipo.idEquipo = '".$idEquipo."'");
+		$query = $this->db->prepare("SELECT Usuario.idUsuario, Usuario.nombre, Usuario.apellido, Usuario.fotografia, Usuario.fechaNacimiento FROM Usuario INNER JOIN MiembrosEquipo ON Usuario.idUsuario = MiembrosEquipo.idUsuario WHERE MiembrosEquipo.idEquipo = '".$idEquipo."'");
 		$query->execute();
 		$resultado = $query->fetchAll();
 		return $resultado;

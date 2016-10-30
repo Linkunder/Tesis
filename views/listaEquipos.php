@@ -34,7 +34,7 @@ $contactos = $vars['listaContactos'];
           <h2> Mis equipos al mando <i class="fa fa-futbol-o" aria-hidden="true"></i> </h2>
         </div>
 
-      <p class="centered">Para crear un equipo haz click
+      <p class="centered">No eres capitán de ningún equipo. Para crear un equipo haz click
         <button type="button" class="btn btn-md btn-primary" href="#" data-toggle="modal" data-target="#modal-1" >aquí 
           <i class="fa fa-plus-circle"></i>
         </button>
@@ -49,23 +49,23 @@ $contactos = $vars['listaContactos'];
           <h2> Mis equipos al mando <i class="fa fa-futbol-o" aria-hidden="true"></i> </h2>
         </div>
       
-            <p class="centered">Para crear un nuevo equipo haz click
+            <p class="centered">A continuación puedes ver los equipos de los cuales eres capitán. Para crear un nuevo equipo haz click
                 <button type="button" class="btn btn-md btn-primary" href="#" data-toggle="modal" data-target="#modal-1" >aquí 
                 <i class="fa fa-plus-circle"></i>
               </button>
-              . Puedes gestionar uno de tus equipos haciendo click en el botón "Modificar"
+              . Puedes modificar los datos y jugadores de uno de tus equipos haciendo click en el botón "Gestionar"
             </p>
 
 
+
+        <div class="row">
+          <div class="col-md-6 col-md-offset-3">
             <div class="table-responsive">
               <table class="table table-striped table-hover">
                 <thead>
                   <tr id="color-encabezado">
-                    <th></th>
                     <th>Nombre</th>
                     <th>Color</th>
-                    <th>Partidos disputados</th>
-                    <th>Partidos cancelados</th>
                     <th></th>
                   </tr>
                 </thead>
@@ -75,27 +75,16 @@ $contactos = $vars['listaContactos'];
                   ?>
                   <tr>
                   <td>
-                    <div class="profile-userpic">
-                      <!--img src="assets/images/usuarios/20.jpg" class="img-responsive" alt=""-->
-                    </div>
-                  </td>
-                  <td>
                     <?php echo $item['nombre']?>
                   </td>
                   <td>
                     <?php echo $item['color']?>
                   </td>
-                  <td>
-                    <?php echo $item['partidosDisputados']?>
-                  </td>
-                  <td>
-                    <?php echo $item['partidosCancelados']?>
-                  </td>
                   <td class="centered">
                     <a href="?controlador=Equipo&accion=gestionarEquipo&idEquipo=<?php echo $item['idEquipo']?>">
                       <!--button type="button" class="btn btn-md btn-success" data-toggle="modal" data-target="#myModal"-->
                       <button type="button" class="btn btn-md btn-success">
-                      Modificar 
+                      Gestionar 
                       <i class="fa fa-pencil-square-o"></i>
                       </button>
                     </a>
@@ -107,6 +96,15 @@ $contactos = $vars['listaContactos'];
                 </tbody>
               </table>
             </div>
+            </div>
+            </div>
+
+
+
+
+
+
+
 
 
       <?php
@@ -133,7 +131,7 @@ $contactos = $vars['listaContactos'];
       ?>
 
       <!--h2> Mis equipos <i class="fa fa-futbol-o" aria-hidden="true"></i> </h2-->
-            <p class="centered">Además, perteneces a los siguientes equipos</p>
+            <p class="centered">Además, perteneces a los siguientes equipos. Haz click en el nombre de alugno para ver a tus compañeros de equipo.</p>
             <?php
             foreach ($equiposMiembro as $item) {
             ?>
@@ -151,36 +149,24 @@ $contactos = $vars['listaContactos'];
                       <!-- MOSTRAR JUGADORES -->
                       <div class="row">
                         <br>
-                          <div class="col-md-3 portfolio-item">
-                              <a href="#">
-                                  <img class="img-responsive" src="http://placehold.it/400x400" alt="">  <br>
-                              </a>
+                          <?php
+                          $miembrosEquipo = $vars['listaMiembrosEquipo'.$item['idEquipo']];
+                          foreach($miembrosEquipo as $key){
+                          ?>
+                          <div class="col-md-3 profile-userpic">
+                            <img class="img-responsive" style="width: 150px; height: 150px;" src="assets/images/usuarios/<?php echo $key['fotografia']?>">
+                            <div class="profile-usertitle">
+                              <div class="profile-usertitle-name">
+                                <?php  echo $key['nombre']." ".$key['apellido']; ?>
+                              </div>
+                            </div>
+                            <br>
                           </div>
-                          <div class="col-md-3 portfolio-item">
-                              <a href="#">
-                                  <img class="img-responsive" src="http://placehold.it/400x400" alt="">  <br>
-                              </a>
-                          </div>
-                          <div class="col-md-3 portfolio-item">
-                              <a href="#">
-                                  <img class="img-responsive" src="http://placehold.it/400x400" alt="">  <br>  
-                              </a>
-                          </div>
-                          <div class="col-md-3 portfolio-item">
-                              <a href="#">
-                                  <img class="img-responsive" src="http://placehold.it/400x400" alt="">    <br>
-                              </a>
-                          </div>
+                          <?php
+                          }
+                          ?>
                       </div>
-                      <?php
-                      $miembrosEquipo = $vars['listaMiembrosEquipo'.$item['idEquipo']];
-                      foreach($miembrosEquipo as $key){
-                      echo $key['nombre']." ".$key['apellido'];
-                      ?>
-                      <img src="assets/images/usuarios/<?php echo $key['fotografia']?>">
-                      <?php
-                      }
-                      ?>
+                      
                     </div>                    
                   </div>
                   

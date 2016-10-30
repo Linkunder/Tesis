@@ -213,6 +213,7 @@ foreach ($equipos as $equipo ) {
           <form  action="?controlador=Contacto&accion=agregarMiembro" method="POST">
               <select class="form-control" id="equipo" name="equipo" title="Selecciona uno de los equipos que administras..">
                 <?php
+
                 foreach ($miembrosEquiposJugador as $miembrosEquipos) {
                   if ($miembrosEquipos['idUsuario'] == $contactoActual){
                     $equipoUsuario = $miembrosEquipos['nombre'];
@@ -225,7 +226,6 @@ foreach ($equipos as $equipo ) {
                   <option id="text-black" ><?php echo "El jugador está en todos tus equipos."?></option>
                   <?php
                 } else {
-
 
 
                 foreach ($resultado as $key => $value ) {

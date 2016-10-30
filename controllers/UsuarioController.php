@@ -143,7 +143,20 @@ class UsuarioController{
 		$idUsuario = $_SESSION['login_user_id'];
 		$perfilUsuario = $usuario->getUsuario($idUsuario);
 		$data['perfilUsuario'] = $perfilUsuario;
+		/*
+		foreach ($perfilUsuario as $key ) {
+			$fechaNacimiento = $key['fechaNacimiento'];
+		}
+		$edad = $this->calcularEdad($fechaNacimiento);
+		$data['edadUsuario'] = $edad;
+		*/
 		$this->view->show('perfilUsuario.php',$data);
+	}
+
+	//	Calcular edad de un usuario.
+	public function calcularEdad($fecha){
+		list($Y,$m,$d) = explode("-", $fecha);
+		return(date("md")<$m.$d ? date("Y")-$Y-1 : date("Y")-$Y );
 	}
 
 
@@ -172,6 +185,7 @@ class UsuarioController{
  	public function verCalendario(){
  		$this->view->show('verCalendario.php');
  	}
+
 
 
 }

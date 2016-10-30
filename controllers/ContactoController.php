@@ -45,7 +45,7 @@ class ContactoController{
 		$idContacto = $_POST["contacto"];
 		$idEquipo = $_POST["equipo"];
 		$equipo->agregarMiembroEquipo($idContacto,$idEquipo);
-		$this->listaContactos();
+		header('Location: ?controlador=Contacto&accion=listaContactos');
 	}
 
 

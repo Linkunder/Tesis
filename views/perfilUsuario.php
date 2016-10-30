@@ -47,7 +47,6 @@ $usuario = $vars['perfilUsuario'];
             <div class="profile-usertitle">
               <div class="profile-usertitle-name">
                 <?php
-
                   echo $key['nombre']." ".$key['apellido'];
                 
                 ?>

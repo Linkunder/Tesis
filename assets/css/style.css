@@ -36,6 +36,13 @@
 
 .texto-modal-negro{
     color: #000;
+    font-size: 14px;
+}
+
+.texto-modal-negro-title{
+    color: #000;
+    font-size: 16px;
+    font-weight: bold;
 }
 
 

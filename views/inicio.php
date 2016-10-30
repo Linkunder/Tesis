@@ -70,9 +70,15 @@ if (isset($vars['cerrar_sesion'])){
         <h2><a class="btn btn-primary btn-large" href="?controlador=Usuario&accion=formularioRegistro">Regístrarse</a></h2>
       </div>
     </div>
+
+    
+
+
+    
       <br/> <br/> <br/> 
     </div>
   </div>
+
 </div>
 
 

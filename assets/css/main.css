@@ -2,8 +2,56 @@
 /*************************
 *******Typography******
 **************************/
+
+#encabezado-especial{
+  border-top: transparent;
+  text-align: center;
+}
+
+#background-claro{
+  background-color: #D7D7D7;
+  opacity: 0.5;
+}
+
+#background-white{
+  background-color: #F1F1F1;
+}
+
 #texto-input-white{
   color: #FFFFFF;
+}
+
+#texto-input-black{
+  color: #000000;
+}
+
+#miembro-equipo{
+  color: #FFFFFF;
+  background-color: #d9534f;
+  text-align: center;
+}
+
+#no-miembro-equipo{
+  background-color: #5cb85c;
+  color: #FFFFFF; 
+  text-align: center;
+}
+
+.pad-top {
+    padding-top:40px;
+}
+.tab-content-border {
+  background-color: #666;
+  border-left: 1px solid #e1e1e1;
+  padding: 15px;
+  border-right: 1px solid #e1e1e1;
+  border-bottom: 1px solid #e1e1e1;
+  -webkit-border-bottom-right-radius: 4px;
+  -webkit-border-bottom-left-radius: 4px;
+  -moz-border-radius-bottomright: 4px;
+  -moz-border-radius-bottomleft: 4px;
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
 }
 
 
@@ -902,9 +950,9 @@ section {
 
 
 textarea.form-control {
-  min-height: 180px;
+  min-height: 100px;
   resize:none;
-  color: #FFFFFF;
+  color: #000;
 }
 
 .form-group {
