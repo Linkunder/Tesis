@@ -90,6 +90,7 @@ class RecintoController{
       header('Location: ?controlador=Recinto&accion=notificarRecinto&1');
     }
 
+    
 
 
 }

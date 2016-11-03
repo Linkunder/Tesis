@@ -490,33 +490,24 @@ $_SESSION['idRecinto']=NULL;
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h3 class="modal-title">Elige el tipo de partido</h3>
                 </div>
-                <div class="modal-body">
-                            <div class="row">
-                                <div class="col-sm-8">       
+                <div class="modal-body">      
                                         <label class="label-partido" for="color">Tipo de partido</label>
                                         <br/>
 
 											<button type="button" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#modalRevuelta">Revuelta</button>
-											<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalEquipoPropio">Equipo Propio</button>
-											<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#" >A v/s B</button>
+											<button type="button" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#modalEquipoPropio">Equipo Propio</button>
+											<button type="button" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#" >A v/s B</button>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-8">
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar <i class="fa fa-times" aria-hidden="true"></i></button>
                                 <button  class="btn btn-primary" 
                                 href="#" >Aceptar <i class="fa fa-check" aria-hidden="true"></i></button>
 
-                            </div>
-                            </div>
                             </div> 
                 </div>
             </div>
         </div>
     </div>
-</div>
 <!--MODAL Equipo Propio-->       
 <div class="container">
     <div class="modal fade" id="modalEquipoPropio">
@@ -527,7 +518,7 @@ $_SESSION['idRecinto']=NULL;
                     <h3 class="modal-title">Define la hora, fecha y cantidad de jugadores</h3>
                 </div>
                 <div class="modal-body">
-                    <form  method="post" action="cancha.php" class="design-form" >
+                    <form  method="post" action="?controlador=Partido&accion=partidoEquipoPropio" class="design-form" >
                         <div class="container">  
                             <div class="row">
                                 <div class="col-sm-8">
@@ -549,7 +540,7 @@ $_SESSION['idRecinto']=NULL;
                                 <div class="col-sm-8">
                                     <div class="form-group">
                                         <label class="label-partido" for="jugadores">Numero de jugadores</label>
-                                        <input type="int" name="cantidad"  class="form-control partido" id="equipo" required="required" title="Solo puede ingresar hasta 22 jugadores" placeholder="Ingresa número de jugadores..." pattern="^[0|1]\d{1}$|[0-9]|2+[0|1|2]">
+                                        <input type="number" name="cantidad"  class="form-control partido" id="equipo" required="required" title="Solo puede ingresar hasta 22 jugadores" placeholder="Ingresa número de jugadores..." pattern="^[0|1]\d{1}$|[0-9]|2+[0|1|2]" min="2">
                                         <input  name="idRecinto" class="hide" value="<?php echo $_SESSION['idRecinto'];?>"/>
                                     </div>
                                 </div>
@@ -565,7 +556,7 @@ $_SESSION['idRecinto']=NULL;
                             <div class="row">
                                 <div class="col-sm-8">
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar <i class="fa fa-times" aria-hidden="true"></i></button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal" data-toggle="modal" data-target="#modalTipoPartido">Cancelar <i class="fa fa-times" aria-hidden="true"></i></button>
                                 <button type="submit" class="btn btn-primary">Aceptar <i class="fa fa-check" aria-hidden="true"></i></button>
                             </div>
                             </div>
@@ -634,7 +625,7 @@ $_SESSION['idRecinto']=NULL;
                             <div class="row">
                                 <div class="col-sm-8">
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar <i class="fa fa-times" aria-hidden="true"></i></button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal" data-toggle="modal" data-target="#modalTipoPartido">Cancelar <i class="fa fa-times" aria-hidden="true"></i></button>
                                 <button type="submit" class="btn btn-primary">Aceptar <i class="fa fa-check" aria-hidden="true"></i></button>
                             </div>
                             </div>

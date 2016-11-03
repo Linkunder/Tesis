@@ -14,8 +14,8 @@ class Recinto{
 	}
 
 	public function getRecinto($idRecinto){
-		$consulta = $this->db->prepare('
-			SELECT * FROM Recinto WHERE idRecinto = $idRecinto ');
+		$consulta = $this->db->prepare("
+			SELECT * FROM Recinto WHERE idRecinto = '".$idRecinto."' ");
 		$consulta->execute();
 		$resultado = $consulta->fetchAll();
 		return $resultado;
