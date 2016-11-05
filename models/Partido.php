@@ -10,6 +10,17 @@ class Partido{
 
 	}
 
+	public function getPartido($idPartido){
+		$consulta = $this->db->prepare("
+			SELECT * FROM Partido WHERE idPartido = '$idPartido';
+			");
+		$consulta->execute();
+		$resultado = $consulta->fetchAll();
+		return $resultado;
+
+
+	}
+
 	public function getPartidosUsuario($idUsuario){
 		$consulta = $this->db->prepare('
 			SELECT jugadorespartido.idPartido, partido.idRecinto FROM jugadorespartido INNER JOIN usuario on jugadorespartido.idUsuario = usuario.idUsuario INNER JOIN partido on jugadorespartido.idPartido = partido.idPartido');
@@ -50,11 +61,18 @@ class Partido{
 				'$idRecinto',
 				 0	
 				);
-			SELECT LAST_INSERT_ID();
+			SELECT LAST_INSERT_ID() AS lastId;
 				");
 		$consulta->execute();
-		$resultado= $consulta->fetchAll();
+		$resultado= $this->db->lastInsertId();
 
+		return $resultado;
+	}
+
+	public function getJugadoresPartido($idPartido){
+		$consulta = $this->db->prepare("SELECT usuario.nombre, usuario.nickname, usuario.fotografia, usuario.email FROM jugadorespartido INNER JOIN usuario on jugadorespartido.idUsuario = usuario.idUsuario WHERE idPartido='$idPartido'");
+		$consulta->execute();
+		$resultado=$consulta->fetchAll();
 		return $resultado;
 	}
 

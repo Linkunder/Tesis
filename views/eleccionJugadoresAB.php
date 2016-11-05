@@ -1,5 +1,3 @@
-
-
 <?php 
 
 
@@ -17,6 +15,7 @@ $_SESSION['fecha'] = $vars['fecha'];
 $_SESSION['hora'] = $vars['hora'];
 $_SESSION['cantidad'] = $vars['cantidad'];
 $_SESSION['color']  = $vars['color'];
+$_SESSION['color2'] = $vars['color2'];
 
 // Si quiero 10 jugadores, pero tengo solo 4 contactos, deberia notificar un partido a los demás jugadores.
 
@@ -175,7 +174,7 @@ $(function(){
       $.ajax({
           type:'post',
           cache:false,
-          url:"?controlador=Partido&accion=agendarPartido",
+          url:"?controlador=Partido&accion=agendarPartidoAB",
           data:{jObject:jObject}
     });
     }
@@ -193,7 +192,7 @@ $(function(){
 
 	      <div class="heading-a text-center">
 
-        <h2>Elige a los jugadores</h2>
+        <h2>Elige a los jugadores del Equipo A</h2>
         <h3>Mueve tus jugadores al terreno de juego.</h3>
 <?php  foreach ($vars['recintoSeleccionado'] as $key ) {?>
         <h4>Recinto: <?php echo $key['nombre'];?></h4>
@@ -245,7 +244,7 @@ foreach ($vars['contactos'] as $Contacto) {
     <button href="#" data-toggle="modal" data-target="#modal-1" class="hide" id="sig"></button>
 		<div class="col-md-6" ><!--cancha-->
 		<div id="snaptarget" class="ui-widget-header arreglo">
-     </div>
+    </div>
 		</div>
 
 	</div>

@@ -493,10 +493,19 @@ $_SESSION['idRecinto']=NULL;
                 <div class="modal-body">      
                                         <label class="label-partido" for="color">Tipo de partido</label>
                                         <br/>
-
-											<button type="button" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#modalRevuelta">Revuelta</button>
-											<button type="button" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#modalEquipoPropio">Equipo Propio</button>
-											<button type="button" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#" >A v/s B</button>
+                                        <div class="container-fluid">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <button type="button" class="btn btn-primary center-block" data-dismiss="modal" data-toggle="modal" data-target="#modalRevuelta">Revuelta</button>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <button type="button" class="btn btn-primary center-block" data-dismiss="modal" data-toggle="modal" data-target="#modalEquipoPropio">Equipo Propio</button>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <button type="button" class="btn btn-primary center-block" data-dismiss="modal" data-toggle="modal" data-target="#modalAB" >A v/s B</button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar <i class="fa fa-times" aria-hidden="true"></i></button>
@@ -579,7 +588,7 @@ $_SESSION['idRecinto']=NULL;
                     <h3 class="modal-title">Define la hora, fecha y cantidad de jugadores</h3>
                 </div>
                 <div class="modal-body">
-                    <form  method="post" action="cancha.php" class="design-form" >
+                    <form  method="post" action="?controlador=Partido&accion=partidoRevuelta" class="design-form" >
                         <div class="container">  
                             <div class="row">
                                 <div class="col-sm-8">
@@ -609,7 +618,7 @@ $_SESSION['idRecinto']=NULL;
                             <div class="row">
                                 <div class="col-sm-8">
                                     <div class="form-group">
-                                        <label class="label-partido" for="color">Color</label>
+                                        <label class="label-partido" for="color">Color 1</label>
                                         <input type="text" name="color"  class="form-control partido" id="equipo" required="required" placeholder="Ingresa color de vestimenta equipo A...">
                                     </div>
                                 </div>
@@ -617,7 +626,76 @@ $_SESSION['idRecinto']=NULL;
                             <div class="row">
                                 <div class="col-sm-8">
                                     <div class="form-group">
-                                        <label class="label-partido" for="color2">Color</label>
+                                        <label class="label-partido" for="color2">Color 2</label>
+                                        <input type="text" name="color2"  class="form-control partido" id="equipo" required="required" placeholder="Ingresa color de vestimenta equipo B...">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-8">
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal" data-toggle="modal" data-target="#modalTipoPartido">Cancelar <i class="fa fa-times" aria-hidden="true"></i></button>
+                                <button type="submit" class="btn btn-primary">Aceptar <i class="fa fa-check" aria-hidden="true"></i></button>
+                            </div>
+                            </div>
+                            </div>
+                        </div>
+                    </form>   
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL A VS B-->
+<div class="container">
+    <div class="modal fade" id="modalAB">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h3 class="modal-title">Define la hora, fecha y cantidad de jugadores</h3>
+                </div>
+                <div class="modal-body">
+                    <form  method="post" action="?controlador=Partido&accion=partidoAB" class="design-form" >
+                        <div class="container">  
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <div class="form-group">
+                                        <label class="label-partido" for="fecha">Fecha del partido</label>
+                                        <input type="date" name="fecha" placeholder="Fecha del partido" class="form-control" id="equipo" required="required" >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <div class="form-group">
+                                        <label class="label-partido" for="hora">Hora</label>
+                                        <input type="time" name="hora" placeholder="Hora" class="form-control partido" id="equipo" required="required" min="09:00:00" max="23:00:00">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <div class="form-group">
+                                        <label class="label-partido" for="jugadores">Numero de jugadores</label>
+                                        <input type="int" name="cantidad"  class="form-control partido" id="equipo" required="required" title="Solo puede ingresar hasta 22 jugadores" placeholder="Ingresa número de jugadores totales..." pattern="^[0|1]\d{1}$|[0-9]|2+[0|1|2]">
+                                        <input  name="idRecinto" class="hide" value="<?php echo $_SESSION['idRecinto'];?>"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <div class="form-group">
+                                        <label class="label-partido" for="color">Color Equipo A</label>
+                                        <input type="text" name="color"  class="form-control partido" id="equipo" required="required" placeholder="Ingresa color de vestimenta equipo A...">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <div class="form-group">
+                                        <label class="label-partido" for="color2">Color Equipo B</label>
                                         <input type="text" name="color2"  class="form-control partido" id="equipo" required="required" placeholder="Ingresa color de vestimenta equipo B...">
                                     </div>
                                 </div>
