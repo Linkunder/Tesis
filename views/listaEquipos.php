@@ -7,6 +7,9 @@ include('layout/headerJugador.php');
 //if (isset($vars['listaContactos'])){
 $equipos = $vars['listaEquipos'];
 $contactos = $vars['listaContactos'];
+
+$nroContactos = count($contactos);
+
 //}
 ?>
 
@@ -25,8 +28,9 @@ $contactos = $vars['listaContactos'];
       <li class="breadcrumb-item active">Equipos</li>
     </ol>
 
+    <?php
 
-      <?php
+
       if (count($equipos)==0){          // CASO 1: NO TENER EQUIPOS COMO CAPITAN
         ?>
 
@@ -209,7 +213,7 @@ $contactos = $vars['listaContactos'];
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <?php
-      if (count($contactos)==0){        // 1. No hay contactos para agregar en el equipo.
+      if ( count($contactos)<4  ){        // 1. No hay contactos para agregar en el equipo.
       ?>
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -217,7 +221,7 @@ $contactos = $vars['listaContactos'];
         </div>
         <div class="modal-body">
           <form id="demoform" action="?controlador=Contacto&accion=listaContactos" method="post">
-          <h5 class="texto-modal-negro"><?php echo $nombre?>, no tienes contactos para crear tu equipo. 
+          <h5 class="texto-modal-negro"><?php echo $nombre?>, no tienes suficientes contactos para crear tu equipo. 
             Te recomendamos acceder a la sección de contactos e intentarlo nuevamente.
           </h5>
         </div>

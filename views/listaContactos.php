@@ -55,6 +55,9 @@ $contactos = $vars['listaContactos'];
         . Para agregar a uno de tus contactos a un equipo, haz click en el botón 
         <button class="btn btn-success btn-sm fa fa-plus-circle"></a></button></p>
 
+  
+
+
 
         <div class="jumbotron list-content">
           <ul class="list-group">
@@ -79,12 +82,19 @@ $contactos = $vars['listaContactos'];
                 </a>
               </label>
               <div class="break"></div>
+
             </li>
             <?php
             }
             ?>
           </ul>
         </div>
+
+
+
+
+
+
 
 
     </div>
@@ -291,6 +301,3 @@ function setValue(id,nombre){
 };
 
 </script>
-
-
-

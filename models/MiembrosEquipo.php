@@ -14,7 +14,9 @@ class MiembrosEquipo{
 	// Obtener miembros de un determinado equipo de un determinado capitan. 
 	// Obtener equipos de un usuario. (Como Capitán) - 
 	public function getMiembrosEquiposJugador($idUsuario){
-		$query = $this->db->prepare("SELECT miembrosequipo.idUsuario, equipo.idEquipo, equipo.nombre from miembrosequipo join equipo on equipo.idequipo = miembrosequipo.idEquipo where miembrosequipo.idEquipo in (select idEquipo from equipo where idCapitan='".$idUsuario."')");
+		$query = $this->db->prepare("SELECT miembrosequipo.idUsuario, equipo.idEquipo, equipo.nombre 
+			from miembrosequipo join equipo on equipo.idequipo = miembrosequipo.idEquipo where miembrosequipo.idEquipo in 
+			(select idEquipo from equipo where idCapitan='".$idUsuario."')");
 		$query->execute();
 		$resultado = $query->fetchAll();
 		return $resultado;

@@ -12,8 +12,56 @@ $desafios = $vars['listaDesafios'];
 ?>
 
 
-
 <link href="assets/css/profile.css" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/slider.css">
+
+<link rel="stylesheet" href="assets/css/estiloPropio.css">
+
+
+
+
+
+
+
+
+
+<!--modal-->
+<!--DETALLE DESAFIO  - CREACION -->
+<div class="modal fade" id="modal-3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+
+
+
+
+      <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabelDesafio"></h4>
+      </div>
+      <div class="modal-body">
+          <h5 class="texto-modal-negro">Los jugadores de MatchDay están viendo tu desafío.
+          </h5>
+
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Volver <i class="fa fa-arrow-circle-left" aria-hidden="true"></i></button>
+        <button type="submit" class="btn btn-primary">Desafiar <i class="fa fa-check" aria-hidden="true"></i></button>
+      </div>
+
+
+
+    </div>
+  </div>
+</div> 
+
+
+
+
+<!--/modal-->
+
+
 
 
 
@@ -26,6 +74,7 @@ $desafios = $vars['listaDesafios'];
     </ol>
 
     <?php
+  
     if (count($desafios)==0){          // CASO 1: NO TENER DESAFIOS
       ?>
       <div class="page-header">
@@ -41,7 +90,7 @@ $desafios = $vars['listaDesafios'];
           <table class="table">
             <tr>
               <th style="border-top:transparent; text-align:center;">
-                <button type="button" class="btn btn-md btn-primary" href="#" data-toggle="modal" data-target="#modal-1" >Enviar desafío 
+                <button type="button" class="btn btn-md btn-primary" href="#" data-toggle="modal" data-target="#modal-1" >Crear desafío 
                   <i class="fa fa-plus-circle"></i>
                 </button>
               </th>
@@ -82,7 +131,7 @@ $desafios = $vars['listaDesafios'];
                   <table class="table">
                     <tr>
                       <th style="border-top:transparent; text-align:center;">
-                          <button type="button" class="btn btn-md btn-primary" href="#" data-toggle="modal" data-target="#modal-1" >Enviar desafío 
+                          <button type="button" class="btn btn-md btn-primary" href="#" data-toggle="modal" data-target="#modal-1" >Crear desafío 
                           <i class="fa fa-plus-circle"></i>
                           </button>
                       </th>
@@ -108,24 +157,30 @@ $desafios = $vars['listaDesafios'];
           <div class="col-md-8 col-md-offset-2">
             <div class="table-responsive">
               <table class="table table-striped table-hover">
-                <thead>
+                <thead id ="position-table">
                   <tr id="color-encabezado">
-                    <th>Equipo</th>
-                    <th>Fecha</th>
-                    <th>Tipo de partido</th>
-                    <th>Estado</th>
+                    <th id="encabezado-especial">Desafio</th>
+                    <th id="encabezado-especial">Equipo</th>
+                    <th id="encabezado-especial">Fecha</th>
+                    <th id="encabezado-especial">Tipo de partido</th>
+                    <th id="encabezado-especial">Estado</th>
                   </tr>
                 </thead>
-                <tbody id="texto-contactos">
+                <tbody id="texto-contactos" class="center">
                   <?php
                   foreach ($desafios as $item) {
                   ?>
                   <tr>
+                    <td>
+                      <?php 
+                      
+                      echo $item['idDesafio']?>
+                    </td>
                   <td>
-                    <?php echo $item['nombre']?>
+                    <?php echo $item['nombreEquipo']?>
                   </td>
                   <td>
-                    <?php echo $item['fecha']?>
+                    <?php echo $item['fechaPartido']?>
                   </td>
                   <td>
                     <?php 
@@ -143,27 +198,46 @@ $desafios = $vars['listaDesafios'];
                   </td>
                   <td>
                     <?php 
-                    if ($item['estado']==0){
+                    if ($item['estadoDesafio']==0){
                       ?>
                       <span class="label label-warning">Esperando respuestas <i class="fa fa-clock-o" aria-hidden="true"></i></span>
                       <?php
                     }
-                    if ($item['estado']==1){
+                    if ($item['estadoDesafio']==1){
                       ?>
                       <span class="label label-success">Con respuestas <i class="fa fa-bell" aria-hidden="true"></i></span>
                       <?php
                     }
-                    if ($item['estado']==2){
+                    if ($item['estadoDesafio']==2){
                       ?>
-                      <span class="label label-danger">Tiempo límite <i class="fa fa-exclamation-triangle" aria-hidden="true"></i></span>
+                      <span class="label label-primary">Aceptado <i class="fa fa-check-circle" aria-hidden="true"></i></span>
                       <?php
                     }
                     ?>
                   </td>
                   <td>
-                    <button class="btn btn-primary" title="Ver detalle" href="#" data-toggle="modal" data-target="#modal-3">
+                    <?php 
+
+                    $idDesafio = $item['idDesafio'];
+                    $idEquipo = $item['idEquipo'];
+                    ?>
+                    <input type="text" id="id_desafio" value="<?php echo $idDesafio?>" hidden/>
+
+
+                    <!--a class="btn btn-primary" href="javascript:void(0);" data-toggle="modal" data-target="#modal-3" onclick="carga_ajax('<?php echo $idDesafio?>','modal-3','views/detalleDesafio.php');">Con Ajax <i class="fa fa-search-plus" aria-hidden="true"></i></a-->
+
+                    <!--a class="btn btn-primary" href="javascript:void(0);" data-toggle="modal" data-target="#modal-3" onClick="carga_ajax('1','modal-3','ajax_1.php');">
                       <i class="fa fa-search-plus" aria-hidden="true"></i>
-                    </button>
+                    </a-->
+
+                    <!--button class="btn btn-primary" title="Ver detalle" href="#" data-toggle="modal" data-target="#modal-3">
+                      <i class="fa fa-search-plus" aria-hidden="true"></i>
+                    </button-->
+
+
+                    <a href="#" class="btn btn-primary fa fa-plus-circle" onclick="setValue(<?php echo $idDesafio;?>)" title="Ver detalles"></a>
+
+
                   </td>
                 </tr>
                   <?php
@@ -182,7 +256,8 @@ $desafios = $vars['listaDesafios'];
       
       include('layout/footer.php'); 
     }
-      ?>
+
+    ?>
      
 
 <!-- Script Graficos -->
@@ -190,8 +265,9 @@ $desafios = $vars['listaDesafios'];
 
 <!-- Modal -->
 <link rel="stylesheet" type="text/css" href="assets/css/bootstrap-duallistbox.css">
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+<!--script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script-->
 <script src="assets/js/jquery.bootstrap-duallistbox-modal.js"></script>
+
 
 <div class="modal fade" id="modal-1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
@@ -230,7 +306,7 @@ $desafios = $vars['listaDesafios'];
                 <div class="form-group">
                   <label class="texto-modal-negro" for="tipoPartido">Tipo de partido: </label>
                   <select class="form-control" name="tipoPartido" required>
-                    <option selected disabled>Selecciona un tipo de partido</option>
+                    <option  value="" selected disabled>Selecciona un tipo de partido</option>
                     <option  value="0" class="texto-modal-negro">Fútbol</option>
                     <option  value="1" class="texto-modal-negro">Futbolito</option>
                     <option  value="2" class="texto-modal-negro">Baby-Fútbol</option>
@@ -240,7 +316,8 @@ $desafios = $vars['listaDesafios'];
               <div class="col-sm-12">
                 <div class="form-group">
                   <label class="texto-modal-negro" for="fecha">Fecha del partido: </label>
-                  <input type="date" name="fecha" class="form-last-name form-control" required>
+                  <input type="date" name="fecha" class="form-last-name form-control"required step="1" min="<?php echo date("Y-m-d");?>" max="2020-12-31" value="<?php echo date("Y-m-d");?>">
+
                 </div>
               </div>
             </div>
@@ -249,7 +326,7 @@ $desafios = $vars['listaDesafios'];
                 <div class="form-group">
                   <label class="texto-modal-negro" for="equipo">Equipo desafiante: </label>
                   <select class="form-control" name="equipo" required>
-                        <option selected disabled>Selecciona uno de tus equipos</option>
+                        <option value="" selected disabled>Selecciona uno de tus equipos</option>
                         <?php
                         foreach($equipos as $item){
                         ?>
@@ -260,6 +337,23 @@ $desafios = $vars['listaDesafios'];
                         }
                         ?>
                   </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label class="texto-modal-negro" for="comentario">Selecciona un rango de edad: </label>
+                      <div class="well">
+                        <div class="row">
+                          <div class="col-sm-12">
+                            <b class="texto-modal-negro">18</b>
+                            <input id="ex2" name="edad" type="text" class="span2" value="" data-slider-min="18" data-slider-max="60" data-slider-step="1" data-slider-value="[18,60]"/>
+                            <b class="texto-modal-negro">60</b>
+                          </div>
+                        </div>
+                      </div>
+                      
                 </div>
               </div>
             </div>
@@ -289,137 +383,332 @@ $desafios = $vars['listaDesafios'];
 
 
 <!-- VESTIBULO DE DESAFIOS -->
-<?php
-  $desafiosSistema = $vars['listaDesafiosSistema'];
-?>
-
 
 <div class="modal fade" id="modal-2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog modal-lg" role="document">
+  <div class="modal-dialog " role="document">
     <div class="modal-content">
       <?php
-      if (count($desafiosSistema) == 0){
+      if (count($equipos)==0){        // 1. No hay equipos para el desafio
       ?>
-      <div class="modal-header">
+        <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
           <h4 class="modal-title" id="myModalLabel">Atención <i class="fa fa-exclamation-triangle" aria-hidden="true"></i></h4>
-      </div>
-      <div class="modal-body">
-          <h5 class="texto-modal-negro"><?php echo $nombre?>, ahora no hay desafios disponibles en MatchDay, intentalo en unos momentos más.
+        </div>
+        <div class="modal-body">
+          <form id="demoform" action="?controlador=Equipo&accion=listaEquipos" method="post">
+          <h5 class="texto-modal-negro"><?php echo $nombre?>, para desafiar a otros equipos, debes ser capitán de al menos un equipo. 
+            Te recomendamos acceder a la sección de equipos e intentarlo nuevamente.
           </h5>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Aceptar <i class="fa fa-accept" aria-hidden="true"></i></button>
-      </div>
-      <?php   
-      } else {
-        ?>
-
-
-
-
-      <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="myModalLabel">Desafíos MatchDay</h4>
-      </div>
-      <div class="modal-body">
-          <h5 class="texto-modal-negro"><?php echo $nombre?>, elige uno de los desafios para ver mayores detalles.
-          </h5>
-
-          <div class="table-responsive">
-            <table class="table table-striped table-hover">
-              <thead>
-                <tr id="color-encabezado">
-                  <th>Equipo</th>
-                  <th>Edad promedio</th>
-                  <th>Puntuacion</th>
-                  <th>Dia del partido</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody id="texto-contactos">
-                <?php
-                foreach ($desafiosSistema as $item) {
-                  ?>
-                  <tr>
-                    <td>
-                      <?php echo $item['nombreEquipo']?>
-                    </td>
-                    <td>
-                      <?php echo $item['edadPromedio']?>
-                    </td>
-                    <td>
-                      <?php echo $item['puntuacion']?>
-                    </td>
-                    <td>
-                      <?php echo $item['fecha']?>
-                    </td>
-                    <td class="centered">
-                      <button class="btn btn-primary" title="Ver detalle" href="#" data-toggle="modal" data-target="#modal-4">
-                      <i class="fa fa-search-plus" aria-hidden="true"></i>
-                    </button>
-                    </td>
-                  </tr>
-                    <?php
-                    }
-                    ?>
-              </tbody>
-            </table>
-          </div>
-
-          <?php
-          foreach ($desafiosSistema as $key) {
-           ?>
-
-           <?php
-          }
-          ?>
-
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Volver <i class="fa fa-arrow-circle-left" aria-hidden="true"></i></button>
-      </div>
-
-        <?php
-      }
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">Ir a Equipos <i class="fa fa-users" aria-hidden="true"></i></button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar <i class="fa fa-times" aria-hidden="true"></i></button>
+        </div>
+      </form>
+      <?php
+      } else {                        //  2.  Hay equipos para el desafio.
       ?>
 
 
-    </div>
-  </div>
-</div>
-
-
-
-
-
-
-
-<!--DETALLE DESAFIO-->
-<div class="modal fade" id="modal-4" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-
-
 
       <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
           <h4 class="modal-title" id="myModalLabel">Desafíos MatchDay</h4>
       </div>
       <div class="modal-body">
-          <h5 class="texto-modal-negro"><?php echo $nombre?>, elige uno de los desafios para ver mayores detalles.
-          </h5>
+        <h5 class="texto-modal-negro">Elige uno de tus equipos para aceptar un desafío MatchDay</h5><br>
+        <form id="demoform" action="?controlador=Desafio&accion=verVestibuloDesafios" method="post">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label class="texto-modal-negro" for="equipo">Equipo desafiante: </label>
+                  <select class="form-control" name="equipo" required>
+                        <option value="" selected disabled>Selecciona uno de tus equipos</option>
+                        <?php
+                        foreach($equipos as $item){
+                        ?>
+                        <option  value="<?php echo $item['idEquipo']?>" class="texto-modal-negro">
+                            <?php echo $item['idEquipo'].": ".$item['nombre']?>
+                        </option>
+                        <?php
+                        }
+                        ?>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label class="texto-modal-negro" for="comentario">Selecciona un rango de edad: </label>
+                      <div class="well">
+                        <div class="row">
+                          <div class="col-sm-12">
+                            <b class="texto-modal-negro">18</b>
+                            <input id="ex3" name="edad" type="text" class="span2" value="" data-slider-min="18" data-slider-max="60" data-slider-step="1" data-slider-value="[18,60]"/>
+                            <b class="texto-modal-negro">60</b>
+                          </div>
+                        </div>
+                      </div>
+                      
+                </div>
+              </div>
+            </div>
+          </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar <i class="fa fa-times" aria-hidden="true"></i></button>
+          <button type="submit" class="btn btn-primary">Aceptar <i class="fa fa-check" aria-hidden="true"></i></button>
+        </div>
+        </form>
 
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Volver <i class="fa fa-arrow-circle-left" aria-hidden="true"></i></button>
-      </div>
+
+      <?php
+    }
+      ?>
+
 
 
 
     </div>
   </div>
 </div>
+
+
+
+<?php
+$aux = 1;
+$nroEncuentros = $vars['nroEncuentros'];
+?>
+
+<!-- MODAL PARA VER RESPUESTAS -->
+<div class="container">
+  <div class="modal fade" id="myModal">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <?php $desafioActual = $_GET['idDesafio']; ?>
+          <h4 class="modal-title" id="myModalLabelDesafio">
+            Detalle desafío
+          </h4>
+        </div>
+        <div class="modal-body">
+        <h5 class="texto-modal-negro"><?php echo $nombre?>, puedes ver el detalle y respuestas de tus desafios haciendo click en el botón "",</h5>
+
+        <?php
+
+
+        $encuentroActual = $vars['listaEncuentros'.$desafioActual];
+
+        if ($encuentroActual != 0){
+
+          foreach ($encuentroActual as $item) { ?>
+
+
+          <div class="panel-group">
+              <div class="panel panel-primary">
+                <div class="panel-heading">
+                  <a data-toggle="collapse" href="#collapse<?php echo $item['idEncuentro']?>">
+                  <h4 class="panel-title">
+                    Propuesta N°<?php echo $aux.": Equipo ".$item['nombreEquipo']?>
+                  </h4></a>
+                </div>
+                <div id="collapse<?php echo $item['idEncuentro']?>" class="panel-collapse collapse">
+                  <br>
+                  <div class="container">
+                    <div class="col-sm-12">
+                      <!-- MOSTRAR JUGADORES -->
+
+                      <div class="row">
+                        
+                        <div class="col-md-3">
+                          <br>
+                          <div class="profile-userpic">
+                          <img class="img-responsive" style="width: 100px; height: 100px;" src="assets/images/usuarios/<?php echo $item['fotografia']?>">
+                          <div class="profile-usertitle">
+                            <div class="profile-usertitle-name">
+                              <?php echo "Capitán: ".$item['nombreCap']." ".$item['apellidoCap']; ?>
+                            </div>
+                          </div>
+                          <br>
+                        </div>
+                        </div>
+                        <div class="col-md-6">
+
+
+                          <br/>
+                          <div class="row">
+                            <label>Equipo: </label><?php echo " ".$item['nombreEquipo']?>
+                            <br>
+                            <label>Puntuación: </label><?php echo " ".$item['puntuacion']?>
+                            <br>
+                            <label>Promedio de edad: </label><?php echo " ".$item['edadPromedio']." años"?>
+                            <br>
+                          </div>
+
+
+
+                          <div class="row">
+                            <br/>
+
+                            <?php
+
+                            if ($item['estado'] == 2){
+
+                            } else {
+                              ?>
+
+                              <table class="table">
+                              <tr>
+                                <th style="border-top:transparent; text-align:center;">
+                                  <form action="?controlador=Encuentro&accion=cancelarEncuentro" method="post">
+                                    <input type="text" name="desafio" value="<?php echo $item['idDesafio']?>" hidden/>
+                                    <input type="text" name="equipo" value="<?php echo $item['idEquipo']?>" hidden/>
+                                  <button type="submit" class="btn btn-md btn-danger">Rechazar solicitud 
+                                    <i class="fa fa-times"></i>
+                                  </button>
+                                </form>
+                                </th>
+                                <th style="border-top:transparent; text-align:center;">
+                                  <form action="?controlador=Encuentro&accion=aceptarEncuentro" method="post">
+                                    <input type="text" name="desafio" value="<?php echo $item['idDesafio']?>" hidden/>
+                                    <input type="text" name="equipo" value="<?php echo $item['idEquipo']?>" hidden/>
+                                  <button type="submit" class="btn btn-md btn-primary">Aceptar solicitud
+                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                  </button>
+                                  </form>
+                                </th>
+                              </tr>
+                            </table>
+                              <?php
+                            }
+
+                            ?>
+                            
+                              
+                            
+                            
+                          </div>
+                        </div>
+
+
+                      </div>
+                    </div>                    
+                  </div>
+                  
+                </div>
+              </div>
+            </div>
+            
+
+
+
+
+
+
+
+          <?php
+          $aux++;
+          }
+        } else {
+          echo "no hay respuestas";
+        }
+
+        ?>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar <i class="fa fa-times" aria-hidden="true"></i></button>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- /MODAL PARA VER RESPUESTAS -->
+
+
+<script type="text/javascript">
+var idDesafio="0";
+function setValue(id){
+  idDesafio= id;
+  document.getElementById("id_desafio").value = idDesafio;
+  window.location.href="?controlador=Desafio&accion=listaDesafios&idDesafio="+id;
+}
+
+window.onload = function() {
+    function getParameterByName(name) {
+      name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+      var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+      results = regex.exec(location.search);
+      return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
+    var a = getParameterByName('idDesafio');
+
+    if(a == ""){
+
+    }else{
+      document.getElementById("id_desafio").value = a;
+      $('#myModal').modal();
+    }
+};
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="assets/js/funciones/funciones.js"></script>
+
+<script src="assets/js/bootstrap-slider.js"></script>
+<script type="text/javascript">
+  $('#ex2').slider({
+    min:18,
+    max:60,
+    step:1,
+    precision:0,
+    tooltip:'show',
+    handle: 'round'
+  });
+
+  $('#ex3').slider({
+    min:18,
+    max:60,
+    step:1,
+    precision:0,
+    tooltip:'show',
+    handle: 'round'
+  });
+</script>
 
 
 

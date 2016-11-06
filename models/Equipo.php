@@ -54,7 +54,8 @@ class Equipo{
 
 	// Obtener equipos de un usuario (Como Miembro, por lo tanto se revisa la tabla 'MiembrosEquipo'). MODULO LISTAR EQUIPOS
 	public function getEquiposMiembro($idUsuario){
-		$query = $this->db->prepare("SELECT * FROM Equipo INNER JOIN MiembrosEquipo ON Equipo.idEquipo = MiembrosEquipo.idEquipo 
+		$query = $this->db->prepare("SELECT * FROM Equipo 
+			INNER JOIN MiembrosEquipo ON Equipo.idEquipo = MiembrosEquipo.idEquipo 
 			WHERE MiembrosEquipo.idUsuario = '".$idUsuario."' AND Equipo.idCapitan != '".$idUsuario."' ");
 		$query->execute();
 		$resultado = $query->fetchAll();
@@ -63,7 +64,10 @@ class Equipo{
 
 	// Obtener miembros de un determinado equipo. - MODULO MODIFICAR EQUIPO
 	public function getMiembrosEquipo($idEquipo){
-		$query = $this->db->prepare("SELECT Usuario.idUsuario, Usuario.nombre, Usuario.apellido, Usuario.fotografia, Usuario.fechaNacimiento FROM Usuario INNER JOIN MiembrosEquipo ON Usuario.idUsuario = MiembrosEquipo.idUsuario WHERE MiembrosEquipo.idEquipo = '".$idEquipo."'");
+		$query = $this->db->prepare("SELECT DISTINCT Usuario.idUsuario, Usuario.nombre, Usuario.apellido, Usuario.fotografia, Usuario.fechaNacimiento 
+			FROM Usuario 
+			INNER JOIN MiembrosEquipo ON Usuario.idUsuario = MiembrosEquipo.idUsuario 
+			WHERE MiembrosEquipo.idEquipo = '".$idEquipo."'");
 		$query->execute();
 		$resultado = $query->fetchAll();
 		return $resultado;
@@ -71,9 +75,11 @@ class Equipo{
 
 	// Obtener posibles jugadores para un equipo (contactos de un usuario que no esten en un determinado equipo) - MODULO CREAR EQUIPO
 	public function getContactosEquipo($idUsuario, $idEquipo){
-		$query = $this->db->prepare("SELECT Usuario.idUsuario, Usuario.nombre, Usuario.apellido, Usuario.Fotografia FROM Usuario JOIN Contacto ON Usuario.idUsuario = Contacto.idContacto 
+		$query = $this->db->prepare("SELECT Usuario.idUsuario, Usuario.nombre, Usuario.apellido, Usuario.Fotografia 
+			FROM Usuario JOIN Contacto ON Usuario.idUsuario = Contacto.idContacto 
 									WHERE Contacto.idUsuario = '".$idUsuario."' AND Usuario.idUsuario NOT IN 
-									(SELECT Usuario.idUsuario FROM Usuario JOIN MiembrosEquipo ON Usuario.idUsuario = MiembrosEquipo.idUsuario 
+									(SELECT Usuario.idUsuario FROM Usuario 
+										JOIN MiembrosEquipo ON Usuario.idUsuario = MiembrosEquipo.idUsuario 
 										WHERE miembrosequipo.idEquipo = '".$idEquipo."' )");
 		$query->execute();
 		$resultado = $query->fetchAll();

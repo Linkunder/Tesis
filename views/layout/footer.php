@@ -28,10 +28,11 @@
                 </th>
               </tr>
               <tr>
-                <th style="border-top:transparent; text-align:center;">
+                <th style="border-top:transparent; text-align:center; font-size:12px;">
                   Proyecto de título
                 </th>
               </tr>
+             
             </table>
           </div>
         </div>
