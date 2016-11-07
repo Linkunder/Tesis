@@ -3,6 +3,8 @@ require 'models/Recinto.php';
 require 'models/Comentario.php';
 require 'models/Puntuacion.php';
 require 'models/Partido.php';
+require 'models/Horario.php';
+require 'models/Implemento.php';
 
 
 class RecintoController{
@@ -10,6 +12,8 @@ class RecintoController{
 	function __construct(){
         $this->view = new View();
         $this->Recinto = new Recinto();
+        $this->Horario = new Horario();
+        $this->Implemento = new Implemento();
     }
 
     public function index()
@@ -88,6 +92,31 @@ class RecintoController{
       $recinto->setSolicitud($nombre, $fono, $direccion, $idUsuario);
 
       header('Location: ?controlador=Recinto&accion=notificarRecinto&1');
+    }
+
+    public function horariosRecinto(){
+      //Id del recinto tomada desde la variable global
+      if(!isset($_SESSION)) { 
+        session_start(); 
+        } 
+
+      $idRecinto = $_SESSION['idRecinto'];
+      $horarios = $this->Horario->getHorariosRecinto($idRecinto);
+      $data['horarios'] = $horarios;
+      //mostrar vista parcial con los horarios (dataTable)
+      $this->view->show("_horarios.php",$data);
+    }
+
+    public function implementosRecinto(){
+      //Id del recinto desde la variable global
+      if(!isset($_SESSION)) { 
+        session_start(); 
+        } 
+      $idRecinto = $_SESSION['idRecinto'];
+      $implementos = $this->Implemento->getImplementosRecinto($idRecinto);
+      $data['implementos'] = $implementos;
+      //mostrar vista parcial con los implementos (dataTable)
+      $this->view->show("_implementos.php", $data);
     }
 
     

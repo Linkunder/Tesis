@@ -169,7 +169,7 @@ $_SESSION['idRecinto']=NULL;
 
                                 <div class="project-info">
                                     <div>
-                                        <span>Precio</span><?php echo "PRECIO";?>
+                                        <span>Implementos</span><button href="#" data-toggle="modal" data-target="#modalImplementos"  >Ver</button>
                                     </div>
                                     <div>
                                         <span>Telefono</span><?php echo $key['telefono'];?>
@@ -178,7 +178,8 @@ $_SESSION['idRecinto']=NULL;
                                         <span>Direccion</span><?php echo $key['direccion'];?>
                                     </div>
                                     <div>
-                                        <span>Horario</span><?php echo "HORARIOS";?>
+                                    <!-- Aqui debe ir un boton para ver los horarios (Modal) -->
+                                        <span>Horario y precios</span><button href="#" data-toggle="modal" data-target="#modalHorarios"  >Ver</button>
                                     </div>
                                     <div>
                                         <span>Superficie</span><?php echo $key['superficie'];?>
@@ -481,6 +482,40 @@ $_SESSION['idRecinto']=NULL;
 	.modal { overflow: auto !important; }
 </style>
         <!-- MODALES-->
+ <!-- MODAL HORARIOS-->
+<div class="container">
+    <div class="modal fade" id="modalHorarios">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h3 class="modal-title">Horarios</h3>
+                </div>
+                <div class="modal-body">     
+                <!--Aqui se deberia llamar a la vista parcial de horarios-->
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+ <!-- MODAL IMPLEMENTOS-->
+<div class="container">
+    <div class="modal fade" id="modalImplementos">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h3 class="modal-title">Implementos</h3>
+                </div>
+                <div class="modal-body">     
+                <!--Aqui se deberia llamar a la vista parcial de horarios-->
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
         <!--MODAL Tipo de partido-->
 <div class="container">
     <div class="modal fade" id="modalTipoPartido">

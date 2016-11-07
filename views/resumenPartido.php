@@ -509,7 +509,8 @@ foreach ($vectorTercerTiempo as $key ) {
   <script type="text/javascript" src="assets/js/jquerypp.custom.js"></script>
   <script type="text/javascript" src="assets/js/jquery.elastislide.js"></script>
     <script>     
-window.onload = function() {
+    //Creo que hay un error en este script.
+/*window.onload = function() {
   //funciones a ejecutar
      $.ajax({
           type:'post',
@@ -517,7 +518,7 @@ window.onload = function() {
           url:"?controlador=Partido&accion=enviarInvitaciones"
     });
   };
-
+*/
 
   </script>
 </body>
