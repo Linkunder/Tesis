@@ -28,9 +28,10 @@ class Usuario{
 								 $password, $telefono, $fechaNacimiento, 
 								$perfil, $estado){
 		$sql = "INSERT INTO Usuario (nombre, apellido, nickname, mail, sexo, fotografia, password, telefono, fechaNacimiento, perfil, estado) 
-				VALUES ('$nombre', '$apellido', '$nickname', '$mail', '$sexo', '$fotografia','$password', '$telefono', '$fechaNacimiento', '$perfil', '$estado');";
-		$query = $this->db->prepare($sql);
-		$query->execute();
+				VALUES ('$nombre', '$apellido', '$nickname', '$mail', '$sexo', '$fotografia','$password', '$telefono', (STR_TO_DATE('".$fechaNacimiento."', '%Y-%d-%m')), '$perfil', '$estado');";
+		echo $sql;
+		//$query = $this->db->prepare($sql);
+		//$query->execute();
 	}
 
 	public function setFotografia($idUsuario, $imagen){
@@ -44,7 +45,6 @@ class Usuario{
 			nickname = '".$nickname."',
 			mail = '".$mail."',
 			telefono = '".$telefono."',
-			fotografia = '".$fotografia."',
 			fechaNacimiento = '".$fechaNacimiento."'
 			WHERE idUsuario = '".$idUsuario."'";
 		$query = $this->db->prepare($sql);

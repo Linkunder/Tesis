@@ -38,7 +38,7 @@ class Desafio{
 		$query = $this->db->prepare
 		("SELECT Desafio.idDesafio, (DATE_FORMAT(Desafio.fecha,'%d-%m-%Y')) as fechaPartido , Desafio.comentario, Desafio.tipoPartido, Desafio.estado as estadoDesafio, Equipo.nombre as nombreEquipo, Equipo.idEquipo
 			FROM Desafio 
-			JOIN Equipo ON Desafio.idEquipo = Equipo.idEquipo WHERE Equipo.idCapitan = '".$idUsuario."' ORDER BY desafio.fecha ASC");
+			JOIN Equipo ON Desafio.idEquipo = Equipo.idEquipo WHERE Equipo.idCapitan = '".$idUsuario."' ORDER BY desafio.estado DESC");
 		$query->execute();
 		$resultado = $query->fetchAll();
 		return $resultado;

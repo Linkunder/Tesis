@@ -44,7 +44,7 @@ class UsuarioController{
 		$nombre = $_POST['nombre'];
 		$apellido= $_POST['apellido'];
 		$nickname= $_POST['nickname'];
-		$fechaNacimiento= $_POST['fechaNacimiento'];
+		$fechaNacimiento= $_POST['date'];
 		$mail= $_POST['mail'];
 		$telefono= $_POST['telefono'];
 		$password = $_POST['password'];
@@ -54,14 +54,17 @@ class UsuarioController{
 		$usuarios = $this->Usuario->getUsuarios();
 		$idUsuario = end($usuarios)['idUsuario'];
 		$this->guardarImagen($idUsuario);
-		header('Location: ?controlador=Index&accion=inicio');
+		$mensaje = 1;
+		$data['nuevoUsuario'] = $mensaje;
+		$this->view->show('inicio.php',$data);
+		//header('Location: ?controlador=Index&accion=inicio');
 	}
 
 	// Subir imagen 
 	private function guardarImagen($idUsuario){
 		$target_dir = "assets/images/usuarios/";
 		$target_file = $target_dir.basename($_FILES["imagen"]["name"]);
-		echo $target_file;
+		//echo $target_file;
 		$uploadOk = 1;
 		$imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
 		// Asignar nuevo nombre: idUsuario.extensionFotografia

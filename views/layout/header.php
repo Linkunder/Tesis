@@ -32,6 +32,15 @@
   
   <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css'>
   <link rel="shortcut icon" href="assets/images/soccer.ico">
+
+
+
+
+  <script type="text/javascript" src="assets/js/jquery.js"></script>
+
+
+
+
 </head><!--/head-->
 
     <?php
@@ -68,13 +77,14 @@
             <ul class="nav pull-left">
               <li class="dropdown" id="menuLogin">
                 <a class="dropdown-toggle" href="#" data-toggle="dropdown" id="navLogin">Ingresar</a>
-                <div class="dropdown-menu" style="padding:2em;">
+                <div class="dropdown-menu dropdown-menuprincipal" style="padding:2em;">
 
 
                   <form class="form" id="formLogin" action="?controlador=Sesion&accion=verificarLogin" method="post">
                     <label class="design-label">¿TIENES CUENTA?</label><br>
-                    <input class="entrada-login" name="mail" id="mail" type="text" placeholder="Mail"> 
-                    <input class="entrada-login" name="password" id="password" type="password" placeholder="Password"><br>
+                    <input class="entrada-login" name="mail" id="mail" type="text" placeholder="Mail" > 
+                    <input class="entrada-login" name="password" id="password" type="password" placeholder="Password">
+                    <br>
                     <button class="boton-login" type="submit" class="design-button">Iniciar sesión</button>
                   </form>
 

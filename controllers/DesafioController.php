@@ -34,7 +34,7 @@ class DesafioController{
 			//$detalleDesafio = $desafios->getDesafio($idDesafio);
 			//$data['detalleDesafio'.$idDesafio] = $detalleDesafio;
 			//var_dump($detalleDesafio);
-			$listaEncuentros = $encuentros->getEncuentros($idDesafio);
+			$listaEncuentros = $encuentros->getEncuentros($idDesafio);		// Encuentros de los desafios hechos por el jugador de la sesión.
 			if (!empty($listaEncuentros)){
 				$data['listaEncuentros'.$idDesafio] = $listaEncuentros;
 				$nroEncuentros++;
@@ -43,6 +43,8 @@ class DesafioController{
 			}
 			
 		}
+		$listaSolicitudes = $encuentros->getSolicitudes($idUsuario);	// Lista de solicitudes realizadas por el jugador.
+		$data['listaSolicitudes'] = $listaSolicitudes;
 		$data['nroEncuentros'] = $nroEncuentros;
 		//$listaDesafiosSistema = $desafios->getDesafiosSistema($idUsuario);	// Desafios de los equipos del usuario
 		//$data['listaDesafiosSistema'] = $listaDesafiosSistema;

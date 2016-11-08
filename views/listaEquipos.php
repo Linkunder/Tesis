@@ -135,7 +135,7 @@ $nroContactos = count($contactos);
       ?>
 
       <!--h2> Mis equipos <i class="fa fa-futbol-o" aria-hidden="true"></i> </h2-->
-            <p class="centered">Además, perteneces a los siguientes equipos. Haz click en el nombre de alugno para ver a tus compañeros de equipo.</p>
+            <p class="centered">Además, perteneces a los siguientes equipos. Haz click en el nombre de alguno para ver a tus compañeros de equipo.</p>
             <?php
             foreach ($equiposMiembro as $item) {
             ?>
@@ -239,7 +239,7 @@ $nroContactos = count($contactos);
       </div>
       <div class="modal-body">
         <h5 class="texto-modal-negro">Ingresa los datos de tu futuro equipo, del cual serás capitán.</h5>
-        <form id="demoform" action="?controlador=Equipo&accion=crearEquipo" method="post">
+        <form id="demoform" action="?controlador=Equipo&accion=crearEquipo" method="post" >
           <div class="container-fluid">
             <div class="row">
               <div class="col-sm-12">
@@ -281,7 +281,9 @@ $nroContactos = count($contactos);
         </form>
 
         <script>
-            var demo1 = $('select[name="arrayContactos[]"]').bootstrapDualListbox();
+            var demo1 = $('select[name="arrayContactos[]"]').bootstrapDualListbox({
+              selectorMinimalHeight:'100'
+            });
 
         </script>
 

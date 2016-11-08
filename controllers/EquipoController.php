@@ -85,6 +85,7 @@ class EquipoController{
 		$idEquipo = end($equipos)['idEquipo'];
 		for ($i=0; $i<count($miembros) ; $i++) {
 			$idMiembro = $miembros[$i];
+			//echo "Miembro: ".$miembros[$i];
 			$equipo->agregarMiembroEquipo($idMiembro,$idEquipo);
 		}
 		$equipo->agregarMiembroEquipo($idUsuario,$idEquipo);

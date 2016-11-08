@@ -31,12 +31,11 @@ include('layout/headerJugador.php');
 
       <?php
 
-      if (isset($vars['nroDesafios'])){
+      if ($vars['nroDesafios'] != 0 ){
 
         ?>
 
-              <p class="centered"><?php echo $nombre?>, estos son los desafíos Matchday que puedes responder.
-      </p>
+        <p class="centered"><?php echo $nombre?>, estos son los desafíos Matchday que puedes responder.</p>
 
 
       <div class="row">
@@ -58,6 +57,7 @@ include('layout/headerJugador.php');
                 for ($i=1; $i <= $nroDesafios; $i++) {
                   $desafio = $vars['listaDesafiosSistema'.$i];
                 foreach ($desafio as $item) {
+                  if ($item['estadoDesafio']!=2){
                 ?>
                 <tr>
                   <td>
@@ -95,11 +95,6 @@ include('layout/headerJugador.php');
                       <span class="label label-success">Con respuestas <i class="fa fa-bell" aria-hidden="true"></i></span>
                       <?php
                     }
-                    if ($item['estadoDesafio']==2){
-                      ?>
-                      <span class="label label-danger">Tiempo límite <i class="fa fa-exclamation-triangle" aria-hidden="true"></i></span>
-                      <?php
-                    }
                     ?>
                   </td>
                   <td>
@@ -111,6 +106,7 @@ include('layout/headerJugador.php');
                   </td>
                 </tr>
                   <?php
+                }
                     }
                   }
                   ?>
@@ -128,11 +124,38 @@ include('layout/headerJugador.php');
 
       } else {
 
+        ?>
+
+        <p class="centered"><?php echo $nombre?>, en estos momentos no hay desafíos disponibles para tu equipo.
+          Por favor, inténtalo más tarde.</p>
+
+          <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+              <table class="table">
+                <tr>
+                  <th style="border-top:transparent; text-align:center;">
+                    <a href="?controlador=Desafio&accion=listaDesafios">
+                      <button type="button" class="btn btn-md btn-primary" href="#" data-toggle="modal" data-target="#modal-1">Volver
+                        <i class="fa fa-arrow-circle-left"></i>
+                      </button>
+                    </a>
+                  </th>
+                </tr>
+              </table>
+            </div>
+          </div>
+
+        <?php
+
 
 
 
       }
       ?>
+
+
+      
+
 
 
 

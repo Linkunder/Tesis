@@ -67,6 +67,9 @@ if (isset($_SESSION['login_user_email'])){
   <link rel="shortcut icon" href="assets/images/soccer.ico">
 
 
+
+  <script type="text/javascript" src="assets/js/jquery.js"></script>
+
 </head><!--/head-->
 
     <?php
@@ -102,7 +105,7 @@ if (isset($_SESSION['login_user_email'])){
             <ul class="nav pull-left">
               <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $nombre?> <i class="fa fa-user"></i>
                 <b class="caret"></b></a>
-                <ul class="dropdown-menu">
+                <ul class="dropdown-menu dropdown-menuprincipal" >
                   <li><a href="?controlador=Usuario&accion=perfilUsuario">Perfil   </a></li><div class="drop-divider"></div>
                   <li><a href="?controlador=Contacto&accion=listaContactos">Contactos </a></li><div class="drop-divider"></div>
                   <li><a href="?controlador=Equipo&accion=listaEquipos">Equipos </a></li><div class="drop-divider"></div>
@@ -115,7 +118,7 @@ if (isset($_SESSION['login_user_email'])){
             <ul class="nav pull-left">
               <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Partidos <i class="fa fa-flag" aria-hidden="true"></i>
                 <b class="caret"></b></a>
-                <ul class="dropdown-menu">
+                <ul class="dropdown-menu dropdown-menuprincipal">
                   <?php
 
 

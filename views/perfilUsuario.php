@@ -16,7 +16,10 @@ $usuario = $vars['perfilUsuario'];
 
 <!-- Aqui empieza la pagina -->
 <link href="assets/css/profile.css" rel="stylesheet">
-<div class="row">
+
+
+
+
   <div id="contact-us" class="parallax">
     <div class="container">
       <br/>
@@ -100,7 +103,6 @@ $usuario = $vars['perfilUsuario'];
     </div>
 
   </div>
-</div>
 
 
 

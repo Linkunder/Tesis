@@ -385,7 +385,7 @@
         '       <i></i>' +
         '     </button>' +
         '   </div>' +
-        '   <select multiple="multiple"></select>' +
+        '   <select multiple="multiple" ></select>' +
         ' </div>' +
         ' <div class="box2">' +
         ' <h5 class="texto-modal-negro">Equipo</h5>' +
@@ -406,7 +406,7 @@
         '     </button>' +
         */
         '   </div>' +
-        '   <select multiple="multiple"  ></select>' +
+        '   <select multiple="multiple" ></select>' +
         ' </div>' +
         '</div>')
         .insertBefore(this.element);

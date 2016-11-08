@@ -3,7 +3,17 @@ include('layout/header.php');
 ?>
 <link rel="stylesheet" href="assets/css/style-f.css">
 
-<!--DATEPICKER-->
+
+<!--  jQuery -->
+<script type="text/javascript" src="assets/js/jquery-1.11.3.min.js"></script>
+
+<!-- Isolated Version of Bootstrap, not needed if your site already uses Bootstrap -->
+<link rel="stylesheet" href="assets/css/bootstrap-iso.css" />
+
+<!-- Bootstrap Date-Picker Plugin -->
+<script type="text/javascript" src="assets/js/bootstrap-datepicker.min.js"></script>
+<link rel="stylesheet" href="assets/css/bootstrap-datepicker3.css"/>
+
 
 
 
@@ -42,8 +52,10 @@ include('layout/header.php');
               </div>
               <div class="form-group">
                 <label class="sr-only" for="form-last-name">Fecha de nacimiento</label>
-                <input type="date" name="fechaNacimiento" class="form-last-name form-control" required>
+                <!--input type="date" name="fechaNacimiento" class="form-last-name form-control" required-->
+                <input class="form-control" id="date" name="date" placeholder="MM/DD/YYY" type="text" required/>
               </div>
+
               <div class="form-group">
                 <label class="sr-only" for="form-last-name">Teléfono</label>
                 <input type="text" name="telefono" placeholder="Ingresa tu teléfono" class="form-last-name form-control" >
@@ -157,7 +169,23 @@ include('layout/header.php');
 
 
   
-  <script src="assets/js/jquery.js"></script>
+
+              <script>
+                  $(document).ready(function(){
+                    var date_input=$('input[name="date"]'); //our date input has the name "date"
+                    var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+                    var options={
+                      format: 'mm/dd/yyyy',
+                      container: container,
+                      todayHighlight: true,
+                      autoclose: true,
+                    };
+                    date_input.datepicker(options);
+                  })
+              </script>
+
+
+  <!--script src="assets/js/jquery.js"></script-->
   <script src="assets/js/bootstrap.min.js"></script>
   <script src="assets/js/jquery.inview.min.js"></script>
   <script src="assets/js/wow.min.js"></script>
@@ -175,7 +203,6 @@ include('layout/header.php');
 
 
 <script src="assets/js/fileinput.min.js"></script>
-<script src="assets/js/jquery-1.11.1.min.js"></script>
 <script src="assets/js/jquery.backstretch.min.js"></script>
 <script src="assets/js/retina-1.1.0.min.js"></script>
 <script src="assets/js/scripts.js"></script>

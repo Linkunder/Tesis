@@ -4,9 +4,10 @@ include('layout/headerJugador.php');
 
 // Traer usuario desde el controlador.
 
-//if (isset($vars'modificarPerfil')){
+if (isset($vars['modificarPerfil']  )){
   $usuario = $vars['modificarPerfil'];
-//}
+}
+
 
 
 
@@ -18,7 +19,15 @@ include('layout/headerJugador.php');
 <!-- Aqui empieza la pagina -->
 
 <link href="assets/css/profile.css" rel="stylesheet">
-<div class="row">
+
+
+
+
+
+
+
+
+
   <div id="contact-us" class="parallax">
 
     <div class="container">
@@ -32,6 +41,7 @@ include('layout/headerJugador.php');
     <div class="page-header">
           <h2> Modificar perfil <i class="fa fa-user" aria-hidden="true"></i> </h2>
         </div>
+
       <div class="row profile">
         <div class="col-md-4 ">
           <div class="profile-sidebar">
@@ -101,7 +111,7 @@ include('layout/headerJugador.php');
     </div>
 
   </div>
-</div>
+
 
 
   

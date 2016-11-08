@@ -36,9 +36,9 @@ class EncuentroController{
 		$idEquipo = $_POST['equipo'];
 		$estado = 2;
 		$desafio->cambiarEstado($idDesafio, $estado);
+		$encuentro->cambiarEstado($idDesafio, $estado);
 		$encuentro->eliminarEncuentros($idDesafio, $idEquipo);
-
-		echo "desafio: ".$idDesafio." equipo: ".$idEquipo;
+		header('Location: ?controlador=Desafio&accion=listaDesafios');
 	}
 
 	// Se elimina una tupla de la tabla encuentro.
@@ -47,6 +47,8 @@ class EncuentroController{
 		$idEquipo = $_POST['equipo'];
 		echo "desafio: ".$idDesafio." equipo: ".$idEquipo;
 	}
+
+
 
 
 }
