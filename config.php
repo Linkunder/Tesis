@@ -6,9 +6,14 @@
 	$config->set('controllersFolder', 'controllers/');
 	$config->set('modelsFolder', 'models/');
 	$config->set('viewsFolder', 'views/');
-	 
+	 /*
 	$config->set('dbhost', 'localhost');
 	$config->set('dbname', 'DBTesis');
 	$config->set('dbuser', 'root');
 	$config->set('dbpass', '');
+	*/
+	$config->set('dbhost', 'parra.chillan.ubiobio.cl:3306');
+	$config->set('dbname', 'pnsilva');
+	$config->set('dbuser', 'pnsilva');
+	$config->set('dbpass', 'M5D5TNgt');
 ?>

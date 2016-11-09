@@ -28,8 +28,8 @@ class Usuario{
 								 $password, $telefono, $fechaNacimiento, 
 								$perfil, $estado){
 		$sql = "INSERT INTO Usuario (nombre, apellido, nickname, mail, sexo, fotografia, password, telefono, fechaNacimiento, perfil, estado) 
-				VALUES ('$nombre', '$apellido', '$nickname', '$mail', '$sexo', '$fotografia','$password', '$telefono', (STR_TO_DATE('".$fechaNacimiento."', '%Y-%d-%m')), '$perfil', '$estado');";
-		echo $sql;
+				VALUES ('$nombre', '$apellido', '$nickname', '$mail', '$sexo', '$fotografia','$password', '$telefono', (STR_TO_DATE('".$fechaNacimiento."', '%Y-%m-%D')), '$perfil', '$estado');";
+		//echo $sql;
 		//$query = $this->db->prepare($sql);
 		//$query->execute();
 	}

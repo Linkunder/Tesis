@@ -622,7 +622,7 @@ $nroEncuentros = $vars['nroEncuentros'];
           <br/>
           <div class="container-fluid">
             <div class="alert alert-danger fade in">
-              <strong>Error!</strong> No estás autorizado para acceder a este desafío.
+              <strong>Error!</strong> No estás autorizado para acceder a esta información.
             </div>
           </div>
           <?php

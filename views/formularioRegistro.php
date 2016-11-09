@@ -53,7 +53,7 @@ include('layout/header.php');
               <div class="form-group">
                 <label class="sr-only" for="form-last-name">Fecha de nacimiento</label>
                 <!--input type="date" name="fechaNacimiento" class="form-last-name form-control" required-->
-                <input class="form-control" id="date" name="date" placeholder="MM/DD/YYY" type="text" required/>
+                <input class="form-control" id="date" name="date" placeholder="Ingresa fecha de nacimiento" type="text" required/>
               </div>
 
               <div class="form-group">
@@ -175,7 +175,7 @@ include('layout/header.php');
                     var date_input=$('input[name="date"]'); //our date input has the name "date"
                     var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
                     var options={
-                      format: 'mm/dd/yyyy',
+                      format: 'dd/mm/yyyy',
                       container: container,
                       todayHighlight: true,
                       autoclose: true,
