@@ -169,17 +169,18 @@ $_SESSION['idRecinto']=NULL;
 
                                 <div class="project-info">
                                     <div>
-                                        <span>Implementos</span><button href="#" data-toggle="modal" data-target="#modalImplementos"  >Ver</button>
+                                        <span>Implementos</span>
+                                        <button type="button" class="btn-info" href="javascript:void(0);" data-toggle="modal" data-target="#modal"  onclick="carga_ajax('modal','implementos');">Ver <i class="fa fa-eye"></i> </button>
                                     </div>
                                     <div>
-                                        <span>Telefono</span><?php echo $key['telefono'];?>
+                                        <span>Telefono</span> <?php echo $key['telefono'];?>
                                     </div>
                                     <div>
                                         <span>Direccion</span><?php echo $key['direccion'];?>
                                     </div>
                                     <div>
                                     <!-- Aqui debe ir un boton para ver los horarios (Modal) -->
-                                        <span>Horario y precios</span><button href="#" data-toggle="modal" data-target="#modalHorarios"  >Ver</button>
+                                        <span>Horario y precios</span><button type="button" class="btn-info" href="javascript:void(0);" data-toggle="modal" data-target="#modal" id="botonHorario" onclick="carga_ajax('modal','horarios');">Ver <i class="fa fa-eye"></i> </button>
                                     </div>
                                     <div>
                                         <span>Superficie</span><?php echo $key['superficie'];?>
@@ -198,7 +199,6 @@ $_SESSION['idRecinto']=NULL;
                                 
                                     }?>
                            
-
                                     <br/>
                                     <?php
                                      //Con este if se comprueba que el jusgador tenga un estado activo y no haya comentado en este recinto
@@ -274,6 +274,7 @@ $_SESSION['idRecinto']=NULL;
                                     </div>
                                     
                                     <br/>
+                                    <!-- hasta aqui deberia quedar una tabla para abarcar lo de arriba -->
                                     <?php 
                                     $_SESSION["idRecinto"]=$idRecinto;
                                     if($jugar==1){ ?>
@@ -483,38 +484,27 @@ $_SESSION['idRecinto']=NULL;
 </style>
         <!-- MODALES-->
  <!-- MODAL HORARIOS-->
-<div class="container">
-    <div class="modal fade" id="modalHorarios">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h3 class="modal-title">Horarios</h3>
-                </div>
-                <div class="modal-body">     
-                <!--Aqui se deberia llamar a la vista parcial de horarios-->
-                </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
- <!-- MODAL IMPLEMENTOS-->
-<div class="container">
-    <div class="modal fade" id="modalImplementos">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h3 class="modal-title">Implementos</h3>
-                </div>
-                <div class="modal-body">     
-                <!--Aqui se deberia llamar a la vista parcial de horarios-->
-                </div>
-                </div>
-            </div>
-        </div>
+<!--MODAL IMPLEMENTOS-->
+    <div class="modal fade" id="modal" tabindex="-1" role="dialog" >
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Ventana normal</h4>
+      </div>
+      <div class="modal-body">
+        <h1>Texto #manosenelcódigo</h1>
+      </div>
+      <div class="modal-footer">
+            <h4>pie de página</h4>
+      </div>
     </div>
+  </div>
+</div>
+<!--Modal-->
+ <!-- MODAL IMPLEMENTOS-->
+   
 
         <!--MODAL Tipo de partido-->
 <div class="container">
@@ -845,9 +835,38 @@ $_SESSION['idRecinto']=NULL;
                 });
             });
 
+        </script>
 
+        <script>
+            /*
+            $('#modalImplementos').on('show.bs.modal', function(){
+                alert("Hola");
+                //$('#modalImplementos').load('?controlador=Recinto&accion=implementosRecinto');
+                $('#modalImplementos').load('?controlador=Recinto&accion=implementosRecinto');
+                 
+            })
+            */
+            function carga_ajax(div, tipo){
+                if(tipo == 'implementos'){
+                     $.post(
+                    '?controlador=Recinto&accion=implementosRecinto',
+                    function(resp){
+                        $("#"+div+"").html(resp);
+                    }
+                    ); 
+                }
+                if(tipo == 'horarios'){
+                    $.post(
+                        '?controlador=Recinto&accion=horariosRecinto',
+                        function(resp){
+                            $("#"+div+"").html(resp);
+                        }
+                    ); 
+                }
 
+            }
 
+            
         </script>
 
 

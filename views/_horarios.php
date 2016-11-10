@@ -1,6 +1,13 @@
-
-<table id="horarios" class="display" cellspacing="0" width="100%">
-	<thead>
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Horarios y tarifas</h4>
+      </div>
+      <div class="modal-body">
+      <?php     if(count($vars['horarios'])!=0){ ?>
+      <table id="implementos" class="table bootstrap table-striped label-partido">
+<thead>
 		<tr>
 			<th>Nombre</th>
 			<th>Horas</th>
@@ -8,14 +15,6 @@
 			<th>Precio</th>
 		</tr>
 	</thead>
-	<tfoot>
-		<tr>
-			<th>Nombre</th>
-			<th>Horas</th>
-			<th>Dias</th>
-			<th>Precio</th>
-		</tr>
-	</tfoot>
 	<tbody>
 	<?php foreach($vars['horarios'] as $horario){?>
 		<tr>
@@ -29,8 +28,13 @@
 	<?php } ?>
 	</tbody>
 </table>
+	<?php }else{
+	?>
+	<h2 class="label-partido">No existen Horarios asociados</h2>
+	<?php }
 
-<script>
-//Script para inicializar el datatable
-
-</script>
+	?>
+      </div>
+      
+    </div>
+ </div>

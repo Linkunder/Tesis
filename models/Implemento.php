@@ -11,7 +11,7 @@ class Implemento{
 			SELECT * FROM Implemento WHERE idRecinto = '$idRecinto';
 			");
 		$consulta->execute();
-		$resultado= $consuulta->fetchAll();
+		$resultado= $consulta->fetchAll();
 		return $resultado;
 	}
 
