@@ -44,11 +44,11 @@ include('layout/header.php');
             <div class="form-bottom">
               <div class="form-group">
                 <label class="sr-only" for="form-first-name">Nombre</label>
-                <input type="text" name="nombre" placeholder="Ingresa tu nombre" class="form-first-name form-control" >
+                <input type="text" name="nombre" placeholder="Ingresa tu nombre" class="form-first-name form-control" required>
               </div>
               <div class="form-group">
                 <label class="sr-only" for="form-last-name">Apellido</label>
-                <input type="text" name="apellido" placeholder="Ingresa tu apellido" class="form-last-name form-control" >
+                <input type="text" name="apellido" placeholder="Ingresa tu apellido" class="form-last-name form-control" required>
               </div>
               <div class="form-group">
                 <label class="sr-only" for="form-last-name">Fecha de nacimiento</label>
@@ -58,15 +58,15 @@ include('layout/header.php');
 
               <div class="form-group">
                 <label class="sr-only" for="form-last-name">Teléfono</label>
-                <input type="text" name="telefono" placeholder="Ingresa tu teléfono" class="form-last-name form-control" >
+                <input type="text" name="telefono" placeholder="Ingresa tu teléfono" class="form-last-name form-control" required>
               </div>
               <div class="form-group">
                 <label class="sr-only" for="form-about-yourself">Selecciona tu sexo</label>
                 <select class="form-last-name form-control" name="sexo" required>
-                        <option selected disabled>Selecciona sexo</option>
+                        <option value="" selected disabled>Selecciona sexo</option>
                         <option id="text-black" value="M">Masculino</option>
                         <option id="text-black" value="F">Femenino</option>
-                      </select>  
+                </select>  
               </div>
               <button type="button" class="btn btn-primary btn-next">Siguiente <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></button>
             </div>
@@ -84,15 +84,15 @@ include('layout/header.php');
             <div class="form-bottom">
               <div class="form-group">
                 <label class="sr-only" for="form-email">Mail</label>
-                <input type="text" name="mail" placeholder="Ingresa tu mail" class="form-email form-control" >
+                <input type="text" name="mail" placeholder="Ingresa tu mail" class="form-email form-control" required>
               </div>
               <div class="form-group">
                 <label class="sr-only" for="form-password">Password</label>
-                <input type="password" name="password" placeholder="Ingresa tu password" class="form-password form-control" >
+                <input type="password" name="password" placeholder="Ingresa tu password" class="form-password form-control" required>
               </div>
               <div class="form-group">
                 <label class="sr-only" for="form-first-name">Nickname</label>
-                <input type="text" name="nickname" placeholder="Elige un nickname" class="form-first-name form-control" >
+                <input type="text" name="nickname" placeholder="Elige un nickname" class="form-first-name form-control" required>
               </div>
               <button type="button" class="btn btn-warning btn-previous"> <i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Atrás</button>
               <button type="button" class="btn btn-primary btn-next">Siguiente <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></button>
@@ -175,10 +175,11 @@ include('layout/header.php');
                     var date_input=$('input[name="date"]'); //our date input has the name "date"
                     var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
                     var options={
-                      format: 'dd/mm/yyyy',
+                      format: 'dd-mm-yyyy',
                       container: container,
                       todayHighlight: true,
                       autoclose: true,
+                      startView: 2,
                     };
                     date_input.datepicker(options);
                   })

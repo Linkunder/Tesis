@@ -78,33 +78,43 @@ $nroContactos = count($contactos);
               <table class="table table-striped table-hover">
                 <thead>
                   <tr id="color-encabezado">
-                    <th>Nombre</th>
-                    <th>Color</th>
+                    <th id="encabezado-especial">#</th>
+                    <th id="encabezado-especial">Nombre</th>
+                    <th id="encabezado-especial">Color</th>
+                    <th id="encabezado-especial">Edad promedio</th>
                     <th></th>
                   </tr>
                 </thead>
-                <tbody id="texto-contactos">
+                <tbody id="texto-contactos" class="center">
                   <?php
+                  $i = 1;
                   foreach ($equipos as $item) {
                   ?>
                   <tr>
-                  <td>
-                    <?php echo $item['nombre']?>
-                  </td>
-                  <td>
-                    <?php echo $item['color']?>
-                  </td>
-                  <td class="centered">
-                    <a href="?controlador=Equipo&accion=gestionarEquipo&idEquipo=<?php echo $item['idEquipo']?>">
-                      <!--button type="button" class="btn btn-md btn-success" data-toggle="modal" data-target="#myModal"-->
-                      <button type="button" class="btn btn-md btn-success">
-                      Gestionar 
-                      <i class="fa fa-pencil-square-o"></i>
-                      </button>
-                    </a>
-                  </td>
+                    <td>
+                      <?php echo $i?>
+                    </td>
+                    <td>
+                      <?php echo $item['nombre']?>
+                    </td>
+                    <td>
+                      <?php echo $item['color']?>
+                    </td>
+                    <td>
+                      <?php echo $item['edadPromedio']?>
+                    </td>
+                    <td class="centered">
+                      <a href="?controlador=Equipo&accion=gestionarEquipo&idEquipo=<?php echo $item['idEquipo']?>">
+                        <!--button type="button" class="btn btn-md btn-success" data-toggle="modal" data-target="#myModal"-->
+                        <button type="button" class="btn btn-md btn-success">
+                        Gestionar 
+                        <i class="fa fa-pencil-square-o"></i>
+                        </button>
+                      </a>
+                    </td>
                 </tr>
                   <?php
+                  $i++;
                   }
                   ?>
                 </tbody>

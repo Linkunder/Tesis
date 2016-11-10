@@ -20,12 +20,13 @@ class EncuentroController{
 	public function setEncuentro(){
 		$encuentro = new Encuentro();
 		$desafio = new Desafio();
+		/*
 		$idDesafio = $_GET['idDesafio'];
 		$idEquipo = $_SESSION['equipoSeleccionado'];
 		$estado = 1;
 		$encuentro->setEncuentro($idDesafio, $idEquipo, $estado); // Se inserta en la base de datos
 		$desafio->cambiarEstado($idDesafio, $estado);				// Se cambia el estado del desafio (sin respuestas->con respuestas)
-		header('Location: ?controlador=Desafio&accion=listaDesafios');
+		header('Location: ?controlador=Desafio&accion=listaDesafios');*/
 	}
 
 	// Se acepto una solicitud de este desafio, por lo tanto se registra que el desafio será jugado y las demas solicitudes se rechazan.
@@ -47,6 +48,7 @@ class EncuentroController{
 		$idEquipo = $_POST['equipo'];
 		echo "desafio: ".$idDesafio." equipo: ".$idEquipo;
 	}
+
 
 
 

@@ -4,6 +4,7 @@
 include('layout/headerJugador.php');
 $equipos = $vars['listaEquipos'];
 $desafios = $vars['listaDesafios'];
+$recintos = $vars['listaRecintos'];
 
 
 
@@ -15,10 +16,28 @@ $desafios = $vars['listaDesafios'];
 <link href="assets/css/profile.css" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/slider.css">
 
-<link rel="stylesheet" href="assets/css/estiloPropio.css">
 
 
 
+
+<!--  jQuery -->
+<script type="text/javascript" src="assets/js/jquery-1.11.3.min.js"></script>
+
+<!-- Isolated Version of Bootstrap, not needed if your site already uses Bootstrap -->
+<link rel="stylesheet" href="assets/css/bootstrap-iso.css" />
+
+<!-- Bootstrap Date-Picker Plugin -->
+<script type="text/javascript" src="assets/js/bootstrap-datepicker.min.js"></script>
+<link rel="stylesheet" href="assets/css/bootstrap-datepicker3.css"/>
+
+
+
+
+
+<!-- DATATABLE -->
+<link href="assets/css/dataTables.bootstrap.min.css" rel="stylesheet">
+<script type="text/javascript" src="assets/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="assets/js/dataTables.bootstrap.min.js"></script>
 
 
 
@@ -142,7 +161,7 @@ $desafios = $vars['listaDesafios'];
         <div class="row">
           <div class="col-md-8 col-md-offset-2">
             <div class="table-responsive">
-              <table class="table table-striped table-hover">
+              <table id="example" class="table table-striped table-hover">
                 <thead id ="position-table">
                   <tr id="color-encabezado">
                     <th id="encabezado-especial">Desafio</th>
@@ -150,6 +169,7 @@ $desafios = $vars['listaDesafios'];
                     <th id="encabezado-especial">Fecha</th>
                     <th id="encabezado-especial">Tipo de partido</th>
                     <th id="encabezado-especial">Estado</th>
+                    <th></th>
                   </tr>
                 </thead>
                 <tbody id="texto-contactos" class="center">
@@ -169,7 +189,9 @@ $desafios = $vars['listaDesafios'];
                     <?php echo $item['fechaPartido']?>
                   </td>
                   <td>
-                    <?php 
+                    <?php
+
+                    
                     $tipo = $item['tipoPartido'];
                     if ($tipo==0){
                       echo "Fútbol";
@@ -180,6 +202,7 @@ $desafios = $vars['listaDesafios'];
                     if ($tipo==2){
                       echo "Baby-Fútbol";
                     }
+                    
                     ?>
                   </td>
                   <td>
@@ -207,9 +230,9 @@ $desafios = $vars['listaDesafios'];
                     $idEquipo = $item['idEquipo'];
                     ?>
                   <input type="text" id="id_desafio" value="<?php echo $idDesafio?>" hidden/>
-                  <td>
+                  <!--td>
                     <a href="#" class="btn btn-danger fa fa-trash-o" onclick="setValue2(<?php echo $idDesafio;?>)" data-placement="right" data-toggle="tooltip" title="Cancelar desafío"></a>
-                  </td>
+                  </td-->
                   <td>
 
 
@@ -224,7 +247,7 @@ $desafios = $vars['listaDesafios'];
                     </button-->
 
 
-                    <a href="#" class="btn btn-primary fa fa-plus-circle" onclick="setValue(<?php echo $idDesafio;?>)" data-placement="right" data-toggle="tooltip" title="Ver detalles"></a>
+                    <a href="#" class="btn btn-primary fa fa-search-plus" onclick="setValue(<?php echo $idDesafio;?>)" data-placement="right" data-toggle="tooltip" title="Ver detalles"></a>
 
                     <script>
                       $(document).ready(function(){
@@ -246,6 +269,11 @@ $desafios = $vars['listaDesafios'];
 
 
         
+        <script type="text/javascript">
+          $(document).ready(function() {
+            $('#example').DataTable();
+        } );
+        </script>
 
 
 
@@ -278,11 +306,11 @@ $desafios = $vars['listaDesafios'];
           <div class="row">
           <div class="col-md-8 col-md-offset-2">
             <div class="table-responsive">
-              <table class="table table-striped table-hover">
+              <table id="example2" class="table table-striped table-hover">
                 <thead id ="position-table">
                   <tr id="color-encabezado">
-                    <th id="encabezado-especial">Enc</th>
-                    <th id="encabezado-especial">Des</th>
+                    <!--th id="encabezado-especial">Enc</th>
+                    <th id="encabezado-especial">Des</th-->
                     <th id="encabezado-especial">Tu Equipo</th>
                     <th id="encabezado-especial">Rival</th>
                     <th id="encabezado-especial">Tipo de partido</th>
@@ -295,12 +323,12 @@ $desafios = $vars['listaDesafios'];
                   foreach ($solicitudes as $item) {
                   ?>
                   <tr>
-                    <td>
+                    <!--td>
                       <?php echo $item['idEncuentro']?>
                     </td>
                     <td>
                       <?php echo $item['idDesafio']?>
-                    </td>
+                    </td-->
                   <td>
                     <?php echo $item['equipo1']?>
                   </td>
@@ -309,6 +337,7 @@ $desafios = $vars['listaDesafios'];
                   </td>
                   <td>
                     <?php 
+                    /*
                     $tipo = $item['tipoPartido'];
                     if ($tipo==0){
                       echo "Fútbol";
@@ -319,36 +348,36 @@ $desafios = $vars['listaDesafios'];
                     if ($tipo==2){
                       echo "Baby-Fútbol";
                     }
+                    */
                     ?>
                   </td>
                   <td>
                     <?php echo $item['fechaPartido']?>
                   </td>
                   <td>
-                    <?php 
+                    <?php
                     if ($item['estadoSolicitud']==1){
                       ?>
 
                       <span class="label label-warning">Esperando respuesta <i class="fa fa-clock-o" aria-hidden="true"></i></span>
+                      </td>
 
-                      <?php
+               
+                     <?php
                     }
-                    if ($item['estadoSolicitud']==3){
-                      ?>
 
-                      <span class="label label-success">Con respuestas <i class="fa fa-bell" aria-hidden="true"></i></span>
 
-                      <?php
-                    }
                     if ($item['estadoSolicitud']==2){
                       ?>
 
                       <span class="label label-primary">Encuentro aceptado <i class="fa fa-check-circle" aria-hidden="true"></i></span>
                       
-                      <?php
+                  </td>
+                   <?php
                     }
                     ?>
-                  </td>
+
+
                 </tr>
                   <?php
                   }
@@ -358,6 +387,12 @@ $desafios = $vars['listaDesafios'];
             </div>
           </div>
         </div>
+ <script type="text/javascript">
+          $(document).ready(function() {
+            $('#example2').DataTable();
+        } );
+        </script>
+
 
 
           <?php
@@ -367,6 +402,23 @@ $desafios = $vars['listaDesafios'];
 
   </div>
 </div>
+
+
+<!-- DATEPICKER-->
+              <script>
+                  $(document).ready(function(){
+                    var date_input=$('input[name="date"]'); //our date input has the name "date"
+                    var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+                    var options={
+                      format: 'dd-mm-yyyy',
+                      container: container,
+                      todayHighlight: true,
+                      autoclose: true,
+                      startDate: "<?php echo "d-m-Y"?>",
+                    };
+                    date_input.datepicker(options);
+                  })
+              </script>
 
       <?php
       include('layout/footer.php'); 
@@ -418,26 +470,6 @@ $desafios = $vars['listaDesafios'];
         <form id="demoform" action="?controlador=Desafio&accion=crearDesafio" method="post">
           <div class="container-fluid">
             <div class="row">
-              <div class="col-sm-12">
-                <div class="form-group">
-                  <label class="texto-modal-negro" for="tipoPartido">Tipo de partido: </label>
-                  <select class="form-control" name="tipoPartido" required>
-                    <option  value="" selected disabled>Selecciona un tipo de partido</option>
-                    <option  value="0" class="texto-modal-negro">Fútbol</option>
-                    <option  value="1" class="texto-modal-negro">Futbolito</option>
-                    <option  value="2" class="texto-modal-negro">Baby-Fútbol</option>
-                  </select>
-                </div>
-              </div>
-              <div class="col-sm-12">
-                <div class="form-group">
-                  <label class="texto-modal-negro" for="fecha">Fecha del partido: </label>
-                  <input type="date" name="fecha" class="form-last-name form-control"required step="1" min="<?php echo date("Y-m-d");?>" max="2020-12-31" value="<?php echo date("Y-m-d");?>">
-
-                </div>
-              </div>
-            </div>
-            <div class="row">
               <div class="col-md-12">
                 <div class="form-group">
                   <label class="texto-modal-negro" for="equipo">Equipo desafiante: </label>
@@ -447,12 +479,53 @@ $desafios = $vars['listaDesafios'];
                         foreach($equipos as $item){
                         ?>
                         <option  value="<?php echo $item['idEquipo']?>" class="texto-modal-negro">
-                            <?php echo $item['idEquipo'].": ".$item['nombre']?>
+                            <?php echo $item['nombre']?>
                         </option>
                         <?php
                         }
                         ?>
                   </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label class="texto-modal-negro" for="recinto">Recinto: </label>
+                  
+
+
+                  <select class="form-control" name="recinto" required>
+                    <option value="" selected disabled>Selecciona un recinto</option>
+                        <?php
+                        foreach($recintos as $item){
+                        ?>
+                        <option  value="<?php echo $item['idRecinto']?>" class="texto-modal-negro">
+                            <?php echo $item['nombre']?>
+                        </option>
+                        <?php
+                        }
+                        ?>
+                  </select>
+
+                  <!--label class="texto-modal-negro" for="tipoPartido">Tipo de partido: </label>
+                  <select class="form-control" name="tipoPartido" required>
+                    <option  value="" selected disabled>Selecciona un tipo de partido</option>
+                    <option  value="0" class="texto-modal-negro">Fútbol</option>
+                    <option  value="1" class="texto-modal-negro">Futbolito</option>
+                    <option  value="2" class="texto-modal-negro">Baby-Fútbol</option>
+                  </select-->
+
+
+                </div>
+              </div>
+
+
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label class="texto-modal-negro" for="fecha">Fecha del partido: </label>
+                  <!--input type="date" name="fecha" class="form-last-name form-control"required step="1" min="<?php echo date("Y-m-d");?>" max="2020-12-31" value="<?php echo date("Y-m-d");?>"-->
+                  <input class="form-control" id="date" name="date" placeholder="dd-mm-aaa" type="text"  required/>
                 </div>
               </div>
             </div>
@@ -477,7 +550,7 @@ $desafios = $vars['listaDesafios'];
               <div class="col-md-12">
                 <div class="form-group">
                   <label class="texto-modal-negro" for="comentario">Comentario adicional: </label>
-                  <textarea id="texto-input-black" class="form-control" rows="2" maxlength="200" name="comentario"></textarea>
+                  <textarea id="texto-input-black" class="form-control" rows="2" maxlength="200" placeholder="Aqui puedes escribir información adicional (hora, posiciones de jugadores, etc.)" name="comentario" required></textarea>
                 </div>
               </div>
             </div>
@@ -495,6 +568,9 @@ $desafios = $vars['listaDesafios'];
     </div>
   </div>
 </div>
+
+
+
 
 
 
@@ -692,6 +768,21 @@ $nroEncuentros = $vars['nroEncuentros'];
                             <label>Promedio de edad: </label><?php echo " ".$item['edadPromedio']." años"?>
                             <br>
                           </div>
+                          <div class="row">
+                            <table class="table">
+                              <tr>
+                                <th style="border-top:transparent; text-align:center;">
+                                  <form action="?controlador=Partido&accion=aceptarEncuentro" method="post">
+                                    <input type="text" name="desafio" value="<?php echo $item['idDesafio']?>" hidden/>
+                                    <input type="text" name="equipo" value="<?php echo $item['idEquipo']?>" hidden/>
+                                  <button type="submit" class="btn btn-md btn-primary">Agendar partido
+                                    <i class="fa fa-futbol-o" aria-hidden="true"></i>
+                                  </button>
+                                  </form>
+                                </th>
+                              </tr>
+                            </table>
+                          </div>
 
 
 
@@ -886,7 +977,6 @@ window.onload = function() {
 
 
 
-
 <script src="assets/js/funciones/funciones.js"></script>
 
 <script src="assets/js/bootstrap-slider.js"></script>
@@ -909,6 +999,5 @@ window.onload = function() {
     handle: 'round'
   });
 </script>
-
 
 

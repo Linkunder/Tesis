@@ -2,6 +2,7 @@
 
 require 'models/Equipo.php';
 require 'models/Contacto.php';
+require 'models/Usuario.php';
 
 session_start();
 
@@ -76,6 +77,7 @@ class EquipoController{
 	//	Desplegar formulario para crear el equipo (nombre, color, jugadores)
 	public function crearEquipo(){
 		$equipo = new Equipo();
+		$usuario = new Usuario();
 		$nombre = $_POST["nombre"];
 		$color = $_POST["color"];
 		$idUsuario = $_SESSION['login_user_id'];
@@ -83,16 +85,37 @@ class EquipoController{
 		$miembros = $_POST["arrayContactos"];
 		$equipos = $this->Equipo->getEquipos();
 		$idEquipo = end($equipos)['idEquipo'];
+		$arrayEdades = array(); 
 		for ($i=0; $i<count($miembros) ; $i++) {
 			$idMiembro = $miembros[$i];
+			$fechaNac = $usuario->getFechaNac($idMiembro);
+			foreach ($fechaNac as $fecha) {
+				$fechaNacimiento = $fecha['fechaNacimiento'];
+				//echo $fechaNacimiento."<br>";
+			}
+			$arrayEdades[$i] = $this->calcularEdad($fechaNacimiento);
 			//echo "Miembro: ".$miembros[$i];
 			$equipo->agregarMiembroEquipo($idMiembro,$idEquipo);
 		}
+
+		$edadPromedio = $this->calcularPromedio($arrayEdades);
+		$nroJugadores = count($miembros);
+		$this->Equipo->setMiembros($idEquipo,$edadPromedio, $nroJugadores);
 		$equipo->agregarMiembroEquipo($idUsuario,$idEquipo);
 		header('Location: ?controlador=Equipo&accion=listaEquipos');
 	}
 
 
+	//	Calcular edad de un usuario.
+	public function calcularEdad($fecha){
+		list($Y,$m,$d) = explode("-", $fecha);
+		return(date("md")<$m.$d ? date("Y")-$Y-1 : date("Y")-$Y );
+	}
+
+	// Calcular promedio de edad de un array
+	public function calcularPromedio($array){
+		return round(array_sum($array)/count($array));
+	}
 	
 
 

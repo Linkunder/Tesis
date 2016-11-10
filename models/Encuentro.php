@@ -78,6 +78,17 @@ class Encuentro{
 		return $resultado;
 	}
 
+	public function getEncuentro($idEncuentro){
+		$sql = "SELECT encuentro.idEncuentro, encuentro.idDesafio, (DATE_FORMAT(Desafio.fecha,'%d-%m-%Y')) as fechaPartido ,  desafio.tipoPartido, equipo.nombre as equipo1,(select nombre from equipo where idEquipo = desafio.idEquipo) as equipo2, encuentro.estadoSolicitud 
+		from encuentro join desafio on encuentro.idDesafio = desafio.idDesafio 
+		join equipo on encuentro.idEquipo = equipo.idEquipo WHERE encuentro.idEncuentro= '".$idEncuentro."';";
+		echo $sql;
+		$query = $this->db->prepare($sql);
+		$query->execute();
+		$resultado = $query->fetchAll();
+		return $resultado;
+	}
+
 
 
 }

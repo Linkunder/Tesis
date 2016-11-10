@@ -26,6 +26,11 @@
 
 /*
 0. Extras ************************************************************/
+
+.text-datepicker{
+    color: #000;
+}
+
 .title2{
     text-align: center;
     padding:10px;
@@ -56,7 +61,7 @@
 **********************************************************************/
  body {
     font-family:'Roboto', sans-serif;
-    color: #FFF;
+    /*color: #FFF;*/
     line-height:1.2em;
     font-size:17px;
     line-height:20px;

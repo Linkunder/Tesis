@@ -32,6 +32,13 @@ class Equipo{
 		$query->execute();
 	}
 
+	//	Setear edad del equipo
+	public function setMiembros($idEquipo,$edad, $nroJugadores){
+		$sql = "UPDATE Equipo SET edadPromedio = '".$edad."' , nroJugadores = '".$nroJugadores."' WHERE idEquipo = '".$idEquipo."' ";
+		$query = $this->db->prepare($sql);
+		$query->execute();
+	}
+
 	
 
 	// Obtener equipos de un usuario. (Como Capitán) - MODULO LISTAR EQUIPOS

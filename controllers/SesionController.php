@@ -27,20 +27,26 @@ class SesionController{
 	public function verificarLogin(){
         $mail = $_POST['mail'];
         $password = $_POST['password'];
-        $resultado =  $this->Login->getLogin($mail, $password);    
-        if($resultado){
-            session_start();
-            $_SESSION['login_user_id'] = $resultado->idUsuario;
-            $_SESSION['login_user_name'] = $resultado->nombre;
-            $_SESSION['login_user_email'] = $resultado->mail;
-            $_SESSION['login_user_estado'] = $resultado->estado;
-            // Direccionar a la pantalla de inicio del jugador
-            header('Location: ?controlador=Index&accion=indexJugador');
-        }else{
+        $resultado =  $this->Login->getLogin($mail); 
+        if ($resultado){
+            if(password_verify($password, $resultado->password)){
+                session_start();
+                $_SESSION['login_user_id'] = $resultado->idUsuario;
+                $_SESSION['login_user_name'] = $resultado->nombre;
+                $_SESSION['login_user_email'] = $resultado->mail;
+                $_SESSION['login_user_estado'] = $resultado->estado;
+                // Direccionar a la pantalla de inicio del jugador
+                header('Location: ?controlador=Index&accion=indexJugador');
+            } else{
             //var_dump($resultado);
             $data['error_login'] = true;
             $this->view->show("inicio.php", $data);
-        }
+            }
+        } else{
+            //var_dump($resultado);
+            $data['error_login'] = true;
+            $this->view->show("inicio.php", $data);
+            }
     }
 
 

@@ -15,6 +15,17 @@ $contactos = $vars['listaContactos'];
 <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
 <link href="assets/css/profile.css" rel="stylesheet">
 
+
+<!-- DATATABLE -->
+<link href="assets/css/dataTables.bootstrap.min.css" rel="stylesheet">
+<script type="text/javascript" src="assets/js/jquery.js"></script>
+<script type="text/javascript" src="assets/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="assets/js/dataTables.bootstrap.min.js"></script>
+
+
+
+
+
   <div id="contact-us" class="parallax">
     <div class="container">
 
@@ -55,43 +66,63 @@ $contactos = $vars['listaContactos'];
         . Para agregar a uno de tus contactos a un equipo, haz click en el botón 
         <button class="btn btn-success btn-sm fa fa-plus-circle"></a></button></p>
 
+
+<br/>
+        <div class="table-responsive">
+        <table id="example" class="table table-striped table-hover" >
+                <thead id ="position-table">
+                    <tr id="color-encabezado">
+                        <th id="encabezado-especial"></th>
+                        <th id="encabezado-especial">Nombre</th>
+                        <th id="encabezado-especial">Mail</th>
+                        <th id="encabezado-especial">Edad</th>
+                        <th id="encabezado-especial">Teléfono</th>
+                        <th id="encabezado-especial"></th>
+                    </tr>
+                </thead>
+                <!--tfoot>
+                    <tr>
+                        <th></th>
+                        <th>Nombre</th>
+                        <th>Mail</th>
+                        <th>Edad</th>
+                        <th>Teléfono</th>
+                        <th></th>
+                    </tr>
+                </tfoot-->
+                <tbody id="texto-contactos" class="center">
+                  <?php
+                      foreach ($contactos as $item) {
+                        $idContacto = $item['idUsuario'];
+                        $nombreContacto = $item['nombre'];
+                      ?>
+                    <tr>
+                      
+                      <td><img style="width: 100px; height: 100px;" class="img-thumbnail" src="assets/images/usuarios/<?php echo $item['fotografia']?>"></td>
+                      <td><?php echo $nombreContacto." ".$item['apellido']?></td>
+                      <td><?php echo $item['mail']?></td>
+                      <td><?php echo $vars['edadContacto'.$item['idUsuario']]?></td>
+                      <td><?php echo $item['telefono']?></td>
+                      
+                      <td>
+                        <a href="#" class="btn btn-success btn-xs fa fa-plus-circle" onclick="setValue(<?php echo $idContacto.",'$nombreContacto'";?>)" title="Agregar">
+                      </td>
+                    </tr>
+                    <?php
+                      }
+                      ?>
+                </tbody>
+            </table>
+          </div>
+
+        <script type="text/javascript">
+          $(document).ready(function() {
+            $('#example').DataTable();
+        } );
+        </script>
+
+
   
-
-
-
-        <div class="jumbotron list-content">
-          <ul class="list-group">
-            <li href="#" class="list-group-item title">
-              Listado de contactos
-            </li>
-            <?php
-            foreach ($contactos as $item) {
-              $idContacto = $item['idUsuario'];
-              $nombreContacto = $item['nombre'];
-            ?>
-            <li href="#" class="list-group-item text-left">
-              <img class="img-thumbnail" src="assets/images/usuarios/<?php echo $item['fotografia']?>">
-              <label class="name">&nbsp;
-                <?php echo $idContacto." ".$nombreContacto." ".$item['apellido']?><br>
-              </label>
-              <input type="text" id="idContacto" value="<?php echo $idContacto?>" hidden/>
-              <label class="pull-right">
-                <br/>
-                <!--a href="#" class="btn btn-success btn-xs fa fa-plus-circle" data-toggle="modal" data-target="#myModal" data-id="<?php echo $idContacto?>" title="Agregar"></a-->
-                <a href="#" class="btn btn-success btn-xs fa fa-plus-circle" onclick="setValue(<?php echo $idContacto.",'$nombreContacto'";?>)" title="Agregar">
-                </a>
-              </label>
-              <div class="break"></div>
-
-            </li>
-            <?php
-            }
-            ?>
-          </ul>
-        </div>
-
-
-
 
 
 
@@ -123,16 +154,26 @@ include('layout/footer.php');
           <h4 class="modal-title" id="myModalLabel">Búsqueda de jugadores</h4>
         </div>
         <div class="modal-body">
-          <p id="texto-contactos">Para agregar un contacto, búscalo ingresando su nickname.</p>
+           <h5 class="texto-modal-negro">Para agregar un contacto, búscalo ingresando su nickname.</h5>
+           <br/>
           <form action="?controlador=Usuario&accion=busquedaJugador" method="POST">
             <input id="text-black" type="text" class="form-control partido" placeholder="Ingresa un nickname..." name="search" required="required"/>
+
               <div class="row">
-                <div class="col-md-6 col-md-offset-4">
-                  <div class="div-btn-a">
-                    <button class="btn-busqueda" type="submit">Buscar</button>  
-                  </div>
-                </div>
-              </div>          
+                <br/>
+                    <table class="table">
+                      <tr>
+                        <th style="border-top:transparent; text-align:center;">
+                          <button type="submit" class="btn btn-lg btn-primary">Buscar
+                            <i class="fa fa-search" aria-hidden="true"></i>
+                          </button>
+                        </th>
+                      </tr>
+                    </table>
+
+                 
+              </div> 
+
           </form>
           <hr/>
 
@@ -148,9 +189,6 @@ include('layout/footer.php');
           <h3>Resultados</h3>
           <hr/>
           <?php 
-          }
-          foreach ($variable as $key => $value) {
-            # code...
           }
           ?>
 

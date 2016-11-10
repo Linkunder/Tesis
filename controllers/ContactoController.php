@@ -31,6 +31,14 @@ class ContactoController{
 			$nuevoContacto = $contactos->setContacto($idUsuario,$idContacto);
 		}
 		$listaContactos = $contactos->getContactos($idUsuario);
+		$arrayEdades = array();
+		$i = 0;
+		foreach ($listaContactos as $contacto) {
+			$arrayEdades[] = $this->calcularEdad($contacto['fechaNacimiento']);
+			$data['edadContacto'.$contacto['idUsuario']] = $arrayEdades[$i];
+			$i++;
+		}
+
 		$data['listaContactos'] = $listaContactos;			// Listar contactos del usuario
 		$listaEquipos = $equipos->getEquiposJugador($idUsuario);
 		$data['listaEquipos'] = $listaEquipos;				// Listar equipos del usuario (para que un contacto sea agregado a uno de ellos)
@@ -47,6 +55,25 @@ class ContactoController{
 		$equipo->agregarMiembroEquipo($idContacto,$idEquipo);
 		header('Location: ?controlador=Contacto&accion=listaContactos');
 	}
+
+	//	Calcular edad de un usuario.
+	public function calcularEdad($fecha){
+		list($Y,$m,$d) = explode("-", $fecha);
+		return(date("md")<$m.$d ? date("Y")-$Y-1 : date("Y")-$Y );
+	}
+
+	// Equipos del capitan
+    public function equiposCapitan(){
+    	if(!isset($_SESSION)) { 
+        	session_start(); 
+        } 
+        $equipos = new Equipo();
+      	$idUsuario = $_SESSION['login_user_id'];
+      	$listaEquipos = $equipos->getEquiposJugador($idUsuario);
+		$data['listaEquipos'] = $listaEquipos;		
+      	//mostrar vista parcial con los implementos (dataTable)
+      	$this->view->show("agregarJugador.php", $data);
+    }
 
 
 

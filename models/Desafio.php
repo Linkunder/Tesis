@@ -10,18 +10,19 @@ class Desafio{
 	}
 
 	// Creacion de un desafio
-	public function setDesafio($fechaPartido, $limInf, $limSup, $comentario, $idEquipo, $tipoPartido, $estado){
-		$sql = "INSERT INTO Desafio (fecha, limInferior, limSuperior, comentario, idEquipo, tipoPartido, estado) 
-				VALUES ( '$fechaPartido', '$limInf',' $limSup', '$comentario', '$idEquipo' ,'$tipoPartido', '$estado');";
-				echo $sql;
+	public function setDesafio($fechaPartido, $limInf, $limSup, $comentario, $idEquipo, $recinto, $estado){
+		$sql = "INSERT INTO Desafio (fecha, limInferior, limSuperior, comentario, idEquipo, idRecinto, estado) 
+				VALUES ( (STR_TO_DATE('".$fechaPartido."', '%d-%m-%Y')) , '$limInf',' $limSup', '$comentario', '$idEquipo' ,'$recinto', '$estado');";
+				
 		$query = $this->db->prepare($sql);
 		$query->execute();
 	}
 
 	// Obtener un determinado desafio.
 	public function getDesafio($idDesafio){
-		$query = $this->db->prepare("SELECT Desafio.idDesafio, (DATE_FORMAT(Desafio.fecha,'%d-%m-%Y')) as fechaPartido , Desafio.comentario, Desafio.tipoPartido, Desafio.estado as estadoDesafio, Equipo.nombre as nombreEquipo, Usuario.nombre, Usuario.Apellido 
+		$query = $this->db->prepare("SELECT Desafio.idDesafio, (DATE_FORMAT(Desafio.fecha,'%d-%m-%Y')) as fechaPartido , Recinto.nombre as nombreRecinto, Recinto.tipo as tipoPartido, Desafio.comentario, Desafio.idEquipo, Desafio.estado as estadoDesafio, Equipo.nombre as nombreEquipo, Usuario.nombre, Usuario.Apellido 
 			FROM Desafio 
+			JOIN Recinto ON Desafio.idRecinto = Recinto.idRecinto  
 			JOIN Equipo ON Desafio.idEquipo = Equipo.idEquipo 
 			JOIN Usuario ON Usuario.idUsuario = Equipo.idCapitan 
 			WHERE Desafio.idDesafio = '".$idDesafio."'
@@ -36,9 +37,10 @@ class Desafio{
 	// Obtener los desafios de los equipos de un usuario.
 	public function getDesafios($idUsuario){
 		$query = $this->db->prepare
-		("SELECT Desafio.idDesafio, (DATE_FORMAT(Desafio.fecha,'%d-%m-%Y')) as fechaPartido , Desafio.comentario, Desafio.tipoPartido, Desafio.estado as estadoDesafio, Equipo.nombre as nombreEquipo, Equipo.idEquipo
-			FROM Desafio 
-			JOIN Equipo ON Desafio.idEquipo = Equipo.idEquipo WHERE Equipo.idCapitan = '".$idUsuario."' ORDER BY desafio.estado DESC");
+		("SELECT Desafio.idDesafio, (DATE_FORMAT(Desafio.fecha,'%d-%m-%Y')) as fechaPartido , Recinto.nombre as nombreRecinto, Recinto.tipo as tipoPartido, Desafio.comentario,Desafio.estado as estadoDesafio, Equipo.nombre as nombreEquipo, Equipo.idEquipo
+			FROM Desafio
+			JOIN Recinto ON Desafio.idRecinto = Recinto.idRecinto  
+			JOIN Equipo ON Desafio.idEquipo = Equipo.idEquipo WHERE Equipo.idCapitan = '".$idUsuario."' ORDER BY desafio.estado DESC, desafio.fecha ASC");
 		$query->execute();
 		$resultado = $query->fetchAll();
 		return $resultado;
@@ -50,7 +52,6 @@ class Desafio{
 			Desafio.fecha, 
 			Desafio.comentario, 
 			Desafio.idEquipo, 
-			Desafio.tipoPartido, 
 			Desafio.estado,
 			Equipo.nombre as nombreEquipo, 
 			Equipo.puntuacion, 

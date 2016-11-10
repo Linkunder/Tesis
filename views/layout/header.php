@@ -82,8 +82,8 @@
 
                   <form class="form" id="formLogin" action="?controlador=Sesion&accion=verificarLogin" method="post">
                     <label class="design-label">¿TIENES CUENTA?</label><br>
-                    <input class="entrada-login" name="mail" id="mail" type="text" placeholder="Mail" > 
-                    <input class="entrada-login" name="password" id="password" type="password" placeholder="Password">
+                    <input class="entrada-login" name="mail" id="mail" type="text" placeholder="Mail" required> 
+                    <input class="entrada-login" name="password" id="password" type="password" placeholder="Password" required>
                     <br>
                     <button class="boton-login" type="submit" class="design-button">Iniciar sesión</button>
                   </form>

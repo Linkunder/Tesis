@@ -89,5 +89,15 @@ class Recinto{
 			");
 		$consulta->execute();
 	}
+
+
+	public function getRecintosActivos(){
+		$consulta = $this->db->prepare('SELECT * FROM Recinto WHERE estado = 1');
+		$consulta->execute();
+		$resultado = $consulta->fetchAll();
+		return $resultado;	
+	} 
+
+
 }
 ?>

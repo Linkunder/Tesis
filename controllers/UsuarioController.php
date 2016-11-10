@@ -39,18 +39,27 @@ class UsuarioController{
 		$this->view->show('testform.php');
 	}
 
-	// Registrar usuario en la base de datos. Queda pendiente subir fotografia.
+	// Registrar usuario en la base de datos. 
 	public function registrarUsuario(){
 		$nombre = $_POST['nombre'];
 		$apellido= $_POST['apellido'];
 		$nickname= $_POST['nickname'];
 		$fechaNacimiento= $_POST['date'];
+		//echo $fechaNacimiento;
 		$mail= $_POST['mail'];
 		$telefono= $_POST['telefono'];
 		$password = $_POST['password'];
+		$password_cifrada = password_hash($password,PASSWORD_DEFAULT); 
+		/* Coste de la función por defecto: 10
+			password_hash($password,PASSWORD_DEFAULT,array("cost")=>12);
+			http://php.net/manual/es/faq.passwords.php
+		*/
+		//echo $password_cifrada;
 		$sexo= $_POST['sexo'];
 		$fotografia = "no";
-		$this->Usuario->setUsuario($nombre,$apellido,$nickname, $mail, $sexo, $fotografia, $password, $telefono, $fechaNacimiento,1,1);
+		
+		$this->Usuario->setUsuario($nombre,$apellido,$nickname, $mail, $sexo, $fotografia, $password_cifrada, $telefono, $fechaNacimiento,1,1);
+		
 		$usuarios = $this->Usuario->getUsuarios();
 		$idUsuario = end($usuarios)['idUsuario'];
 		$this->guardarImagen($idUsuario);
@@ -81,11 +90,11 @@ class UsuarioController{
 		        $uploadOk = 0;
 		    }
 		}
-		// Chequear si el archivo existe o no (no deberia)
+		/*/ Chequear si el archivo existe o no (no deberia)
 		if (file_exists($target_file)) {
 		    $message = "Lo sentimos pero esta imagen ya existe.";
 		    $uploadOk = 0;
-		}
+		}*/
 		// Chequear el tamaño de la imagen. 
 		if ($_FILES["imagen"]["size"] > 5000000) {
 		    $message = "Lo sentimos, pero el archivo es muy grande.";
@@ -162,6 +171,10 @@ class UsuarioController{
 		return(date("md")<$m.$d ? date("Y")-$Y-1 : date("Y")-$Y );
 	}
 
+	// Calcular promedio de edad de un array
+	public function calcularPromedio($array){
+		return round(array_sum($array)/count($array));
+	}
 
 	// Mostrar formulario para modificar perfil. Opcion Mi información
 	public function modificarPerfil(){
