@@ -21,9 +21,9 @@ class Partido{
 
 	}
 
+	//PARTIDOS JUGADOS DEL USUARIO
 	public function getPartidosUsuario($idUsuario){
-		$consulta = $this->db->prepare('
-			SELECT jugadorespartido.idPartido, partido.idRecinto FROM jugadorespartido INNER JOIN usuario on jugadorespartido.idUsuario = usuario.idUsuario INNER JOIN partido on jugadorespartido.idPartido = partido.idPartido');
+		$consulta = $this->db->prepare("SELECT jugadorespartido.idPartido, partido.idRecinto FROM jugadorespartido INNER JOIN partido on jugadorespartido.idPartido = partido.idPartido WHERE partido.estado = 2 AND jugadorespartido.idUsuario = '$idUsuario'");
 		$consulta->execute();
 		$resultado = $consulta->fetchAll();
 		return $resultado;

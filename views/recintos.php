@@ -206,6 +206,7 @@ $_SESSION['idRecinto']=NULL;
         
                                         	$contadorPuntuacion=0;
                                         	$contadorPartido = 0;
+
                                         	foreach ($vars['partidos'] as $partido) {
                                         		if($partido['idRecinto'] == $idRecinto){
                                         			$contadorPartido++;
@@ -311,7 +312,7 @@ $_SESSION['idRecinto']=NULL;
 
                             <div class="panel-body comments">
                                 <form method="post" action="?controlador=Comentario&accion=setComentario">
-                                    <input class="form-control" name="contenido" placeholder="Escribe tu comentario" rows="2" required id="texto-input-white"></input>
+                                    <input id="comentario" class="form-control" onkeyup="clean('comentario');" onkeydown="clean('comentario');" name="contenido" placeholder="Escribe tu comentario" rows="2" required id="texto-input-white"></input>
                                     <input type="hidden" name="idUsuario" value="<?php echo $_SESSION['login_user_id']  ?>">
                                     <input type="hidden" name="idRecinto" value="<?php echo $idRecinto ?>">
                                     <br>
@@ -868,7 +869,17 @@ $_SESSION['idRecinto']=NULL;
 
             
         </script>
-
+        <script type="text/javascript">
+        function clean(e){
+        var textfield = document.getElementById(e);
+        var groserias = ["puta", "puto","marica","mierda","wn","weon","hueon","huevon","ctm", "conchetumadre", "conchatumadre", "conchesumadre","conshasumadre","concha","pico","raja","culo","culia","culiao","qlo","qla","chucha","shusha","ahueonado","ahueonao","maraca","aweonao","huevon","malparidos","maricon","mrd","xuxa"]
+        //var regex ="["mierda"]"/gi;
+        for(var i=0; i<groserias.length; i++){
+        var regex= new RegExp("(^|\\s)"+groserias[i]+"($|(?=\\s))","gi")
+        textfield.value = textfield.value.replace(regex, function($0, $1){return $1 + ""});
+                                            }   
+        }
+</script>                                  
 
 
     </body>
