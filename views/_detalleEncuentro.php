@@ -2,13 +2,13 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Información adicional</h4>
+        <h4 class="modal-title">Información del encuentro</h4>
       </div>
       <?php
-      $equipoSeleccionado = $vars['equipoSeleccionado'];
-      $desafio = $vars['desafio'];
-      foreach ($desafio as $item) {
-        $idDesafio = $item['idDesafio'];
+      //$equipoSeleccionado = $vars['equipoSeleccionado'];
+      $encuentro = $vars['encuentro'];
+      foreach ($encuentro as $item) {
+        $idEncuentro = $item['idEncuentro'];
         ?>
       <div class="modal-body">
         <!--h6 class="texto-modal-negro">Si aceptas este desafío, el partido se llevará a cabo en la 
@@ -44,17 +44,17 @@
                     ?></td>
                   </tr>
                   <tr>
-                    <th>Desafiante</th>
-                    <td><?php echo $item['nombreEquipo']?></td>
+                    <th>Partido</th>
+                    <td><?php echo $item['equipo1']." vs ".$item['equipo2']?></td>
                   </tr>
-                  <tr>
-                    <th>Capitán</th>
-                    <td><?php echo $item['nombre']." ".$item['apellido']?></td>
+                  <!--tr>
+                    <th>Capitán Rival</th>
+                    <td><?php echo $item['nombreCap']." ".$item['apellidoCap']?></td>
                   </tr>
                   <tr>
                     <th>Comentario</th>
                     <td><?php echo $item['comentario']?></td>
-                  </tr>
+                  </tr-->
                 </table>
               </div>
             </div>
@@ -67,21 +67,9 @@
       <br/>
 
       <div class="modal-footer">
-         <h6 class="texto-modal-negro">Puedes agregar un comentario al capitán del equipo desafiante. Para aceptar este desafío haciendo click en el botón "Desafiar". </h6>
-         <form id="demoform" action="?controlador=Encuentro&accion=setEncuentro" method="post">
-          <input type="text" name="desafio" value="<?php echo $idDesafio?>" hidden/>
-          <input type="text" name="equipo" value="<?php echo $equipoSeleccionado?>" hidden/>
-          <div class="row">
-              <div class="col-md-12">
-                <div class="form-group">
-                  
-                  <textarea id="texto-input-black" class="form-control" rows="2" maxlength="200" placeholder="Aqui puedes escribir información adicional (hora, posiciones de jugadores, etc.)" name="comentario" ></textarea>
-                </div>
-              </div>
-            </div>
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Volver <i class="fa fa-arrow-circle-left" aria-hidden="true"></i></button>
-        <button type="submit" class="btn btn-primary">Desafiar <i class="fa fa-check" aria-hidden="true"></i></button>
-        </form>
+         <h6 class="texto-modal-negro">
+         El partido será agendado por el capitán del equipo rival. </h6>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Volver <i class="fa fa-arrow-circle-left" aria-hidden="true"></i></button>
       </div>
 
 

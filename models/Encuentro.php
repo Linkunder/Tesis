@@ -39,9 +39,9 @@ class Encuentro{
 	}
 
 	// Guardar el desafio realizado por un equipo (En el vestibulo)
-	public function setEncuentro($idDesafio, $idEquipo, $estado){
-		$sql = "INSERT INTO Encuentro (idDesafio, idEquipo, estadoSolicitud) 
-			VALUES ('".$idDesafio."', '".$idEquipo."' , '".$estado."');";
+	public function setEncuentro($idDesafio, $idEquipo, $respuesta, $estado){
+		$sql = "INSERT INTO Encuentro (idDesafio, idEquipo, respuesta, estadoSolicitud) 
+			VALUES ('".$idDesafio."', '".$idEquipo."' , '".$respuesta."', '".$estado."');";
 		$query = $this->db->prepare($sql);
 		$query->execute();
 	}
@@ -69,8 +69,10 @@ class Encuentro{
 	}
 
 	public function getSolicitudes($idUsuario){
-		$sql = "SELECT encuentro.idEncuentro, encuentro.idDesafio, (DATE_FORMAT(Desafio.fecha,'%d-%m-%Y')) as fechaPartido ,  desafio.tipoPartido, equipo.nombre as equipo1,(select nombre from equipo where idEquipo = desafio.idEquipo) as equipo2, encuentro.estadoSolicitud 
-		from encuentro join desafio on encuentro.idDesafio = desafio.idDesafio 
+		$sql = "SELECT encuentro.idEncuentro, encuentro.idDesafio, (DATE_FORMAT(Desafio.fecha,'%d-%m-%Y')) as fechaPartido , recinto.tipo as tipoPartido, equipo.nombre as equipo1,(select nombre from equipo where idEquipo = desafio.idEquipo) as equipo2, encuentro.estadoSolicitud 
+		from encuentro 
+		join desafio on encuentro.idDesafio = desafio.idDesafio
+		join recinto on recinto.idRecinto = desafio.idRecinto 
 		join equipo on encuentro.idEquipo = equipo.idEquipo WHERE equipo.idCapitan= '".$idUsuario."';";
 		$query = $this->db->prepare($sql);
 		$query->execute();
@@ -79,10 +81,13 @@ class Encuentro{
 	}
 
 	public function getEncuentro($idEncuentro){
-		$sql = "SELECT encuentro.idEncuentro, encuentro.idDesafio, (DATE_FORMAT(Desafio.fecha,'%d-%m-%Y')) as fechaPartido ,  desafio.tipoPartido, equipo.nombre as equipo1,(select nombre from equipo where idEquipo = desafio.idEquipo) as equipo2, encuentro.estadoSolicitud 
-		from encuentro join desafio on encuentro.idDesafio = desafio.idDesafio 
+		$sql = "SELECT encuentro.idEncuentro, encuentro.idDesafio, (DATE_FORMAT(Desafio.fecha,'%d-%m-%Y')) as fechaPartido , Recinto.tipo as tipoPartido,
+		Recinto.fotografia as fotoRecinto, Recinto.nombre as nombreRecinto, equipo.nombre as equipo1,(select nombre from equipo where idEquipo = desafio.idEquipo) as equipo2, encuentro.estadoSolicitud 
+		from encuentro 
+		join desafio on encuentro.idDesafio = desafio.idDesafio 
+		join recinto on desafio.idRecinto = recinto.idRecinto
 		join equipo on encuentro.idEquipo = equipo.idEquipo WHERE encuentro.idEncuentro= '".$idEncuentro."';";
-		echo $sql;
+		//echo $sql;
 		$query = $this->db->prepare($sql);
 		$query->execute();
 		$resultado = $query->fetchAll();

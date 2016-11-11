@@ -6,6 +6,7 @@ include('layout/headerJugador.php');
 // Se obtiene la lista de contactos del usuario.
 //if (isset($vars['listaContactos'])){
 $contactos = $vars['listaContactos'];
+$equipos = $vars['listaEquipos'];
 //}
 
 
@@ -98,14 +99,23 @@ $contactos = $vars['listaContactos'];
                       ?>
                     <tr>
                       
-                      <td><img style="width: 100px; height: 100px;" class="img-thumbnail" src="assets/images/usuarios/<?php echo $item['fotografia']?>"></td>
+                      <td style="width: 100px; height: 100px;"><img class="img-thumbnail img-responsive" src="assets/images/usuarios/<?php echo $item['fotografia']?>"></td>
                       <td><?php echo $nombreContacto." ".$item['apellido']?></td>
                       <td><?php echo $item['mail']?></td>
                       <td><?php echo $vars['edadContacto'.$item['idUsuario']]?></td>
                       <td><?php echo $item['telefono']?></td>
                       
                       <td>
-                        <a href="#" class="btn btn-success btn-xs fa fa-plus-circle" onclick="setValue(<?php echo $idContacto.",'$nombreContacto'";?>)" title="Agregar">
+
+                        <?php
+                        if (count($equipos) != 0){
+                          ?>
+                          <a href="#" class="btn btn-success btn-xs fa fa-plus-circle" onclick="setValue(<?php echo $idContacto.",'$nombreContacto'";?>)" title="Agregar">
+
+                          <?php
+                        } 
+                        ?>
+                        
                       </td>
                     </tr>
                     <?php
@@ -226,7 +236,7 @@ include('layout/footer.php');
 
 
 <?php
-$equipos = $vars['listaEquipos'];
+//$equipos = $vars['listaEquipos'];
 $miembrosEquiposJugador = $vars['listaMiembrosEquiposJugador'];
 $arrayEquipos = array();
 $arrayEquipos2 = array();
@@ -258,6 +268,9 @@ foreach ($equipos as $equipo ) {
           <h4 class="modal-title" id="myModalLabelContact"></h4>
         </div>
         <div class="modal-body">
+
+
+
           <form  action="?controlador=Contacto&accion=agregarMiembro" method="POST">
               <select class="form-control" id="equipo" name="equipo" title="Selecciona uno de los equipos que administras..">
                 <?php
@@ -269,6 +282,8 @@ foreach ($equipos as $equipo ) {
                   }
                 }
                 $resultado = array_diff($arrayEquipos2, $arrayEquiposMiembro);
+
+
                 if (count($resultado)==0){
                   ?>
                   <option id="text-black" ><?php echo "El jugador está en todos tus equipos."?></option>

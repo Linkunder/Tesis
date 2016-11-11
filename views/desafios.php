@@ -44,6 +44,29 @@ $recintos = $vars['listaRecintos'];
 
 
 
+<!--MODAL IMPLEMENTOS-->
+    <div class="modal fade" id="modal" tabindex="-1" role="dialog" >
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Ventana normal</h4>
+      </div>
+      <div class="modal-body">
+        <h1>Texto #manosenelcódigo</h1>
+      </div>
+      <div class="modal-footer">
+            <h4>pie de página</h4>
+      </div>
+    </div>
+  </div>
+</div>
+<!--Modal-->
+
+
+
+
+
 <!--modal-->
 <!--DETALLE DESAFIO  - CREACION -->
 <div class="modal fade" id="modal-3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -316,11 +339,13 @@ $recintos = $vars['listaRecintos'];
                     <th id="encabezado-especial">Tipo de partido</th>
                     <th id="encabezado-especial">Fecha</th>
                     <th id="encabezado-especial">Estado</th>
+                    <th></th>
                   </tr>
                 </thead>
                 <tbody id="texto-contactos" class="center">
                   <?php
                   foreach ($solicitudes as $item) {
+                    $idEncuentro = $item['idEncuentro'];
                   ?>
                   <tr>
                     <!--td>
@@ -337,7 +362,7 @@ $recintos = $vars['listaRecintos'];
                   </td>
                   <td>
                     <?php 
-                    /*
+                    
                     $tipo = $item['tipoPartido'];
                     if ($tipo==0){
                       echo "Fútbol";
@@ -348,7 +373,7 @@ $recintos = $vars['listaRecintos'];
                     if ($tipo==2){
                       echo "Baby-Fútbol";
                     }
-                    */
+                    
                     ?>
                   </td>
                   <td>
@@ -376,6 +401,10 @@ $recintos = $vars['listaRecintos'];
                    <?php
                     }
                     ?>
+                    <td>
+                       <button type="button" class="btn btn-primary fa fa-search-plus" href="javascript:void(0);" data-toggle="modal" data-target="#modal"  onclick="carga_ajax('modal','<?php echo $idEncuentro?>');"></button>
+
+                    </td>
 
 
                 </tr>
@@ -676,6 +705,9 @@ $aux = 1;
 $nroEncuentros = $vars['nroEncuentros'];
 ?>
 
+
+
+
 <!-- MODAL PARA VER RESPUESTAS -->
 <div class="container">
   <div class="modal fade" id="myModal">
@@ -768,6 +800,16 @@ $nroEncuentros = $vars['nroEncuentros'];
                             <label>Promedio de edad: </label><?php echo " ".$item['edadPromedio']." años"?>
                             <br>
                           </div>
+
+
+                          <div class="row">
+                            <br/>
+
+                            <?php
+
+                            if ($item['estado'] == 2){
+                              ?>
+
                           <div class="row">
                             <table class="table">
                               <tr>
@@ -784,15 +826,7 @@ $nroEncuentros = $vars['nroEncuentros'];
                             </table>
                           </div>
 
-
-
-                          <div class="row">
-                            <br/>
-
-                            <?php
-
-                            if ($item['estado'] == 2){
-
+                              <?php
                             } else {
                               ?>
 
@@ -1001,3 +1035,25 @@ window.onload = function() {
 </script>
 
 
+        <script>
+            /*
+            $('#modalImplementos').on('show.bs.modal', function(){
+                alert("Hola");
+                //$('#modalImplementos').load('?controlador=Recinto&accion=implementosRecinto');
+                $('#modalImplementos').load('?controlador=Recinto&accion=implementosRecinto');
+                 
+            })
+            */
+            function carga_ajax(div, id){
+                     $.post(
+                    '?controlador=Encuentro&accion=detalleEncuentro&idEncuentro='+id,
+                    function(resp){
+                        $("#"+div+"").html(resp);
+                    }
+                    ); 
+
+
+            }
+
+            
+        </script>

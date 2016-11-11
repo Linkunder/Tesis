@@ -135,15 +135,13 @@ class DesafioController{
 
 
     public function detalleDesafio(){
-      //Id del recinto desde la variable global
-    	//$encuentro = new Encuentro();
-      if(!isset($_SESSION)) { 
+      /*if(!isset($_SESSION)) { 
         session_start(); 
-        } 
-      $idDesafio = $_SESSION['idDesafio'];
+        } */
+      $idDesafio = $_GET['idDesafio']; // POST o algo
       $desafio = $this->Desafio->getDesafio($idDesafio);
       $data['desafio'] = $desafio;
-      //mostrar vista parcial con los implementos (dataTable)
+      $data['equipoSeleccionado'] = $_SESSION['equipoSeleccionado'];
       $this->view->show("_detalleDesafio.php", $data);
     }
 

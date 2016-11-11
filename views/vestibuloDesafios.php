@@ -174,7 +174,7 @@ $_SESSION['idEncuentro']=NULL;
 
                     <!--a href="#" class="btn btn-primary fa fa-search-plus"  data-placement="right" data-toggle="tooltip" title="Ver detalles"></a-->
 
-                    <button type="button" class="btn btn-primary" href="javascript:void(0);" data-toggle="modal" data-target="#modal"  onclick="carga_ajax('modal','<?php echo $idDesafio?>');">Ver <i class="fa fa-eye"></i> </button>
+                    <button type="button" class="btn btn-primary fa fa-search-plus" href="javascript:void(0);" data-toggle="modal" data-target="#modal"  onclick="carga_ajax('modal','<?php echo $idDesafio?>');">Ver <i class="fa fa-eye"></i> </button>
 
                     <script>
                       $(document).ready(function(){
@@ -307,7 +307,7 @@ include('layout/footer.php');
             */
             function carga_ajax(div, id){
                      $.post(
-                    '?controlador=Desafio&accion=detalleDesafio',
+                    '?controlador=Desafio&accion=detalleDesafio&idDesafio='+id,
                     function(resp){
                         $("#"+div+"").html(resp);
                     }
