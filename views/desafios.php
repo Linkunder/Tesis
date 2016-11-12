@@ -270,7 +270,24 @@ $recintos = $vars['listaRecintos'];
                     </button-->
 
 
-                    <a href="#" class="btn btn-primary fa fa-search-plus" onclick="setValue(<?php echo $idDesafio;?>)" data-placement="right" data-toggle="tooltip" title="Ver detalles"></a>
+                    
+
+                    <?php
+                    if ($item['estadoDesafio']==2){
+                      ?>
+                      <button type="button" class="btn btn-primary fa fa-search-plus" href="javascript:void(0);" data-toggle="modal" data-target="#modal"  onclick="carga_ajax('modal','<?php echo $idDesafio?>','desafio');"></button>
+
+
+                      <?php
+                    } else {
+                      ?>
+                      <a href="#" class="btn btn-primary fa fa-search-plus" onclick="setValue(<?php echo $idDesafio;?>)" data-placement="right" data-toggle="tooltip" title="Ver detalles"></a>
+                      <?php
+
+                    }
+
+                    ?>
+
 
                     <script>
                       $(document).ready(function(){
@@ -402,7 +419,7 @@ $recintos = $vars['listaRecintos'];
                     }
                     ?>
                     <td>
-                       <button type="button" class="btn btn-primary fa fa-search-plus" href="javascript:void(0);" data-toggle="modal" data-target="#modal"  onclick="carga_ajax('modal','<?php echo $idEncuentro?>');"></button>
+                       <button type="button" class="btn btn-primary fa fa-search-plus" href="javascript:void(0);" data-toggle="modal" data-target="#modal"  onclick="carga_ajax('modal','<?php echo $idEncuentro?>','encuentro');"></button>
 
                     </td>
 
@@ -814,8 +831,9 @@ $nroEncuentros = $vars['nroEncuentros'];
                             <table class="table">
                               <tr>
                                 <th style="border-top:transparent; text-align:center;">
-                                  <form action="?controlador=Partido&accion=aceptarEncuentro" method="post">
+                                  <form action="?controlador=Partido&accion=agendarDesafio" method="post">
                                     <input type="text" name="desafio" value="<?php echo $item['idDesafio']?>" hidden/>
+                                    <input type="text" name="encuentro" value="<?php echo $item['idEncuentro']?>" hidden/>
                                     <input type="text" name="equipo" value="<?php echo $item['idEquipo']?>" hidden/>
                                   <button type="submit" class="btn btn-md btn-primary">Agendar partido
                                     <i class="fa fa-futbol-o" aria-hidden="true"></i>
@@ -1044,15 +1062,23 @@ window.onload = function() {
                  
             })
             */
-            function carga_ajax(div, id){
+            function carga_ajax(div, id,tipo){
+              if (tipo == 'encuentro'){
                      $.post(
                     '?controlador=Encuentro&accion=detalleEncuentro&idEncuentro='+id,
                     function(resp){
                         $("#"+div+"").html(resp);
                     }
                     ); 
-
-
+              }
+              if (tipo == 'desafio'){
+                $.post(
+                    '?controlador=Desafio&accion=agendarPartido&idDesafio='+id,
+                    function(resp){
+                        $("#"+div+"").html(resp);
+                    }
+                    ); 
+              }
             }
 
             

@@ -146,6 +146,24 @@ class DesafioController{
     }
 
 
+    public function agendarPartido(){
+      /*if(!isset($_SESSION)) { 
+        session_start(); 
+        } */
+      $idDesafio = $_GET['idDesafio'];
+      $desafio = $this->Desafio->getDesafio($idDesafio);
+      $encuentro = new Encuentro();
+      $encuentroAcordado = $encuentro->getEncuentroAcordado($idDesafio);
+      foreach ($encuentroAcordado as $key ) {
+      	$data['nombreEquipo2'] = $key['nombreEquipo2'];
+      	$data['respuestaRival'] = $key['respuesta'];
+      	$data['idRival'] = $key['idRival'];
+      }
+      $data['desafio'] = $desafio;
+      $this->view->show("_agendarDesafio.php", $data);
+    }
+
+
 
 
 

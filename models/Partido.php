@@ -7,7 +7,12 @@ class Partido{
 	}
 
 	public function getPartidos(){
-
+		$consulta = $this->db->prepare("
+			SELECT * FROM Partido;
+			");
+		$consulta->execute();
+		$resultado = $consulta->fetchAll();
+		return $resultado;
 	}
 
 	public function getPartido($idPartido){
@@ -73,6 +78,54 @@ class Partido{
 		$consulta = $this->db->prepare("SELECT usuario.nombre, usuario.nickname, usuario.fotografia, usuario.email FROM jugadorespartido INNER JOIN usuario on jugadorespartido.idUsuario = usuario.idUsuario WHERE idPartido='$idPartido'");
 		$consulta->execute();
 		$resultado=$consulta->fetchAll();
+		return $resultado;
+	}
+
+	public function setPartidoDesafio($idOrganizador,$fecha, $hora, $cuota, $tipo, $estado, $idRecinto){
+		$consulta= $this->db->prepare(
+			"INSERT INTO Partido (
+				idOrganizador,
+				fecha,
+				hora,
+				cuota,
+				tipo,
+				estado,
+				idRecinto,
+				tercerTiempo)
+			VALUES(
+				'$idOrganizador',
+				(STR_TO_DATE('".$fecha."', '%d-%m-%Y')),
+				'$hora',
+				'$cuota',
+				'$tipo',
+				'$estado',
+				'$idRecinto',
+				 0	
+				);
+			SELECT LAST_INSERT_ID() AS lastId;
+				");
+		$consulta->execute();
+		$resultado= $this->db->lastInsertId();
+
+		return $resultado;
+	}
+
+	public function setEquiposDesafio($ultimoPartido, $idEquipoOrganizador, $idRival){
+		$consulta= $this->db->prepare(
+			"INSERT INTO EquiposPartido (
+				idPartido,
+				idEquipo,
+				idEquipo2)
+			VALUES(
+				'$ultimoPartido',
+				'$idEquipoOrganizador',
+				'$idRival'
+				);
+			SELECT LAST_INSERT_ID() AS lastId;
+				");
+		$consulta->execute();
+		$resultado= $this->db->lastInsertId();
+
 		return $resultado;
 	}
 

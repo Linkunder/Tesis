@@ -4,6 +4,8 @@ require 'models/Partido.php';
 require 'models/Usuario.php';
 require 'models/Contacto.php';
 require 'models/Recinto.php';
+require 'models/Desafio.php';
+require 'models/Equipo.php';
 
 
 session_start();
@@ -15,6 +17,8 @@ class PartidoController{
 		$this->Usuario = new Usuario();
 		$this->Contacto = new Contacto();
 		$this->Recinto = new Recinto();
+		$this->Desafio = new Desafio();
+		$this->Equipo = new Equipo();
 	}
 
 	public function index(){
@@ -164,6 +168,51 @@ class PartidoController{
 		
 		//enviamos los datos a la vista del resumen del partido
 		$this->view->show("resumenPartido.php",$data);		
+	}
+
+
+	public function agendarDesafio(){
+		$idOrganizador= $_POST['idUsuario'];
+		$idRival = $_POST['rival'];
+		$idDesafio = $_POST['desafio'];
+		$horaPartido = $_POST['hora'];
+		$desafio = $this->Desafio->getDesafio($idDesafio);
+		foreach ($desafio as $item) {
+			$fechaPartido = $item['fechaPartido'];
+			$tipoPartido = $item['tipoPartido'];
+			$idRecinto = $item['idRecinto'];
+			$idEquipoOrganizador = $item['idEquipoOrganizador'];
+			$equipoOrganizador = $item['nombreEquipo'];
+			$cuota = 0;
+		}
+		$estado = 0; // Activo.
+
+		// Enviar datos a la BD
+		$this->Partido->setPartidoDesafio($idOrganizador,$fechaPartido, $horaPartido, $cuota, $tipoPartido, $estado, $idRecinto);
+
+		$partidos = $this->Partido->getPartidos();
+		$ultimoPartido = end($partidos)['idPartido'];
+		$this->Partido->setEquiposDesafio($ultimoPartido, $idEquipoOrganizador, $idRival);
+
+		//Datos del partido
+		$data['tipoPartido'] = $tipoPartido;
+		$data['idCapitan']	=  $idOrganizador;
+		$data['fecha']	=	$fechaPartido;
+		$data['hora']	=	$horaPartido;
+		$data['cantidad']	=	0;
+		$data['color']	=	"Definidos por cada equipo"; // Falta traer estos datos.
+		//Se debe manejar la cuota con JS creo yo
+		//$cuota['cuota'] =	0;
+		//Jugadores del equipo rival
+		$jugadoresEquipo1 = $this->Equipo->getMiembrosEquipo($idEquipoOrganizador);
+		$jugadoresEquipo2 = $this->Equipo->getMiembrosEquipo($idRival);
+		//$data['jugadores']	= $jugadoresPartido;
+		//Recinto deportivo
+		$recinto = $this->Recinto->getRecinto($idRecinto);
+		$data['recinto'] = $recinto;
+
+
+
 	}
 
 	public function enviarInvitaciones(){
