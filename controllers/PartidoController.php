@@ -102,13 +102,15 @@ class PartidoController{
 	public function agendarPartido(){
 		//debemos identificar que tipo de partido es
 		//Si es revuelta agregar color
-		$idTipo =$_SESSION['tipoPartido'];
+		$idTipo =	$_SESSION['tipoPartido'];
 		$idCapitan	= $_SESSION['login_user_id'];
 		$fecha	=	$_SESSION['fecha'];
 		$hora	=	$_SESSION['hora'];
 		$cantidad	= $_SESSION['cantidad'];
 		$color	=	$_SESSION['color'];
 		$idRecinto = $_SESSION['idRecinto'];
+
+		//partido con estado agendado
 		$idEstado = "1";
 		$cuota = "0";
 		//Ingresar Partido
