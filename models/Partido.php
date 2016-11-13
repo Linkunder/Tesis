@@ -75,7 +75,7 @@ class Partido{
 	}
 
 	public function getJugadoresPartido($idPartido){
-		$consulta = $this->db->prepare("SELECT usuario.nombre, usuario.nickname, usuario.fotografia, usuario.email FROM jugadorespartido INNER JOIN usuario on jugadorespartido.idUsuario = usuario.idUsuario WHERE idPartido='$idPartido'");
+		$consulta = $this->db->prepare("SELECT usuario.nombre, usuario.nickname, usuario.fotografia, usuario.mail FROM jugadorespartido INNER JOIN usuario on jugadorespartido.idUsuario = usuario.idUsuario WHERE idPartido='$idPartido'");
 		$consulta->execute();
 		$resultado=$consulta->fetchAll();
 		return $resultado;
