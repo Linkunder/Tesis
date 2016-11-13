@@ -95,6 +95,18 @@ class Encuentro{
 	}
 
 
+	public function getEncuentroAcordado($idDesafio){
+		$sql = "SELECT equipo.idEquipo as idRival ,equipo.nombre as nombreEquipo2, encuentro.respuesta
+		from encuentro 
+		join desafio on encuentro.idDesafio = desafio.idDesafio 
+		join equipo on encuentro.idEquipo = equipo.idEquipo WHERE encuentro.idDesafio= '".$idDesafio."';";
+		//echo $sql;
+		$query = $this->db->prepare($sql);
+		$query->execute();
+		$resultado = $query->fetchAll();
+		return $resultado;
+	}
+
 
 }
 

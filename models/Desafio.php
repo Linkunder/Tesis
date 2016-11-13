@@ -20,7 +20,20 @@ class Desafio{
 
 	// Obtener un determinado desafio.
 	public function getDesafio($idDesafio){
-		$query = $this->db->prepare("SELECT Desafio.idDesafio, (DATE_FORMAT(Desafio.fecha,'%d-%m-%Y')) as fechaPartido , Recinto.fotografia as fotoRecinto, Recinto.nombre as nombreRecinto, Recinto.tipo as tipoPartido, Desafio.comentario, Desafio.idEquipo, Desafio.estado as estadoDesafio, Equipo.nombre as nombreEquipo, Usuario.nombre, Usuario.apellido 
+		$query = $this->db->prepare(
+			"SELECT Desafio.idDesafio,
+			(DATE_FORMAT(Desafio.fecha,'%d-%m-%Y')) as fechaPartido , 
+			Recinto.idRecinto, Recinto.fotografia as fotoRecinto, 
+			Recinto.nombre as nombreRecinto, 
+			Recinto.tipo as tipoPartido, 
+			Desafio.comentario, 
+			Desafio.idEquipo, 
+			Desafio.estado as estadoDesafio,
+			Equipo.idEquipo as idEquipoOrganizador, 
+			Equipo.idCapitan, 
+			Equipo.nombre as nombreEquipo,
+			Usuario.nombre, 
+			Usuario.apellido 
 			FROM Desafio 
 			JOIN Recinto ON Desafio.idRecinto = Recinto.idRecinto  
 			JOIN Equipo ON Desafio.idEquipo = Equipo.idEquipo 
