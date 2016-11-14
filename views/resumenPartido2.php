@@ -183,17 +183,13 @@ if (isset($vars['tercerTiempo'])){
       ?>
 
       <div class="row">
-          <table class="table">
-            <tr>
-              <th style="border-top:transparent; text-align:center;">
-                <a href="enviarInvitaciones.php">
-                <button type="button" class="btn btn-primary btn-lg center-block col-md-12">Enviar invitaciones
-                  <i class="fa fa-paper-plane" aria-hidden="true"></i>
-                </button>
-              </a>
-              </th>
-            </tr>
-          </table>
+
+        <div class="alert alert-success">
+        <strong>¡Listo!</strong> Se ha enviado una invitación a los jugadores invitados al partido.
+      </div>
+
+
+
       </div>
 
     </div>
@@ -269,7 +265,7 @@ function carga_ajax(div, id, tipo){
   }
   if (tipo == 'mapaLocal'){
     $.post(
-      '?controlador=Local&accion=verMapaLocal&idRecinto='+id,
+      '?controlador=Local&accion=verMapaLocal&idLocal='+id,
       function(resp){
         $("#"+div+"").html(resp);
       }

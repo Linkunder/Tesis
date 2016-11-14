@@ -29,7 +29,7 @@ class LocalController{
 	}
 
     public function verMapaLocal(){
-      $idLocal = $_GET['id'];
+      $idLocal = $_GET['idLocal'];
       $local = new Local();
       $mapaLocal = $local->getDireccionLocal($idLocal);
       $data['mapa'] = $mapaLocal;

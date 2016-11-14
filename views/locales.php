@@ -58,7 +58,7 @@ $idPartido = $_SESSION['idPartido'];
 
 
     <div class="page-header">
-        <h2> Resumen del partido <i class="fa fa-futbol-o" aria-hidden="true"></i> </h2>
+        <h2> Busca el lugar ideal para tu tercer tiempo <i class="fa fa-futbol-o" aria-hidden="true"></i> </h2>
       </div>
 
 

@@ -118,7 +118,7 @@ class RecintoController{
 
 
     public function verMapaRecinto(){
-      $idRecinto = $_GET['id'];
+      $idRecinto = $_GET['idRecinto'];
       $recinto = new Recinto();
       $mapaRecinto = $recinto->getDireccionRecinto($idRecinto);
       $data['mapa'] = $mapaRecinto;
