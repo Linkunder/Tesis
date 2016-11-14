@@ -23,7 +23,7 @@ class RecintoController{
 
     //Busqueda recintos sin registrar
     public function busquedaRecintos(){
-      
+
             if(isset($_POST['tipo'])){
 	          $tipo = $_POST['tipo'];
              }else{

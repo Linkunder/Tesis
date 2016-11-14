@@ -10,7 +10,9 @@ require 'models/TercerTiempo.php';
 require 'models/Local.php';
 
 
-session_start();
+      if(!isset($_SESSION)) { 
+        session_start(); 
+        } 
 
 class PartidoController{
 	function __construct(){
@@ -161,17 +163,15 @@ class PartidoController{
 		$data['jugadores']	=	$jugadoresPartido;
 		//Recinto deportivo
 		$recinto = $this->Recinto->getRecinto($_SESSION['idRecinto']);
-		//Tercer Tiempo
-		$t = $this->Partido->getIdTercerTiempo('idPartido');
-		$idTercerTiempo = end($t)['idTercerTiempo'];
+		//Obtenemos el id del tercer tiempo
+		$t = $this->tercerTiempo->getTercerTiempo('idPartido');
 
-		if($idTercerTiempo != 0){
-			$tercerTiempo= $this->tercerTiempo->getTercerTiempo($idTercerTiempo);
-
+		if(count($t) != 0){
 			//pasamos el tercerTiempo
-			$data['tercerTiempo'] = $tercerTiempo;
-
-			$idLocal = end($tercerTiempo)['idLocal'];
+			$data['tercerTiempo'] = $t;
+			$aux = end($t);
+			$idLocal = $aux['idLocal'];
+			$_SESSION['idTercer']= $aux['idTercerTiempo'];
 
 			$data['local'] = $this->local->getLocal($idLocal);
 		}
@@ -248,7 +248,7 @@ class PartidoController{
 		$idUsuario= $_SESSION['idUsuario'];
 		$idRecinto= $_SESSION['idRecinto']; //Recinto seleccionado
 		$cantidad = $_SESSION['cantidad'];
-		$_SESSION['idTercer']=0;
+		
 		$idTercer = $_SESSION['idTercer'];
 		$correo=$_SESSION['login_user_email'];
         $nombreJugador= $_SESSION['login_user_name'];
@@ -262,31 +262,27 @@ class PartidoController{
 		}
 
 $existenciaTercerTiempo=0;
-//partido
-
+//buscamos con el id del partido si tiene tercer tiempo
+$tercerTiempoPartido = $this->tercerTiempo->getTercerTiempo($idPartido);
+$existenciaTercerTiempo = count($tercerTiempoPartido);
 $partidoSeleccionado = $this->Partido->getPartido($idPartido);
-foreach ($partidoSeleccionado as $key) {
-	$existenciaTercerTiempo=$key['tercerTiempo'];
-}
+
 
 $idLocal=0;
-//$tercerTiempo = $jefeTercer->leerTercerTiempo($existenciaTercerTiempo);
-//foreach ($tercerTiempo as $TercerTiempo) {
-//	$idLocal = $TercerTiempo->getIdLocal();
-//}
 
 
-
-
-//$localTercerTiempo = $jefeLocal->leerLocal($idLocal);
 
 if ($existenciaTercerTiempo != 0) { // Si es 0, no hay tercer tiempo 
-/*foreach ($localTercerTiempo as $Local) {
-	$nombreLugar = $Local->getNombre();
-	$direcciontercertiempo = $Local->getDireccion();
-	$imagenLugar = $Local->getRutaFotografia();
+	foreach ($tercerTiempoPartido as $TercerTiempo) {
+	$idLocal = $TercerTiempo['idLocal'];
+	}
+	$localTercerTiempo = $this->local->getLocal($idLocal);
+	foreach ($localTercerTiempo as $Local) {
+		$nombreLugar = $Local['nombre'];
+		$direcciontercertiempo = $Local['direccion'];
+		$imagenLugar = $Local['fotografia'];
 }
-*/
+
 }
 
 
@@ -372,10 +368,10 @@ $message .= "</table>";
 
 if($existenciaTercerTiempo!=0){
 $message .= "<p>Tambien se te ha invitado a un evento post partido!</p>";
-	$message .= "Este tercer tiempo sera en: " .$tercertiempo. " mapa de referencia:";
+	$message .= "Este tercer tiempo sera en: " .$nombreLugar. " mapa de referencia:";
 $message .= '<div style="height:auto; width:auto;"><img src="http://maps.googleapis.com/maps/api/staticmap?center='. $direcciontercertiempo . ',Chillan&zoom=14&scale=false&size=600x300&maptype=roadmap&format=png&visual_refresh=true&markers=size:small%7Ccolor:0xff0000%7Clabel:%7C'.$direcciontercertiempo.' Chillan, Chile" alt="Website Change Request" /></div>';
 }
-$message .= "<center><b><p>© 2016 DSI., MatchDay.</p></b></center>";
+$message .= "<center><b><p>© 2016. MatchDay.</p></b></center>";
 $message .= "</body>";
 $message .= "</html>";
 

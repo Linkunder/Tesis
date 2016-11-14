@@ -329,7 +329,7 @@ $_SESSION['idRecinto']=NULL;
                             if($contadorPartido == 1){ 
                                 ?>
 
-                            <di v class="panel-body comments">
+                            <div class="panel-body comments">
                                 <form method="post" action="?controlador=Comentario&accion=setComentario">
                                     <input id="comentario" class="form-control comentario" onkeyup="clean('comentario');" onkeydown="clean('comentario');" name="contenido" placeholder="Escribe tu comentario" rows="2" required id="texto-input-white"></input>
                                     <input type="hidden" name="idUsuario" value="<?php echo $_SESSION['login_user_id']  ?>">

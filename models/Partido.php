@@ -28,7 +28,7 @@ class Partido{
 
 	//PARTIDOS JUGADOS DEL USUARIO
 	public function getPartidosUsuario($idUsuario){
-		$consulta = $this->db->prepare("SELECT jugadorespartido.idPartido, partido.idRecinto FROM jugadorespartido INNER JOIN partido on jugadorespartido.idPartido = partido.idPartido WHERE partido.estado = 2 AND jugadorespartido.idUsuario = '$idUsuario'");
+		$consulta = $this->db->prepare("SELECT JugadoresPartido.idPartido, Partido.idRecinto FROM JugadoresPartido INNER JOIN Partido on Jugadorespartido.idPartido = Partido.idPartido WHERE Partido.estado = 2 AND JugadoresPartido.idUsuario = '$idUsuario'");
 		$consulta->execute();
 		$resultado = $consulta->fetchAll();
 		return $resultado;
@@ -36,7 +36,7 @@ class Partido{
 
 	public function setJugadoresPartido($idPartido, $idUsuario, $equipo){
 		$consulta = $this->db->prepare("
-			INSERT INTO jugadorespartido (
+			INSERT INTO JugadoresPartido (
 				idPartido, idUsuario, equipo) 
 				VALUES
 				('$idPartido',
@@ -54,8 +54,7 @@ class Partido{
 				cuota,
 				tipo,
 				estado,
-				idRecinto,
-				tercerTiempo)
+				idRecinto)
 			VALUES(
 				'$idOrganizador',
 				'$fecha',
@@ -63,8 +62,7 @@ class Partido{
 				'$cuota',
 				'$tipo',
 				'$estado',
-				'$idRecinto',
-				 0	
+				'$idRecinto'
 				);
 			SELECT LAST_INSERT_ID() AS lastId;
 				");
@@ -75,7 +73,7 @@ class Partido{
 	}
 
 	public function getJugadoresPartido($idPartido){
-		$consulta = $this->db->prepare("SELECT usuario.nombre, usuario.nickname, usuario.fotografia, usuario.mail FROM jugadorespartido INNER JOIN usuario on jugadorespartido.idUsuario = usuario.idUsuario WHERE idPartido='$idPartido'");
+		$consulta = $this->db->prepare("SELECT Usuario.nombre, Usuario.nickname, Usuario.fotografia, Usuario.mail FROM JugadoresPartido INNER JOIN Usuario on JugadoresPartido.idUsuario = Usuario.idUsuario WHERE idPartido='$idPartido'");
 		$consulta->execute();
 		$resultado=$consulta->fetchAll();
 		return $resultado;
@@ -90,8 +88,7 @@ class Partido{
 				cuota,
 				tipo,
 				estado,
-				idRecinto,
-				tercerTiempo)
+				idRecinto)
 			VALUES(
 				'$idOrganizador',
 				(STR_TO_DATE('".$fecha."', '%d-%m-%Y')),
@@ -99,8 +96,7 @@ class Partido{
 				'$cuota',
 				'$tipo',
 				'$estado',
-				'$idRecinto',
-				 0	
+				'$idRecinto'
 				);
 			SELECT LAST_INSERT_ID() AS lastId;
 				");
@@ -129,20 +125,9 @@ class Partido{
 		return $resultado;
 	}
 
-	public function setTercerTiempoPartido($idPartido, $idTercerTiempo){
-		$consulta=$this->db->prepare("
-			UPDATE Partido SET idTercerTiempo = '$idTercerTiempo' WHERE
-			idPartido = '$idPartido'
-			");
-		$consulta->execute();
 
-	}
-	public function getIdTercerTiempo($idPartido){
-		$consulta=$this->db->prepare("SELECT idTercerTiempo FROM Partido WHERE idPartido='$idPartido';");
-		$consulta->execute();
-		$resultado= $consulta->fetchAll();
-		return $resultado;
-	}
+
+
 
 
 

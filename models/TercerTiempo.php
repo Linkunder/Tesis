@@ -27,13 +27,20 @@ class TercerTiempo{
 				'$comentario',
 				'$hora',
 				'$cuota',
-				'$idLocal'
-				'idPartido'
+				'$idLocal',
+				'$idPartido'
 				);
 				SELECT LAST_INSERT_ID() AS lastId;
 			");
 		$consulta->execute();
-		$resultado = $consulta->fetchAll();
+		$resultado = $this->db->lastInsertId();
+		return $resultado;
+	}
+
+	public function getIdTercerTiempo($idPartido){
+		$consulta=$this->db->prepare("SELECT idTercerTiempo FROM TercerTiempo WHERE idPartido='$idPartido';");
+		$consulta->execute();
+		$resultado= $consulta->fetchAll();
 		return $resultado;
 	}
 

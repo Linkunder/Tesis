@@ -213,7 +213,7 @@ foreach ($vectorTercerTiempo as $key ) {
 <div id="contact-nosotros" class="parallax">
   <div class="container">
      <?php
-      if (!isset($vars['tercerTiempo'])){ // SI NO HAY TERCER TIEMPO 
+      if (!(isset($vars['tercerTiempo']))){ // SI NO HAY TERCER TIEMPO 
         ?>
     <div class="row">
       <h2>Resumen del partido</h2>

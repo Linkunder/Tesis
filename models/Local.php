@@ -14,7 +14,7 @@ class Local{
 
 	public function getLocal($idLocal){
 		$consulta = $this->db->prepare("
-			SELECT * FROM Loca WHERE idLocal = '$idLocal';
+			SELECT * FROM Local WHERE idLocal = '$idLocal';
 			");
 		$consulta->execute();
 		$resultado=$consulta->fetchAll();
