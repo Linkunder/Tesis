@@ -12,9 +12,25 @@ class Encuentro{
 	//	Obtener respuestas de un desafio
 	public function getEncuentros($idDesafio){
 		$sql = "SELECT DISTINCT 
-		desafio.estado, encuentro.idEncuentro, equipo.idEquipo , encuentro.idDesafio, equipo.nombre as nombreEquipo, usuario.nombre as nombreCap, usuario.apellido as apellidoCap, usuario.fotografia, equipo.puntuacion, equipo.edadPromedio 
+		desafio.estado,
+		desafio.fecha as fechaPartido,
+		desafio.comentario, 
+		encuentro.idEncuentro,
+		encuentro.estadoSolicitud,
+		equipo.idEquipo , 
+		encuentro.idDesafio,  
+		recinto.nombre as nombreRecinto, 
+		recinto.fotografia as fotoRecinto,
+		recinto.tipo as tipoPartido, 
+		equipo.nombre as nombreEquipo, 
+		usuario.nombre as nombreCap, 
+		usuario.apellido as apellidoCap, 
+		usuario.fotografia, 
+		equipo.puntuacion, 
+		equipo.edadPromedio 
 			FROM encuentro 
 			join desafio on encuentro.idDesafio = desafio.idDesafio 
+			join recinto on desafio.idRecinto = recinto.idRecinto
 			join equipo on equipo.idEquipo = encuentro.idEquipo 
 			join usuario on equipo.idCapitan = usuario.idUsuario
 			WHERE encuentro.idDesafio = '".$idDesafio."' ";
@@ -101,6 +117,16 @@ class Encuentro{
 		join desafio on encuentro.idDesafio = desafio.idDesafio 
 		join equipo on encuentro.idEquipo = equipo.idEquipo WHERE encuentro.idDesafio= '".$idDesafio."';";
 		//echo $sql;
+		$query = $this->db->prepare($sql);
+		$query->execute();
+		$resultado = $query->fetchAll();
+		return $resultado;
+	}
+
+
+	public function cancelarEncuentro($idEncuentro){
+		$sql = 
+			"DELETE FROM encuentro WHERE idEncuentro = '".$idEncuentro."';";
 		$query = $this->db->prepare($sql);
 		$query->execute();
 		$resultado = $query->fetchAll();

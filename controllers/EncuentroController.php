@@ -37,8 +37,9 @@ class EncuentroController{
 	public function aceptarEncuentro(){
 		$encuentro = new Encuentro();
 		$desafio = new Desafio();
-		$idDesafio = $_POST['desafio'];
-		$idEquipo = $_POST['equipo'];
+		$idDesafio = $_POST['idDesafio'];
+		$idEquipo = $_POST['idEquipo'];
+		$idEncuentro = $_POST['idEncuentro'];
 		$estado = 2;
 		$desafio->cambiarEstado($idDesafio, $estado);
 		$encuentro->cambiarEstado($idDesafio, $estado);
@@ -48,9 +49,13 @@ class EncuentroController{
 
 	// Se elimina una tupla de la tabla encuentro.
 	public function cancelarEncuentro(){
-		$idDesafio = $_POST['desafio'];
-		$idEquipo = $_POST['equipo'];
-		echo "desafio: ".$idDesafio." equipo: ".$idEquipo;
+		$encuentro = new Encuentro();
+		$idEncuentro = $_POST['idEncuentro'];
+		echo $idEncuentro;
+		//$idEquipo = $_POST['idEquipo'];
+		$encuentro->cancelarEncuentro($idEncuentro);
+		//echo "encuentro: ".$idEncuentro." equipo: ".$idEquipo;
+		header('Location: ?controlador=Desafio&accion=listaDesafios');
 	}
 
 

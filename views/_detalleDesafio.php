@@ -80,7 +80,7 @@
               </div>
             </div>
         <button type="button" class="btn btn-danger" data-dismiss="modal">Volver <i class="fa fa-arrow-circle-left" aria-hidden="true"></i></button>
-        <button type="submit" class="btn btn-primary">Desafiar <i class="fa fa-check" aria-hidden="true"></i></button>
+        <button type="submit" class="btn btn-primary">Desafiar <i class="fa fa-check-circle" aria-hidden="true"></i></button>
         </form>
       </div>
 

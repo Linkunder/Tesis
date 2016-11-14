@@ -70,6 +70,19 @@ if (isset($_SESSION['login_user_email'])){
 
   <script type="text/javascript" src="assets/js/jquery.js"></script>
 
+
+
+
+  <!-- DATATABLE -->
+<link href="assets/css/dataTables.bootstrap.min.css" rel="stylesheet">
+<script type="text/javascript" src="assets/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="assets/js/dataTables.bootstrap.min.js"></script>
+
+<link href="assets/css/responsive.dataTables.min.css" rel="stylesheet">
+<script type="text/javascript" src="assets/js/dataTables.responsive.min.js"></script>
+
+
+
 </head><!--/head-->
 
     <?php

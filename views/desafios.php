@@ -39,6 +39,9 @@ $recintos = $vars['listaRecintos'];
 <script type="text/javascript" src="assets/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="assets/js/dataTables.bootstrap.min.js"></script>
 
+<link href="assets/css/responsive.dataTables.min.css" rel="stylesheet">
+<script type="text/javascript" src="assets/js/dataTables.responsive.min.js"></script>
+
 
 
 
@@ -176,15 +179,25 @@ $recintos = $vars['listaRecintos'];
 
 
             <br>
+  
+        <div class="panel-group">
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <a data-toggle="collapse" href="#misDesafios">
+                <h4 class="panel-title">
+                  Mis desafios
+                </h4>
+              </a>
+            </div>
+          </div>
+        </div>
 
 
-
-
-
-        <div class="row">
+        <!-- TABLA DE MIS DESAFIOS -->
+        <div class="row collapse" id="misDesafios">
           <div class="col-md-8 col-md-offset-2">
-            <div class="table-responsive">
-              <table id="example" class="table table-striped table-hover">
+            <!--div class="table-responsive"-->
+              <table id="example" class="table table-striped table-hover display responsive nowrap"  cellspacing="0" width="100%">
                 <thead id ="position-table">
                   <tr id="color-encabezado">
                     <th id="encabezado-especial">Desafio</th>
@@ -279,13 +292,21 @@ $recintos = $vars['listaRecintos'];
 
 
                       <?php
-                    } else {
+                    } 
+
+                    if ($item['estadoDesafio']==1){
                       ?>
-                      <a href="#" class="btn btn-primary fa fa-search-plus" onclick="setValue(<?php echo $idDesafio;?>)" data-placement="right" data-toggle="tooltip" title="Ver detalles"></a>
+                      <button type="button" class="btn btn-primary fa fa-search-plus" href="javascript:void(0);" data-toggle="modal" data-target="#modal"  onclick="carga_ajax('modal','<?php echo $idDesafio?>','respuestas');"></button>
                       <?php
-
                     }
+                    
 
+
+                    if ($item['estadoDesafio']==0){
+                      ?>
+                      <button type="button" class="btn btn-primary fa fa-search-plus" href="javascript:void(0);" data-toggle="modal" data-target="#modal"  onclick="carga_ajax('modal','<?php echo $idDesafio?>','respuestas');"></button>
+                      <?php
+                    }
                     ?>
 
 
@@ -303,15 +324,18 @@ $recintos = $vars['listaRecintos'];
                   ?>
                 </tbody>
               </table>
-            </div>
+            <!--/div-->
           </div>
         </div>
+        <!-- /TABLA DE MIS DESAFIOS -->
 
 
         
         <script type="text/javascript">
           $(document).ready(function() {
-            $('#example').DataTable();
+            $('#example').DataTable({
+              responsive: true
+            });
         } );
         </script>
 
@@ -342,11 +366,39 @@ $recintos = $vars['listaRecintos'];
           <?php
         } else {
           ?>
-          <p class="centered">En esta sección, puedes ver las solicitudes que has realizado en el vestíbulo de partidos de MatchDay.</p>
-          <div class="row">
+          <br/>
+
+
+
+
+
+
+        <div class="panel-group">
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <a data-toggle="collapse" href="#misRespuestas">
+                <h4 class="panel-title">
+                  Mis respuestas
+                </h4>
+              </a>
+            </div>
+          </div>
+        </div>
+
+
+
+
+
+      <!-- TABLA DE MIS SOLICITUDES -->
+
+          
+
+
+          <div class="row collapse" id="misRespuestas">
+            <p class="centered">En esta sección, puedes ver las solicitudes que has realizado en el vestíbulo de partidos de MatchDay.</p>
           <div class="col-md-8 col-md-offset-2">
-            <div class="table-responsive">
-              <table id="example2" class="table table-striped table-hover">
+            <!--div class="table-responsive"-->
+              <table id="example2" class="table table-striped table-hover display responsive nowrap" cellspacing="0" width="100%">
                 <thead id ="position-table">
                   <tr id="color-encabezado">
                     <!--th id="encabezado-especial">Enc</th>
@@ -399,28 +451,24 @@ $recintos = $vars['listaRecintos'];
                   <td>
                     <?php
                     if ($item['estadoSolicitud']==1){
-                      ?>
-
-                      <span class="label label-warning">Esperando respuesta <i class="fa fa-clock-o" aria-hidden="true"></i></span>
-                      </td>
-
-               
-                     <?php
-                    }
-
-
-                    if ($item['estadoSolicitud']==2){
-                      ?>
-
-                      <span class="label label-primary">Encuentro aceptado <i class="fa fa-check-circle" aria-hidden="true"></i></span>
-                      
-                  </td>
-                   <?php
-                    }
                     ?>
-                    <td>
-                       <button type="button" class="btn btn-primary fa fa-search-plus" href="javascript:void(0);" data-toggle="modal" data-target="#modal"  onclick="carga_ajax('modal','<?php echo $idEncuentro?>','encuentro');"></button>
+                      <span class="label label-warning">Esperando respuesta <i class="fa fa-clock-o" aria-hidden="true"></i></span>
+                    <?php
+                    }
+                     if ($item['estadoSolicitud']==2){
+                      ?>
+                      <span class="label label-primary">Encuentro aceptado <i class="fa fa-check-circle" aria-hidden="true"></i></span>
+                    <?php
+                    }
 
+                    ?>
+
+
+
+
+                  </td>
+                    <td>
+                      <button type="button" class="btn btn-primary fa fa-search-plus" href="javascript:void(0);" data-toggle="modal" data-target="#modal"  onclick="carga_ajax('modal','<?php echo $idEncuentro?>','encuentro');"></button>
                     </td>
 
 
@@ -430,12 +478,18 @@ $recintos = $vars['listaRecintos'];
                   ?>
                 </tbody>
               </table>
-            </div>
+            <!--/div-->
           </div>
         </div>
- <script type="text/javascript">
+
+        <!-- / TABLA DE MIS DESAFIOS -->
+
+
+        <script type="text/javascript">
           $(document).ready(function() {
-            $('#example2').DataTable();
+            $('#example2').DataTable({
+              responsive: true
+            });
         } );
         </script>
 
@@ -444,6 +498,110 @@ $recintos = $vars['listaRecintos'];
           <?php
         }
         ?>
+
+        <br/>
+
+
+
+
+        <?php
+        $historialDesafios = $vars['historialDesafios'];
+        if ( !empty($historialDesafios) ){
+          ?>
+
+
+        <div class="panel-group">
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <a data-toggle="collapse" href="#historialDesafios">
+                <h4 class="panel-title">
+                  Historial de desafios
+                </h4>
+              </a>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="row collapse" id="historialDesafios">
+          <p class="centered">En esta sección, puedes ver el historial de desafíos realizados por tus equipos en MatchDay</p>
+          <div class="col-md-8 col-md-offset-2">
+            <!--div class="table-responsive"-->
+              <table id="example3" class="table table-striped table-hover display responsive nowrap" cellspacing="0" width="100%">
+                <thead id ="position-table">
+                  <tr id="color-encabezado">
+                    <!--th id="encabezado-especial">Enc</th>
+                    <th id="encabezado-especial">Des</th-->
+                    <th id="encabezado-especial">Tu Equipo</th>
+                    <th id="encabezado-especial">Rival</th>
+                    <th id="encabezado-especial">Tipo de partido</th>
+                    <th id="encabezado-especial">Fecha</th>
+                  </tr>
+                </thead>
+                <tbody id="texto-contactos" class="center">
+                  <?php
+                  foreach ($historialDesafios as $item) {
+                    //$idEncuentro = $item['idEncuentro'];
+                  ?>
+                  <tr>
+                    <!--td>
+                      <?php echo $item['idEncuentro']?>
+                    </td>
+                    <td>
+                      <?php echo $item['idDesafio']?>
+                    </td-->
+                  <td>
+                    <?php echo $item['equipo1']?>
+                  </td>
+                  <td>
+                    <?php echo $item['equipo2']?>
+                  </td>
+                  <td>
+                    <?php 
+                    
+                    $tipo = $item['tipoPartido'];
+                    if ($tipo==0){
+                      echo "Fútbol";
+                    }
+                    if ($tipo==1){
+                      echo "Futbolito";
+                    }
+                    if ($tipo==2){
+                      echo "Baby-Fútbol";
+                    }
+                    
+                    ?>
+                  </td>
+                  <td>
+                    <?php echo $item['fechaPartido']?>
+                  </td>
+                  
+
+
+
+                </tr>
+                  <?php
+                  }
+                  ?>
+                </tbody>
+              </table>
+            <!--/div-->
+          </div>
+        </div>
+
+
+        <script type="text/javascript">
+          $(document).ready(function() {
+            $('#example3').DataTable({
+              responsive: true
+            });
+        } );
+        </script>
+        <?php
+        }
+        ?>
+
+
 
 
   </div>
@@ -970,6 +1128,16 @@ $nroEncuentros = $vars['nroEncuentros'];
 
 <!-- FIN MODAL -->
 
+
+
+
+
+
+
+
+
+
+
 <script type="text/javascript">
 var idDesafio="0";
 function setValue(id){
@@ -1074,6 +1242,14 @@ window.onload = function() {
               if (tipo == 'desafio'){
                 $.post(
                     '?controlador=Desafio&accion=agendarPartido&idDesafio='+id,
+                    function(resp){
+                        $("#"+div+"").html(resp);
+                    }
+                    ); 
+              }
+              if (tipo == 'respuestas'){
+                 $.post(
+                    '?controlador=Desafio&accion=verRespuestas&idDesafio='+id,
                     function(resp){
                         $("#"+div+"").html(resp);
                     }
