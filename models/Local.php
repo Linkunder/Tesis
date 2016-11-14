@@ -21,6 +21,12 @@ class Local{
 		return $resultado;
 	}
 
+	public function getDireccionLocal($idLocal){
+		$consulta = $this->db->prepare("SELECT nombre, direccion FROM Local WHERE idLocal = '".$idLocal."' ");
+		$consulta->execute();
+		$resultado = $consulta->fetchAll();
+		return $resultado;	
+	}
 
 }
 ?>

@@ -27,6 +27,13 @@
 /*
 0. Extras ************************************************************/
 
+
+.resumenPartido{
+    background-color: #F0F0F0;
+}
+
+
+
 .text-datepicker{
     color: #000;
 }

@@ -190,7 +190,7 @@ class PartidoController{
 		unset($_SESSION['tipoPartido']);*/
 		
 		//enviamos los datos a la vista del resumen del partido
-		$this->view->show("resumenPartido.php",$data);		
+		$this->view->show("resumenPartido2.php",$data);		
 	}
 
 

@@ -98,6 +98,13 @@ class Recinto{
 		return $resultado;	
 	} 
 
+	public function getDireccionRecinto($idRecinto){
+		$consulta = $this->db->prepare("SELECT nombre, direccion FROM Recinto WHERE idRecinto = '".$idRecinto."' ");
+		$consulta->execute();
+		$resultado = $consulta->fetchAll();
+		return $resultado;	
+	}
+
 
 }
 ?>

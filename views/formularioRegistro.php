@@ -1,6 +1,15 @@
 <?php 
 include('layout/header.php');
 ?>
+
+<style type="text/css">
+  .cropit-preview {
+  /* You can specify preview size in CSS */
+  width: 960px;
+  height: 540px;
+}
+</style>
+
 <link rel="stylesheet" href="assets/css/style-f.css">
 
 
@@ -16,6 +25,15 @@ include('layout/header.php');
 
 
 
+<script type="text/javascript" src="assets/js/cropbox.js"></script>
+
+<script type="text/javascript" src="assets/js/cropbox-min.js"></script>
+
+
+
+
+
+
 
 <!-- Aqui empieza la pagina -->
 
@@ -27,6 +45,50 @@ include('layout/header.php');
       </div>
       <p>En MatchDay, podrás agendar tus partidos, comentar tus canchas favoritas y agendar un tercer tiempo con tus amigos.</p>
     </div>
+
+    <h1>PRUEBA DE IMAGEN RICK</h1>
+
+
+
+<!-- This wraps the whole cropper -->
+<div id="image-cropper">
+  <!-- This is where the preview image is displayed -->
+  <div class="cropit-preview"></div>
+  
+  <!-- This range input controls zoom -->
+  <!-- You can add additional elements here, e.g. the image icons -->
+  <input type="range" class="cropit-image-zoom-input" />
+  
+  <!-- This is where user selects new image -->
+  <input type="file" class="cropit-image-input" />
+  
+  <!-- The cropit- classes above are needed
+       so cropit can identify these elements -->
+</div>
+
+<script type="text/javascript">
+  $('#image-cropper').cropit();
+
+// In the demos I'm passing in an imageState option
+// so it renders an image by default:
+// $('#image-cropper').cropit({ imageState: { src: { imageSrc } } });
+
+// Exporting cropped image
+$('.download-btn').click(function() {
+  var imageData = $('#image-cropper').cropit('export');
+  window.open(imageData);
+});
+</script>
+
+
+
+
+
+
+
+
+
+
 
     <div class="row">
       <div class="col-sm-6 col-sm-offset-3 form-box">
@@ -109,10 +171,17 @@ include('layout/header.php');
               </div>
             </div>
             <div class="form-bottom">
+
+
               <div class="form-group">
                 <label class="sr-only" for="imagen"></label>
                 <input type="file" id="imagen" name="imagen" required="required"  class="file" multiple data-min-file-count="1">
               </div>
+
+
+
+
+
               <button type="button" class="btn btn-warning btn-previous"> <i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Atrás</button>
               <button type="submit" class="btn btn-primary">Finalizar <i class="fa fa-paper-plane" aria-hidden="true"></i></button>
             </div>

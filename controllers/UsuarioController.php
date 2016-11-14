@@ -65,8 +65,8 @@ class UsuarioController{
 		$this->guardarImagen($idUsuario);
 		$mensaje = 1;
 		$data['nuevoUsuario'] = $mensaje;
-		$this->view->show('inicio.php',$data);
-		//header('Location: ?controlador=Index&accion=inicio');
+		//$this->view->show('inicio.php',$data);
+		header('Location: ?controlador=Index&accion=inicio');
 	}
 
 	// Subir imagen 

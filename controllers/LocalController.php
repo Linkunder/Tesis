@@ -28,6 +28,15 @@ class LocalController{
 		$this->view->show("locales.php",$data);
 	}
 
+    public function verMapaLocal(){
+      $idLocal = $_GET['id'];
+      $local = new Local();
+      $mapaLocal = $local->getDireccionLocal($idLocal);
+      $data['mapa'] = $mapaLocal;
+      //mostrar vista parcial con los implementos (dataTable)
+      $this->view->show("_mapa.php", $data);
+    }
+
 
 }
 

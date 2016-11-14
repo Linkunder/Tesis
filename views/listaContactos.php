@@ -67,10 +67,7 @@ $equipos = $vars['listaEquipos'];
           <h2> No tienes contactos <i class="fa fa-frown-o" aria-hidden="true"></i>  </h2>
       </div>
       <p class="centered">Para agregar un nuevo contacto haz click 
-        <button href="#" data-toggle="modal" data-target="#modal-1" type="button" class="btn btn-md btn-primary" action="">aquí <i class="fa fa-plus-circle"></i></button>
-        . Para agregar a uno de tus contactos a un equipo, haz click en el botón 
-        <button type="button" class="btn btn-md btn-success" action="">Agregar <i class="fa fa-users"></i></button></p>
-
+        <button href="#" data-toggle="modal" data-target="#modal-1" type="button" class="btn btn-md btn-primary" action="">aquí <i class="fa fa-plus-circle"></i></button>.
     </div>
   </div>
 
@@ -89,8 +86,7 @@ $equipos = $vars['listaEquipos'];
 
       <p class="centered">Para agregar un nuevo contacto haz click 
         <button href="#" data-toggle="modal" data-target="#modal-1" type="button" class="btn btn-md btn-primary" action="">aquí <i class="fa fa-plus-circle"></i></button>
-        . Para agregar a uno de tus contactos a un equipo, haz click en el botón 
-        <button class="btn btn-success btn-sm fa fa-plus-circle"></a></button></p>
+        . Para agregar a uno de tus contactos a un equipo, haz click en el botón "Agregar" </p>
 
 
       <br/>

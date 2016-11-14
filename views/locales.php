@@ -53,16 +53,20 @@ $idPartido = $_SESSION['idPartido'];
 
         <!-- Portfolio section start -->
         <!--link rel="stylesheet" type="text/css" href="css/bootstrap.css" /-->
-<div class="section secondary-section" id="contact-us">
+<div id="contact-us" class="parallax">
   <div class="container">
-    <div class="title">
-      <h2>Busca el lugar ideal para tu tercer tiempo<h2>
-    </div>
+
+
+    <div class="page-header">
+        <h2> Resumen del partido <i class="fa fa-futbol-o" aria-hidden="true"></i> </h2>
+      </div>
+
+
 
     <div class="row">
       <div class="col-md-6 col-md-offset-3">
         <form action="?controlador=Local&accion=busquedaLocales" method="POST">
-          <input type="text" class="form-control" placeholder="Busca tu lugar ideal ..." name="search"/>
+          <input type="text" class="form-control" placeholder="Busca tu lugar ideal ..." name="search" id="texto-input-white"/>
           <div class="row">
             <div class="col-md-6 col-md-offset-4">
               <div class="div-btn-a">

@@ -116,6 +116,16 @@ class RecintoController{
       $this->view->show("_implementos.php", $data);
     }
 
+
+    public function verMapaRecinto(){
+      $idRecinto = $_GET['id'];
+      $recinto = new Recinto();
+      $mapaRecinto = $recinto->getDireccionRecinto($idRecinto);
+      $data['mapa'] = $mapaRecinto;
+      //mostrar vista parcial con los implementos (dataTable)
+      $this->view->show("_mapa.php", $data);
+    }
+
     
 
 

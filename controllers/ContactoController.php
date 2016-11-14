@@ -52,15 +52,15 @@ class ContactoController{
         $idContacto = $_GET['idContacto'];
         $idUsuario = $_SESSION['login_user_id'];
         $equiposContacto = $equipo->getEquiposCapitan($idContacto, $idUsuario); // Equipos en los que podria estar el contacto.
-        
-
+        $data['equipos'] = $equiposContacto;
+        $_SESSION['idNuevoMiembro'] = $idContacto;
         $this->view->show("_nuevoMiembro.php", $data);
 	}
 
 	//	Agregar contacto a un equipo (desde la lista de contactos)	- MODULO AGREGAR CONTACTO. MODAL
 	public function agregarMiembro(){
 		$equipo = new Equipo();
-		$idContacto = $_POST["contacto"];
+		$idContacto = $_SESSION['idNuevoMiembro'];
 		$idEquipo = $_POST["equipo"];
 		$equipo->agregarMiembroEquipo($idContacto,$idEquipo);
 		header('Location: ?controlador=Contacto&accion=listaContactos');
