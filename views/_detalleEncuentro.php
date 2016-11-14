@@ -61,14 +61,32 @@
           </div>
 
       </div>
-      <?php
-      }
+      <?php 
+      $estadoEncuentro = $item['estadoSolicitud'];
+    }
       ?>
       <br/>
 
       <div class="modal-footer">
-         <h6 class="texto-modal-negro">
-         El partido será agendado por el capitán del equipo rival. </h6>
+
+          <?php
+          if ($estadoEncuentro == 1 ){
+            ?>
+            <div class="alert alert-success" role="alert">
+              <strong>Solicitud enviada!</strong> El capitán del equipo rival debe aceptar o rechazar tu solicitud.
+            </div>
+            <?php
+          } 
+          if ($estadoEncuentro == 2){
+            ?>
+            <div class="alert alert-info" role="alert">
+              <strong>Solicitud aceptada!</strong> El capitán del equipo rival será encargado de agendar el partido.
+            </div>
+            <?php
+          }
+
+          ?>
+
         <button type="button" class="btn btn-primary" data-dismiss="modal">Volver <i class="fa fa-arrow-circle-left" aria-hidden="true"></i></button>
       </div>
 

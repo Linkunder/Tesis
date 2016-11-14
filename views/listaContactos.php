@@ -68,9 +68,10 @@ $equipos = $vars['listaEquipos'];
         <button class="btn btn-success btn-sm fa fa-plus-circle"></a></button></p>
 
 
-<br/>
+      <br/>
+
         <div class="table-responsive">
-        <table id="example" class="table table-striped table-hover" >
+          <table id="example" class="table table-striped table-hover" >
                 <thead id ="position-table">
                     <tr id="color-encabezado">
                         <th id="encabezado-especial"></th>

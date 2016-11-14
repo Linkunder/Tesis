@@ -195,6 +195,7 @@ class PartidoController{
 
 
 	public function agendarDesafio(){
+		//$desafio = new Desafio();
 		$idOrganizador= $_POST['idUsuario'];
 		$idRival = $_POST['rival'];
 		$idDesafio = $_POST['desafio'];
@@ -202,15 +203,17 @@ class PartidoController{
 		$desafio = $this->Desafio->getDesafio($idDesafio);
 		foreach ($desafio as $item) {
 			$fechaPartido = $item['fechaPartido'];
-			$tipoPartido = $item['tipoPartido'];
 			$idRecinto = $item['idRecinto'];
 			$idEquipoOrganizador = $item['idEquipoOrganizador'];
 			$equipoOrganizador = $item['nombreEquipo'];
 			$cuota = 0;
 		}
-		$estado = 0; // Activo.
+		$estado = 1; // Activo.
+		$estadoDesafio = 3; // Agendado.
+		$tipoPartido = 4;
 
 		// Enviar datos a la BD
+		$this->Desafio->cambiarEstado($idDesafio, $estadoDesafio);
 		$this->Partido->setPartidoDesafio($idOrganizador,$fechaPartido, $horaPartido, $cuota, $tipoPartido, $estado, $idRecinto);
 
 		$partidos = $this->Partido->getPartidos();
@@ -234,6 +237,7 @@ class PartidoController{
 		$recinto = $this->Recinto->getRecinto($idRecinto);
 		$data['recinto'] = $recinto;
 
+		echo "Ir a resumen Partido";
 
 
 	}

@@ -30,6 +30,8 @@ class DesafioController{
 		$data['listaEquipos'] = $listaEquipos;
 		$listaDesafios = $desafios->getDesafios($idUsuario);				// Desafios de los equipos del usuario
 		$data['listaDesafios'] = $listaDesafios;
+		$historialDesafios = $desafios->getHistorialDesafios($idUsuario);
+		$data['historialDesafios'] = $historialDesafios;
 		$nroEncuentros = 0;
 		foreach ($listaDesafios as $desafio) {
 			$idDesafio = $desafio['idDesafio'];
@@ -161,6 +163,19 @@ class DesafioController{
       }
       $data['desafio'] = $desafio;
       $this->view->show("_agendarDesafio.php", $data);
+    }
+
+    public function verRespuestas(){
+      /*if(!isset($_SESSION)) { 
+        session_start(); 
+        } */
+        $encuentros = new Encuentro();
+        $idDesafio = $_GET['idDesafio'];
+        $desafio = $this->Desafio->getDesafio($idDesafio);
+        $data['desafio'] = $desafio;
+        $listaEncuentros = $encuentros->getEncuentros($idDesafio);
+        $data['listaEncuentros'] = $listaEncuentros;
+        $this->view->show("_verRespuestas.php", $data);
     }
 
 

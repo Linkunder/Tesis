@@ -50,10 +50,20 @@ class Desafio{
 	// Obtener los desafios de los equipos de un usuario.
 	public function getDesafios($idUsuario){
 		$query = $this->db->prepare
-		("SELECT Desafio.idDesafio, (DATE_FORMAT(Desafio.fecha,'%d-%m-%Y')) as fechaPartido , Recinto.nombre as nombreRecinto, Recinto.tipo as tipoPartido, Desafio.comentario,Desafio.estado as estadoDesafio, Equipo.nombre as nombreEquipo, Equipo.idEquipo
+		("SELECT Desafio.idDesafio, 
+			(DATE_FORMAT(Desafio.fecha,'%d-%m-%Y')) as fechaPartido , 
+			Recinto.nombre as nombreRecinto, 
+			Recinto.tipo as tipoPartido, 
+			Desafio.comentario,
+			Desafio.estado as estadoDesafio, 
+			Equipo.nombre as nombreEquipo, 
+			Equipo.idEquipo
 			FROM Desafio
 			JOIN Recinto ON Desafio.idRecinto = Recinto.idRecinto  
-			JOIN Equipo ON Desafio.idEquipo = Equipo.idEquipo WHERE Equipo.idCapitan = '".$idUsuario."' ORDER BY desafio.estado DESC, desafio.fecha ASC");
+			JOIN Equipo ON Desafio.idEquipo = Equipo.idEquipo 
+			WHERE Equipo.idCapitan = '".$idUsuario."' 
+			AND Desafio.estado != 3
+			ORDER BY desafio.estado DESC, desafio.fecha ASC");
 		$query->execute();
 		$resultado = $query->fetchAll();
 		return $resultado;
@@ -90,6 +100,27 @@ class Desafio{
 		$sql = "UPDATE Desafio SET estado = '".$estado."' WHERE idDesafio = '".$idDesafio."' ;";
 		$query = $this->db->prepare($sql);
 		$query->execute();
+	}
+
+
+	public function getHistorialDesafios($idUsuario){
+		$query = $this->db->prepare
+		("SELECT Desafio.idDesafio, 
+			(DATE_FORMAT(Desafio.fecha,'%d-%m-%Y')) as fechaPartido ,
+			Recinto.nombre as nombreRecinto, 
+			Recinto.tipo as tipoPartido, 
+			Equipo.nombre as equipo1, 
+			(select nombre from equipo where idEquipo = Encuentro.idEquipo) as equipo2
+			FROM Desafio
+			JOIN Encuentro ON Desafio.idDesafio = Encuentro.idDesafio
+			JOIN Recinto ON Desafio.idRecinto = Recinto.idRecinto  
+			JOIN Equipo ON Desafio.idEquipo = Equipo.idEquipo 
+			WHERE Equipo.idCapitan = '".$idUsuario."' 
+			AND Desafio.estado = 3
+			ORDER BY desafio.estado DESC, desafio.fecha ASC");
+		$query->execute();
+		$resultado = $query->fetchAll();
+		return $resultado;
 	}
 
 
