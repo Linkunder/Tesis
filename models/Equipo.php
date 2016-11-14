@@ -82,9 +82,11 @@ class Equipo{
 
 	// Obtener posibles jugadores para un equipo (contactos de un usuario que no esten en un determinado equipo) - MODULO CREAR EQUIPO
 	public function getContactosEquipo($idUsuario, $idEquipo){
-		$query = $this->db->prepare("SELECT Usuario.idUsuario, Usuario.nombre, Usuario.apellido, Usuario.Fotografia 
-			FROM Usuario JOIN Contacto ON Usuario.idUsuario = Contacto.idContacto 
-									WHERE Contacto.idUsuario = '".$idUsuario."' AND Usuario.idUsuario NOT IN 
+		$query = $this->db->prepare(
+			"SELECT Usuario.idUsuario, Usuario.nombre, Usuario.apellido, Usuario.Fotografia 
+			FROM Usuario 
+			JOIN Contacto ON Usuario.idUsuario = Contacto.idContacto 
+			WHERE Contacto.idUsuario = '".$idUsuario."' AND Usuario.idUsuario NOT IN 
 									(SELECT Usuario.idUsuario FROM Usuario 
 										JOIN MiembrosEquipo ON Usuario.idUsuario = MiembrosEquipo.idUsuario 
 										WHERE miembrosequipo.idEquipo = '".$idEquipo."' )");
@@ -106,6 +108,18 @@ class Equipo{
 	public function agregarMiembroEquipo($idUsuario, $idEquipo){
 		$query = $this->db->prepare("INSERT INTO MiembrosEquipo (idUsuario, idEquipo) VALUES ('$idUsuario','$idEquipo');");
 		$query->execute();
+	}
+
+
+	// Equipos del capitan en los que no esta su contacto.
+	public function getEquiposCapitan($idContacto, $idUsuario){
+		$query = $this->db->prepare(
+			"SELECT * FROM Equipo
+			JOIN MiembrosEquipo ON MiembrosEquipo.idEquipo = Equipo.idEquipo 
+			WHERE idUsuario = '".$idUsuario."' AND idEquipo = '".$idEquipo."'");
+		$query->execute();
+		$resultado = $query->fetchAll();
+		return $resultado;
 	}
 
 

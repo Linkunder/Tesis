@@ -13,15 +13,40 @@ $equipos = $vars['listaEquipos'];
 
 
 ?>
-<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
 <link href="assets/css/profile.css" rel="stylesheet">
 
 
 <!-- DATATABLE -->
 <link href="assets/css/dataTables.bootstrap.min.css" rel="stylesheet">
-<script type="text/javascript" src="assets/js/jquery.js"></script>
 <script type="text/javascript" src="assets/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="assets/js/dataTables.bootstrap.min.js"></script>
+
+<link href="assets/css/responsive.dataTables.min.css" rel="stylesheet">
+<script type="text/javascript" src="assets/js/dataTables.responsive.min.js"></script>
+
+
+
+
+
+<!--MODAL IMPLEMENTOS-->
+    <div class="modal fade" id="modal" tabindex="-1" role="dialog" >
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Ventana normal</h4>
+      </div>
+      <div class="modal-body">
+        <h1>Texto #manosenelcódigo</h1>
+      </div>
+      <div class="modal-footer">
+            <h4>pie de página</h4>
+      </div>
+    </div>
+  </div>
+</div>
+<!--Modal-->
+
 
 
 
@@ -70,16 +95,17 @@ $equipos = $vars['listaEquipos'];
 
       <br/>
 
-        <div class="table-responsive">
-          <table id="example" class="table table-striped table-hover" >
+
+
+          <table id="example" class="table table-striped table-hover display responsive nowrap" cellspacing="0" width="100%" >
                 <thead id ="position-table">
                     <tr id="color-encabezado">
-                        <th id="encabezado-especial"></th>
-                        <th id="encabezado-especial">Nombre</th>
-                        <th id="encabezado-especial">Mail</th>
-                        <th id="encabezado-especial">Edad</th>
-                        <th id="encabezado-especial">Teléfono</th>
-                        <th id="encabezado-especial"></th>
+                        <th id="encabezado-especial" width='20%'></th>
+                        <th id="encabezado-especial" width='20%'>Nombre</th>
+                        <th id="encabezado-especial" width='20%'>Mail</th>
+                        <th id="encabezado-especial" width='10%'>Edad</th>
+                        <th id="encabezado-especial" width='20%'>Teléfono</th>
+                        <th id="encabezado-especial" width='10%'></th>
                     </tr>
                 </thead>
                 <!--tfoot>
@@ -100,7 +126,9 @@ $equipos = $vars['listaEquipos'];
                       ?>
                     <tr>
                       
-                      <td style="width: 100px; height: 100px;"><img class="img-thumbnail img-responsive" src="assets/images/usuarios/<?php echo $item['fotografia']?>"></td>
+                      <td style="width: 100px; height: 100px;">
+                        <img class="img-thumbnail img-responsive" src="assets/images/usuarios/<?php echo $item['fotografia']?>">
+                      </td>
                       <td><?php echo $nombreContacto." ".$item['apellido']?></td>
                       <td><?php echo $item['mail']?></td>
                       <td><?php echo $vars['edadContacto'.$item['idUsuario']]?></td>
@@ -111,7 +139,9 @@ $equipos = $vars['listaEquipos'];
                         <?php
                         if (count($equipos) != 0){
                           ?>
-                          <a href="#" class="btn btn-success btn-xs fa fa-plus-circle" onclick="setValue(<?php echo $idContacto.",'$nombreContacto'";?>)" title="Agregar">
+
+                          <!--a href="#" class="btn btn-success btn-xs fa fa-plus-circle" onclick="setValue(<?php echo $idContacto.",'$nombreContacto'";?>)" title="Agregar"-->
+                          <button type="button" class="btn btn-primary" href="javascript:void(0);" data-toggle="modal" data-target="#modal"  onclick="carga_ajax('modal','<?php echo $idContacto?>');">Agregar <i class="fa fa-plus-circle" aria-hidden="true"></i></button>
 
                           <?php
                         } 
@@ -124,11 +154,12 @@ $equipos = $vars['listaEquipos'];
                       ?>
                 </tbody>
             </table>
-          </div>
 
         <script type="text/javascript">
           $(document).ready(function() {
-            $('#example').DataTable();
+            $('#example').DataTable({
+              responsive: true
+            });
         } );
         </script>
 
@@ -355,3 +386,28 @@ function setValue(id,nombre){
 };
 
 </script>
+
+
+
+ <script>
+            /*
+            $('#modalImplementos').on('show.bs.modal', function(){
+                alert("Hola");
+                //$('#modalImplementos').load('?controlador=Recinto&accion=implementosRecinto');
+                $('#modalImplementos').load('?controlador=Recinto&accion=implementosRecinto');
+                 
+            })
+            */
+            function carga_ajax(div, id){
+
+                     $.post(
+                    '?controlador=Contacto&accion=nuevoMiembro&idContacto='+id,
+                    function(resp){
+                        $("#"+div+"").html(resp);
+                    }
+                    ); 
+              
+            }
+
+            
+        </script>
