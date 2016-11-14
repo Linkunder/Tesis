@@ -6,6 +6,8 @@ require 'models/Contacto.php';
 require 'models/Recinto.php';
 require 'models/Desafio.php';
 require 'models/Equipo.php';
+require 'models/TercerTiempo.php';
+require 'models/Local.php';
 
 
 session_start();
@@ -19,6 +21,8 @@ class PartidoController{
 		$this->Recinto = new Recinto();
 		$this->Desafio = new Desafio();
 		$this->Equipo = new Equipo();
+		$this->tercerTiempo = new TercerTiempo();
+		$this->local = new Local();
 	}
 
 	public function index(){
@@ -157,6 +161,23 @@ class PartidoController{
 		$data['jugadores']	=	$jugadoresPartido;
 		//Recinto deportivo
 		$recinto = $this->Recinto->getRecinto($_SESSION['idRecinto']);
+		//Tercer Tiempo
+		$t = $this->Partido->getIdTercerTiempo('idPartido');
+		$idTercerTiempo = end($t)['idTercerTiempo'];
+
+		if($idTercerTiempo != 0){
+			$tercerTiempo= $this->tercerTiempo->getTercerTiempo($idTercerTiempo);
+
+			//pasamos el tercerTiempo
+			$data['tercerTiempo'] = $tercerTiempo;
+
+			$idLocal = end($tercerTiempo)['idLocal'];
+
+			$data['local'] = $this->local->getLocal($idLocal);
+		}
+
+
+
 		$data['recinto'] = $recinto;
 
 		//Liberamos las variables globales
