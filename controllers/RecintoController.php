@@ -23,7 +23,7 @@ class RecintoController{
 
     //Busqueda recintos sin registrar
     public function busquedaRecintos(){
-
+      
             if(isset($_POST['tipo'])){
 	          $tipo = $_POST['tipo'];
              }else{
@@ -96,11 +96,8 @@ class RecintoController{
 
     public function horariosRecinto(){
       //Id del recinto tomada desde la variable global
-      if(!isset($_SESSION)) { 
-        session_start(); 
-        } 
 
-      $idRecinto = $_SESSION['idRecinto'];
+      $idRecinto = $_GET['id'];
       $horarios = $this->Horario->getHorariosRecinto($idRecinto);
       $data['horarios'] = $horarios;
       //mostrar vista parcial con los horarios (dataTable)
@@ -112,7 +109,7 @@ class RecintoController{
       if(!isset($_SESSION)) { 
         session_start(); 
         } 
-      $idRecinto = $_SESSION['idRecinto'];
+      $idRecinto = $_GET['id'];
       $implementos = $this->Implemento->getImplementosRecinto($idRecinto);
       $data['implementos'] = $implementos;
       //mostrar vista parcial con los implementos (dataTable)

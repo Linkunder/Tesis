@@ -6,7 +6,7 @@
       </div>
       <div class="modal-body">
       <?php     if(count($vars['horarios'])!=0){ ?>
-      <table id="implementos" class="table bootstrap table-striped label-partido">
+      <table id="tablaHorarios" class="table bootstrap-datatable table-striped label-partido">
 <thead>
 		<tr>
 			<th>Nombre</th>
@@ -38,3 +38,8 @@
       
     </div>
  </div>
+         <script type="text/javascript">
+          $(document).ready(function() {
+            $('#tablaHorarios').DataTable();
+        } );
+        </script>

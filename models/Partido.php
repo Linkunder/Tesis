@@ -129,6 +129,20 @@ class Partido{
 		return $resultado;
 	}
 
+	public function setTercerTiempoPartido($idPartido, $idTercerTiempo){
+		$consulta=$this->db->prepare("
+			UPDATE Partido SET idTercerTiempo = '$idTercerTiempo' WHERE
+			idPartido = '$idPartido'
+			");
+		$consulta->execute();
+
+	}
+	public function getIdTercerTiempo($idPartido){
+		$consulta=$this->db->prepare("SELECT idTercerTiempo FROM Partido WHERE idPartido='$idPartido';");
+		$consulta->execute();
+		$resultado= $consulta->fetchAll();
+		return $resultado;
+	}
 
 
 

@@ -165,6 +165,7 @@ $(function(){
   
   function setValue(){
     //arv= arrayJugador.join(","); //Funciona
+
     var jObject={};
     for(i in arrayJugador){
       jObject[i] = arrayJugador[i];
@@ -179,6 +180,7 @@ $(function(){
           data:{jObject:jObject}
     });
     }
+
 
 
   </script>
@@ -380,7 +382,7 @@ foreach ($vars['contactos'] as $Contacto) {
                       <div class="form-group">
                         <h2 class="center">¿Deseas agendar un tercer tiempo?<h2>
                        
-                        <button class="btn-submit" type="submit" onClick="setValue()" formaction="tercerTiempo.php">Si</button>
+                        <button class="btn-submit" type="submit" onClick="setValue()" formaction="?controlador=Local&accion=busquedaLocales">Si</button>
                        
                         <button type="submit" class="btn-submit" onClick="setValue()" >No</button>
                         

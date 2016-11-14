@@ -21,7 +21,7 @@ $_SESSION['idRecinto']=NULL;
         <!-- Portfolio section start -->
         <!--link rel="stylesheet" type="text/css" href="css/bootstrap.css" /-->
         <link href="assets/css/profile.css" rel="stylesheet">
-
+    
         <div id="contact-us" class="parallax">
              <?php if(isset($_GET["nuevo"])){ 
                         if($_GET["nuevo"]==1){   ?>
@@ -168,23 +168,42 @@ $_SESSION['idRecinto']=NULL;
 
 
                                 <div class="project-info">
-                                    <div>
+                                <table width='100%'>
+                                        <tr>
+                                        <td width='50%'>
                                         <span>Implementos</span>
-                                        <button type="button" class="btn-info" href="javascript:void(0);" data-toggle="modal" data-target="#modal"  onclick="carga_ajax('modal','implementos');">Ver <i class="fa fa-eye"></i> </button>
-                                    </div>
-                                    <div>
-                                        <span>Telefono</span> <?php echo $key['telefono'];?>
-                                    </div>
-                                    <div>
-                                        <span>Direccion</span><?php echo $key['direccion'];?>
-                                    </div>
-                                    <div>
+                                        </td>
+                                        <td width='50%'>
+                                        <button type="button" class="btn-info" href="javascript:void(0);" data-toggle="modal" data-target="#modal"  onclick="carga_ajax('modal','implementos','<?php echo $idRecinto ?>');">Ver <i class="fa fa-eye"></i> </button>
+                                        </td>
+                                        </tr>
+                                        <tr>
+                                        <td>
+                                        <span>Telefono</span> 
+                                        </td>
+                                        <td>
+                                        <?php echo $key['telefono'];?>
+                                        </td>
+                                        </tr>
+                                        <tr>
+                                        <td>
+                                        <span>Direccion</span>
+                                        </td>
+                                        <td>
+                                        <?php echo $key['direccion'];?>
+                                        </td>
+                                        </tr>                                  
                                     <!-- Aqui debe ir un boton para ver los horarios (Modal) -->
-                                        <span>Horario y precios</span><button type="button" class="btn-info" href="javascript:void(0);" data-toggle="modal" data-target="#modal" id="botonHorario" onclick="carga_ajax('modal','horarios');">Ver <i class="fa fa-eye"></i> </button>
-                                    </div>
-                                    <div>
-                                        <span>Superficie</span><?php echo $key['superficie'];?>
-                                    </div>
+                                        <tr>
+                                            <td><span>Horario y precios</span></td>
+                                            <td><button type="button" class="btn-info" href="javascript:void(0);" data-toggle="modal" data-target="#modal" id="botonHorario" onclick="carga_ajax('modal','horarios', '<?php echo $idRecinto ?>');">Ver <i class="fa fa-eye"></i> </button></td>
+                                        </tr>
+                                        <tr>
+                                            <td><span>Superficie</span></td>
+                                            <td><?php echo $key['superficie'];?></td>
+                                        </tr>
+                                    
+                                </table>
                                     <div>
                                         <span>Puntuación</span><?php 
                                         //Si la puntuacion del recinto es 0 significa que no ha recibido puntuaciones por lo tanto debemos mostrar un mensaje, y si es distnto de 0 se muestra la puntuacion
@@ -198,7 +217,7 @@ $_SESSION['idRecinto']=NULL;
 
                                 
                                     }?>
-                           
+                              
                                     <br/>
                                     <?php
                                      //Con este if se comprueba que el jusgador tenga un estado activo y no haya comentado en este recinto
@@ -310,7 +329,7 @@ $_SESSION['idRecinto']=NULL;
                             if($contadorPartido == 1){ 
                                 ?>
 
-                            <div class="panel-body comments">
+                            <di v class="panel-body comments">
                                 <form method="post" action="?controlador=Comentario&accion=setComentario">
                                     <input id="comentario" class="form-control comentario" onkeyup="clean('comentario');" onkeydown="clean('comentario');" name="contenido" placeholder="Escribe tu comentario" rows="2" required id="texto-input-white"></input>
                                     <input type="hidden" name="idUsuario" value="<?php echo $_SESSION['login_user_id']  ?>">
@@ -779,6 +798,9 @@ $_SESSION['idRecinto']=NULL;
 
         <!-- ScrollUp button end -->
         <!-- Include javascript -->
+        <script type="text/javascript" src="assets/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="assets/js/dataTables.bootstrap.min.js"></script>
+
         <script src="assets/js/jquery.js"></script>
         <script type="text/javascript" src="assets/js/jquery.mixitup.js"></script>
         <script type="text/javascript" src="assets/js/bootstrap.js"></script>
@@ -847,10 +869,10 @@ $_SESSION['idRecinto']=NULL;
                  
             })
             */
-            function carga_ajax(div, tipo){
+            function carga_ajax(div, tipo, id){
                 if(tipo == 'implementos'){
                      $.post(
-                    '?controlador=Recinto&accion=implementosRecinto',
+                    '?controlador=Recinto&accion=implementosRecinto&id='+id,
                     function(resp){
                         $("#"+div+"").html(resp);
                     }
@@ -858,7 +880,7 @@ $_SESSION['idRecinto']=NULL;
                 }
                 if(tipo == 'horarios'){
                     $.post(
-                        '?controlador=Recinto&accion=horariosRecinto',
+                        '?controlador=Recinto&accion=horariosRecinto&id='+id,
                         function(resp){
                             $("#"+div+"").html(resp);
                         }
@@ -879,8 +901,7 @@ $_SESSION['idRecinto']=NULL;
         textfield.value = textfield.value.replace(regex, function($0, $1){return $1 + ""});
                                             }   
         }
-</script>                                  
-
+        </script>                                  
 
     </body>
 </html>

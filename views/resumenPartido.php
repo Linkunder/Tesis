@@ -24,12 +24,12 @@ if (isset($_SESSION['login_user_email'])){
   $mail= $_SESSION['login_user_email'];
 }
 
-
+/*
 if(isset($_GET["tercertiempo"]) ){
   $tercertiempo=$_GET["tercertiempo"];
 }else{
   $tercertiempo=0;
-}
+}*/
 /////Usuario de prueba//////
 
     $user= $_SESSION['login_user_name'];
@@ -187,16 +187,17 @@ $hora =     $_SESSION['hora'];
 
 
 
-if ($tercertiempo !== 0){
+
+if (isset($vars['tercerTiempo'])){
   // Variable local
-  $local = $_SESSION['idLocal'];
-  $jefeLocales = controlLocales::obtenerInstancia();
-  $vectorLocales = $jefeLocales->leerLocal($local);
-$vectorTercerTiempo = $jefeTercerTiempo->leerTercertiempo($tercertiempo);
+  $tercerTiempo= end($vars['tercerTiempo']);
+  $local = $tercerTiempo['idLocal'];
+  $vectorLocales = $vars['local'];
+  $vectorTercerTiempo = $vars['tercerTiempo'];
 
 foreach ($vectorTercerTiempo as $key ) {
-  $horaTercer = $key->getHora();
-  $descripcion = $key->getDescripcion();
+  $horaTercer = $key['hora'];
+  $descripcion = $key['comentario'];
 }
 } 
 
@@ -212,7 +213,7 @@ foreach ($vectorTercerTiempo as $key ) {
 <div id="contact-nosotros" class="parallax">
   <div class="container">
      <?php
-      if ($tercertiempo==0){ // SI NO HAY TERCER TIEMPO 
+      if (!isset($vars['tercerTiempo'])){ // SI NO HAY TERCER TIEMPO 
         ?>
     <div class="row">
       <h2>Resumen del partido</h2>
@@ -410,9 +411,9 @@ foreach ($vectorTercerTiempo as $key ) {
         <?php
             foreach ($vectorLocales as $key ) {
             ?>
-            <h4>Local: <?php echo $key->getNombre();?></h4>
+            <h4>Local: <?php echo $key['nombre'];?></h4>
             <div class="folio-image">
-                  <img class="img-responsive" src="assets/images/locales/<?php echo  $key->getRutaFotografia(); ?>" alt="">
+                  <img class="img-responsive" src="assets/images/locales/<?php echo  $key['fotografia']; ?>" alt="">
                 </div>
            
       </div>
@@ -423,7 +424,7 @@ foreach ($vectorTercerTiempo as $key ) {
         <iframe
           width="100%" height="336px" frameborder="5" style="border:0"  maptype="satellite"
           src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDR2WyVnnd9GsSTKys5OEkowPu41kMpEUs
-          &q=Chile  + Chillan + <?php echo $key->getDireccion();?>" allowfullscreen>
+          &q=Chile  + Chillan + <?php echo $key['direccion'];?>" allowfullscreen>
           </iframe>
            <?php
             }
@@ -509,16 +510,17 @@ foreach ($vectorTercerTiempo as $key ) {
   <script type="text/javascript" src="assets/js/jquerypp.custom.js"></script>
   <script type="text/javascript" src="assets/js/jquery.elastislide.js"></script>
     <script>     
+
     //Creo que hay un error en este script.
-/*window.onload = function() {
-  //funciones a ejecutar
-     $.ajax({
+
+       $(document).ready(function() {     
+        $.ajax({
           type:'post',
           cache:false,
           url:"?controlador=Partido&accion=enviarInvitaciones"
-    });
-  };
-*/
+         });
+        });
+
 
   </script>
 </body>
