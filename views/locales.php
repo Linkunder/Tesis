@@ -169,7 +169,7 @@ $idPartido = $_SESSION['idPartido'];
                                     <?php 
                                     $_SESSION["idLocal"]=$idLocal;?>
                                     <center>
-                                        <button class="btn-busqueda" href="#" data-toggle="modal" data-target="#modal-1" >
+                                        <button class="btn btn-primary btn-lg" href="#" data-toggle="modal" data-target="#modal-1" >
                                             Ir Aqui
                                         </button> 
                                     </center>

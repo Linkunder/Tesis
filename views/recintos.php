@@ -18,6 +18,10 @@ $_SESSION['idRecinto']=NULL;
         
 ?>
 
+
+
+
+
         <!-- Portfolio section start -->
         <!--link rel="stylesheet" type="text/css" href="css/bootstrap.css" /-->
         <link href="assets/css/profile.css" rel="stylesheet">
@@ -174,7 +178,7 @@ $_SESSION['idRecinto']=NULL;
                                         <span>Implementos</span>
                                         </td>
                                         <td width='50%'>
-                                        <button type="button" class="btn-info" href="javascript:void(0);" data-toggle="modal" data-target="#modal"  onclick="carga_ajax('modal','implementos','<?php echo $idRecinto ?>');">Ver <i class="fa fa-eye"></i> </button>
+                                        <button type="button" class="btn btn-primary btn-xs" href="javascript:void(0);" data-toggle="modal" data-target="#modal"  onclick="carga_ajax('modal','implementos','<?php echo $idRecinto ?>');">Ver <i class="fa fa-eye"></i> </button>
                                         </td>
                                         </tr>
                                         <tr>
@@ -196,7 +200,7 @@ $_SESSION['idRecinto']=NULL;
                                     <!-- Aqui debe ir un boton para ver los horarios (Modal) -->
                                         <tr>
                                             <td><span>Horario y precios</span></td>
-                                            <td><button type="button" class="btn-info" href="javascript:void(0);" data-toggle="modal" data-target="#modal" id="botonHorario" onclick="carga_ajax('modal','horarios', '<?php echo $idRecinto ?>');">Ver <i class="fa fa-eye"></i> </button></td>
+                                            <td><button type="button" class="btn btn-primary btn-xs" href="javascript:void(0);" data-toggle="modal" data-target="#modal" id="botonHorario" onclick="carga_ajax('modal','horarios', '<?php echo $idRecinto ?>');">Ver <i class="fa fa-eye"></i> </button></td>
                                         </tr>
                                         <tr>
                                             <td><span>Superficie</span></td>
@@ -299,7 +303,7 @@ $_SESSION['idRecinto']=NULL;
                                     $_SESSION["idRecinto"]=$idRecinto;
                                     if($jugar==1){ ?>
                                     <center>
-                                        <button class="btn-busqueda" href="#" data-toggle="modal" data-target="#modalTipoPartido" >
+                                        <button class="btn btn-primary btn-lg" href="#" data-toggle="modal" data-target="#modalTipoPartido" >
                                             Jugar Aqui
                                         </button> 
                                     </center>
@@ -578,7 +582,9 @@ $_SESSION['idRecinto']=NULL;
                                 <div class="col-sm-8">
                                     <div class="form-group">
                                         <label class="label-partido" for="fecha">Fecha del partido</label>
+
                                         <input type="date" name="fecha" placeholder="Fecha del partido" class="form-control" id="equipo" required="required" >
+
                                     </div>
                                 </div>
                             </div>

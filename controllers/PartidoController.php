@@ -160,11 +160,15 @@ class PartidoController{
 		$cuota['cuota'] =	0;
 		//Jugadores del partido
 		$jugadoresPartido =	$this->Partido->getJugadoresPartido($_SESSION['idPartido']);
-		$data['jugadores']	=	$jugadoresPartido;
+		$data['jugadores']	= $jugadoresPartido;
 		//Recinto deportivo
 		$recinto = $this->Recinto->getRecinto($_SESSION['idRecinto']);
+
+
 		//Obtenemos el id del tercer tiempo
-		$t = $this->tercerTiempo->getTercerTiempo('idPartido');
+		$t = $this->tercerTiempo->getTercerTiempo($_SESSION['idPartido']);
+		//var_dump($t);
+
 
 		if(count($t) != 0){
 			//pasamos el tercerTiempo
@@ -193,11 +197,42 @@ class PartidoController{
 		$this->view->show("resumenPartido2.php",$data);		
 	}
 
+	public function getJugadoresPartido(){
+		$idPartido = $_GET['idPartido'];
+		$partido = $this->Partido->getTipoPartido($idPartido);
+		foreach ($partido as $key) {
+			$tipoPartido = $key['tipo'];
+		}
+		if ($tipoPartido == 4 ){ 	// Desafio
+			// Traer equipos con sus jugadores.
+			$idEquipo1 = $_SESSION['idEquipo1'];
+			$idEquipo2 = $_SESSION['idEquipo2'];
+			//Datos de los equipos.
+			$equipo1 = $this->Equipo->getEquipo($idEquipo1);
+			$data['equipo1']	= $equipo1;
+			$equipo2 = $this->Equipo->getEquipo($idEquipo2);
+			$data['equipo2']	= $equipo2;
+			//Jugadores del equipo rival
+			$jugadoresEquipo1 = $this->Equipo->getMiembrosEquipo($idEquipo1);
+			$data['jugadores1']	= $jugadoresEquipo1;
+			$jugadoresEquipo2 = $this->Equipo->getMiembrosEquipo($idEquipo2);
+			$data['jugadores2']	= $jugadoresEquipo2;
+			?>
+			<?php
+		} else {
+			$jugadoresPartido =	$this->Partido->getJugadoresPartido($idPartido);
+			$data['jugadores']	= $jugadoresPartido;
+		}
+		$data['tipoPartido'] = $tipoPartido;
+		$this->view->show("_jugadoresPartido.php", $data);
+	}
+
 
 	public function agendarDesafio(){
 		//$desafio = new Desafio();
 		$idOrganizador= $_POST['idUsuario'];
 		$idRival = $_POST['rival'];
+		$_SESSION['idEquipo2'] = $idRival;
 		$idDesafio = $_POST['desafio'];
 		$horaPartido = $_POST['hora'];
 		$desafio = $this->Desafio->getDesafio($idDesafio);
@@ -205,12 +240,13 @@ class PartidoController{
 			$fechaPartido = $item['fechaPartido'];
 			$idRecinto = $item['idRecinto'];
 			$idEquipoOrganizador = $item['idEquipoOrganizador'];
+			$_SESSION['idEquipo1'] = $idEquipoOrganizador;
 			$equipoOrganizador = $item['nombreEquipo'];
 			$cuota = 0;
 		}
 		$estado = 1; // Activo.
 		$estadoDesafio = 3; // Agendado.
-		$tipoPartido = 4;
+		$tipoPartido = 4; // Desafio.
 
 		// Enviar datos a la BD
 		$this->Desafio->cambiarEstado($idDesafio, $estadoDesafio);
@@ -227,17 +263,23 @@ class PartidoController{
 		$data['hora']	=	$horaPartido;
 		$data['cantidad']	=	0;
 		$data['color']	=	"Definidos por cada equipo"; // Falta traer estos datos.
-		//Se debe manejar la cuota con JS creo yo
 		//$cuota['cuota'] =	0;
+
 		//Jugadores del equipo rival
 		$jugadoresEquipo1 = $this->Equipo->getMiembrosEquipo($idEquipoOrganizador);
 		$jugadoresEquipo2 = $this->Equipo->getMiembrosEquipo($idRival);
+
+		$data['jugadoresEquipo1'] = $jugadoresEquipo1;
+		$data['jugadoresEquipo2'] = $jugadoresEquipo2;
 		//$data['jugadores']	= $jugadoresPartido;
 		//Recinto deportivo
 		$recinto = $this->Recinto->getRecinto($idRecinto);
 		$data['recinto'] = $recinto;
 
-		echo "Ir a resumen Partido";
+		$data['idRecinto'] = $idRecinto;
+		$data['idPartido'] = $ultimoPartido;
+
+		$this->view->show("resumenPartido2.php",$data);	
 
 
 	}

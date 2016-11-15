@@ -73,7 +73,25 @@ class Partido{
 	}
 
 	public function getJugadoresPartido($idPartido){
-		$consulta = $this->db->prepare("SELECT Usuario.nombre, Usuario.nickname, Usuario.fotografia, Usuario.mail FROM JugadoresPartido INNER JOIN Usuario on JugadoresPartido.idUsuario = Usuario.idUsuario WHERE idPartido='$idPartido'");
+		$consulta = $this->db->prepare(
+			"SELECT Usuario.nombre,
+			 Usuario.apellido, 
+			 Usuario.nickname, 
+			 Usuario.fotografia, 
+			 Usuario.mail 
+			FROM JugadoresPartido 
+			INNER JOIN Usuario on JugadoresPartido.idUsuario = Usuario.idUsuario 
+			WHERE idPartido='$idPartido'");
+		$consulta->execute();
+		$resultado=$consulta->fetchAll();
+		return $resultado;
+	}
+
+	public function getTipoPartido($idPartido){
+		$consulta = $this->db->prepare(
+			"SELECT tipo
+			FROM Partido
+			WHERE idPartido='$idPartido'");
 		$consulta->execute();
 		$resultado=$consulta->fetchAll();
 		return $resultado;

@@ -48,7 +48,7 @@ $recintos = $vars['listaRecintos'];
 
 
 <!--MODAL IMPLEMENTOS-->
-    <div class="modal fade" id="modal" tabindex="-1" role="dialog" >
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" >
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -536,6 +536,7 @@ $recintos = $vars['listaRecintos'];
                     <th id="encabezado-especial">Rival</th>
                     <th id="encabezado-especial">Tipo de partido</th>
                     <th id="encabezado-especial">Fecha</th>
+                    <th></th>
                   </tr>
                 </thead>
                 <tbody id="texto-contactos" class="center">
@@ -574,6 +575,9 @@ $recintos = $vars['listaRecintos'];
                   </td>
                   <td>
                     <?php echo $item['fechaPartido']?>
+                  </td>
+                  <td>
+                    boton resumen
                   </td>
                   
 

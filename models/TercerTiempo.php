@@ -8,7 +8,7 @@ class TercerTiempo{
 
 	public function getTercerTiempo($idPartido){
 		$consulta = $this->db->prepare("
-			SELECT * FROM TercerTiempo;
+			SELECT * FROM TercerTiempo WHERE idPartido = '$idPartido';
 			");
 		$consulta->execute();
 		$resultado = $consulta->fetchAll();

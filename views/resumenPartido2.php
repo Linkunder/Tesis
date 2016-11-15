@@ -4,12 +4,34 @@
 
 include('layout/headerJugador.php');
 
-//$idPartido= $_SESSION["idPartido"];
-$idUsuario= $_SESSION['login_user_id'];
-$idRecinto= $_SESSION['idRecinto']; //Recinto seleccionado
-$cantidad = $_SESSION['cantidad']; //Cantidad de jugadores seleccionados
-$fecha =    $_SESSION['fecha'];
-$hora =     $_SESSION['hora'];
+
+
+
+
+
+if (isset($vars['tipoPartido'])) {
+
+  // Desafios
+  if ($vars['tipoPartido'] == 4) { 
+    $tipoPartido = $vars['tipoPartido'];
+    $fecha = $vars['fecha'];
+    $hora = $vars['hora'];
+    $mensaje = "Se ha enviado una notificación a los jugadores de ambos equipos con la información del partido.";
+    $idRecinto= $vars['idRecinto'];
+    $idPartido = $vars['idPartido'];
+  } else {
+    $idPartido= $_SESSION["idPartido"];
+    $idUsuario= $_SESSION['login_user_id'];
+    $idRecinto= $_SESSION['idRecinto']; //Recinto seleccionado
+    $cantidad = $_SESSION['cantidad']; //Cantidad de jugadores seleccionados
+    $fecha =    $_SESSION['fecha'];
+    $hora =     $_SESSION['hora'];
+  }
+
+
+}
+
+
 
 
 foreach ($vars['recinto'] as $key ) {
@@ -38,7 +60,11 @@ if (isset($vars['tercerTiempo'])){
     $direccionLocal= $key['direccion'];
   }
 
-} 
+}
+
+
+
+
 
 ?>
 
@@ -50,17 +76,15 @@ if (isset($vars['tercerTiempo'])){
 
 <!--MODAL -->
 <div class="modal fade" id="modal" tabindex="-1" role="dialog" >
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Ventana normal</h4>
+
       </div>
       <div class="modal-body">
-        <h1>Texto #manosenelcódigo</h1>
       </div>
       <div class="modal-footer">
-            <h4>pie de página</h4>
       </div>
     </div>
   </div>
@@ -121,7 +145,7 @@ if (isset($vars['tercerTiempo'])){
                 <tr>
                   <th><span>Jugadores</span></th>
                   <td>
-                    <button type="button" class="btn btn-primary btn-sm " href="javascript:void(0);" data-toggle="modal" data-target="#modal"  onclick="carga_ajax('modal','<?php echo $idRecinto?>','jugadores');">
+                    <button type="button" class="btn btn-primary btn-sm " href="javascript:void(0);" data-toggle="modal" data-target="#modal"  onclick="carga_ajax2('modal','<?php echo $idPartido?>','jugadores');">
                       Ver aquí <i class="fa fa-users" aria-hidden="true"></i>
                     </button>
                   </td>
@@ -182,15 +206,35 @@ if (isset($vars['tercerTiempo'])){
       }
       ?>
 
-      <div class="row">
-
-        <div class="alert alert-success">
-        <strong>¡Listo!</strong> Se ha enviado una invitación a los jugadores invitados al partido.
+      <div class="alert alert-success">
+        <strong>¡Listo!</strong>
+        <?php
+        if (isset($tipoPartido)){
+          if ($tipoPartido == 4) {
+            echo $mensaje;
+          } else {
+            echo "Se ha enviado una invitación a los participantes del partido.";
+          }
+        } else {
+          echo "Se ha enviado una invitación a los participantes del partido.";
+        }
+        ?>
       </div>
 
+   
 
-
-      </div>
+        <table class="table">
+          <tr>
+            <th style="border-top:transparent; text-align:center;">
+              <a href="?controlador=Index&accion=indexJugador">
+                <button type="submit" class="btn btn-md btn-primary btn-lg col-md-12">Volver al inicio
+                <i class="fa fa-home" aria-hidden="true"></i>
+              </button>
+              </a>
+              
+            </th>
+          </tr>
+        </table>
 
     </div>
 
@@ -255,17 +299,22 @@ function carga_ajax(div, id, tipo){
       }
       );
   }
-  if (tipo == 'jugadores'){
+
+  if (tipo == 'mapaLocal'){
     $.post(
-      '?controlador=Encuentro&accion=detalleEncuentro&idEncuentro='+id,
+      '?controlador=Local&accion=verMapaLocal&idLocal='+id,
       function(resp){
         $("#"+div+"").html(resp);
       }
       );
   }
-  if (tipo == 'mapaLocal'){
+}
+
+
+function carga_ajax2(div, id, tipo){
+  if (tipo == 'jugadores'){
     $.post(
-      '?controlador=Local&accion=verMapaLocal&idLocal='+id,
+      '?controlador=Partido&accion=getJugadoresPartido&idPartido='+id,
       function(resp){
         $("#"+div+"").html(resp);
       }
