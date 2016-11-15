@@ -67,13 +67,17 @@ $idPartido = $_SESSION['idPartido'];
       <div class="col-md-6 col-md-offset-3">
         <form action="?controlador=Local&accion=busquedaLocales" method="POST">
           <input type="text" class="form-control" placeholder="Busca tu lugar ideal ..." name="search" id="texto-input-white"/>
-          <div class="row">
-            <div class="col-md-6 col-md-offset-4">
-              <div class="div-btn-a">
-                <button class="btn-busqueda" type="submit">Buscar</button>  
-              </div>
-            </div>
-          </div>
+
+
+          <div class="col-md-12">
+            <br/>
+            <button class="btn btn-primary btn-lg col-md-12 " type="submit">
+              Buscar
+              <i class="fa fa-search" aria-hidden="true"></i>
+            </button>
+          </div>  
+
+
         </form>
       </div><!-- /.col-lg-6 -->
     </div>
@@ -309,11 +313,6 @@ $idPartido = $_SESSION['idPartido'];
  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
     <script type="text/javascript" src="assets/js/jquerypp.custom.js"></script>
     <script type="text/javascript" src="assets/js/jquery.elastislide.js"></script>
-    <script type="text/javascript">
-      
-      $( '#carousel' ).elastislide();
-      
-    </script>
 
 
   
@@ -325,7 +324,7 @@ $idPartido = $_SESSION['idPartido'];
     <div class="footer-top wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="300ms">
       <div class="container text-center">
         <div class="footer-logo">
-          <a href="index.html"><img class="img-responsive" src="images/logo.png" alt=""></a>
+          <a href="index.html"><img class="img-responsive" src="assets/images/logo.png" alt=""></a>
         </div>
         <div class="social-icons">
           <ul>

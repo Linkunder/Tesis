@@ -31,6 +31,10 @@ class PartidoController{
 		$this->view->show("");
 	}
 
+	public function partidos(){
+		$this->view->show("partidos.php");
+	}
+
 	//Recopilar informacion del sistema
 	public function partidoEquipoPropio(){
 		//Datos del partido

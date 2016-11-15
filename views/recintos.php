@@ -52,6 +52,11 @@ $_SESSION['idRecinto']=NULL;
                 ?>
 
             <div class="container">
+                <br>
+                <ol class="breadcrumb transparent">
+                    <li class="breadcrumb-item"><a href="?controlador=Index&accion=indexJugador"> <i class="fa fa-home" aria-hidden="true"></i> Inicio</a></li>
+                    <li class="breadcrumb-item active">Recintos</li>
+                </ol>
                     <?php 
                     if($jugar==1){  
                     ?>
@@ -84,13 +89,14 @@ $_SESSION['idRecinto']=NULL;
                             <?php }else{?>
 							<input type="text" class="fomr-control" hidden name="tipo" value="0"/>
                             <?php } ?>
-                            <div class="row">
-                                <div class="col-md-6 col-md-offset-4">
-                                    <div class="div-btn-a">
-                                        <button class="btn-busqueda" type="submit">Buscar</button>  
-                                    </div>
-                                </div>
-                            </div>          
+                            
+                                <div class="col-md-12">
+                                    <br/>
+                                    <button class="btn btn-primary btn-lg col-md-12 " type="submit">
+                                        Buscar
+                                        <i class="fa fa-search" aria-hidden="true"></i>
+                                    </button>  
+                                </div>     
                         </form>
                     </div><!-- /.col-lg-6 -->
                 </div>
@@ -539,8 +545,10 @@ $_SESSION['idRecinto']=NULL;
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h3 class="modal-title">Elige el tipo de partido</h3>
                 </div>
-                <div class="modal-body">      
-                                        <label class="label-partido" for="color">Tipo de partido</label>
+                <div class="modal-body">
+                <h5 class="texto-modal-negro">Selecciona el tipo de partido que quieres organizar.
+          </h5>     
+                                        
                                         <br/>
                                         <div class="container-fluid">
                                             <div class="row">
@@ -556,12 +564,9 @@ $_SESSION['idRecinto']=NULL;
                                             </div>
                                         </div>
                                     </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar <i class="fa fa-times" aria-hidden="true"></i></button>
-                                <button  class="btn btn-primary" 
-                                href="#" >Aceptar <i class="fa fa-check" aria-hidden="true"></i></button>
-
-                            </div> 
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar <i class="fa fa-times" aria-hidden="true"></i></button>
+                                    </div> 
                 </div>
             </div>
         </div>
