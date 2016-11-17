@@ -157,10 +157,11 @@ class Partido{
 
 	public function getPartidosSistema($idUsuario){
 		$consulta = $this->db->prepare(
-			"SELECT *
-			FROM Partido
-			WHERE estado=4
-			AND idOrganizador != '".$idUsuario."'");
+			"SELECT Partido.idPartido, Partido.fecha, Partido.hora, Recinto.nombre 
+			FROM Partido 
+			JOIN Recinto ON Partido.idRecinto = Recinto.idRecinto
+			WHERE Partido.estado=4 AND Partido.idOrganizador != '".$idUsuario."' and Partido.idPartido in 
+			(SELECT JugadoresPartido.idPartido from JugadoresPartido where JugadoresPartido.idUsuario != '".$idUsuario."')");
 		$consulta->execute();
 		$resultado=$consulta->fetchAll();
 		return $resultado;

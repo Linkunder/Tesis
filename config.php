@@ -11,6 +11,7 @@
 	$config->set('dbname', 'DBTesis');
 	$config->set('dbuser', 'root');
 	$config->set('dbpass', '');
+
 	/*
 	$config->set('dbhost', 'parra.chillan.ubiobio.cl:3306');
 	$config->set('dbname', 'pnsilva');

@@ -8,7 +8,6 @@ include('layout/headerJugador.php');
 
 
 
-
 if (isset($vars['tipoPartido'])) {
 
   // Desafios
@@ -30,7 +29,6 @@ if (isset($vars['tipoPartido'])) {
 
 
 }
-
 
 
 

@@ -17,6 +17,7 @@ include('layout/headerJugador.php');
 
 // Recibir información de los partidos Pendientes como organizador
 $partidosPendientes = $vars['partidosPendientes'];
+
 if (empty($partidosPendientes)){
   $nroPartidosPendientes = count($partidosPendientes);
   $mensaje = "No tienes partidos pendientes.";
@@ -27,7 +28,7 @@ if (empty($partidosPendientes)){
 }
 
 $partidosSistema = $vars['partidosSistema'];
-$nroPartidosSistema = count($partidosPendientes);
+$nroPartidosSistema = count($partidosSistema);
 
 
 ?>
@@ -152,11 +153,13 @@ $nroPartidosSistema = count($partidosPendientes);
       <h2> Partidos <i class="fa fa-futbol-o" aria-hidden="true"></i> </h2>
     </div>
 
-  <h4>Instrucciones</h4>
-  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas porttitor magna in purus accumsan hendrerit. 
-    Morbi commodo non neque eu rhoncus. Nullam imperdiet molestie sem, vel imperdiet ipsum sodales id. Nullam 
-    augue orci, sagittis eget sagittis eu, vehicula ac dui. Pellentesque eget erat a tortor consequat tincidunt. 
-    Pellentesque a feugiat dui, sit amet sagittis nibh. Cras ornare at leo faucibus commodo.</p>
+  
+    <div class="well">
+      <p id="texto-input-black">Para jugar un partido disponible en el sistema, debes ingresar a la opción "Partidos MatchDay". Si quieres
+        publicar uno de tus partidos en los cuales faltan jugadores, publícalo en el sistema mediante la opción "Mis Partidos". 
+      </p>
+
+    </div>
 
 
 
@@ -164,7 +167,7 @@ $nroPartidosSistema = count($partidosPendientes);
 <div class="container">
   
   <ul class="nav nav-tabs nav-justified">
-    <li><a data-toggle="tab" href="#menu1">Partidos Matchday <span class="label label-warning"><?php echo $nroPartidosSistema?></span></a></li>
+    <li><a data-toggle="tab" href="#menu1">Partidos Matchday <span class="label label-success"><?php echo $nroPartidosSistema?></span></a></li>
     <li><a data-toggle="tab" href="#menu2">Mis partidos <span class="label label-danger"><?php echo $nroPartidosPendientes?></span></a></li>
     <li><a data-toggle="tab" href="#menu3">Calendario <i class="fa fa-calendar-o" aria-hidden="true"></i></a></li>
   </ul>
@@ -174,8 +177,10 @@ $nroPartidosSistema = count($partidosPendientes);
 
 
 
-    <div id="menu1" class="tab-pane fade">
 
+
+
+    <div id="menu1" class="tab-pane fade">
 
       <?php
       if ( $nroPartidosSistema == 0){
@@ -186,7 +191,7 @@ $nroPartidosSistema = count($partidosPendientes);
         </div>
         <?php
       } else {
-        if ($nroPartidosSistema = 1){
+        if ($nroPartidosSistema == 1){
           $msg1 = "partido disponible";
         } else {
           $msg1 = "partidos disponibles";
@@ -194,7 +199,7 @@ $nroPartidosSistema = count($partidosPendientes);
         ?>
         <!-- TABLA DE Partidos Pendientes -->
         <br>
-        <div class="alert alert-info">
+        <div class="alert alert-success">
           <strong>Atención!</strong> Hay <?php echo $nroPartidosSistema." ".$msg1 ?> para ti.
           Puedes enviar una solicitud para unirte a un partido haciendo click en el botón
           <button type="button" class="btn btn-primary btn-xs">Unirse <i class="fa fa-exclamation-circle" aria-hidden="true"></i></button>.
@@ -224,7 +229,7 @@ $nroPartidosSistema = count($partidosPendientes);
                       <?php echo $item['hora']?>
                     </td>
                     <td>
-                      <?php echo $item['idRecinto']?>
+                      <?php echo $item['nombre']?>
                     </td>
                     <td>
                       5/10
@@ -261,6 +266,11 @@ $nroPartidosSistema = count($partidosPendientes);
       }
       ?>
     </div>
+
+
+
+
+
 
 
     <div id="menu2" class="tab-pane fade">
@@ -330,7 +340,7 @@ $nroPartidosSistema = count($partidosPendientes);
                     </td>
                     <td>
                       <button type="button" class="btn btn-success" href="javascript:void(0);" data-toggle="modal" data-target="#modal"  
-                      onclick="carga_ajax('modal','<?php echo $item['idPartido']?>','solicitudes');">
+                      onclick="carga_ajax('modal','<?php echo $item['idPartido']?>','notificar');">
                       Notificar 
                         <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
                     </button>
@@ -418,7 +428,26 @@ date_input.datepicker(options);
 <?php
 include('layout/footer.php'); 
 ?>
-     
+  
+
+
+
+
+<script>
+
+function carga_ajax(div, id, tipo){
+  if (tipo == 'resumen'){
+    $.post(
+      '?controlador=Partido&accion=detallePartido&idPartido='+id,
+      function(resp){
+        $("#"+div+"").html(resp);
+      }
+      ); 
+  }
+
+  
+}
+</script>   
 
 
 

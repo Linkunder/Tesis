@@ -41,8 +41,19 @@ class PartidoController{
 		// Partidos del sistema donde el jugadores no es el capitan ni participante.
 		$partidosSistema = $this->Partido->getPartidosSistema($idUsuario);
 		$data['partidosSistema'] = $partidosSistema;
+
 		$this->view->show("partidos.php",$data);
 	}
+
+	public function detallePartido(){
+      /*if(!isset($_SESSION)) { 
+        session_start(); 
+        } */
+      $idPartido = $_GET['idPartido']; 
+      $partido = $this->Partido->getPartido($idPartido);
+      $data['partido'] = $partido;
+      $this->view->show("_detallePartido.php",$data);
+    }
 
 	//Recopilar informacion del sistema
 	public function partidoEquipoPropio(){
@@ -176,6 +187,7 @@ class PartidoController{
 		$jugadoresPartido =	$this->Partido->getJugadoresPartido($_SESSION['idPartido']);
 		$data['jugadores']	= $jugadoresPartido;
 		//Recinto deportivo
+
 		$recinto = $this->Recinto->getRecinto($_SESSION['idRecinto']);
 
 
