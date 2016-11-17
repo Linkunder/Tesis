@@ -307,10 +307,9 @@ $_SESSION['idRecinto']=NULL;
                                     <br/>
                                     <!-- hasta aqui deberia quedar una tabla para abarcar lo de arriba -->
                                     <?php 
-                                    $_SESSION["idRecinto"]=$idRecinto;
                                     if($jugar==1){ ?>
                                     <center>
-                                        <button class="btn btn-primary btn-lg" href="#" data-toggle="modal" data-target="#modalTipoPartido" >
+                                        <button class="btn btn-primary btn-lg cp" href="#" data-toggle="modal" data-target="#modalTipoPartido" data-id="<?php echo $idRecinto ?>">
                                             Jugar Aqui
                                         </button> 
                                     </center>
@@ -416,7 +415,7 @@ $_SESSION['idRecinto']=NULL;
 
                                 
 
-                                if ($comentario['idRecinto']==$_SESSION["idRecinto"]) {
+                                if ($comentario['idRecinto']==$idRecinto) {
                                     $contComentario++;
                                 ?>
                                     <div class="comment">
@@ -607,10 +606,10 @@ $_SESSION['idRecinto']=NULL;
                                     <div class="form-group">
                                         <label class="label-partido" for="jugadores">Numero de jugadores</label>
                                         <input type="number" name="cantidad"  class="form-control partido" id="equipo" required="required" title="Solo puede ingresar hasta 22 jugadores" placeholder="Ingresa número de jugadores..." pattern="^[0|1]\d{1}$|[0-9]|2+[0|1|2]" min="2">
-                                        <input  name="idRecinto" class="hide" value="<?php echo $_SESSION['idRecinto'];?>"/>
                                     </div>
                                 </div>
                             </div>
+                            <input id="idRecintoPartidoPropio" type="number" name="idRecinto"  value="" hidden />
                             <div class="row">
                                 <div class="col-sm-8">
                                     <div class="form-group">
@@ -668,10 +667,10 @@ $_SESSION['idRecinto']=NULL;
                                     <div class="form-group">
                                         <label class="label-partido" for="jugadores">Numero de jugadores</label>
                                         <input type="int" name="cantidad"  class="form-control partido" id="equipo" required="required" title="Solo puede ingresar hasta 22 jugadores" placeholder="Ingresa número de jugadores totales..." pattern="^[0|1]\d{1}$|[0-9]|2+[0|1|2]">
-                                        <input  name="idRecinto" class="hide" value="<?php echo $_SESSION['idRecinto'];?>"/>
                                     </div>
                                 </div>
                             </div>
+                            <input  id="idRecintoPartidoRevuelta" type="number" name="idRecinto" value="" hidden />
                             <div class="row">
                                 <div class="col-sm-8">
                                     <div class="form-group">
@@ -737,10 +736,11 @@ $_SESSION['idRecinto']=NULL;
                                     <div class="form-group">
                                         <label class="label-partido" for="jugadores">Numero de jugadores</label>
                                         <input type="int" name="cantidad"  class="form-control partido" id="equipo" required="required" title="Solo puede ingresar hasta 22 jugadores" placeholder="Ingresa número de jugadores totales..." pattern="^[0|1]\d{1}$|[0-9]|2+[0|1|2]">
-                                        <input  name="idRecinto" class="hide" value="<?php echo $_SESSION['idRecinto'];?>"/>
+                                        
                                     </div>
                                 </div>
                             </div>
+                            <input  id="idRecintoPartidoAB" type="number" name="idRecinto" value="" hidden />
                             <div class="row">
                                 <div class="col-sm-8">
                                     <div class="form-group">
@@ -913,7 +913,21 @@ $_SESSION['idRecinto']=NULL;
         textfield.value = textfield.value.replace(regex, function($0, $1){return $1 + ""});
                                             }   
         }
-        </script>                                  
+        </script>        .
+        <script type="text/javascript">
+        var idRecinto;
+
+        $('.cp').click(function (e){
+            e.preventDefault();
+            idRecinto = $(this).data('id');
+            document.getElementById("idRecintoPartidoPropio").setAttribute("value", idRecinto);
+            document.getElementById("idRecintoPartidoRevuelta").setAttribute("value", idRecinto);
+            document.getElementById("idRecintoPartidoAB").setAttribute("value", idRecinto);
+        });         
+        
+
+
+        </script>                          
 
     </body>
 </html>

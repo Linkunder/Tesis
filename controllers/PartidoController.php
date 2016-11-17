@@ -52,9 +52,10 @@ class PartidoController{
 		$hora	=	$_POST['hora'];
 		$cantidad	=	$_POST['cantidad'];
 		$color	=	$_POST['color'];
-
+		$idRecinto = $_POST['idRecinto'];
+		$_SESSION['idRecinto'] = $idRecinto;
 		$listadoContactos= $this->Contacto->getContactos($idCapitan);
-		$recinto = $this->Recinto->getRecinto($_SESSION['idRecinto']);
+		$recinto = $this->Recinto->getRecinto($idRecinto);
 		$data['fecha'] = $fecha;
 		$data['hora']  = $hora;
 		$data['cantidad'] = $cantidad;
