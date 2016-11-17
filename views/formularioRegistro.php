@@ -39,6 +39,13 @@ include('layout/header.php');
 
 <div id="contact-us" class="parallax">
   <div class="container">
+
+    <br>
+    <ol class="breadcrumb transparent">
+      <li class="breadcrumb-item"><a href="?controlador=Index&accion=inicio"> <i class="fa fa-home" aria-hidden="true"></i> Inicio</a></li>
+      <li class="breadcrumb-item active">Partidos</li>
+    </ol>
+
     <div class="row">
       <div class="page-header">
           <h2> Únete a MatchDay </h2>
@@ -46,48 +53,6 @@ include('layout/header.php');
       <p>En MatchDay, podrás agendar tus partidos, comentar tus canchas favoritas y agendar un tercer tiempo con tus amigos. Únete a la
         mejor comunidad futbolera de Chile.</p>
     </div>
-
-    <h1>PRUEBA DE IMAGEN RICK</h1>
-
-
-
-<!-- This wraps the whole cropper -->
-<div id="image-cropper">
-  <!-- This is where the preview image is displayed -->
-  <div class="cropit-preview"></div>
-  
-  <!-- This range input controls zoom -->
-  <!-- You can add additional elements here, e.g. the image icons -->
-  <input type="range" class="cropit-image-zoom-input" />
-  
-  <!-- This is where user selects new image -->
-  <input type="file" class="cropit-image-input" />
-  
-  <!-- The cropit- classes above are needed
-       so cropit can identify these elements -->
-</div>
-
-<script type="text/javascript">
-  $('#image-cropper').cropit();
-
-// In the demos I'm passing in an imageState option
-// so it renders an image by default:
-// $('#image-cropper').cropit({ imageState: { src: { imageSrc } } });
-
-// Exporting cropped image
-$('.download-btn').click(function() {
-  var imageData = $('#image-cropper').cropit('export');
-  window.open(imageData);
-});
-</script>
-
-
-
-
-
-
-
-
 
 
 
@@ -147,7 +112,7 @@ $('.download-btn').click(function() {
             <div class="form-bottom">
               <div class="form-group">
                 <label class="sr-only" for="form-email">Mail</label>
-                <input type="text" name="mail" placeholder="Ingresa tu mail" class="form-email form-control" required>
+                <input type="email" name="mail" placeholder="Ingresa tu mail" class="form-email form-control" required>
               </div>
               <div class="form-group">
                 <label class="sr-only" for="form-password">Password</label>
