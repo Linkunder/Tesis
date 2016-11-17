@@ -13,17 +13,88 @@ include('layout/headerJugador.php');
 
 
 
+<?php
+
+// Recibir información de los partidos Pendientes como organizador
+$partidosPendientes = $vars['partidosPendientes'];
+if (empty($partidosPendientes)){
+  $nroPartidosPendientes = count($partidosPendientes);
+  $mensaje = "No tienes partidos pendientes.";
+} else {
+  $nroPartidosPendientes = count($partidosPendientes);
+  //echo $nroPartidosPendientes;
+  $mensaje = "Tienes ".$nroPartidosPendientes." partidos pendientes";
+}
+
+$partidosSistema = $vars['partidosSistema'];
+$nroPartidosSistema = count($partidosPendientes);
 
 
-<!--  jQuery -->
-<script type="text/javascript" src="assets/js/jquery-1.11.3.min.js"></script>
+?>
 
-<!-- Isolated Version of Bootstrap, not needed if your site already uses Bootstrap -->
-<link rel="stylesheet" href="assets/css/bootstrap-iso.css" />
 
-<!-- Bootstrap Date-Picker Plugin -->
-<script type="text/javascript" src="assets/js/bootstrap-datepicker.min.js"></script>
-<link rel="stylesheet" href="assets/css/bootstrap-datepicker3.css"/>
+
+
+
+
+
+<!--Calendario-->
+<link href='assets/css/fullcalendar.css' rel='stylesheet' />
+<link href='assets/css/fullcalendar.print.css' rel='stylesheet' media='print' />
+
+<script src='assets/js/moment.min.js'></script>
+<script src="assets/js/es.js"></script>
+<script src='assets/lang-all.js'></script>
+<script src='assets/js/fullcalendar.min.js'></script>
+
+
+<script>
+  $(document).ready(function() {
+    var hoy = new Date();
+    var dd = hoy.getDate();
+    var mm = hoy.getMonth()+1; //hoy es 0!
+    var yyyy = hoy.getFullYear();
+
+    if(dd<10) {
+      dd='0'+dd
+    }
+
+    if(mm<10) {
+      mm='0'+mm
+    }
+
+    hoy = mm+'-'+dd+'-'+yyyy;
+
+    $('#calendar1').fullCalendar({
+      header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'month,basicWeek,basicDay'
+      },
+      defaultDate: hoy,
+      editable: false,
+      eventLimit: true, // allow "more" link when too many events
+
+      // Partidos
+      events: [
+      <?php foreach ($partidosPendientes as $key ) {
+        ?>
+        {
+          title: '<?php echo $key['idPartido']?>',
+          url: 'http://google.com/',
+          start: '<?php echo $key['fecha']."T".$key['hora'];?>',
+        },
+        <?php }?>
+        ]
+      });
+  });
+</script>
+
+<!--/Calendario -->
+
+
+
+
 
 
 
@@ -65,30 +136,12 @@ include('layout/headerJugador.php');
 
 
 
-<?php
-
-// Recibir información de los partidos Pendientes como organizador
-$partidosPendientes = $vars['partidosPendientes'];
-if (empty($partidosPendientes)){
-  $nroPartidosPendientes = count($partidosPendientes);
-  $mensaje = "No tienes partidos pendientes.";
-} else {
-  $nroPartidosPendientes = count($partidosPendientes);
-  //echo $nroPartidosPendientes;
-  $mensaje = "Tienes ".$nroPartidosPendientes." partidos pendientes";
-}
-
-$partidosSistema = $vars['partidosSistema'];
-$nroPartidosSistema = count($partidosPendientes);
-
-
-?>
-
 <!-- Inicio Pagina -->
 
 
 <div id="contact-us" class="parallax">
   <div class="container">
+
     <br>
     <ol class="breadcrumb transparent">
       <li class="breadcrumb-item"><a href="?controlador=Index&accion=indexJugador"> <i class="fa fa-home" aria-hidden="true"></i> Inicio</a></li>
@@ -133,11 +186,18 @@ $nroPartidosSistema = count($partidosPendientes);
         </div>
         <?php
       } else {
+        if ($nroPartidosSistema = 1){
+          $msg1 = "partido disponible";
+        } else {
+          $msg1 = "partidos disponibles";
+        }
         ?>
         <!-- TABLA DE Partidos Pendientes -->
         <br>
         <div class="alert alert-info">
-          <strong>Atención!</strong> Hay <?php echo $nroPartidosSistema?> partidos disponibles para ti.
+          <strong>Atención!</strong> Hay <?php echo $nroPartidosSistema." ".$msg1 ?> para ti.
+          Puedes enviar una solicitud para unirte a un partido haciendo click en el botón
+          <button type="button" class="btn btn-primary btn-xs">Unirse <i class="fa fa-exclamation-circle" aria-hidden="true"></i></button>.
         </div>
           <div class="col-md-12">
             <!--div class="table-responsive"-->
@@ -214,11 +274,21 @@ $nroPartidosSistema = count($partidosPendientes);
         </div>
         <?php
       } else {
+        if ($nroPartidosPendientes = 1){
+          $msg2 = "partido pendiente";
+        } else {
+          $msg2 = "partidos pendientes";
+        }
         ?>
         <!-- TABLA DE Partidos Pendientes -->
         <br>
         <div class="alert alert-danger">
-          <strong>Atención!</strong> Tienes <?php echo $nroPartidosPendientes?> partidos pendientes.
+          <strong>Atención!</strong> Tienes <?php echo $nroPartidosPendientes." ".$msg2?>. Si quieres realizar el partido, puedes
+          enviar una noticicación a los demás jugadores de MatchDay haciendo click en el botón 
+          <button type="button" class="btn btn-success btn-xs">Notificar <i class="fa fa-exclamation-circle" aria-hidden="true"></i></button>. 
+          De lo contrario, cancela el partido haciendo click en el botón 
+          <button type="button" class="btn btn-danger btn-xs">Cancelar <i class="fa fa-times-circle" aria-hidden="true"></i>
+          </button>.
         </div>
           <div class="col-md-12">
             <!--div class="table-responsive"-->
@@ -296,6 +366,18 @@ $nroPartidosSistema = count($partidosPendientes);
 
     <div id="menu3" class="tab-pane fade">
       <p>Calendario de partidos: partidos activos, jugados y cancelados.</p>
+
+      <style>
+      #calendar1 {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      </style>
+      <br/>
+
+      <div id='calendar1' ></div>
+
+
     </div>
 
 

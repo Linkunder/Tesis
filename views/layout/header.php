@@ -82,18 +82,20 @@
 
                   <form class="form" id="formLogin" action="?controlador=Sesion&accion=verificarLogin" method="post">
                     <label class="design-label">¿TIENES CUENTA?</label><br>
-                    <input class="entrada-login" name="mail" id="mail" type="text" placeholder="Mail" required> 
+                    <div class="form-group">
+                    <input class="entrada-login" name="mail" id="mail" type="email" placeholder="Mail" required> 
                     <input class="entrada-login" name="password" id="password" type="password" placeholder="Password" required>
-                    <br>
-                    <button class="boton-login" type="submit" class="design-button">Iniciar sesión</button>
+                    </div>
+                    <button class="btn btn-default btn-md col-md-12" type="submit"><strong>Iniciar sesión</strong></button>
                   </form>
-
-
+                  <br>
+                  <br>
                    <form class="form" id="formLogin" action="?controlador=Usuario&accion=formularioRegistro" method="post">
                     <li role="separator" class="divider"></li>
                     <label class="design-label">¿ERES NUEVO EN MATCH DAY?</label><br>
-                    <button class="boton-login" type="submit" class="design-button">&nbsp;&nbsp;&nbsp;Regístrate&nbsp;&nbsp;&nbsp;</button>
-                  </form>
+                    <br>
+                    <button class="btn btn-default btn-md col-md-12" type="submit" ><strong>Regístrate</strong></button>
+                   </form>
                 </div>
               </li>
             </ul>
