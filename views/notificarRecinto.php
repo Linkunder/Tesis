@@ -2,67 +2,71 @@
 
         include('layout/headerJugador.php');
 ?>
+<link rel="stylesheet" href="assets/css/style-f.css">
+
+
+<!--  jQuery -->
+<script type="text/javascript" src="assets/js/jquery-1.11.3.min.js"></script>
+
+<!-- Isolated Version of Bootstrap, not needed if your site already uses Bootstrap -->
+<link rel="stylesheet" href="assets/css/bootstrap-iso.css" />
+
+<!-- Bootstrap Date-Picker Plugin -->
+<script type="text/javascript" src="assets/js/bootstrap-datepicker.min.js"></script>
+<link rel="stylesheet" href="assets/css/bootstrap-datepicker3.css"/>
+
+
+
+<script type="text/javascript" src="assets/js/cropbox.js"></script>
+
+<script type="text/javascript" src="assets/js/cropbox-min.js"></script>
+
 
 
 
 <!-- Aqui empieza la pagina -->
-
-  
- 
-
-    <div id="contact-us" class="parallax">
-      <div class="container">
-        <div class="row">
-          <div class="heading text-center">
+<div id="contact-us" class="parallax">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6 col-sm-offset-3 form-box">
+        <form role="form" action="?controlador=Recinto&accion=ingresarRecinto" method="post" class="registration-form" >
+          <fieldset>
+            <div class="form-top">
+              <div class="form-top-left">
             <h2>Notifica un recinto</h2>
             <p>¿Tu recinto favorito no está en MatchDay? ¿Qué esperas? Notificanos tu cancha favorita para que todos los jugadores de MatchDay deseen hacer goles en ella.</p>
-            <h4>Paso 1: Completa el siguiente formulario</h4>
-          </div>
-        </div>
-          <div class="row">
-            <div class="col-sm-12 col-sm-offset-3 centered">
-              <form  method="post" action="?controlador=Recinto&accion=ingresarRecinto" class="design-form col-sm-offset-3 centered" >
-
-
-
-
-                <div class="row">
-                  <div class="col-sm-6 col-sm-offset-3 centered">
-                    <div class="form-group">
-                      <input type="text" name="nombre" id="nombre" class="form-control" placeholder="Nombre" >
-                    </div>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col-sm-6 col-sm-offset-3 centered">
-                    <div class="form-group">
-                      <input type="text" name="fono" id="fono" class="form-control" placeholder="Telefono" >
-                    </div>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col-sm-6 col-sm-offset-3 centered">
-                    <div class="form-group">
-                      <input type="text" name="direccion" id="direccion" class="form-control" placeholder="Dirección" >
-                    </div>
-                  </div>
-                </div>
-                <input name="idUsuario" id="idUsuario" class="hide" value="<?php echo $_SESSION['login_user_id'] ?>" class="form-control">
-
-                <div class="row">
-                  <div class="col-sm-6 col-sm-offset-3 centered">
-                  <button type="submit" class="btn-submit">Siguiente</button>
-                </div>
-             
-                </div>
-              </form>   
               </div>
-          </div>
+              <div class="form-top-right">
+                <i class="fa fa-futbol-o" aria-hidden="true"> </i>
+              </div>
+            </div>
+            <div class="form-bottom">
+              <div class="form-group">
+                <label class="sr-only" for="form-first-name">Nombre</label>
+                    <input type="text" name="nombre" id="nombre" class="form-control" placeholder="Nombre" >
+              </div>
+              <div class="form-group">
+                <label class="sr-only" for="form-last-name">Telefono</label>
+                      <input type="text" name="fono" id="fono" class="form-control" placeholder="Telefono" >
+              </div>
+              <div class="form-group">
+                <label class="sr-only" for="form-last-name">Dirección</label>
+                <input type="text" name="direccion" id="direccion" class="form-control" placeholder="Dirección" >
+              </div>
+              <div class="form-group">
+                  <input name="idUsuario" id="idUsuario" class="hide" value="<?php echo $_SESSION['login_user_id'] ?>" class="form-control">
+              </div>
+              <button type="submit" class="btn btn-primary">Notificar <i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+            </div>
+          </fieldset>
+        </form>
       </div>
-    </div>   
+    </div>
+  </div>
+  </div>
+ <!-- Prueba -->
 
+   
 <!-- /Aqui termina la pagina -->
 
 
@@ -111,6 +115,17 @@
   <script type="text/javascript" src="assets/js/lightbox.min.js"></script>
   <script type="text/javascript" src="assets/js/main.js"></script>
   <script type="text/javascript" src="assets/js/fileinput.min.js"></script>
+
+
+
+
+
+
+<script src="assets/js/jquery.backstretch.min.js"></script>
+<script src="assets/js/retina-1.1.0.min.js"></script>
+<script src="assets/js/scripts.js"></script>
+
+
 
 </body>
 </html>
