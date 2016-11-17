@@ -32,7 +32,16 @@ class PartidoController{
 	}
 
 	public function partidos(){
-		$this->view->show("partidos.php");
+		$idUsuario = $_SESSION['login_user_id'];
+
+		// Partidos organizados por el jugador de la sesion en estado pendiente.
+		$partidosPendientes = $this->Partido->getPartidosPendientes($idUsuario);
+		$data['partidosPendientes'] = $partidosPendientes;
+
+		// Partidos del sistema donde el jugadores no es el capitan ni participante.
+		$partidosSistema = $this->Partido->getPartidosSistema($idUsuario);
+		$data['partidosSistema'] = $partidosSistema;
+		$this->view->show("partidos.php",$data);
 	}
 
 	//Recopilar informacion del sistema

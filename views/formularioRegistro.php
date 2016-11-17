@@ -43,7 +43,8 @@ include('layout/header.php');
       <div class="page-header">
           <h2> Únete a MatchDay </h2>
       </div>
-      <p>En MatchDay, podrás agendar tus partidos, comentar tus canchas favoritas y agendar un tercer tiempo con tus amigos.</p>
+      <p>En MatchDay, podrás agendar tus partidos, comentar tus canchas favoritas y agendar un tercer tiempo con tus amigos. Únete a la
+        mejor comunidad futbolera de Chile.</p>
     </div>
 
     <h1>PRUEBA DE IMAGEN RICK</h1>

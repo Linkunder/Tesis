@@ -74,11 +74,11 @@
     line-height:20px;
 }
 a {
-    color:#181A1C;
+    /*color:#181A1C;*/
     text-decoration: none;
 }
 a:hover {
-    color: #FECE1A;
+    color: #000000;
     text-decoration:none;
 }
 h1, h2, h3, h4, h5, h6 {

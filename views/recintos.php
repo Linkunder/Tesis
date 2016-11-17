@@ -92,11 +92,11 @@ $_SESSION['idRecinto']=NULL;
                             
                                 <div class="col-md-12">
                                     <br/>
-                                    <button class="btn btn-primary btn-lg col-md-12 " type="submit">
+                                    <button class="btn btn-primary btn-lg col-md-12 center-block" type="submit">
                                         Buscar
                                         <i class="fa fa-search" aria-hidden="true"></i>
                                     </button>  
-                                </div>     
+                                </div>    
                         </form>
                     </div><!-- /.col-lg-6 -->
                 </div>
@@ -112,6 +112,7 @@ $_SESSION['idRecinto']=NULL;
 
                         // AHORA VIENEN LOS RESULTADOS
                         ?>
+                        
                 <h3>Resultados</h3>
 
                 <ul class="nav nav-pills">

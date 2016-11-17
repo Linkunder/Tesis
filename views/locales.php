@@ -71,12 +71,11 @@ $idPartido = $_SESSION['idPartido'];
 
           <div class="col-md-12">
             <br/>
-            <button class="btn btn-primary btn-lg col-md-12 " type="submit">
+            <button class="btn btn-primary btn-lg col-md-12 center-block" type="submit">
               Buscar
               <i class="fa fa-search" aria-hidden="true"></i>
             </button>
           </div>  
-
 
         </form>
       </div><!-- /.col-lg-6 -->

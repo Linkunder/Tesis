@@ -144,6 +144,29 @@ class Partido{
 	}
 
 
+	public function getPartidosPendientes($idUsuario){
+		$consulta = $this->db->prepare(
+			"SELECT *
+			FROM Partido
+			WHERE estado=4
+			AND idOrganizador = '".$idUsuario."'");
+		$consulta->execute();
+		$resultado=$consulta->fetchAll();
+		return $resultado;
+	}
+
+	public function getPartidosSistema($idUsuario){
+		$consulta = $this->db->prepare(
+			"SELECT *
+			FROM Partido
+			WHERE estado=4
+			AND idOrganizador != '".$idUsuario."'");
+		$consulta->execute();
+		$resultado=$consulta->fetchAll();
+		return $resultado;
+	}
+
+
 
 
 

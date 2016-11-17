@@ -64,6 +64,29 @@ include('layout/headerJugador.php');
 
 
 
+
+<?php
+
+// Recibir información de los partidos Pendientes como organizador
+$partidosPendientes = $vars['partidosPendientes'];
+if (empty($partidosPendientes)){
+  $nroPartidosPendientes = count($partidosPendientes);
+  $mensaje = "No tienes partidos pendientes.";
+} else {
+  $nroPartidosPendientes = count($partidosPendientes);
+  //echo $nroPartidosPendientes;
+  $mensaje = "Tienes ".$nroPartidosPendientes." partidos pendientes";
+}
+
+$partidosSistema = $vars['partidosSistema'];
+$nroPartidosSistema = count($partidosPendientes);
+
+
+?>
+
+<!-- Inicio Pagina -->
+
+
 <div id="contact-us" class="parallax">
   <div class="container">
     <br>
@@ -76,12 +99,211 @@ include('layout/headerJugador.php');
       <h2> Partidos <i class="fa fa-futbol-o" aria-hidden="true"></i> </h2>
     </div>
 
+  <h4>Instrucciones</h4>
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas porttitor magna in purus accumsan hendrerit. 
+    Morbi commodo non neque eu rhoncus. Nullam imperdiet molestie sem, vel imperdiet ipsum sodales id. Nullam 
+    augue orci, sagittis eget sagittis eu, vehicula ac dui. Pellentesque eget erat a tortor consequat tincidunt. 
+    Pellentesque a feugiat dui, sit amet sagittis nibh. Cras ornare at leo faucibus commodo.</p>
+
+
+
+
+<div class="container">
+  
+  <ul class="nav nav-tabs nav-justified">
+    <li><a data-toggle="tab" href="#menu1">Partidos Matchday <span class="label label-warning"><?php echo $nroPartidosSistema?></span></a></li>
+    <li><a data-toggle="tab" href="#menu2">Mis partidos <span class="label label-danger"><?php echo $nroPartidosPendientes?></span></a></li>
+    <li><a data-toggle="tab" href="#menu3">Calendario <i class="fa fa-calendar-o" aria-hidden="true"></i></a></li>
+  </ul>
+
+  <div class="tab-content">
+
+
+
+
+    <div id="menu1" class="tab-pane fade">
+
+
+      <?php
+      if ( $nroPartidosSistema == 0){
+        ?>
+        <br>
+        <div class="alert alert-warning">
+          <strong>Lo sentimos!</strong> Actualmente no hay partidos disponibles en MatchDay. Inténtalo más tarde.
+        </div>
+        <?php
+      } else {
+        ?>
+        <!-- TABLA DE Partidos Pendientes -->
+        <br>
+        <div class="alert alert-info">
+          <strong>Atención!</strong> Hay <?php echo $nroPartidosSistema?> partidos disponibles para ti.
+        </div>
+          <div class="col-md-12">
+            <!--div class="table-responsive"-->
+              <table id="example2" class="table table-striped table-hover display responsive nowrap"  cellspacing="0" width="100%">
+                <thead id ="position-table">
+                  <tr id="color-encabezado">
+                    <th id="encabezado-especial">Fecha</th>
+                    <th id="encabezado-especial">Hora</th>
+                    <th id="encabezado-especial">Recinto</th>
+                    <th id="encabezado-especial">Participantes</th>
+                    <th id="encabezado-especial"></th>
+                  </tr>
+                </thead>
+                <tbody id="texto-contactos" class="center">
+                  <?php
+                  foreach ($partidosSistema as $item) {
+                  ?>
+                  <tr>
+                    <td>
+                      <?php 
+                      echo $item['fecha']?>
+                    </td>
+                    <td>
+                      <?php echo $item['hora']?>
+                    </td>
+                    <td>
+                      <?php echo $item['idRecinto']?>
+                    </td>
+                    <td>
+                      5/10
+                    </td>
+                    <td>
+                      <button type="button" class="btn btn-primary" href="javascript:void(0);" data-toggle="modal" data-target="#modal"  
+                      onclick="carga_ajax('modal','<?php echo $item['idPartido']?>','resumen');">
+                      Unirse 
+                        <i class="fa fa-paper-plane" aria-hidden="true"></i>
+                    </button>
+                    </td>
+                  </tr>
+                  <?php
+                  }
+                  ?>
+                </tbody>
+              </table>
+            <!--/div-->
+          </div>
+        <!-- /TABLA DE PARTIDOS Pendientes -->
+
+
+        
+        <script type="text/javascript">
+          $(document).ready(function() {
+            $('#example2').DataTable({
+              responsive: true
+            });
+        } );
+
+
+        </script>
+        <?php
+      }
+      ?>
+    </div>
+
+
+    <div id="menu2" class="tab-pane fade">
+
+      <?php
+      if ($nroPartidosPendientes == 0){
+        ?>
+        <br>
+        <div class="alert alert-success">
+          <strong>Excelente!</strong> <?php echo $mensaje?> 
+        </div>
+        <?php
+      } else {
+        ?>
+        <!-- TABLA DE Partidos Pendientes -->
+        <br>
+        <div class="alert alert-danger">
+          <strong>Atención!</strong> Tienes <?php echo $nroPartidosPendientes?> partidos pendientes.
+        </div>
+          <div class="col-md-12">
+            <!--div class="table-responsive"-->
+              <table id="example" class="table table-striped table-hover display responsive nowrap"  cellspacing="0" width="100%">
+                <thead id ="position-table">
+                  <tr id="color-encabezado">
+                    <th id="encabezado-especial">Fecha</th>
+                    <th id="encabezado-especial">Hora</th>
+                    <th id="encabezado-especial">Recinto</th>
+                    <th id="encabezado-especial">Participantes</th>
+                    <th id="encabezado-especial"></th>
+                    <th id="encabezado-especial"></th>
+                  </tr>
+                </thead>
+                <tbody id="texto-contactos" class="center">
+                  <?php
+                  foreach ($partidosPendientes as $item) {
+                  ?>
+                  <tr>
+                    <td>
+                      <?php 
+                      echo $item['fecha']?>
+                    </td>
+                    <td>
+                      <?php echo $item['hora']?>
+                    </td>
+                    <td>
+                      <?php echo $item['idRecinto']?>
+                    </td>
+                    <td>
+                      5/10
+                    </td>
+                    <td>
+                      <button type="button" class="btn btn-danger" href="javascript:void(0);" data-toggle="modal" data-target="#modal"  
+                      onclick="carga_ajax('modal','<?php echo $item['idPartido']?>','cancelar');">
+                      Cancelar 
+                        <i class="fa fa-times-circle" aria-hidden="true"></i>
+                      </button>
+                    </td>
+                    <td>
+                      <button type="button" class="btn btn-success" href="javascript:void(0);" data-toggle="modal" data-target="#modal"  
+                      onclick="carga_ajax('modal','<?php echo $item['idPartido']?>','solicitudes');">
+                      Notificar 
+                        <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                    </button>
+                    </td>
+                  </tr>
+                  <?php
+                  }
+                  ?>
+                </tbody>
+              </table>
+            <!--/div-->
+          </div>
+        <!-- /TABLA DE PARTIDOS Pendientes -->
+
+
+        
+        <script type="text/javascript">
+          $(document).ready(function() {
+            $('#example').DataTable({
+              responsive: true
+            });
+        } );
+
+
+        </script>
+        <?php
+      }
+      ?>
+
+
+    </div>
+
+
+    <div id="menu3" class="tab-pane fade">
+      <p>Calendario de partidos: partidos activos, jugados y cancelados.</p>
+    </div>
 
 
 
 
 
-    
+  </div>
+</div>
 
 
        
@@ -90,6 +312,9 @@ include('layout/headerJugador.php');
 
   </div>
 </div>
+
+
+<!-- Fin Pagina -->
 
 
 <!-- DATEPICKER-->
