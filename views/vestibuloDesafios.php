@@ -102,8 +102,9 @@ $_SESSION['idEncuentro']=NULL;
 
       <div class="row">
         <div class="col-md-8 col-md-offset-2">
-          <div class="table-responsive">
-            <table id="example" class="table table-striped table-hover">
+
+
+            <table id="example" class="table table-striped table-hover display responsive nowrap" cellspacing="0" width="100%">
               <thead>
                 <tr id="color-encabezado">
                   <th id="encabezado-especial">Desafio</th>
@@ -193,14 +194,15 @@ $_SESSION['idEncuentro']=NULL;
                   ?>
                 </tbody>
               </table>
-            </div>
           </div>
         </div>
         <br>
 
          <script type="text/javascript">
           $(document).ready(function() {
-            $('#example').DataTable();
+            $('#example').DataTable({
+              responsive: true
+            });
         } );
         </script>
 

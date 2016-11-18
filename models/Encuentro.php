@@ -12,28 +12,28 @@ class Encuentro{
 	//	Obtener respuestas de un desafio
 	public function getEncuentros($idDesafio){
 		$sql = "SELECT DISTINCT 
-		desafio.estado,
-		desafio.fecha as fechaPartido,
-		desafio.comentario, 
-		encuentro.idEncuentro,
-		encuentro.estadoSolicitud,
-		equipo.idEquipo , 
-		encuentro.idDesafio,  
-		recinto.nombre as nombreRecinto, 
-		recinto.fotografia as fotoRecinto,
-		recinto.tipo as tipoPartido, 
-		equipo.nombre as nombreEquipo, 
-		usuario.nombre as nombreCap, 
-		usuario.apellido as apellidoCap, 
-		usuario.fotografia, 
-		equipo.puntuacion, 
-		equipo.edadPromedio 
-			FROM encuentro 
-			join desafio on encuentro.idDesafio = desafio.idDesafio 
-			join recinto on desafio.idRecinto = recinto.idRecinto
-			join equipo on equipo.idEquipo = encuentro.idEquipo 
-			join usuario on equipo.idCapitan = usuario.idUsuario
-			WHERE encuentro.idDesafio = '".$idDesafio."' ";
+		Desafio.estado,
+		Desafio.fecha as fechaPartido,
+		Desafio.comentario, 
+		Encuentro.idEncuentro,
+		Encuentro.estadoSolicitud,
+		Equipo.idEquipo , 
+		Encuentro.idDesafio,  
+		Recinto.nombre as nombreRecinto, 
+		Recinto.fotografia as fotoRecinto,
+		Recinto.tipo as tipoPartido, 
+		Equipo.nombre as nombreEquipo, 
+		Usuario.nombre as nombreCap, 
+		Usuario.apellido as apellidoCap, 
+		Usuario.fotografia, 
+		Equipo.puntuacion, 
+		Equipo.edadPromedio 
+			FROM Encuentro 
+			join Desafio on Encuentro.idDesafio = Desafio.idDesafio 
+			join Recinto on Desafio.idRecinto = Recinto.idRecinto
+			join Equipo on Equipo.idEquipo = Encuentro.idEquipo 
+			join Usuario on Equipo.idCapitan = Usuario.idUsuario
+			WHERE Encuentro.idDesafio = '".$idDesafio."' ";
 		$query = $this->db->prepare($sql);
 		$query->execute();
 		$resultado = $query->fetchAll();
@@ -72,7 +72,7 @@ class Encuentro{
 	}
 
 	public function eliminarEncuentros($idDesafio, $idEquipo){
-		$sql = "DELETE FROM encuentro WHERE idDesafio = '".$idDesafio."' and idEquipo != '".$idEquipo."';";
+		$sql = "DELETE FROM Encuentro WHERE idDesafio = '".$idDesafio."' and idEquipo != '".$idEquipo."';";
 		$query = $this->db->prepare($sql);
 		$query->execute();
 	}
@@ -85,11 +85,16 @@ class Encuentro{
 	}
 
 	public function getSolicitudes($idUsuario){
-		$sql = "SELECT encuentro.idEncuentro, encuentro.idDesafio, (DATE_FORMAT(Desafio.fecha,'%d-%m-%Y')) as fechaPartido , recinto.tipo as tipoPartido, equipo.nombre as equipo1,(select nombre from equipo where idEquipo = desafio.idEquipo) as equipo2, encuentro.estadoSolicitud 
-		from encuentro 
-		join desafio on encuentro.idDesafio = desafio.idDesafio
-		join recinto on recinto.idRecinto = desafio.idRecinto 
-		join equipo on encuentro.idEquipo = equipo.idEquipo WHERE equipo.idCapitan= '".$idUsuario."';";
+		$sql = "SELECT Encuentro.idEncuentro, Encuentro.idDesafio, 
+			(DATE_FORMAT(Desafio.fecha,'%d-%m-%Y')) as fechaPartido , 
+			Recinto.tipo as tipoPartido, Equipo.nombre as equipo1, 
+			(select nombre from Equipo where idEquipo = Desafio.idEquipo) as equipo2, 
+			Encuentro.estadoSolicitud 
+			from Encuentro 
+			join Desafio on Encuentro.idDesafio = Desafio.idDesafio 
+			join Recinto on Recinto.idRecinto = Desafio.idRecinto 
+			join Equipo on Encuentro.idEquipo = Equipo.idEquipo 
+			WHERE Equipo.idCapitan= '".$idUsuario."';";
 		$query = $this->db->prepare($sql);
 		$query->execute();
 		$resultado = $query->fetchAll();
@@ -97,12 +102,19 @@ class Encuentro{
 	}
 
 	public function getEncuentro($idEncuentro){
-		$sql = "SELECT encuentro.idEncuentro, encuentro.idDesafio, (DATE_FORMAT(Desafio.fecha,'%d-%m-%Y')) as fechaPartido , Recinto.tipo as tipoPartido,
-		Recinto.fotografia as fotoRecinto, Recinto.nombre as nombreRecinto, equipo.nombre as equipo1,(select nombre from equipo where idEquipo = desafio.idEquipo) as equipo2, encuentro.estadoSolicitud 
-		from encuentro 
-		join desafio on encuentro.idDesafio = desafio.idDesafio 
-		join recinto on desafio.idRecinto = recinto.idRecinto
-		join equipo on encuentro.idEquipo = equipo.idEquipo WHERE encuentro.idEncuentro= '".$idEncuentro."';";
+		$sql = "SELECT Encuentro.idEncuentro, 
+		Encuentro.idDesafio, 
+		(DATE_FORMAT(Desafio.fecha,'%d-%m-%Y')) as fechaPartido , 
+		Recinto.tipo as tipoPartido,
+		Recinto.fotografia as fotoRecinto, 
+		Recinto.nombre as nombreRecinto, 
+		Equipo.nombre as equipo1,
+		(select nombre from Equipo where idEquipo = Desafio.idEquipo) as equipo2, 
+		Encuentro.estadoSolicitud 
+		from Encuentro 
+		join Desafio on Encuentro.idDesafio = Desafio.idDesafio 
+		join Recinto on Desafio.idRecinto = Recinto.idRecinto
+		join Equipo on Encuentro.idEquipo = Equipo.idEquipo WHERE Encuentro.idEncuentro= '".$idEncuentro."';";
 		//echo $sql;
 		$query = $this->db->prepare($sql);
 		$query->execute();
@@ -112,10 +124,13 @@ class Encuentro{
 
 
 	public function getEncuentroAcordado($idDesafio){
-		$sql = "SELECT equipo.idEquipo as idRival ,equipo.nombre as nombreEquipo2, encuentro.respuesta
-		from encuentro 
-		join desafio on encuentro.idDesafio = desafio.idDesafio 
-		join equipo on encuentro.idEquipo = equipo.idEquipo WHERE encuentro.idDesafio= '".$idDesafio."';";
+		$sql = "SELECT 
+		Equipo.idEquipo as idRival ,
+		Equipo.nombre as nombreEquipo2,
+		Encuentro.respuesta
+		from Encuentro 
+		join Desafio on Encuentro.idDesafio = Desafio.idDesafio 
+		join Equipo on Encuentro.idEquipo = Equipo.idEquipo WHERE Encuentro.idDesafio= '".$idDesafio."';";
 		//echo $sql;
 		$query = $this->db->prepare($sql);
 		$query->execute();
@@ -126,7 +141,7 @@ class Encuentro{
 
 	public function cancelarEncuentro($idEncuentro){
 		$sql = 
-			"DELETE FROM encuentro WHERE idEncuentro = '".$idEncuentro."';";
+			"DELETE FROM Encuentro WHERE idEncuentro = '".$idEncuentro."';";
 		$query = $this->db->prepare($sql);
 		$query->execute();
 		$resultado = $query->fetchAll();

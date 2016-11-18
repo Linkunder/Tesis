@@ -30,6 +30,8 @@ class DesafioController{
 		$data['listaEquipos'] = $listaEquipos;
 		$listaDesafios = $desafios->getDesafios($idUsuario);				// Desafios de los equipos del usuario
 		$data['listaDesafios'] = $listaDesafios;
+
+
 		$historialDesafios = $desafios->getHistorialDesafios($idUsuario);
 		$data['historialDesafios'] = $historialDesafios;
 		$nroEncuentros = 0;
@@ -98,6 +100,7 @@ class DesafioController{
 			$limInf = $edades[0];
 			$limSup = $edades[1];
 		}
+
 		$desafiosSistema = $desafios->getDesafiosSistema($idUsuario, $limInf, $limSup);	// equipos con desafios donde el usuario no es capitan
 		$miembrosEquipo = $equipo->getMiembrosEquipo($idEquipoJugador);	// miembros del equipo que eligio el usuario
 		//$auxDesafio = array();

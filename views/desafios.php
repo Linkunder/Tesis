@@ -2,8 +2,11 @@
 <?php
 
 include('layout/headerJugador.php');
+
+
 $equipos = $vars['listaEquipos'];
 $desafios = $vars['listaDesafios'];
+
 $recintos = $vars['listaRecintos'];
 
 
@@ -398,6 +401,8 @@ $recintos = $vars['listaRecintos'];
             <p class="centered">En esta sección, puedes ver las solicitudes que has realizado en el vestíbulo de partidos de MatchDay.</p>
           <div class="col-md-8 col-md-offset-2">
             <!--div class="table-responsive"-->
+
+
               <table id="example2" class="table table-striped table-hover display responsive nowrap" cellspacing="0" width="100%">
                 <thead id ="position-table">
                   <tr id="color-encabezado">
@@ -601,6 +606,7 @@ $recintos = $vars['listaRecintos'];
             });
         } );
         </script>
+
         <?php
         }
         ?>

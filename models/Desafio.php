@@ -39,7 +39,6 @@ class Desafio{
 			JOIN Equipo ON Desafio.idEquipo = Equipo.idEquipo 
 			JOIN Usuario ON Usuario.idUsuario = Equipo.idCapitan 
 			WHERE Desafio.idDesafio = '".$idDesafio."'
-			ORDER BY desafio.fecha ASC
 			");
 		$query->execute();
 		$resultado = $query->fetchAll();
@@ -49,8 +48,7 @@ class Desafio{
 
 	// Obtener los desafios de los equipos de un usuario.
 	public function getDesafios($idUsuario){
-		$query = $this->db->prepare
-		("SELECT Desafio.idDesafio, 
+		$sql = "SELECT Desafio.idDesafio, 
 			(DATE_FORMAT(Desafio.fecha,'%d-%m-%Y')) as fechaPartido , 
 			Recinto.nombre as nombreRecinto, 
 			Recinto.tipo as tipoPartido, 
@@ -62,8 +60,8 @@ class Desafio{
 			JOIN Recinto ON Desafio.idRecinto = Recinto.idRecinto  
 			JOIN Equipo ON Desafio.idEquipo = Equipo.idEquipo 
 			WHERE Equipo.idCapitan = '".$idUsuario."' 
-			AND Desafio.estado != 3
-			ORDER BY desafio.estado DESC, desafio.fecha ASC");
+			AND Desafio.estado != 3";
+		$query = $this->db->prepare($sql);
 		$query->execute();
 		$resultado = $query->fetchAll();
 		return $resultado;
@@ -86,7 +84,7 @@ class Desafio{
 			WHERE Equipo.idCapitan != '".$idUsuario."' 
 			AND Desafio.limInferior >= '".$limInf."' 
 			AND Desafio.limSuperior <= '".$limSup."'
-			ORDER BY desafio.fecha DESC
+			AND Desafio.estado != 3
 			 ";
 		$query = $this->db->prepare($sql);
 		$query->execute();
@@ -116,8 +114,7 @@ class Desafio{
 			JOIN Recinto ON Desafio.idRecinto = Recinto.idRecinto  
 			JOIN Equipo ON Desafio.idEquipo = Equipo.idEquipo 
 			WHERE Equipo.idCapitan = '".$idUsuario."' 
-			AND Desafio.estado = 3
-			ORDER BY desafio.estado DESC, desafio.fecha ASC");
+			AND Desafio.estado = 3");
 		$query->execute();
 		$resultado = $query->fetchAll();
 		return $resultado;

@@ -5,6 +5,7 @@
 
         <?php
           $desafio = $vars['desafio'];
+          
           $encuentros = $vars['listaEncuentros'];
         ?>
         <h4 class="modal-title">
