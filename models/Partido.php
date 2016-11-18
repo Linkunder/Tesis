@@ -37,7 +37,7 @@ class Partido{
 	public function setJugadoresPartidoPropio($idPartido, $idUsuario, $equipo, $color){
 		$consulta = $this->db->prepare("
 			INSERT INTO JugadoresPartido (
-				idPartido, idUsuario, equipo, color) 
+				idPartido, idUsuario, equipo, color1) 
 				VALUES
 				('$idPartido',
 				'$idUsuario',
