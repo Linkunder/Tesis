@@ -96,10 +96,7 @@ include('layout/header.php');
                         <option id="text-black" value="F">Femenino</option>
                 </select>  
               </div>
-              <button type="button" class="btn btn-primary btn-next">Siguiente <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></button>
             </div>
-          </fieldset>
-          <fieldset>
             <div class="form-top">
               <div class="form-top-left">
                 <h3>Paso 2 / 3</h3>
@@ -122,11 +119,7 @@ include('layout/header.php');
                 <label class="sr-only" for="form-first-name">Nickname</label>
                 <input type="text" name="nickname" placeholder="Elige un nickname" class="form-first-name form-control" required>
               </div>
-              <button type="button" class="btn btn-warning btn-previous"> <i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Atrás</button>
-              <button type="button" class="btn btn-primary btn-next">Siguiente <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></button>
             </div>
-          </fieldset>
-          <fieldset>
             <div class="form-top">
               <div class="form-top-left">
                 <h3>Paso 3 / 3</h3>
@@ -144,13 +137,9 @@ include('layout/header.php');
                 <input type="file" id="imagen" name="imagen" required="required"  class="file" multiple data-min-file-count="1">
               </div>
 
-
-
-
-
-              <button type="button" class="btn btn-warning btn-previous"> <i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Atrás</button>
               <button type="submit" class="btn btn-primary">Finalizar <i class="fa fa-paper-plane" aria-hidden="true"></i></button>
             </div>
+
           </fieldset>
         </form>
       </div>
