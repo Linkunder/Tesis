@@ -152,6 +152,8 @@ $(function(){
     ?>
     $( "#draggable<?php echo $Contacto['idUsuario'];?>" ).draggable({ 
       snap: ".ui-widget-header",
+      containment: "#contenedorJugadores",
+      scroll: false,
       create: function(event, $Contacto){}
       });
     $("#draggable<?php echo $Contacto['idUsuario'];?>").data("jugador",false);
@@ -187,8 +189,7 @@ $(function(){
   <div id="contact-us" class="parallax">
     <div class="container">
 
-	<div class="row">
-
+	<div class="row" id="contenedorJugadores">
 
 	      <div class="heading-a text-center">
 
@@ -243,8 +244,7 @@ foreach ($vars['contactos'] as $Contacto) {
 		</div>
     <button href="#" data-toggle="modal" data-target="#modal-1" class="hide" id="sig"></button>
 		<div class="col-md-6" ><!--cancha-->
-		<div id="snaptarget" class="ui-widget-header arreglo">
-    </div>
+		<div id="snaptarget" class="ui-widget-header arreglo"></div>
 		</div>
 
 	</div>

@@ -156,6 +156,8 @@ $(function(){
     ?>
     $( "#draggable<?php echo $Contacto['idUsuario'];?>" ).draggable({ 
       snap: ".ui-widget-header",
+      containment: "#contenedorJugadores",
+      scroll: false,
       create: function(event, $Contacto){}
       });
     $("#draggable<?php echo $Contacto['idUsuario'];?>").data("jugador",false);
@@ -203,7 +205,7 @@ $(function(){
   <div id="contact-us" class="parallax">
     <div class="container">
 
-	<div class="row">
+	<div class="row" id="contenedorJugadores">
 
 
 	      <div class="heading-a text-center">
@@ -214,7 +216,6 @@ $(function(){
         <h4>Recinto: <?php echo $key['nombre'];?></h4>
         <?php } ?>
       </div>
-       
 		<div class="col-md-6"><!-- Jugadores y buscador-->
 		<p>Contactos:</p>
 

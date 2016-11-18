@@ -12,7 +12,14 @@ class IndexController
     public function index()
     {
         //La pagina de inicio
-        $this->view->show("index.php");
+        if(!isset($_SESSION)) { 
+        session_start(); 
+        } 
+        if(!isset($_SESSION['login_user_id'])){
+            $this->view->show("index.php");
+        }else{
+             $this->view->show("indexJugador.php");
+        }
     }
     public function inicio(){
         $this->view->show("inicio.php");
