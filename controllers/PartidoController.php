@@ -88,16 +88,18 @@ class PartidoController{
 		$cantidad	=	$_POST['cantidad'];
 		$color	=	$_POST['color'];
 		$color2 =	$_POST['color2'];
+		$idRecinto = $_POST['idRecinto'];
+		$_SESSION['idRecinto'] = $idRecinto;
 		//Contactos del jugador capitan
 		$listadoContactos=$this->Contacto->getContactos($idCapitan);
 		//Recinto deportivo en el cual se efectuara el partido
-		$recinto = $this->Recinto->getRecinto($_SESSION['idRecinto']);
+		$recinto = $this->Recinto->getRecinto($idRecinto);
 		//Datos del partido hacia la vista
 		$data['fecha'] = $fecha;
 		$data['hora']  = $hora;
 		$data['cantidad'] = $cantidad;
 		$data['color']= $color;
-		$data['color2']= $color;
+		$data['color2']= $color2;
 		//Revuelta = 1
 		$data['tipoPartido'] = 1;
 		$_SESSION['tipoPartido'] = 1;
@@ -145,7 +147,7 @@ class PartidoController{
 		$idEstado = "1";
 		$cuota = "0";
 		//Ingresar Partido
-		$idPartido = $this->Partido->setPartidoEquipoPropio($idCapitan,$fecha, $hora, $cuota, $idTipo, $idEstado, $idRecinto);
+		$idPartido = $this->Partido->setPartido($idCapitan,$fecha, $hora, $cuota, $idTipo, $idEstado, $idRecinto);
 		$_SESSION['idPartido'] = $idPartido;
 
 
@@ -153,12 +155,39 @@ class PartidoController{
 		$data	=	json_decode($_POST['jObject'], true);
 		for($i=0; $i<sizeof($data); $i++){
 			$id=$data[$i];
-			$this->Partido->setJugadoresPartido($idPartido, $id, "A");
+			$this->Partido->setJugadoresPartidoPropio($idPartido, $id, "A", $color);
 		}
 			//Debido a que el capitan no se trae, se debe agregar.
-			$this->Partido->setJugadoresPartido($idPartido, $idCapitan,"A");
+			$this->Partido->setJugadoresPartidoPropio($idPartido, $idCapitan,"A", $color);
 		}
 
+	public function agendarPartidoRevuelta(){
+		$idTipo =	$_SESSION['tipoPartido'];
+		$idCapitan	= $_SESSION['login_user_id'];
+		$fecha	=	$_SESSION['fecha'];
+		$hora	=	$_SESSION['hora'];
+		$cantidad	= $_SESSION['cantidad'];
+		$color	=	$_SESSION['color'];
+		$color2 = $_SESSION['color2'];
+		$idRecinto = $_SESSION['idRecinto'];
+
+		//partido con estado agendado
+		$idEstado = "1";
+		$cuota = "0";
+		//Ingresar Partido
+		$idPartido = $this->Partido->setPartido($idCapitan,$fecha, $hora, $cuota, $idTipo, $idEstado, $idRecinto);
+		$_SESSION['idPartido'] = $idPartido;
+
+
+		//Ingresar equipo del partido (Jugadores) Esto es igual en revuelta y EquipoPropio
+		$data	=	json_decode($_POST['jObject'], true);
+		for($i=0; $i<sizeof($data); $i++){
+			$id=$data[$i];
+			$this->Partido->setJugadoresRevuelta($idPartido, $id, $color, $color2);
+		}
+			//Debido a que el capitan no se trae, se debe agregar.
+			$this->Partido->setJugadoresRevuelta($idPartido, $idCapitan, $color, $color2);
+	}
 	public function agendarPartidoAB(){
 
 	}
@@ -362,6 +391,7 @@ if ($existenciaTercerTiempo != 0) { // Si es 0, no hay tercer tiempo
 				$cuotaTotal = $Partido['cuota']*$cantidad;
 				$participantes = $cantidad;
 				$cuotaPersonal = $Partido['cuota'];
+				$tipoPartido = $Partido['tipo'];
 			}
 
 

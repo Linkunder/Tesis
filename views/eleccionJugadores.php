@@ -17,6 +17,9 @@ $_SESSION['fecha'] = $vars['fecha'];
 $_SESSION['hora'] = $vars['hora'];
 $_SESSION['cantidad'] = $vars['cantidad'];
 $_SESSION['color']  = $vars['color'];
+if(isset($vars['color2'])){
+  $_SESSION['color2'] =$vars['color2'];
+}
 
 // Si quiero 10 jugadores, pero tengo solo 4 contactos, deberia notificar un partido a los demás jugadores.
 
@@ -165,23 +168,33 @@ $(function(){
   
   function setValue(){
     //arv= arrayJugador.join(","); //Funciona
+    //Se toma el tipo de partido que se esta agendando para ir a esa funcion.
+    var tipoPartido =<?php echo $_SESSION['tipoPartido'];?>;
+    var agendar = "";
 
     var jObject={};
     for(i in arrayJugador){
       jObject[i] = arrayJugador[i];
     }
 
+    if(tipoPartido == "2"){
+      agendar="agendarPartido";
 
-    jObject=JSON.stringify(jObject);
+    }
+    if(tipoPartido == "1"){
+      agendar="agendarPartidoRevuelta";
+    }
+    if(tipoPartido == "3"){
+      agendar="agendarPartidoAB";
+    }
+      jObject=JSON.stringify(jObject);
       $.ajax({
           type:'post',
           cache:false,
-          url:"?controlador=Partido&accion=agendarPartido",
+          url:"?controlador=Partido&accion="+agendar,
           data:{jObject:jObject}
-    });
+      });
     }
-
-
 
   </script>
 

@@ -34,18 +34,34 @@ class Partido{
 		return $resultado;
 	}
 
-	public function setJugadoresPartido($idPartido, $idUsuario, $equipo){
+	public function setJugadoresPartidoPropio($idPartido, $idUsuario, $equipo, $color){
 		$consulta = $this->db->prepare("
 			INSERT INTO JugadoresPartido (
-				idPartido, idUsuario, equipo) 
+				idPartido, idUsuario, equipo, color) 
 				VALUES
 				('$idPartido',
 				'$idUsuario',
-				'$equipo');
+				'$equipo',
+				'$color'
+				);
 			");
 		$consulta->execute();
 	}
-	public function setPartidoEquipoPropio($idOrganizador,$fecha, $hora, $cuota, $tipo, $estado, $idRecinto){
+
+	public function setJugadoresRevuelta($idPartido, $idUsuario, $color, $color2){
+		$consulta = $this->db->prepare("
+			INSERT INTO JugadoresPartido (
+				idPartido, idUsuario, color1, color2) 
+				VALUES
+				('$idPartido',
+				'$idUsuario',
+				'$color',
+				'$color2'
+				);
+			");
+		$consulta->execute();
+	}
+	public function setPartido($idOrganizador,$fecha, $hora, $cuota, $tipo, $estado, $idRecinto){
 		$consulta= $this->db->prepare("
 			INSERT INTO Partido (
 				idOrganizador,
