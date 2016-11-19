@@ -56,13 +56,13 @@ $recintos = $vars['listaRecintos'];
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Ventana normal</h4>
+        <h4 class="modal-title" id="myModalLabel">Cargando ...</h4>
       </div>
       <div class="modal-body">
-        <h1>Texto #manosenelcódigo</h1>
+        <div class="preloader"> <i class="fa fa-circle-o-notch fa-spin"></i></div>
       </div>
       <div class="modal-footer">
-            <h4>pie de página</h4>
+            <h4>Espere por favor ...</h4>
       </div>
     </div>
   </div>

@@ -164,8 +164,9 @@ class Partido{
 		$consulta = $this->db->prepare(
 			"SELECT *
 			FROM Partido
-			WHERE estado=4
-			AND idOrganizador = '".$idUsuario."'");
+			JOIN Recinto ON Partido.idRecinto = Recinto.idRecinto
+			WHERE Partido.estado=4
+			AND Partido.idOrganizador = '".$idUsuario."'");
 		$consulta->execute();
 		$resultado=$consulta->fetchAll();
 		return $resultado;
@@ -176,11 +177,32 @@ class Partido{
 			"SELECT Partido.idPartido, Partido.fecha, Partido.hora, Recinto.nombre 
 			FROM Partido 
 			JOIN Recinto ON Partido.idRecinto = Recinto.idRecinto
-			WHERE Partido.estado=4 AND Partido.idOrganizador != '".$idUsuario."' and Partido.idPartido in 
+			WHERE Partido.estado=5 AND Partido.idOrganizador != '".$idUsuario."' and Partido.idPartido in 
 			(SELECT JugadoresPartido.idPartido from JugadoresPartido where JugadoresPartido.idUsuario != '".$idUsuario."')");
 		$consulta->execute();
 		$resultado=$consulta->fetchAll();
 		return $resultado;
+	}
+
+	public function getResumenPartido($idPartido){
+		$sql = "SELECT 
+		Partido.idPartido,
+		Partido.fecha,
+		Partido.hora,
+		Partido.cuota,
+		Partido.tipo, 
+		Partido.estado,
+		Partido.idRecinto,
+		Recinto.nombre,
+		Recinto.fotografia
+		FROM Partido
+		JOIN Recinto ON Partido.idRecinto = Recinto.idRecinto
+		WHERE idPartido = '".$idPartido."';
+		";
+		$consulta = $this->db->prepare($sql);
+		$consulta->execute();
+		$resultado = $consulta->fetchAll();
+		return $resultado;		
 	}
 
 

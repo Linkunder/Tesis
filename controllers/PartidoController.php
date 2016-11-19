@@ -46,14 +46,31 @@ class PartidoController{
 	}
 
 	public function detallePartido(){
-      /*if(!isset($_SESSION)) { 
-        session_start(); 
-        } */
       $idPartido = $_GET['idPartido']; 
-      $partido = $this->Partido->getPartido($idPartido);
+      $partido = $this->Partido->getResumenPartido($idPartido);
       $data['partido'] = $partido;
+      $data['accion'] = 0; // Solicitud
       $this->view->show("_detallePartido.php",$data);
     }
+
+	public function cancelarPartido(){
+      $idPartido = $_GET['idPartido']; 
+      $partido = $this->Partido->getResumenPartido($idPartido);
+      $data['partido'] = $partido;
+      $data['accion'] = 1; // Cancelar
+      $this->view->show("_detallePartido.php",$data);
+    }
+
+	public function notificarPartido(){
+
+      $idPartido = $_GET['idPartido']; 
+      $partido = $this->Partido->getResumenPartido($idPartido);
+      $data['partido'] = $partido;
+      $data['accion'] = 2; // Notificar
+      $this->view->show("_detallePartido.php",$data);
+    }
+
+
 
 	//Recopilar informacion del sistema
 	public function partidoEquipoPropio(){

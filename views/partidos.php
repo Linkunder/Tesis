@@ -17,15 +17,7 @@ include('layout/headerJugador.php');
 
 // Recibir información de los partidos Pendientes como organizador
 $partidosPendientes = $vars['partidosPendientes'];
-
-if (empty($partidosPendientes)){
-  $nroPartidosPendientes = count($partidosPendientes);
-  $mensaje = "No tienes partidos pendientes.";
-} else {
-  $nroPartidosPendientes = count($partidosPendientes);
-  //echo $nroPartidosPendientes;
-  $mensaje = "Tienes ".$nroPartidosPendientes." partidos pendientes";
-}
+$nroPartidosPendientes = count($partidosPendientes);
 
 $partidosSistema = $vars['partidosSistema'];
 $nroPartidosSistema = count($partidosSistema);
@@ -120,13 +112,13 @@ $nroPartidosSistema = count($partidosSistema);
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Ventana normal</h4>
+        <h4 class="modal-title" id="myModalLabel">Cargando ...</h4>
       </div>
       <div class="modal-body">
-        <h1>Texto #manosenelcódigo</h1>
+        <div class="preloader"> <i class="fa fa-circle-o-notch fa-spin"></i></div>
       </div>
       <div class="modal-footer">
-            <h4>pie de página</h4>
+            <h4>Espere por favor ... </h4>
       </div>
     </div>
   </div>
@@ -197,7 +189,7 @@ $nroPartidosSistema = count($partidosSistema);
           $msg1 = "partidos disponibles";
         }
         ?>
-        <!-- TABLA DE Partidos Pendientes -->
+        <!-- TABLA DE Partidos Sistema -->
         <br>
         <div class="alert alert-success">
           <strong>Atención!</strong> Hay <?php echo $nroPartidosSistema." ".$msg1 ?> para ti.
@@ -249,7 +241,7 @@ $nroPartidosSistema = count($partidosSistema);
               </table>
             <!--/div-->
           </div>
-        <!-- /TABLA DE PARTIDOS Pendientes -->
+        <!-- /TABLA DE PARTIDOS Sistema -->
 
 
         
@@ -280,11 +272,11 @@ $nroPartidosSistema = count($partidosSistema);
         ?>
         <br>
         <div class="alert alert-success">
-          <strong>Excelente!</strong> <?php echo $mensaje?> 
+          <strong>Atención!</strong> Actualmente no tienes partidos pedientes en MatchDay.
         </div>
         <?php
       } else {
-        if ($nroPartidosPendientes = 1){
+        if ($nroPartidosPendientes == 1){
           $msg2 = "partido pendiente";
         } else {
           $msg2 = "partidos pendientes";
@@ -326,7 +318,7 @@ $nroPartidosSistema = count($partidosSistema);
                       <?php echo $item['hora']?>
                     </td>
                     <td>
-                      <?php echo $item['idRecinto']?>
+                      <?php echo $item['nombre']?>
                     </td>
                     <td>
                       5/10
@@ -434,8 +426,10 @@ include('layout/footer.php');
 
 
 <script>
-
+ 
 function carga_ajax(div, id, tipo){
+
+  /* Acceder al resumen de un partido disponible en el sistema */
   if (tipo == 'resumen'){
     $.post(
       '?controlador=Partido&accion=detallePartido&idPartido='+id,
@@ -444,6 +438,26 @@ function carga_ajax(div, id, tipo){
       }
       ); 
   }
+  /* Acceder al resumen de un partido pendiente y cancelarlo */
+  if (tipo == 'cancelar'){
+    $.post(
+      '?controlador=Partido&accion=cancelarPartido&idPartido='+id,
+      function(resp){
+        $("#"+div+"").html(resp);
+      }
+      ); 
+  }
+  /* Acceder al resumen de un partido pendiente y notificarlo */
+  if (tipo == 'notificar'){
+    $.post(
+      '?controlador=Partido&accion=notificarPartido&idPartido='+id,
+      function(resp){
+        $("#"+div+"").html(resp);
+      }
+      ); 
+  }
+
+
 
   
 }
