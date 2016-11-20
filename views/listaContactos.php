@@ -122,8 +122,8 @@ $equipos = $vars['listaEquipos'];
                       ?>
                     <tr>
                       
-                      <td style="width: 100px; height: 100px;">
-                        <img class="img-thumbnail img-responsive" src="assets/images/usuarios/<?php echo $item['fotografia']?>">
+                      <td width='10%'>
+                        <img height="30" class="img-responsive" src="assets/images/usuarios/<?php echo $item['fotografia']?>">
                       </td>
                       <td><?php echo $nombreContacto." ".$item['apellido']?></td>
                       <td><?php echo $item['mail']?></td>

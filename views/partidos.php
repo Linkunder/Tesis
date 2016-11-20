@@ -45,7 +45,7 @@ $nroPartidosSistema = count($partidosSistema);
 
 <script src='assets/js/moment.min.js'></script>
 <script src="assets/js/es.js"></script>
-<!--script src='assets/lang-all.js'></script-->
+<script src='assets/lang-all.js'></script>
 <script src='assets/js/fullcalendar.min.js'></script>
 
 
@@ -78,7 +78,7 @@ $nroPartidosSistema = count($partidosSistema);
 
       // Partidos
       events: [
-      <?php foreach ($partidosPendientes as $key ) {
+      <?php foreach ($partidosUsuario as $key ) {
         ?>
         {
           title: '<?php echo $key['idPartido']?>',
@@ -225,14 +225,15 @@ $nroPartidosSistema = count($partidosSistema);
                     <th id="encabezado-especial">Fecha</th>
                     <th id="encabezado-especial">Hora</th>
                     <th id="encabezado-especial">Recinto</th>
-                    <th id="encabezado-especial">Participantes</th>
+                    <th id="encabezado-especial">Estado</th>
                     <th id="encabezado-especial"></th>
                   </tr>
                 </thead>
                 <tbody id="texto-contactos" class="center">
                   <?php
                   foreach ($partidosSistema as $item) {
-                    $idPartidoSistema = $item['idPartido'];
+                    $idPartidoSistema = $item['idPartido1'];
+                    $estadoSolicitud = $item['estadoSolicitud'];
                   ?>
                   <tr>
                     <td>
@@ -251,14 +252,69 @@ $nroPartidosSistema = count($partidosSistema);
                       <?php echo $item['nombre']?>
                     </td>
                     <td>
-                      5/10
+                     <?php
+                     if ($estadoSolicitud == 1){
+                      ?>
+                      <span class="label label-success">Solicitud aceptada <i class="fa fa-smile-o" aria-hidden="true"></i></span>   
+                      <?php
+                     }
+                     if ($estadoSolicitud == 2){
+                      ?>
+                      <span class="label label-warning">Esperando respuesta capitán <i class="fa fa-clock-o" aria-hidden="true"></i></span>   
+                      <?php
+                     }
+                     if ($estadoSolicitud == null){
+                     ?>
+                      <span class="label label-primary">¡Únete a este partido! <i class="fa fa-reply" aria-hidden="true"></i></span>   
+                      <?php
+                     }
+                    if ($estadoSolicitud == 3){
+                     ?>
+                      <span class="label label-danger">Solicitd rechazada <i class="fa fa-reply" aria-hidden="true"></i></span>   
+                      <?php
+                     }
+                     ?>
                     </td>
                     <td>
+                      <?php
+                     if ($estadoSolicitud == 1){
+                      ?>
+                      <button type="button" class="btn btn-info" href="javascript:void(0);" data-toggle="modal" data-target="#modal"  
+                          onclick="carga_ajax1('modal','<?php echo $idPartidoSistema?>','resumen');">
+                          Ver resumen 
+                            <i class="fa fa-info-circle" aria-hidden="true"></i>
+                         </button>   
+                      <?php
+                     }
+                     if ($estadoSolicitud == 2){
+                      ?>
+                      <button type="button" class="btn btn-info" href="javascript:void(0);" data-toggle="modal" data-target="#modal"  
+                          onclick="carga_ajax1('modal','<?php echo $idPartidoSistema?>','resumen');">
+                          Ver resumen 
+                            <i class="fa fa-info-circle" aria-hidden="true"></i>
+                         </button>   
+                      <?php
+                     }
+                     if ($estadoSolicitud == null){
+                     ?>
                       <button type="button" class="btn btn-primary" href="javascript:void(0);" data-toggle="modal" data-target="#modal"  
                       onclick="carga_ajax1('modal','<?php echo $idPartidoSistema; ?>','solicitud');">
                       Unirse 
                         <i class="fa fa-paper-plane" aria-hidden="true"></i>
-                    </button>
+                      </button>  
+                      <?php
+                     }
+                     if ($estadoSolicitud == 3){
+                     ?>
+                      <button type="button" class="btn btn-primary" href="javascript:void(0);" data-toggle="modal" data-target="#modal"  
+                      onclick="carga_ajax1('modal','<?php echo $idPartidoSistema; ?>','solicitud');">
+                      Reintentar
+                        <i class="fa fa-paper-plane" aria-hidden="true"></i>
+                      </button>  
+                      <?php
+                     }
+                     ?>
+                      
                     </td>
                   </tr>
                   <?php
@@ -306,9 +362,7 @@ $nroPartidosSistema = count($partidosSistema);
         ?>
         <!-- TABLA DE Partidos Pendientes -->
         <br>
-        <div class="alert alert-info">
-          <strong>Instrucciones</strong> 
-        </div>
+
           <div class="col-md-12">
             <!--div class="table-responsive"-->
               <table id="example" class="table table-striped table-hover display responsive nowrap"  cellspacing="0" width="100%">
@@ -338,10 +392,10 @@ $nroPartidosSistema = count($partidosSistema);
                     <td width='15%'>
                       <?php echo $hora?>
                     </td>
-                    <td >
+                    <td width='15%'>
                       <?php echo $recinto?>
                     </td>
-                    <td>
+                    <td width='15%'>
                       <?php
                       if ($estado == 1){
                         ?>

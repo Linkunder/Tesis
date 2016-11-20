@@ -37,6 +37,7 @@ class PartidoController{
 		$idUsuario = $_SESSION['login_user_id'];
 
 
+
 		if ( isset($_POST['idPartido']) && isset($_POST['accion'])){
 			$idPartido = $_POST['idPartido'];
     		$accion = $_POST['accion'];
@@ -55,7 +56,18 @@ class PartidoController{
     			$mensaje = "El partido ha sido notificado a los jugadores de MatchDay. Debes estar atento a sus solicitudes";
     			$data['mensaje'] = $mensaje;
     		}
+
+
 			$this->cambiarEstadoPartido($idPartido, $accion);
+
+			if ($accion == 4){
+				$idSolicitante = $_POST['idUsuario'];
+				$respuesta = $_POST['respuesta'];
+				$this->cambiarEstadoSolicitud($idPartido, $idSolicitante, $respuesta, $accion);
+				$data['accion'] = 4;
+    			$mensaje = "La operación ha sido realizada con éxito. Al jugador se le notificará tu decisión.";
+    			$data['mensaje'] = $mensaje;
+    		}
 		}
 
 
@@ -113,8 +125,34 @@ class PartidoController{
       $partido = $this->Partido->getResumenPartido($idPartido);
       $data['partido'] = $partido;
       $data['accion'] = 4; // Solicitud
+      $arrayEdades = array();
+      $i = 0;
+      $solicitudes = $this->Partido->obtenerSolicitudes($idPartido);
+      foreach ($solicitudes as $key ) {
+      	$arrayEdades[] = $this->calcularEdad($key['fechaNacimiento']);
+      	$data['edadUsuario'.$key['idUsuario']] = $arrayEdades[$i];
+      	$i++;
+      }
+      $data['solicitudes'] = $solicitudes;
       $this->view->show("_detallePartido.php",$data);
     }
+
+    public function cambiarEstadoSolicitud($idPartido, $idUsuario, $respuesta, $accion){
+    	if ($accion == 4){		// Rechazar la solicitud.
+    		$this->Partido->cambiarEstadoSolicitud($idPartido, $idUsuario, $respuesta);
+    		if ($respuesta == 1 ){ // Se acepto la solicitud, por lo tanto lo agrego a jugadores partido.
+    			$estado = 1;
+    			$this->Partido->agregarJugador($idPartido, $idUsuario, $estado);
+    		}
+    	}
+    }
+
+
+	//	Calcular edad de un usuario.
+	public function calcularEdad($fecha){
+		list($Y,$m,$d) = explode("-", $fecha);
+		return(date("md")<$m.$d ? date("Y")-$Y-1 : date("Y")-$Y );
+	}
 
 
 
@@ -122,7 +160,7 @@ class PartidoController{
     public function cambiarEstadoPartido($idPartido, $accion){
     	if ($accion == 0 ){	// Solicitud partido
     		$estadoSolicitud = 2;
-    		$tipoSolicitud = 1;
+    		$tipoSolicitud = 0;
     		$idUsuario = $_SESSION['login_user_id'];
     		$this->Partido->agregarSolicitud($idUsuario, $idPartido, $estadoSolicitud, $tipoSolicitud);	
     	}

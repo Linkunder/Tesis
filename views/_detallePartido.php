@@ -71,7 +71,7 @@
                 <div class="project-info">
                   <table>
                     <tr>
-                      <th width='25%'><span>Cancha</span></th>
+                      <th width='15%'><span>Cancha</span></th>
                       <td id="texto-blanco" width='25%'><?php echo $nombreRecinto;?></td>
                     </tr>
                     <tr>
@@ -92,6 +92,10 @@
                     </tr>
                     <tr>
                       <th><span>Cuota</span></th>
+                      <td id="texto-blanco"><?php echo "no disponible";?></td>
+                    </tr>
+                    <tr>
+                      <th><span>Jugadores</span></th>
                       <td id="texto-blanco"><?php echo "no disponible";?></td>
                     </tr>
                   </table>
@@ -173,10 +177,170 @@
           <?php
         }
         if ($accion == 4){  // Ver respuestas
-          ?>
+          $solicitudes = $vars['solicitudes'];
+          $i = 0;
+          foreach ($solicitudes as $key) {
+            if ($key['estado'] == 2){
+              $i++;
+            }
+          }
+          $nroRespuestas = $i;
+          if ($nroRespuestas == 0){
+            ?>
+          <div class="alert alert-warning alert-dismissible">
+            Actualmente no tienes ninguna solicitud para este partido.
+          </div>
+            <?php
+          } else {
+            ?>
           <div class="alert alert-info alert-dismissible">
             Los siguientes jugadores han enviado una solicitud para unirse a tu partido.
           </div>
+
+          <div class="col-md-12">
+            <!--div class="table-responsive"-->
+              <table id="example4" class="table table-striped table-hover display responsive nowrap"  cellspacing="0" width="100%">
+                <thead id ="position-table">
+                  <tr id="color-encabezado">
+                    <th id="encabezado-especial">Jugador</th>
+                    <th id="encabezado-especial">Edad</th>
+                    <th id="encabezado-especial">Teléfono</th>
+                    <th id="encabezado-especial"></th>
+                    <th id="encabezado-especial"></th>
+                  </tr>
+                </thead>
+                <tbody id="texto-contactos" class="center">
+                  <?php
+                  foreach ($solicitudes as $item) {
+                    $estado = $item['estado'];
+                    if ($estado == 2){
+                    $idUsuario = $item['idUsuario'];
+                    $nombre = $item['nombre']." ".$item['apellido'];
+                    $fono = $item['telefono'];
+                  ?>
+                  <tr>
+                    <td width='20%'>
+                      <?php echo $nombre?>
+                    </td>
+                    <td width='20%'>
+                      <?php echo $vars['edadUsuario'.$item['idUsuario']]?>
+                    </td>
+                    <td width='20%'>
+                      <?php echo $fono?>
+                    </td>
+                    <td>
+                      <form action="?controlador=Partido&accion=partidos" method="post">
+                        <input name="idUsuario" value="<?php echo $idUsuario; ?>"  hidden/>
+                        <input name="accion" value="<?php echo $accion; ?>"  hidden/>
+                        <input name="respuesta" value="3"  hidden/>
+                        <input name="idPartido" value="<?php echo $idPartido; ?>" hidden/>
+                        <button type="submit" class="btn btn-danger btn-md">Rechazar <i class="fa fa-times-circle" aria-hidden="true"></i></button>
+                      </form>
+                    </td>
+                    <td>
+                      <form action="?controlador=Partido&accion=partidos" method="post">
+                        <input name="idUsuario" value="<?php echo $idUsuario; ?>"  hidden/>
+                        <input name="accion" value="<?php echo $accion; ?>"  hidden/>
+                        <input name="respuesta" value="1"  hidden/>
+                        <input name="idPartido" value="<?php echo $idPartido; ?>" hidden/>
+                        <button type="submit" class="btn btn-primary btn-md">Aceptar <i class="fa fa-check-circle" aria-hidden="true"></i></button>
+                      </form>
+                    </td>
+                  </tr>
+                  <?php
+                  }
+                  }
+                  ?>
+                </tbody>
+              </table>
+            <!--/div-->
+          </div>
+
+
+
+
+          <script type="text/javascript">
+          $(document).ready(function() {
+            $('#example4').DataTable({
+              responsive: true
+            });
+           } );
+          </script>
+
+          <?php
+          }
+
+
+          $aux = 0;
+          foreach ($solicitudes as $key) {
+            if ($key['estado'] == 1){
+              $aux++;
+            }
+          }
+
+          if ($aux > 0 ){
+            ?>
+            <div class="alert alert-info">
+              Has aceptado <?php echo $aux?> solicitud(es).
+            </div>
+
+
+            <div class="col-md-12">
+              <table id="example5" class="table table-striped table-hover display responsive nowrap"  cellspacing="0" width="100%">
+                <thead id ="position-table">
+                  <tr id="color-encabezado">
+                    <th id="encabezado-especial">Jugador</th>
+                    <th id="encabezado-especial">Edad</th>
+                    <th id="encabezado-especial">Teléfono</th>
+                  </tr>
+                </thead>
+                <tbody id="texto-contactos" class="center">
+                  <?php
+                  foreach ($solicitudes as $item) {
+                    $estado = $item['estado'];
+                    if ($estado == 1){
+                    $idUsuario = $item['idUsuario'];
+                    $nombre = $item['nombre']." ".$item['apellido'];
+                    $fono = $item['telefono'];
+                  ?>
+                  <tr>
+                    <td width='20%'>
+                      <?php echo $nombre?>
+                    </td>
+                    <td width='20%'>
+                      <?php echo $vars['edadUsuario'.$item['idUsuario']]?>
+                    </td>
+                    <td width='20%'>
+                      <?php echo $fono?>
+                    </td>
+                  </tr>
+                  <?php
+                  }
+                  }
+                  ?>
+                </tbody>
+              </table>
+            </div>
+
+
+
+
+          <script type="text/javascript">
+          $(document).ready(function() {
+            $('#example5').DataTable({
+              responsive: true
+            });
+           } );
+          </script>
+            <?php
+          }
+
+          ?>
+
+
+
+
+
 
             <br/>
             <div class="row">
@@ -210,7 +374,7 @@ function carga_ajax(div, id, tipo){
       ); 
   }
 
-
-  
 }
+
+
 </script>   

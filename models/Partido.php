@@ -203,18 +203,20 @@ class Partido{
 
 	public function getPartidosSistema($idUsuario){
 		$consulta = $this->db->prepare(
-			"SELECT Usuario.nombre as nombreCap, 
-			Usuario.apellido as apellidoCap, 
-			Partido.idPartido, 
+			"SELECT DISTINCT 
+			Usuario.nombre as nombreCap, 
+			Usuario.apellido as apellidoCap,
+			Partido.idPartido as idPartido1, 
 			DATE_FORMAT(Partido.fecha,'%d-%m-%Y') as fechaPartido, 
 			DATE_FORMAT(Partido.hora,'%l:%i %p') as horaPartido,
-			Recinto.nombre 
+			Recinto.nombre,
+            (SELECT SolicitudParticipacion.estado FROM SolicitudParticipacion 
+            LEFT OUTER JOIN Usuario ON Usuario.idUsuario = SolicitudParticipacion.idUsuarioSolicitante
+            WHERE Usuario.idUsuario = '".$idUsuario."' AND SolicitudParticipacion.idPartido = idPartido1) as estadoSolicitud
 			FROM Partido 
 			JOIN Recinto ON Partido.idRecinto = Recinto.idRecinto
 			JOIN Usuario ON Partido.idOrganizador = Usuario.idUsuario
-			WHERE Partido.estado=5 AND Partido.idOrganizador != '".$idUsuario."' AND Partido.idPartido in 
-			(SELECT JugadoresPartido.idPartido from JugadoresPartido where JugadoresPartido.idUsuario != '".$idUsuario."')
-			AND Partido.idPartido not in (SELECT SolicitudParticipacion.idPartido FROM SolicitudParticipacion WHERE idUsuarioSolicitante = '".$idUsuario."');
+			WHERE Partido.estado=5 AND Partido.idOrganizador != '".$idUsuario."'
 			");
 		$consulta->execute();
 		$resultado=$consulta->fetchAll();
@@ -269,6 +271,39 @@ class Partido{
 	}
 
 
+	public function obtenerSolicitudes($idPartido){
+		$sql = "SELECT 
+		Usuario.idUsuario, 
+		Usuario.nombre,
+		Usuario.apellido,
+		Usuario.fechaNacimiento,
+		Usuario.telefono,
+		SolicitudParticipacion.estado
+		FROM Usuario
+		JOIN SolicitudParticipacion ON Usuario.idUsuario = SolicitudParticipacion.idUsuarioSolicitante
+		WHERE SolicitudParticipacion.idPartido = '".$idPartido."' 
+		AND SolicitudParticipacion.estado != 3 ;";
+		$consulta = $this->db->prepare($sql);
+		$consulta->execute();
+		$resultado = $consulta->fetchAll();
+		return $resultado;	
+	}
+
+	public function cambiarEstadoSolicitud($idPartido, $idUsuario, $respuesta){
+		$sql = "UPDATE SolicitudParticipacion SET estado = '".$respuesta."' 
+		WHERE idPartido = '".$idPartido."' AND idUsuarioSolicitante = '".$idUsuario."' ;";
+		$query = $this->db->prepare($sql);
+		$query->execute();
+	}
+
+	public function agregarJugador($idPartido, $idUsuario, $estado){
+		$sql = 
+		"INSERT INTO JugadoresPartido (idPartido, idUsuario, estado) 
+		VALUES ('".$idPartido."','".$idUsuario."','".$estado."');
+		";
+		$query = $this->db->prepare($sql);
+		$query->execute();
+	}
 
 
 }
