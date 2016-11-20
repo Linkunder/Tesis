@@ -126,6 +126,14 @@ class RecintoController{
       $this->view->show("_mapa.php", $data);
     }
 
+    public function getHorarios(){
+      $idRecinto = $_GET['id'];
+      $form = $_GET['form'];
+      $data['horarios'] = $this->Horario->getHorariosRecinto($idRecinto);
+      $data['form'] = $form;
+      $this->view->show("_horarios.php", $data);
+    }
+
     
 
 

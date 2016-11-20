@@ -87,7 +87,7 @@ $_SESSION['idRecinto']=NULL;
                             ?>
                             <input type="text" class="fomr-control" hidden name="tipo" value="1"/>
                             <?php }else{?>
-							<input type="text" class="fomr-control" hidden name="tipo" value="0"/>
+                            <input type="text" class="fomr-control" hidden name="tipo" value="0"/>
                             <?php } ?>
                             
                                 <div class="col-md-12">
@@ -234,23 +234,23 @@ $_SESSION['idRecinto']=NULL;
                                      //Con este if se comprueba que el jusgador tenga un estado activo y no haya comentado en este recinto
                                         if(isset($_SESSION['login_user_estado'])){
         
-                                        	$contadorPuntuacion=0;
-                                        	$contadorPartido = 0;
+                                            $contadorPuntuacion=0;
+                                            $contadorPartido = 0;
 
-                                        	foreach ($vars['partidos'] as $partido) {
-                                        		if($partido['idRecinto'] == $idRecinto){
-                                        			$contadorPartido++;
-                                        		}
-                                        	}
-                                        	foreach ($vars['puntuaciones'] as $puntuacion) {
+                                            foreach ($vars['partidos'] as $partido) {
+                                                if($partido['idRecinto'] == $idRecinto){
+                                                    $contadorPartido++;
+                                                }
+                                            }
+                                            foreach ($vars['puntuaciones'] as $puntuacion) {
 
-                                        		if($puntuacion['idRecinto'] == $idRecinto){
-                                        			$contadorPuntuacion++;
-                                        			$puntuacionUsuario = $puntuacion['valoracion'];
-                                        		}
-                                        	}
+                                                if($puntuacion['idRecinto'] == $idRecinto){
+                                                    $contadorPuntuacion++;
+                                                    $puntuacionUsuario = $puntuacion['valoracion'];
+                                                }
+                                            }
 
-                                        		//Si el contador es 0 significa que no ha puntuado el recinto
+                                                //Si el contador es 0 significa que no ha puntuado el recinto
                                                 if($_SESSION['login_user_estado']==1 && $contadorPuntuacion == 0){?>
 
                                     
@@ -278,9 +278,9 @@ $_SESSION['idRecinto']=NULL;
                                 </form>
 
                              <?php }else{
-                             		//Si ha jugado se guar
-                    				//$puntuacionUsuario= $jefePuntuacion->valoracionUsuario($_SESSION['idUsuario'],$key->getIdRecinto());
-                             		//
+                                    //Si ha jugado se guar
+                                    //$puntuacionUsuario= $jefePuntuacion->valoracionUsuario($_SESSION['idUsuario'],$key->getIdRecinto());
+                                    //
                                             ?>
 
                             <form method="post" action="" >
@@ -509,46 +509,56 @@ $_SESSION['idRecinto']=NULL;
         </div>
     </div>
 </div>
-<style type="text/css">
-	.modal { overflow: auto !important; }
-</style>
+
         <!-- MODALES-->
  <!-- MODAL HORARIOS-->
-
-<!--MODAL IMPLEMENTOS-->
-    <div class="modal fade" id="modal" tabindex="-1" role="dialog" >
+<div class="modal fade" id="modalHorario" tabindex="-1" role="dialog" >
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Ventana normal</h4>
+        <h4 class="modal-title" id="myModalLabel"></h4>
       </div>
       <div class="modal-body">
-        <h1>Texto #manosenelcódigo</h1>
+        <h1></h1>
       </div>
       <div class="modal-footer">
-            <h4>pie de página</h4>
+            <h4></h4>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--MODAL IMPLEMENTOS-->
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" >
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"></h4>
+      </div>
+      <div class="modal-body">
+        <h1></h1>
+      </div>
+      <div class="modal-footer">
+            <h4></h4>
       </div>
     </div>
   </div>
 </div>
 <!--Modal-->
- <!-- MODAL IMPLEMENTOS-->
+<!-- MODAL IMPLEMENTOS-->
    
-
         <!--MODAL Tipo de partido-->
-<div class="container">
-    <div class="modal fade" id="modalTipoPartido">
-        <div class="modal-dialog modal-lg">
+    <div class="modal fade" id="modalTipoPartido" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h3 class="modal-title">Elige el tipo de partido</h3>
                 </div>
                 <div class="modal-body">
-                <h5 class="texto-modal-negro">Selecciona el tipo de partido que quieres organizar.
-          </h5>     
-                                        
+                <h5 class="texto-modal-negro">Selecciona el tipo de partido que quieres organizar.</h5>    
                                         <br/>
                                         <div class="container-fluid">
                                             <div class="row">
@@ -556,7 +566,7 @@ $_SESSION['idRecinto']=NULL;
                                                     <button type="button" class="btn btn-primary center-block" data-dismiss="modal" data-toggle="modal" data-target="#modalRevuelta">Revuelta</button>
                                                 </div>
                                                 <div class="col-md-4">
-                                                    <button type="button" class="btn btn-primary center-block" data-dismiss="modal" data-toggle="modal" data-target="#modalEquipoPropio">Equipo Propio</button>
+                                                    <button id=openEquipoPropio type="button" class="btn btn-primary center-block" data-dismiss="modal" data-toggle="modal" data-target="#modalEquipoPropio">Equipo Propio</button>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <button type="button" class="btn btn-primary center-block" data-dismiss="modal" data-toggle="modal" data-target="#modalAB" >A v/s B</button>
@@ -570,10 +580,11 @@ $_SESSION['idRecinto']=NULL;
                 </div>
             </div>
         </div>
-    </div>
-<!--MODAL Equipo Propio-->       
+<style type="text/css">
+    .modal { overflow: auto !important; }
+</style>
 <div class="container">
-    <div class="modal fade" id="modalEquipoPropio">
+    <div class="modal fade" id="modalEquipoPropio" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -594,10 +605,23 @@ $_SESSION['idRecinto']=NULL;
                                 </div>
                             </div>
                             <div class="row">
+                               <!--Aqui van los horarios -->
+                                <div class="col-sm-8">
+                                    <div class="form-group">
+                                      <label for="idHorario">Horario</label>
+                                      <select  data-dismiss="modal" data-toggle="modal" data-target="#modalHorario" data-tipo="modalEquipoPropio" class="form-control hr" id="idHorariomodalEquipoPropio" name="idHorario" required="required"  >
+
+                                      <option id="horariomodalEquipoPropio" type="number2" ></option>
+
+                                      </select>
+                                    </div>
+                                </div>
+                            </div>                           
+                            <div class="row">
                                 <div class="col-sm-8">
                                     <div class="form-group">
                                         <label class="label-partido" for="hora">Hora</label>
-                                        <input type="time" name="hora" placeholder="Hora" class="form-control partido" id="equipo" required="required" min="09:00:00" max="23:00:00">
+                                        <input id="horaPartidomodalEquipoPropio" type="time" name="hora" placeholder="Hora" class="form-control partido" id="equipo" required="required" min="09:00:00" max="23:00:00" step="3600">
                                     </div>
                                 </div>
                             </div>
@@ -610,6 +634,7 @@ $_SESSION['idRecinto']=NULL;
                                 </div>
                             </div>
                             <input id="idRecintoPartidoPropio" type="number" name="idRecinto"  value="" hidden />
+                            
                             <div class="row">
                                 <div class="col-sm-8">
                                     <div class="form-group">
@@ -655,10 +680,23 @@ $_SESSION['idRecinto']=NULL;
                                 </div>
                             </div>
                             <div class="row">
+                               <!--Aqui van los horarios -->
+                                <div class="col-sm-8">
+                                    <div class="form-group">
+                                      <label for="idHorario">Horario</label>
+                                      <select  data-dismiss="modal" data-toggle="modal" data-target="#modalHorario" data-tipo="modalRevuelta" class="form-control hr" id="idHorariomodalRevuelta" name="idHorario" required="required"  >
+
+                                      <option id="horariomodalRevuelta" type="number2" ></option>
+
+                                      </select>
+                                    </div>
+                                </div>
+                            </div> 
+                        <div class="row">
                                 <div class="col-sm-8">
                                     <div class="form-group">
                                         <label class="label-partido" for="hora">Hora</label>
-                                        <input type="time" name="hora" placeholder="Hora" class="form-control partido" id="equipo" required="required" min="09:00:00" max="23:00:00">
+                                        <input id="horaPartidomodalRevuelta" type="time" name="hora" placeholder="Hora" class="form-control partido" required="required" min="09:00:00" max="23:00:00" step="3600">
                                     </div>
                                 </div>
                             </div>
@@ -723,11 +761,24 @@ $_SESSION['idRecinto']=NULL;
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
+                             <div class="row">
+                               <!--Aqui van los horarios -->
+                                <div class="col-sm-8">
+                                    <div class="form-group">
+                                      <label for="idHorario">Horario</label>
+                                      <select  data-dismiss="modal" data-toggle="modal" data-target="#modalHorario" data-tipo="revuelta" class="form-control hr" id="idHorarioAB" name="idHorario" required="required"  >
+
+                                      <option id="horarioAB" type="number2" ></option>
+
+                                      </select>
+                                    </div>
+                                </div>
+                            </div> 
+                        <div class="row">
                                 <div class="col-sm-8">
                                     <div class="form-group">
                                         <label class="label-partido" for="hora">Hora</label>
-                                        <input type="time" name="hora" placeholder="Hora" class="form-control partido" id="equipo" required="required" min="09:00:00" max="23:00:00">
+                                        <input id="horaPartidoAB" type="time" name="hora" placeholder="Hora" class="form-control partido" id="equipo" required="required" min="09:00:00" max="23:00:00" step="3600">
                                     </div>
                                 </div>
                             </div>
@@ -773,11 +824,17 @@ $_SESSION['idRecinto']=NULL;
     </div>
 </div>
 
-<footer id="footer">
+<!--Modales -->
+
+        <!-- ScrollUp button end -->
+        <!-- Include javascript -->
+
+
+  <footer id="footer">
     <div class="footer-top wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="300ms">
       <div class="container text-center">
         <div class="footer-logo">
-          <a href="index.html"><img class="img-responsive" src="assets/images/logo.png" alt=""></a>
+          <a href="?controlador=Index&accion=indexJugador"><img class="img-responsive" src="assets/images/logo.png" alt=""></a>
         </div>
         <div class="social-icons">
           <ul>
@@ -794,47 +851,50 @@ $_SESSION['idRecinto']=NULL;
     <div class="footer-bottom">
       <div class="container">
         <div class="row">
-          <div class="col-sm-6">
-            <p>&copy; 2016 Oxygen Theme.</p>
-          </div>
-          <div class="col-sm-6">
-            <p class="pull-right">Crafted by <a href="http://designscrazed.org/">Allie</a></p>
+          <div class="col-md-4 col-md-offset-4">
+            <table class="table">
+              <tr>
+                <th style="border-top:transparent; text-align:center;">
+                  <img style="width: 35px; height: 53px;"  src="assets/images/logoubio.png">
+                </th>
+              </tr>
+              <tr>
+                <th style="border-top:transparent; text-align:center; font-size:12px;">
+                  Proyecto de título
+                </th>
+              </tr>
+             
+            </table>
           </div>
         </div>
       </div>
     </div>
-  </footer>  
+  </footer>
 
 
 
-
-        <!-- ScrollUp button end -->
-        <!-- Include javascript -->
-        <script type="text/javascript" src="assets/js/jquery.dataTables.min.js"></script>
-        <script type="text/javascript" src="assets/js/dataTables.bootstrap.min.js"></script>
-
-        <script src="assets/js/jquery.js"></script>
+        <script type="text/javascript" src="assets/js/jquery.js"></script>
         <script type="text/javascript" src="assets/js/jquery.mixitup.js"></script>
-        <script type="text/javascript" src="assets/js/bootstrap.js"></script>
+                <script type="text/javascript" src="assets/js/modal.js"></script>
         <script type="text/javascript" src="assets/js/modernizr.custom.js"></script>
         <script type="text/javascript" src="assets/js/jquery.bxslider.js"></script>
         <script type="text/javascript" src="assets/js/jquery.cslider.js"></script>
         <script type="text/javascript" src="assets/js/jquery.placeholder.js"></script>
-        <script type="text/javascript" src="assets/js/jquery.inview.js"></script>
-
-        <!-- css3-mediaqueries.js for IE8 or older -->
-        <!--[if lt IE 9]>
-            <script src="js/respond.min.js"></script>
-        <![endif]-->
+        <script type="text/javascript" src="assets/js/jquery.inview.min.js"></script>
         <script type="text/javascript" src="assets/js/app.js"></script>
+           
 
-        <!--Puntuacion -->
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-        <script src="assets/js/star-rating.js" type="text/javascript"></script>
+
+
+</body>
+</html>
+
 
 
         <script src="http://maps.googleapis.com/maps/api/js"></script>
         <script>
+
+
         function initialize() {
           var mapProp = {
             center:new google.maps.LatLng(-36.602459, -72.077014),
@@ -926,11 +986,26 @@ $_SESSION['idRecinto']=NULL;
         });         
         
 
+        $('.hr').click(function (e){
+            e.preventDefault();
+            var div;
+            var tipo;
+            var id;
+            div = 'modalHorario';
+            nombreModal = $(this).data('tipo');
+            id = document.getElementById("idRecintoPartidoPropio").getAttribute("value");
 
-        </script>                          
+                    $.post(
+                    '?controlador=Recinto&accion=getHorarios&id='+id+'&form='+nombreModal,
+                   function(resp){
+                        $("#"+div+"").html(resp);
+                    }
+                    ); 
+                
 
-    </body>
-</html>
+            
+        });
 
 
+</script>                          
 

@@ -1,4 +1,4 @@
-<div class="modal-dialog" role="document">
+<div class="modal-dialog" role="document" >
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -13,6 +13,11 @@
 			<th>Horas</th>
 			<th>Dias</th>
 			<th>Precio</th>
+			<?php
+				if(isset($vars['form'])){ ?>
+				<th></th>
+			<?php }
+			?>
 		</tr>
 	</thead>
 	<tbody>
@@ -21,9 +26,41 @@
 			<td><?php echo $horario['nombre']?></td>
 			<td><?php echo $horario['horaInicio']."-".$horario['horaFin'];?></td>
 			<!-- Para los dias hay que hacer una especie de if para que los vaya sumado y los vaya mostrando-->
-			<td>Dias</td>
+			<td><?php
+				$dias= explode(',',$horario['dias']);
+				//En este auxiliar iremos guardando los dias y asi mostrar los correspondientes.
+				$aux='';
+				if(count($dias) == 7){
+					echo 'Todos los dias';
+				}else{
+					for($i=0; $i < count($dias); $i++){
+						$d=$aux;
+						if($dias[$i] == "0")
+							$aux=$d.'Lunes ';
+						if($dias[$i] == "1")
+							$aux=$d.'Martes ';
+						if($dias[$i] == "2")
+							$aux=$d.'Miercoles ';
+						if($dias[$i] == "3")
+							$aux=$d.'Jueves ';
+						if($dias[$i] == "4")
+							$aux=$d.'Viernes ';
+						if($dias[$i] == "5")
+							$aux=$d.'Sabado ';
+						if($dias[$i] == "6")
+							$aux=$d.'Domingo ';
+					}
+					echo $aux;
+				}
+
+			?></td>
 			<!-- Habria que ver la forma de mostrar el dinero el "formato"-->
 			<td><?php echo $horario['precio']?></td>
+			<?php
+				if(isset($vars['form'])){ ?>
+			<td><button data-inicio="<?php echo $horario['horaInicio']?>" data-final="<?php echo $horario['horaFin']?>" data-nombre="<?php echo $horario['nombre']?>" data-id="<?php echo $horario['idHorario']?>" class="btn btn-primary btn-sm selHorario" data-dismiss="modal" data-m="<?php echo $vars['form']?>">Elegir</button></td>
+
+			<?php }	?>		
 		</tr>
 	<?php } ?>
 	</tbody>
@@ -39,7 +76,32 @@
     </div>
  </div>
          <script type="text/javascript">
-          $(document).ready(function() {
-            $('#tablaHorarios').DataTable();
-        } );
+
+         $('.selHorario').click(function (e){
+            e.preventDefault();
+            var idHorario;
+            var nombre;
+            var modal;
+            var inicio;
+            var final;
+            idHorario = $(this).data('id');
+            nombre = $(this).data('nombre');
+            modal = $(this).data('m');
+            inicio = $(this).data('inicio');
+            final = $(this).data('final');
+            document.getElementById("horario"+modal).setAttribute("value", idHorario);
+            document.getElementById("horario"+modal).innerHTML=nombre;
+            document.getElementById('horario'+modal).selectedIndex = 0;
+			document.getElementById("horaPartido"+modal).setAttribute("min", inicio);
+			document.getElementById("horaPartido"+modal).setAttribute("max", final);
+
+            $("#"+modal+"").modal("show");
+
+
+
+
+  
+
+
+        });
         </script>
