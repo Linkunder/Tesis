@@ -8,7 +8,7 @@ class TercerTiempo{
 
 	public function getTercerTiempo($idPartido){
 		$consulta = $this->db->prepare("
-			SELECT * FROM TercerTiempo WHERE idPartido = '$idPartido';
+			SELECT * FROM TercerTiempo WHERE idPartido = '".$idPartido."';
 			");
 		$consulta->execute();
 		$resultado = $consulta->fetchAll();
@@ -41,6 +41,14 @@ class TercerTiempo{
 		$consulta=$this->db->prepare("SELECT idTercerTiempo FROM TercerTiempo WHERE idPartido='$idPartido';");
 		$consulta->execute();
 		$resultado= $consulta->fetchAll();
+		return $resultado;
+	}
+
+	public function deleteTercerTiempo($idPartido){
+		$sql = "DELETE FROM TercerTiempo WHERE idPartido = '".$idPartido."';";
+		$query = $this->db->prepare($sql);
+		$query->execute();
+		$resultado = $query->fetchAll();
 		return $resultado;
 	}
 

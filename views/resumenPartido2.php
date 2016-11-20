@@ -93,6 +93,27 @@ if (isset($vars['tercerTiempo'])){
 
 
 
+<!--MODAL -->
+<div class="modal fade" id="modal2" tabindex="-1" role="dialog" >
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Cargando ...</h4>
+      </div>
+      <div class="modal-body">
+        <div class="preloader"> <i class="fa fa-circle-o-notch fa-spin"></i></div>
+      </div>
+      <div class="modal-footer">
+            <h4>Espere por favor ... </h4>
+      </div>
+    </div>
+  </div>
+</div>
+<!--Modal-->
+
+
+
 <!-- Aqui empieza la pagina -->
 <div id="contact-us" class="parallax">
   <div class="container">

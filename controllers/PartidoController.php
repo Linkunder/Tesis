@@ -31,27 +31,57 @@ class PartidoController{
 		$this->view->show("");
 	}
 
+
+
 	public function partidos(){
 		$idUsuario = $_SESSION['login_user_id'];
+
+
+		if ( isset($_POST['idPartido']) && isset($_POST['accion'])){
+			$idPartido = $_POST['idPartido'];
+    		$accion = $_POST['accion'];
+    		if ($accion == 0){
+    			$data['accion'] = 0;
+    			$mensaje = "Tu solicitud ha sido enviada al capitán del encuentro. ";
+    			$data['mensaje'] = $mensaje;
+    		}
+    		if ($accion == 1){
+    			$data['accion'] = 1;
+    			$mensaje = "El partido ha sido cancelado y tus invitados han sido notificados vía mail.";
+    			$data['mensaje'] = $mensaje;
+    		}
+    		if ($accion == 2){
+    			$data['accion'] = 2;
+    			$mensaje = "El partido ha sido notificado a los jugadores de MatchDay. Debes estar atento a sus solicitudes";
+    			$data['mensaje'] = $mensaje;
+    		}
+			$this->cambiarEstadoPartido($idPartido, $accion);
+		}
+
 
 		// Partidos organizados por el jugador de la sesion en estado pendiente.
 		$partidosPendientes = $this->Partido->getPartidosPendientes($idUsuario);
 		$data['partidosPendientes'] = $partidosPendientes;
 
-		// Partidos del sistema donde el jugadores no es el capitan ni participante.
+		$partidosUsuario = $this->Partido->getPartidosOrganizador($idUsuario);
+		$data['partidosUsuario'] = $partidosUsuario;
+
+		// Partidos del sistema donde el jugador no es el capitan ni participante ni ha enviado solicitud antes.
 		$partidosSistema = $this->Partido->getPartidosSistema($idUsuario);
 		$data['partidosSistema'] = $partidosSistema;
+
 
 		$this->view->show("partidos.php",$data);
 	}
 
 	public function detallePartido(){
-      $idPartido = $_GET['idPartido']; 
+      $idPartido = $_GET['idPartido'];
       $partido = $this->Partido->getResumenPartido($idPartido);
       $data['partido'] = $partido;
       $data['accion'] = 0; // Solicitud
       $this->view->show("_detallePartido.php",$data);
     }
+
 
 	public function cancelarPartido(){
       $idPartido = $_GET['idPartido']; 
@@ -62,12 +92,53 @@ class PartidoController{
     }
 
 	public function notificarPartido(){
-
       $idPartido = $_GET['idPartido']; 
       $partido = $this->Partido->getResumenPartido($idPartido);
       $data['partido'] = $partido;
       $data['accion'] = 2; // Notificar
       $this->view->show("_detallePartido.php",$data);
+    }
+
+
+	public function resumenCapitan(){
+      $idPartido = $_GET['idPartido'];
+      $partido = $this->Partido->getResumenPartido($idPartido);
+      $data['partido'] = $partido;
+      $data['accion'] = 3; // Solicitud
+      $this->view->show("_detallePartido.php",$data);
+    }
+
+	public function verSolicitudes(){
+      $idPartido = $_GET['idPartido'];
+      $partido = $this->Partido->getResumenPartido($idPartido);
+      $data['partido'] = $partido;
+      $data['accion'] = 4; // Solicitud
+      $this->view->show("_detallePartido.php",$data);
+    }
+
+
+
+    // Cambiar el estado del partido dependiendo de la accion 
+    public function cambiarEstadoPartido($idPartido, $accion){
+    	if ($accion == 0 ){	// Solicitud partido
+    		$estadoSolicitud = 2;
+    		$tipoSolicitud = 1;
+    		$idUsuario = $_SESSION['login_user_id'];
+    		$this->Partido->agregarSolicitud($idUsuario, $idPartido, $estadoSolicitud, $tipoSolicitud);	
+    	}
+    	if ($accion == 1){	// Cancelar partido
+    		$this->Partido->eliminarJugadoresPartido($idPartido);				// 	1. Eliminar jugadores del partido.
+    		$tercerTiempo = $this->tercerTiempo->getTercerTiempo($idPartido);	
+    		if (count($tercerTiempo) > 0){
+    			$this->tercerTiempo->deleteTercerTiempo($idPartido);			//	2. Eliminar tercer tiempo del partido, si hay.
+    		} 
+    		$estado = 3;
+    		$this->Partido->cambiarEstado($idPartido, $estado);					//	3. Cambiar estado en la tupla partido a cancelado (3->Cancelado)
+    	}
+    	if ($accion == 2){	// Notificar partido
+    		$estado = 5;
+    		$this->Partido->cambiarEstado($idPartido, $estado);
+    	}
     }
 
 

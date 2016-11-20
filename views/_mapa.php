@@ -1,4 +1,4 @@
-<div class="modal-dialog" role="document">
+<div class="modal-dialog modal-lg" role="document">
   <div class="modal-content">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -21,9 +21,18 @@
     }
     ?>
     <div class="modal-footer">
-      <button type="button" class="btn btn-primary" data-dismiss="modal">Volver <i class="fa fa-arrow-circle-left" aria-hidden="true"></i></button>
+      <button type="button" class="btn btn-primary volver">Volver <i class="fa fa-arrow-circle-left" aria-hidden="true"></i></button>
     </div>
   </div>
 </div>
+
+<script type="text/javascript">
+  
+     $('.volver').click(function (e){
+      e.preventDefault();
+      $('#modal2').modal('hide');
+
+  });    
+</script>
 
  

@@ -19,8 +19,16 @@ include('layout/headerJugador.php');
 $partidosPendientes = $vars['partidosPendientes'];
 $nroPartidosPendientes = count($partidosPendientes);
 
+$partidosUsuario = $vars['partidosUsuario'];
+$nroPartidosUsuario = count($partidosUsuario);
+
+
+
 $partidosSistema = $vars['partidosSistema'];
 $nroPartidosSistema = count($partidosSistema);
+
+// Accion que se realice en esta pantalla
+
 
 
 ?>
@@ -37,7 +45,7 @@ $nroPartidosSistema = count($partidosSistema);
 
 <script src='assets/js/moment.min.js'></script>
 <script src="assets/js/es.js"></script>
-<script src='assets/lang-all.js'></script>
+<!--script src='assets/lang-all.js'></script-->
 <script src='assets/js/fullcalendar.min.js'></script>
 
 
@@ -107,7 +115,7 @@ $nroPartidosSistema = count($partidosSistema);
 
 
 <!--MODAL -->
-<div class="modal fade" id="modal" tabindex="-1" role="dialog" >
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -141,6 +149,18 @@ $nroPartidosSistema = count($partidosSistema);
       <li class="breadcrumb-item active">Partidos</li>
     </ol>
 
+    <?php
+    if (isset($vars['accion'])){
+      $mensaje = $vars['mensaje'];
+      ?>
+      <div class="alert alert-success alert-dismissible">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Listo!</strong> <?php echo $mensaje?>
+      </div>
+      <?php
+    } 
+    ?>
+
     <div class="page-header">
       <h2> Partidos <i class="fa fa-futbol-o" aria-hidden="true"></i> </h2>
     </div>
@@ -160,7 +180,7 @@ $nroPartidosSistema = count($partidosSistema);
   
   <ul class="nav nav-tabs nav-justified">
     <li><a data-toggle="tab" href="#menu1">Partidos Matchday <span class="label label-success"><?php echo $nroPartidosSistema?></span></a></li>
-    <li><a data-toggle="tab" href="#menu2">Mis partidos <span class="label label-danger"><?php echo $nroPartidosPendientes?></span></a></li>
+    <li><a data-toggle="tab" href="#menu2">Mis partidos <span class="label label-info"><?php echo $nroPartidosUsuario?></span></a></li>
     <li><a data-toggle="tab" href="#menu3">Calendario <i class="fa fa-calendar-o" aria-hidden="true"></i></a></li>
   </ul>
 
@@ -201,6 +221,7 @@ $nroPartidosSistema = count($partidosSistema);
               <table id="example2" class="table table-striped table-hover display responsive nowrap"  cellspacing="0" width="100%">
                 <thead id ="position-table">
                   <tr id="color-encabezado">
+                    <th id="encabezado-especial">Organizador</th>
                     <th id="encabezado-especial">Fecha</th>
                     <th id="encabezado-especial">Hora</th>
                     <th id="encabezado-especial">Recinto</th>
@@ -211,14 +232,20 @@ $nroPartidosSistema = count($partidosSistema);
                 <tbody id="texto-contactos" class="center">
                   <?php
                   foreach ($partidosSistema as $item) {
+                    $idPartidoSistema = $item['idPartido'];
                   ?>
                   <tr>
                     <td>
-                      <?php 
-                      echo $item['fecha']?>
+                      <?php
+                      echo $item['nombreCap']." ".$item['apellidoCap'];
+                      ?>
                     </td>
                     <td>
-                      <?php echo $item['hora']?>
+                      <?php 
+                      echo $item['fechaPartido']?>
+                    </td>
+                    <td>
+                      <?php echo $item['horaPartido']?>
                     </td>
                     <td>
                       <?php echo $item['nombre']?>
@@ -228,7 +255,7 @@ $nroPartidosSistema = count($partidosSistema);
                     </td>
                     <td>
                       <button type="button" class="btn btn-primary" href="javascript:void(0);" data-toggle="modal" data-target="#modal"  
-                      onclick="carga_ajax('modal','<?php echo $item['idPartido']?>','resumen');">
+                      onclick="carga_ajax1('modal','<?php echo $idPartidoSistema; ?>','solicitud');">
                       Unirse 
                         <i class="fa fa-paper-plane" aria-hidden="true"></i>
                     </button>
@@ -268,29 +295,19 @@ $nroPartidosSistema = count($partidosSistema);
     <div id="menu2" class="tab-pane fade">
 
       <?php
-      if ($nroPartidosPendientes == 0){
+      if ($nroPartidosUsuario == 0){
         ?>
         <br>
-        <div class="alert alert-success">
-          <strong>Atención!</strong> Actualmente no tienes partidos pedientes en MatchDay.
+        <div class="alert alert-danger">
+          <strong>Atención!</strong> No tienes partidos en MatchDay. Accede a la opción "Jugar" y disfruta de esta experiencia.
         </div>
         <?php
       } else {
-        if ($nroPartidosPendientes == 1){
-          $msg2 = "partido pendiente";
-        } else {
-          $msg2 = "partidos pendientes";
-        }
         ?>
         <!-- TABLA DE Partidos Pendientes -->
         <br>
-        <div class="alert alert-danger">
-          <strong>Atención!</strong> Tienes <?php echo $nroPartidosPendientes." ".$msg2?>. Si quieres realizar el partido, puedes
-          enviar una noticicación a los demás jugadores de MatchDay haciendo click en el botón 
-          <button type="button" class="btn btn-success btn-xs">Notificar <i class="fa fa-exclamation-circle" aria-hidden="true"></i></button>. 
-          De lo contrario, cancela el partido haciendo click en el botón 
-          <button type="button" class="btn btn-danger btn-xs">Cancelar <i class="fa fa-times-circle" aria-hidden="true"></i>
-          </button>.
+        <div class="alert alert-info">
+          <strong>Instrucciones</strong> 
         </div>
           <div class="col-md-12">
             <!--div class="table-responsive"-->
@@ -300,43 +317,118 @@ $nroPartidosSistema = count($partidosSistema);
                     <th id="encabezado-especial">Fecha</th>
                     <th id="encabezado-especial">Hora</th>
                     <th id="encabezado-especial">Recinto</th>
-                    <th id="encabezado-especial">Participantes</th>
+                    <th id="encabezado-especial">Estado</th>
                     <th id="encabezado-especial"></th>
                     <th id="encabezado-especial"></th>
                   </tr>
                 </thead>
                 <tbody id="texto-contactos" class="center">
                   <?php
-                  foreach ($partidosPendientes as $item) {
+                  foreach ($partidosUsuario as $item) {
+                    $idPartido = $item['idPartido'];
+                    $fecha = $item['fechaPartido'];
+                    $hora = $item['horaPartido'];
+                    $recinto = $item['nombre'];
+                    $estado = $item['estado'];
                   ?>
                   <tr>
-                    <td>
-                      <?php 
-                      echo $item['fecha']?>
+                    <td width='15%'>
+                      <?php echo $fecha?>
+                    </td>
+                    <td width='15%'>
+                      <?php echo $hora?>
+                    </td>
+                    <td >
+                      <?php echo $recinto?>
                     </td>
                     <td>
-                      <?php echo $item['hora']?>
+                      <?php
+                      if ($estado == 1){
+                        ?>
+                        <span class="label label-info">Activo <i class="fa fa-clock-o" aria-hidden="true"></i></span>
+                        <?php
+                      }
+                      ?>
+                      <?php
+                      if ($estado == 4){
+                        ?>
+                        <span class="label label-danger">Pendiente <i class="fa fa-exclamation-triangle" aria-hidden="true"></i></span>                        
+                        <?php
+                      }
+                      ?>
+                      <?php
+                      if ($estado == 5){
+                        ?>
+                        <span class="label label-warning">MatchDay <i class="fa fa-clock-o" aria-hidden="true"></i></span>
+                        <?php
+                      }
+                      ?>
                     </td>
-                    <td>
-                      <?php echo $item['nombre']?>
-                    </td>
-                    <td>
-                      5/10
-                    </td>
-                    <td>
-                      <button type="button" class="btn btn-danger" href="javascript:void(0);" data-toggle="modal" data-target="#modal"  
-                      onclick="carga_ajax('modal','<?php echo $item['idPartido']?>','cancelar');">
-                      Cancelar 
-                        <i class="fa fa-times-circle" aria-hidden="true"></i>
-                      </button>
-                    </td>
-                    <td>
-                      <button type="button" class="btn btn-success" href="javascript:void(0);" data-toggle="modal" data-target="#modal"  
-                      onclick="carga_ajax('modal','<?php echo $item['idPartido']?>','notificar');">
-                      Notificar 
-                        <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
-                    </button>
-                    </td>
+                    <?php
+                      if ($estado == 1){
+                        ?>
+                        <td>
+                          <button type="button" class="btn btn-danger" href="javascript:void(0);" data-toggle="modal" data-target="#modal"  
+                          onclick="carga_ajax2('modal','<?php echo $idPartido?>','cancelar');">
+                          Cancelar 
+                            <i class="fa fa-times-circle" aria-hidden="true"></i>
+                          </button>
+                        </td>
+                        <td>
+                          <button type="button" class="btn btn-info" href="javascript:void(0);" data-toggle="modal" data-target="#modal"  
+                          onclick="carga_ajax1('modal','<?php echo $idPartido?>','resumen');">
+                          Ver resumen 
+                            <i class="fa fa-info-circle" aria-hidden="true"></i>
+                         </button>
+                        </td>
+
+                        <?php
+                      }
+                    ?>
+                    <?php
+                      if ($estado == 4){
+                        ?>
+                        <td>
+                          <button type="button" class="btn btn-danger" href="javascript:void(0);" data-toggle="modal" data-target="#modal"  
+                          onclick="carga_ajax2('modal','<?php echo $idPartido?>','cancelar');">
+                          Cancelar 
+                            <i class="fa fa-times-circle" aria-hidden="true"></i>
+                          </button>
+                        </td>
+                        <td>
+                          <button type="button" class="btn btn-success" href="javascript:void(0);" data-toggle="modal" data-target="#modal"  
+                          onclick="carga_ajax3('modal','<?php echo $idPartido?>','notificar');">
+                          Notificar 
+                            <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                         </button>
+                        </td>
+
+                        <?php
+                      }
+                    ?>
+                    <?php
+                      if ($estado == 5){
+                        ?>
+                        <td>
+                          <button type="button" class="btn btn-danger" href="javascript:void(0);" data-toggle="modal" data-target="#modal"  
+                          onclick="carga_ajax2('modal','<?php echo $idPartido?>','cancelar');">
+                          Cancelar 
+                            <i class="fa fa-times-circle" aria-hidden="true"></i>
+                          </button>
+                        </td>
+                        <td>
+                          <button type="button" class="btn btn-warning" href="javascript:void(0);" data-toggle="modal" data-target="#modal"  
+                          onclick="carga_ajax4('modal','<?php echo $idPartido?>','respuestas');">
+                          Ver respuestas 
+                            <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                         </button>
+                        </td>
+
+
+                        <?php
+                      }
+                    ?>
+
                   </tr>
                   <?php
                   }
@@ -427,10 +519,10 @@ include('layout/footer.php');
 
 <script>
  
-function carga_ajax(div, id, tipo){
+function carga_ajax1(div, id, tipo){
 
   /* Acceder al resumen de un partido disponible en el sistema */
-  if (tipo == 'resumen'){
+  if (tipo == 'solicitud'){
     $.post(
       '?controlador=Partido&accion=detallePartido&idPartido='+id,
       function(resp){
@@ -438,6 +530,25 @@ function carga_ajax(div, id, tipo){
       }
       ); 
   }
+
+  if (tipo == 'resumen'){
+    $.post(
+      '?controlador=Partido&accion=resumenCapitan&idPartido='+id,
+      function(resp){
+        $("#"+div+"").html(resp);
+      }
+      ); 
+  }
+
+
+  
+}
+
+
+
+function carga_ajax2(div, id, tipo){
+
+
   /* Acceder al resumen de un partido pendiente y cancelarlo */
   if (tipo == 'cancelar'){
     $.post(
@@ -447,6 +558,15 @@ function carga_ajax(div, id, tipo){
       }
       ); 
   }
+
+
+  
+}
+
+
+function carga_ajax3(div, id, tipo){
+
+
   /* Acceder al resumen de un partido pendiente y notificarlo */
   if (tipo == 'notificar'){
     $.post(
@@ -461,6 +581,31 @@ function carga_ajax(div, id, tipo){
 
   
 }
+
+
+function carga_ajax4(div, id, tipo){
+
+
+    $.post(
+      '?controlador=Partido&accion=verSolicitudes&idPartido='+id,
+      function(resp){
+        $("#"+div+"").html(resp);
+      }
+      ); 
+  
+
+
+
+  
+}
+
+
+
+
+ 
+
+
+
 </script>   
 
 

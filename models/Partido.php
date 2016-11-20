@@ -162,9 +162,16 @@ class Partido{
 
 	public function getPartidosPendientes($idUsuario){
 		$consulta = $this->db->prepare(
-			"SELECT *
-			FROM Partido
+			"SELECT 
+			Usuario.nombre as nombreCap, 
+			Usuario.apellido as apellidoCap, 
+			Partido.idPartido, 
+			DATE_FORMAT(Partido.fecha,'%d-%m-%Y') as fechaPartido, 
+			DATE_FORMAT(Partido.hora,'%l:%i %p') as horaPartido,
+			Recinto.nombre 
+			FROM Partido 
 			JOIN Recinto ON Partido.idRecinto = Recinto.idRecinto
+			JOIN Usuario ON Partido.idOrganizador = Usuario.idUsuario
 			WHERE Partido.estado=4
 			AND Partido.idOrganizador = '".$idUsuario."'");
 		$consulta->execute();
@@ -172,13 +179,43 @@ class Partido{
 		return $resultado;
 	}
 
-	public function getPartidosSistema($idUsuario){
+
+	public function getPartidosOrganizador($idUsuario){
 		$consulta = $this->db->prepare(
-			"SELECT Partido.idPartido, Partido.fecha, Partido.hora, Recinto.nombre 
+			"SELECT 
+			Usuario.nombre as nombreCap, 
+			Usuario.apellido as apellidoCap, 
+			Partido.idPartido, 
+			Partido.estado,
+			DATE_FORMAT(Partido.fecha,'%d-%m-%Y') as fechaPartido, 
+			DATE_FORMAT(Partido.hora,'%l:%i %p') as horaPartido,
+			Recinto.nombre 
 			FROM Partido 
 			JOIN Recinto ON Partido.idRecinto = Recinto.idRecinto
-			WHERE Partido.estado=5 AND Partido.idOrganizador != '".$idUsuario."' and Partido.idPartido in 
-			(SELECT JugadoresPartido.idPartido from JugadoresPartido where JugadoresPartido.idUsuario != '".$idUsuario."')");
+			JOIN Usuario ON Partido.idOrganizador = Usuario.idUsuario
+			WHERE Partido.idOrganizador = '".$idUsuario."'
+			AND Partido.estado != 2 AND Partido.estado !=3 ");
+		$consulta->execute();
+		$resultado=$consulta->fetchAll();
+		return $resultado;
+	}
+
+
+	public function getPartidosSistema($idUsuario){
+		$consulta = $this->db->prepare(
+			"SELECT Usuario.nombre as nombreCap, 
+			Usuario.apellido as apellidoCap, 
+			Partido.idPartido, 
+			DATE_FORMAT(Partido.fecha,'%d-%m-%Y') as fechaPartido, 
+			DATE_FORMAT(Partido.hora,'%l:%i %p') as horaPartido,
+			Recinto.nombre 
+			FROM Partido 
+			JOIN Recinto ON Partido.idRecinto = Recinto.idRecinto
+			JOIN Usuario ON Partido.idOrganizador = Usuario.idUsuario
+			WHERE Partido.estado=5 AND Partido.idOrganizador != '".$idUsuario."' AND Partido.idPartido in 
+			(SELECT JugadoresPartido.idPartido from JugadoresPartido where JugadoresPartido.idUsuario != '".$idUsuario."')
+			AND Partido.idPartido not in (SELECT SolicitudParticipacion.idPartido FROM SolicitudParticipacion WHERE idUsuarioSolicitante = '".$idUsuario."');
+			");
 		$consulta->execute();
 		$resultado=$consulta->fetchAll();
 		return $resultado;
@@ -194,11 +231,13 @@ class Partido{
 		Partido.estado,
 		Partido.idRecinto,
 		Recinto.nombre,
-		Recinto.fotografia
+		Recinto.fotografia,
+		Usuario.nombre as nombreCap,
+		Usuario.apellido as apellidoCap
 		FROM Partido
 		JOIN Recinto ON Partido.idRecinto = Recinto.idRecinto
-		WHERE idPartido = '".$idPartido."';
-		";
+		JOIN Usuario ON Partido.idOrganizador = Usuario.idUsuario
+		WHERE idPartido = '".$idPartido."';";
 		$consulta = $this->db->prepare($sql);
 		$consulta->execute();
 		$resultado = $consulta->fetchAll();
@@ -206,7 +245,28 @@ class Partido{
 	}
 
 
+	public function eliminarJugadoresPartido($idPartido){
+		$sql = "DELETE FROM JugadoresPartido WHERE idPartido = '".$idPartido."';";
+		$query = $this->db->prepare($sql);
+		$query->execute();
+		$resultado = $query->fetchAll();
+		return $resultado;
+	}
 
+	public function cambiarEstado($idPartido, $estado){
+		$sql = "UPDATE Partido SET estado = '".$estado."' WHERE idPartido = '".$idPartido."' ;";
+		$query = $this->db->prepare($sql);
+		$query->execute();
+	}
+
+	public function agregarSolicitud($idUsuario, $idPartido, $estadoSolicitud, $tipoSolicitud){
+		$sql = 
+		"INSERT INTO SolicitudParticipacion (idUsuarioSolicitante, idPartido, estado, tipo) 
+		VALUES ('".$idUsuario."','".$idPartido."','".$estadoSolicitud."','".$tipoSolicitud."');
+		";
+		$query = $this->db->prepare($sql);
+		$query->execute();
+	}
 
 
 

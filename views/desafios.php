@@ -651,6 +651,9 @@ $recintos = $vars['listaRecintos'];
 <script src="assets/js/jquery.bootstrap-duallistbox-modal.js"></script>
 
 
+
+
+
 <div class="modal fade" id="modal-1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
