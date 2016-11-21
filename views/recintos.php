@@ -580,10 +580,7 @@ $_SESSION['idRecinto']=NULL;
                 </div>
             </div>
         </div>
-<style type="text/css">
-    .modal { overflow: auto !important; }
-</style>
-<div class="container">
+
     <div class="modal fade" id="modalEquipoPropio" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -609,7 +606,7 @@ $_SESSION['idRecinto']=NULL;
                                 <div class="col-sm-8">
                                     <div class="form-group">
                                       <label for="idHorario">Horario</label>
-                                      <select  data-dismiss="modal" data-toggle="modal" data-target="#modalHorario" data-tipo="modalEquipoPropio" class="form-control hr" id="idHorariomodalEquipoPropio" name="idHorario" required="required"  >
+                                      <select   data-toggle="modal" data-target="#modalHorario" data-tipo="modalEquipoPropio" class="form-control hr" id="idHorariomodalEquipoPropio" name="idHorario" required="required"  >
 
                                       <option id="horariomodalEquipoPropio" type="number2" ></option>
 
@@ -628,7 +625,7 @@ $_SESSION['idRecinto']=NULL;
                             <div class="row">
                                 <div class="col-sm-8">
                                     <div class="form-group">
-                                        <label class="label-partido" for="jugadores">Numero de jugadores</label>
+                                        <label class="label-partido" for="jugadores">Numero de jugadores totales de tu equipo</label>
                                         <input type="number" name="cantidad"  class="form-control partido" id="equipo" required="required" title="Solo puede ingresar hasta 22 jugadores" placeholder="Ingresa número de jugadores..." pattern="^[0|1]\d{1}$|[0-9]|2+[0|1|2]" min="2">
                                     </div>
                                 </div>
@@ -684,7 +681,7 @@ $_SESSION['idRecinto']=NULL;
                                 <div class="col-sm-8">
                                     <div class="form-group">
                                       <label for="idHorario">Horario</label>
-                                      <select  data-dismiss="modal" data-toggle="modal" data-target="#modalHorario" data-tipo="modalRevuelta" class="form-control hr" id="idHorariomodalRevuelta" name="idHorario" required="required"  >
+                                      <select  data-toggle="modal" data-target="#modalHorario" data-tipo="modalRevuelta" class="form-control hr" id="idHorariomodalRevuelta" name="idHorario" required="required"  >
 
                                       <option id="horariomodalRevuelta" type="number2" ></option>
 
@@ -703,7 +700,7 @@ $_SESSION['idRecinto']=NULL;
                             <div class="row">
                                 <div class="col-sm-8">
                                     <div class="form-group">
-                                        <label class="label-partido" for="jugadores">Numero de jugadores</label>
+                                        <label class="label-partido" for="jugadores">Numero de jugadores totales del partido</label>
                                         <input type="int" name="cantidad"  class="form-control partido" id="equipo" required="required" title="Solo puede ingresar hasta 22 jugadores" placeholder="Ingresa número de jugadores totales..." pattern="^[0|1]\d{1}$|[0-9]|2+[0|1|2]">
                                     </div>
                                 </div>
@@ -766,9 +763,9 @@ $_SESSION['idRecinto']=NULL;
                                 <div class="col-sm-8">
                                     <div class="form-group">
                                       <label for="idHorario">Horario</label>
-                                      <select  data-dismiss="modal" data-toggle="modal" data-target="#modalHorario" data-tipo="revuelta" class="form-control hr" id="idHorarioAB" name="idHorario" required="required"  >
+                                      <select  data-toggle="modal" data-target="#modalHorario" data-tipo="modalAB" class="form-control hr" id="idHorarioAB" name="idHorario" required="required"  >
 
-                                      <option id="horarioAB" type="number2" ></option>
+                                      <option id="horariomodalAB" type="number2" ></option>
 
                                       </select>
                                     </div>
@@ -778,16 +775,31 @@ $_SESSION['idRecinto']=NULL;
                                 <div class="col-sm-8">
                                     <div class="form-group">
                                         <label class="label-partido" for="hora">Hora</label>
-                                        <input id="horaPartidoAB" type="time" name="hora" placeholder="Hora" class="form-control partido" id="equipo" required="required" min="09:00:00" max="23:00:00" step="3600">
+                                        <input id="horaPartidomodalAB" type="time" name="hora" placeholder="Hora" class="form-control partido" id="equipo" required="required" min="09:00:00" max="23:00:00" step="3600">
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-8">
                                     <div class="form-group">
-                                        <label class="label-partido" for="jugadores">Numero de jugadores</label>
-                                        <input type="int" name="cantidad"  class="form-control partido" id="equipo" required="required" title="Solo puede ingresar hasta 22 jugadores" placeholder="Ingresa número de jugadores totales..." pattern="^[0|1]\d{1}$|[0-9]|2+[0|1|2]">
-                                        
+                                      <label for="cantidad">Cantidad total de jguadores</label>
+                                      <select  class="form-control"  name="cantidad" required="required"  >
+                                            <option type="number" value="10" >10</option>
+                                            <option type="number" value="12" >12</option>
+                                            <option type="number" value="14" >14</option>
+                                            <option type="number" value="10" >22</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <div class="form-group">
+                                        <label class="label-partido" for="equipo">Selecciona tu equipo</label>
+                                         <select  class="form-control"  name="equipo" required="required" >
+                                            <option  value="A" >A</option>
+                                            <option  value="B" >B</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -875,7 +887,7 @@ $_SESSION['idRecinto']=NULL;
 
         <script type="text/javascript" src="assets/js/jquery.js"></script>
         <script type="text/javascript" src="assets/js/jquery.mixitup.js"></script>
-                <script type="text/javascript" src="assets/js/modal.js"></script>
+        <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="assets/js/modernizr.custom.js"></script>
         <script type="text/javascript" src="assets/js/jquery.bxslider.js"></script>
         <script type="text/javascript" src="assets/js/jquery.cslider.js"></script>
@@ -1006,6 +1018,17 @@ $_SESSION['idRecinto']=NULL;
             
         });
 
-
+$(document).on('show.bs.modal', '.modal', function () {
+    var zIndex = Math.max.apply(null, Array.prototype.map.call(document.querySelectorAll('*'), function(el) {
+  return +el.style.zIndex;
+})) + 10;
+    $(this).css('z-index', zIndex);
+    setTimeout(function() {
+        $('.modal-backdrop').not('.modal-stack').css('z-index', zIndex - 1).addClass('modal-stack');
+    }, 0);
+});
+$(document).on('hidden.bs.modal', '.modal', function () {
+    $('.modal:visible').length && $(document.body).addClass('modal-open');
+});
 </script>                          
 

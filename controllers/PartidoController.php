@@ -8,6 +8,7 @@ require 'models/Desafio.php';
 require 'models/Equipo.php';
 require 'models/TercerTiempo.php';
 require 'models/Local.php';
+require 'models/horario.php';
 
 
       if(!isset($_SESSION)) { 
@@ -25,6 +26,7 @@ class PartidoController{
 		$this->Equipo = new Equipo();
 		$this->tercerTiempo = new TercerTiempo();
 		$this->local = new Local();
+		$this->horario = new Horario();
 	}
 
 	public function index(){
@@ -190,6 +192,7 @@ class PartidoController{
 		$cantidad	=	$_POST['cantidad'];
 		$color	=	$_POST['color'];
 		$idRecinto = $_POST['idRecinto'];
+		$idHorario = $_POST['idHorario'];
 		$_SESSION['idRecinto'] = $idRecinto;
 		$listadoContactos= $this->Contacto->getContactos($idCapitan);
 		$recinto = $this->Recinto->getRecinto($idRecinto);
@@ -197,11 +200,13 @@ class PartidoController{
 		$data['hora']  = $hora;
 		$data['cantidad'] = $cantidad;
 		$data['color']= $color;
+		$data['idHorario'] =$idHorario;
 		//EquipoPropio = 2
 		$data['tipoPartido'] = 2;
 		$_SESSION['tipoPartido'] = 2;
 		$data['recintoSeleccionado']= $recinto;
 		$data['contactos']=$listadoContactos;
+
 
 		$this->view->show("eleccionJugadores.php",$data);
 		
@@ -215,6 +220,7 @@ class PartidoController{
 		$color	=	$_POST['color'];
 		$color2 =	$_POST['color2'];
 		$idRecinto = $_POST['idRecinto'];
+		$idHorario = $_POST['idHorario'];
 		$_SESSION['idRecinto'] = $idRecinto;
 		//Contactos del jugador capitan
 		$listadoContactos=$this->Contacto->getContactos($idCapitan);
@@ -226,6 +232,7 @@ class PartidoController{
 		$data['cantidad'] = $cantidad;
 		$data['color']= $color;
 		$data['color2']= $color2;
+		$data['idHorario'] =$idHorario;
 		//Revuelta = 1
 		$data['tipoPartido'] = 1;
 		$_SESSION['tipoPartido'] = 1;
@@ -242,6 +249,7 @@ class PartidoController{
 		$cantidad	=	$_POST['cantidad'];
 		$color	=	$_POST['color'];
 		$color2 =	$_POST['color2'];
+		$idHorario	=	$_POST['idHorario'];
 		//Contactos del jugador capitan
 		$listadoContactos=$this->Contacto->getContactos($idCapitan);
 		//Recinto deportivo en el cual se efectuara el partido
@@ -257,6 +265,7 @@ class PartidoController{
 		$data['recintoSeleccionado']= $recinto;
 		$data['contactos']=$listadoContactos;
 		$this->view->show("eleccionJugadoresAB.php",$data);
+
 	}
 	public function agendarPartido(){
 		//debemos identificar que tipo de partido es
@@ -268,12 +277,18 @@ class PartidoController{
 		$cantidad	= $_SESSION['cantidad'];
 		$color	=	$_SESSION['color'];
 		$idRecinto = $_SESSION['idRecinto'];
-
+		$idHorario = $_SESSION['idHorario'];
 		//partido con estado agendado
 		$idEstado = "1";
-		$cuota = "0";
+		//se calcula la cuota
+		$horario = $this->horario->getHorario($idHorario);
+
+		$cuota = end($horario)['precio']/($cantidad*2);
+		
+
+
 		//Ingresar Partido
-		$idPartido = $this->Partido->setPartido($idCapitan,$fecha, $hora, $cuota, $idTipo, $idEstado, $idRecinto);
+		$idPartido = $this->Partido->setPartido($idCapitan,$fecha, $hora, $cuota, $idTipo, $idEstado, $idRecinto, $cantidad);
 		$_SESSION['idPartido'] = $idPartido;
 
 
@@ -296,12 +311,15 @@ class PartidoController{
 		$color	=	$_SESSION['color'];
 		$color2 = $_SESSION['color2'];
 		$idRecinto = $_SESSION['idRecinto'];
-
+		$idHorario = $_SESSION['idHorario'];
 		//partido con estado agendado
+
 		$idEstado = "1";
-		$cuota = "0";
+		$horario = $this->horario->getHorario($idHorario);
+		$cuota = end($horario)['precio']/$cantidad;
+		
 		//Ingresar Partido
-		$idPartido = $this->Partido->setPartido($idCapitan,$fecha, $hora, $cuota, $idTipo, $idEstado, $idRecinto);
+		$idPartido = $this->Partido->setPartido($idCapitan,$fecha, $hora, $cuota, $idTipo, $idEstado, $idRecinto, $cantidad);
 		$_SESSION['idPartido'] = $idPartido;
 
 
@@ -330,6 +348,7 @@ class PartidoController{
 		$idEstado = "1";
 
 		//Datos del partido
+		//Se deben traer 
 		$data['tipoPartido'] = $_SESSION['tipoPartido'];
 		$data['idCapitan']	=  $_SESSION['login_user_id'];
 		$data['fecha']	=	$_SESSION['fecha'];
@@ -349,6 +368,8 @@ class PartidoController{
 		//Obtenemos el id del tercer tiempo
 		$t = $this->tercerTiempo->getTercerTiempo($_SESSION['idPartido']);
 		//var_dump($t);
+		$partido= $this->Partido->getPartido($_SESSION['idPartido']);
+		$data['partido'] = $partido;
 
 
 		if(count($t) != 0){
@@ -366,14 +387,15 @@ class PartidoController{
 		$data['recinto'] = $recinto;
 
 		//Liberamos las variables globales
-		/*unset($_SESSION['tipoPartido']);
+		unset($_SESSION['tipoPartido']);
 		unset($_SESSION['fecha']);
 		unset($_SESSION['hora']);
 		unset($_SESSION['cantidad']);
 		unset($_SESSION['color']);
 		unset($_SESSION['idRecinto']);
-		unset($_SESSION['tipoPartido']);*/
-		
+		unset($_SESSION['tipoPartido']);
+		unset($_SESSION['idPartido']);
+		unset($_SESSION['idTercer']);
 		//enviamos los datos a la vista del resumen del partido
 		$this->view->show("resumenPartido2.php",$data);		
 	}

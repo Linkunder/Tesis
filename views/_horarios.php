@@ -58,7 +58,7 @@
 			<td><?php echo $horario['precio']?></td>
 			<?php
 				if(isset($vars['form'])){ ?>
-			<td><button data-inicio="<?php echo $horario['horaInicio']?>" data-final="<?php echo $horario['horaFin']?>" data-nombre="<?php echo $horario['nombre']?>" data-id="<?php echo $horario['idHorario']?>" class="btn btn-primary btn-sm selHorario" data-dismiss="modal" data-m="<?php echo $vars['form']?>">Elegir</button></td>
+			<td><button data-dismiss="modal" data-inicio="<?php echo $horario['horaInicio']?>" data-final="<?php echo $horario['horaFin']?>" data-nombre="<?php echo $horario['nombre']?>" data-id="<?php echo $horario['idHorario']?>" class="btn btn-primary btn-sm selHorario"  data-m="<?php echo $vars['form']?>">Elegir</button></td>
 
 			<?php }	?>		
 		</tr>
@@ -95,7 +95,7 @@
 			document.getElementById("horaPartido"+modal).setAttribute("min", inicio);
 			document.getElementById("horaPartido"+modal).setAttribute("max", final);
 
-            $("#"+modal+"").modal("show");
+           
 
 
 

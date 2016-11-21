@@ -11,6 +11,7 @@ include('layout/headerJugador.php');
 if (isset($vars['tipoPartido'])) {
 
   // Desafios
+  $tipo="";
   if ($vars['tipoPartido'] == 4) { 
     $tipoPartido = $vars['tipoPartido'];
     $fecha = $vars['fecha'];
@@ -18,13 +19,28 @@ if (isset($vars['tipoPartido'])) {
     $mensaje = "Se ha enviado una notificación a los jugadores de ambos equipos con la información del partido.";
     $idRecinto= $vars['idRecinto'];
     $idPartido = $vars['idPartido'];
+    $tipo="Desafio";
+
   } else {
-    $idPartido= $_SESSION["idPartido"];
+    $partido = end($vars['partido']);
+    $idPartido= $partido['idPartido'];
     $idUsuario= $_SESSION['login_user_id'];
-    $idRecinto= $_SESSION['idRecinto']; //Recinto seleccionado
-    $cantidad = $_SESSION['cantidad']; //Cantidad de jugadores seleccionados
-    $fecha =    $_SESSION['fecha'];
-    $hora =     $_SESSION['hora'];
+    $idRecinto= $partido['idRecinto']; //Recinto seleccionado
+    $cantidad = $partido['nroJugadores']; //Cantidad de jugadores seleccionados
+    $fecha =    $partido['fecha'];
+    $hora =     $partido['hora'];
+    $cuota =    $partido['cuota'];
+    $idTipo = $partido['tipo'];
+    $tipo = "";
+    if($idTipo == 1){
+        $tipo="Revuelta";
+    }
+    if($idTipo == 2){
+      $tipo="Equipo Propio";
+    }
+    if($idTipo == 3){
+      $tipo="A v/s B";
+    }
   }
 
 
@@ -156,11 +172,11 @@ if (isset($vars['tercerTiempo'])){
                 </tr>
                 <tr>
                   <th><span>Tipo</span></th>
-                  <td id="texto-blanco"><?php echo "no disponible";?></td>
+                  <td id="texto-blanco"><?php echo $tipo;?></td>
                 </tr>
                 <tr>
                   <th><span>Cuota</span></th>
-                  <td id="texto-blanco"><?php echo "no disponible";?></td>
+                  <td id="texto-blanco"><?php echo '$'.$cuota;?></td>
                 </tr>
                 <tr>
                   <th><span>Jugadores</span></th>

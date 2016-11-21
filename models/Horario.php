@@ -14,6 +14,13 @@ class Horario{
 		return $resultado;
 	}
 
+	public function getHorario($idHorario){
+		$consulta = $this->db->prepare("SELECT * FROM Horario WHERE idHorario = '$idHorario' ;");
+		$consulta->execute();
+		$resultado = $consulta->fetchAll();
+		return $resultado;
+	}
+
 	public function setHorarioRecinto(){
 	}
 

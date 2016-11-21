@@ -17,6 +17,7 @@ $_SESSION['fecha'] = $vars['fecha'];
 $_SESSION['hora'] = $vars['hora'];
 $_SESSION['cantidad'] = $vars['cantidad'];
 $_SESSION['color']  = $vars['color'];
+$_SESSION['idHorario'] = $vars['idHorario'];
 if(isset($vars['color2'])){
   $_SESSION['color2'] =$vars['color2'];
 }
@@ -395,7 +396,7 @@ foreach ($vars['contactos'] as $Contacto) {
           
                       <div class="form-group">
                         <h2 class="center">¿Deseas agendar un tercer tiempo?<h2>
-                       
+                  
                         <button class="btn-submit" type="submit" onClick="setValue()" formaction="?controlador=Local&accion=busquedaLocales">Si</button>
                        
                         <button type="submit" class="btn-submit" onClick="setValue()" >No</button>

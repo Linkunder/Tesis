@@ -37,12 +37,13 @@ class Partido{
 	public function setJugadoresPartidoPropio($idPartido, $idUsuario, $equipo, $color){
 		$consulta = $this->db->prepare("
 			INSERT INTO JugadoresPartido (
-				idPartido, idUsuario, equipo, color1) 
+				idPartido, idUsuario, equipo, color1, estado) 
 				VALUES
 				('$idPartido',
 				'$idUsuario',
 				'$equipo',
-				'$color'
+				'$color',
+				'0'
 				);
 			");
 		$consulta->execute();
@@ -51,17 +52,18 @@ class Partido{
 	public function setJugadoresRevuelta($idPartido, $idUsuario, $color, $color2){
 		$consulta = $this->db->prepare("
 			INSERT INTO JugadoresPartido (
-				idPartido, idUsuario, color1, color2) 
+				idPartido, idUsuario, color1, color2, estado) 
 				VALUES
 				('$idPartido',
 				'$idUsuario',
 				'$color',
-				'$color2'
+				'$color2',
+				'0'
 				);
 			");
 		$consulta->execute();
 	}
-	public function setPartido($idOrganizador,$fecha, $hora, $cuota, $tipo, $estado, $idRecinto){
+	public function setPartido($idOrganizador,$fecha, $hora, $cuota, $tipo, $estado, $idRecinto, $cantidad){
 		$consulta= $this->db->prepare("
 			INSERT INTO Partido (
 				idOrganizador,
@@ -70,7 +72,9 @@ class Partido{
 				cuota,
 				tipo,
 				estado,
-				idRecinto)
+				idRecinto,
+				nroJugadores
+				)
 			VALUES(
 				'$idOrganizador',
 				'$fecha',
@@ -78,7 +82,8 @@ class Partido{
 				'$cuota',
 				'$tipo',
 				'$estado',
-				'$idRecinto'
+				'$idRecinto',
+				'$cantidad'
 				);
 			SELECT LAST_INSERT_ID() AS lastId;
 				");
