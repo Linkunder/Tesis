@@ -134,6 +134,12 @@ class RecintoController{
       $this->view->show("_horarios.php", $data);
     }
 
+    /*    MODULO DE ADMINISTRACION  */
+    public function recintosAdmin(){
+      $recintos = $this->Recinto->getRecintos();
+      $data['recintos'] = $recintos;
+      $this->view->show('recintosAdmin.php',$data);
+    }
     
 
 

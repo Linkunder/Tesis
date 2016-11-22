@@ -35,8 +35,15 @@ class SesionController{
                 $_SESSION['login_user_name'] = $resultado->nombre;
                 $_SESSION['login_user_email'] = $resultado->mail;
                 $_SESSION['login_user_estado'] = $resultado->estado;
+                $_SESSION['login_user_perfil'] = $resultado->perfil;
+                if ($_SESSION['login_user_perfil'] == 1 ){
+                    header('Location: ?controlador=Index&accion=indexJugador');
+                }
+                if ( $_SESSION['login_user_perfil'] == 2 ){
+                    header('Location: ?controlador=Index&accion=indexAdmin');
+                }
                 // Direccionar a la pantalla de inicio del jugador
-                header('Location: ?controlador=Index&accion=indexJugador');
+                
             } else{
             //var_dump($resultado);
             $data['error_login'] = true;

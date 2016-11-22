@@ -28,6 +28,10 @@ class IndexController
     public function indexJugador(){
         $this->view->show("indexJugador.php");
     }
+
+    public function indexAdmin(){
+        $this->view->show("indexAdmin.php");
+    }
 }
 
 ?>

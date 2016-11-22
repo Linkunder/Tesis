@@ -203,7 +203,7 @@ $recintos = $vars['listaRecintos'];
               <table id="example" class="table table-striped table-hover display responsive nowrap"  cellspacing="0" width="100%">
                 <thead id ="position-table">
                   <tr id="color-encabezado">
-                    <th id="encabezado-especial">Desafio</th>
+                    <th id="encabezado-especial">#</th>
                     <th id="encabezado-especial">Equipo</th>
                     <th id="encabezado-especial">Fecha</th>
                     <th id="encabezado-especial">Tipo de partido</th>
@@ -213,13 +213,15 @@ $recintos = $vars['listaRecintos'];
                 </thead>
                 <tbody id="texto-contactos" class="center">
                   <?php
+                  $i = 0;
                   foreach ($desafios as $item) {
+                    $i++;
                   ?>
                   <tr>
                     <td>
                       <?php 
                       
-                      echo $item['idDesafio']?>
+                      echo $i?>
                     </td>
                   <td>
                     <?php echo $item['nombreEquipo']?>
@@ -582,7 +584,9 @@ $recintos = $vars['listaRecintos'];
                     <?php echo $item['fechaPartido']?>
                   </td>
                   <td>
-                    boton resumen
+                     <button type="button" class="btn btn-primary fa fa-search-plus" href="javascript:void(0);" 
+                     data-toggle="modal" data-target="#modal" onclick="carga_ajax('modal','<?php echo $idEncuentro?>','encuentro');">
+                   </button>
                   </td>
                   
 
@@ -840,7 +844,7 @@ $recintos = $vars['listaRecintos'];
                         foreach($equipos as $item){
                         ?>
                         <option  value="<?php echo $item['idEquipo']?>" class="texto-modal-negro">
-                            <?php echo $item['idEquipo'].": ".$item['nombre']?>
+                            <?php echo $item['nombre']?>
                         </option>
                         <?php
                         }
@@ -857,7 +861,7 @@ $recintos = $vars['listaRecintos'];
                         <div class="row">
                           <div class="col-sm-12">
                             <b class="texto-modal-negro">18</b>
-                            <input id="ex3" name="edad" type="text" class="span2" value="" data-slider-min="18" data-slider-max="60" data-slider-step="1" data-slider-value="[18,60]"/>
+                            <input style='width:100px' id="ex3" name="edad" type="text" class="span2" value="" data-slider-min="18" data-slider-max="60" data-slider-step="1" data-slider-value="[18,60]"/>
                             <b class="texto-modal-negro">60</b>
                           </div>
                         </div>

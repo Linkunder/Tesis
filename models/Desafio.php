@@ -108,7 +108,7 @@ class Desafio{
 			Recinto.nombre as nombreRecinto, 
 			Recinto.tipo as tipoPartido, 
 			Equipo.nombre as equipo1, 
-			(select nombre from equipo where idEquipo = Encuentro.idEquipo) as equipo2
+			(select nombre from Equipo where idEquipo = Encuentro.idEquipo) as equipo2
 			FROM Desafio
 			JOIN Encuentro ON Desafio.idDesafio = Encuentro.idDesafio
 			JOIN Recinto ON Desafio.idRecinto = Recinto.idRecinto  
