@@ -8,7 +8,7 @@ require 'models/Desafio.php';
 require 'models/Equipo.php';
 require 'models/TercerTiempo.php';
 require 'models/Local.php';
-require 'models/horario.php';
+require 'models/Horario.php';
 
 
       if(!isset($_SESSION)) { 

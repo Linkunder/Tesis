@@ -10,6 +10,9 @@ class FrontController
         require 'libs/View.php'; //Mini motor de plantillas
  
         require 'config.php'; //Archivo con configuraciones.
+
+        require 'libs/passwordLib.php';
+
  
         //Con el objetivo de no repetir nombre de clases, nuestros controladores
         //terminarán todos en Controller. Por ej, la clase controladora Items, será ItemsController
