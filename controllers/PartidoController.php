@@ -26,7 +26,7 @@ class PartidoController{
 		$this->Equipo = new Equipo();
 		$this->tercerTiempo = new TercerTiempo();
 		$this->local = new Local();
-		$this->horario = new Horario();
+		$this->Horario = new Horario();
 	}
 
 	public function index(){
@@ -281,7 +281,7 @@ class PartidoController{
 		//partido con estado agendado
 		$idEstado = "1";
 		//se calcula la cuota
-		$horario = $this->horario->getHorario($idHorario);
+		$horario = $this->Horario->getHorario($idHorario);
 
 		$cuota = end($horario)['precio']/($cantidad*2);
 		
@@ -315,7 +315,7 @@ class PartidoController{
 		//partido con estado agendado
 
 		$idEstado = "1";
-		$horario = $this->horario->getHorario($idHorario);
+		$horario = $this->Horario->getHorario($idHorario);
 		$cuota = end($horario)['precio']/$cantidad;
 		
 		//Ingresar Partido
