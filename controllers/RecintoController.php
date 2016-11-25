@@ -135,11 +135,18 @@ class RecintoController{
     }
 
     /*    MODULO DE ADMINISTRACION  */
-    public function recintosAdmin(){
+    public function adminRecintos(){
       $recintos = $this->Recinto->getRecintos();
       $data['recintos'] = $recintos;
-      $this->view->show('recintosAdmin.php',$data);
+      $this->view->show('adminRecintos.php',$data);
     }
+
+    public function pruebaRecintos(){
+      $recintos = $this->Recinto->getRecintos();
+      $data['recintos'] = $recintos;
+      $this->view->show('pruebaRecintos.php',$data);
+    }
+
     
 
 

@@ -117,7 +117,12 @@ class EquipoController{
 		return round(array_sum($array)/count($array));
 	}
 	
-
+    /*    MODULO DE ADMINISTRACION  */
+    public function adminEquipos(){
+      $equipos = $this->Equipo->getEquipos();
+      $data['equipos'] = $equipos;
+      $this->view->show('adminEquipos.php',$data);
+    }
 
 
 }

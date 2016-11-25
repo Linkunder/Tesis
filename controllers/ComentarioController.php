@@ -31,5 +31,14 @@ class ComentarioController{
         header('Location: ?controlador=Recinto&accion=busquedaRecintos&nuevo=1');
         
     }
+
+
+
+    /*    MODULO DE ADMINISTRACION  */
+    public function adminComentarios(){
+      $comentarios = $this->Comentario->getComentarios();
+      $data['comentarios'] = $comentarios;
+      $this->view->show('adminComentarios.php',$data);
+    }
 }
 ?>

@@ -48,7 +48,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">Administración - MatchDay</a>
+                <a class="navbar-brand" href="?controlador=Index&accion=indexAdmin">Administración - MatchDay</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -88,25 +88,25 @@
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         <li>
-                            <a href="#"><i class="fa fa-home fa-fw"></i> Inicio</a>
+                            <a href="?controlador=Index&accion=indexAdmin"><i class="fa fa-home fa-fw"></i> Inicio</a>
                         </li>
                         <li>
-                            <a href="?controlador=Recinto&accion=recintosAdmin"><i class="fa fa-map-marker fa-fw"></i> Recintos</a>
+                            <a href="?controlador=Recinto&accion=adminRecintos"><i class="fa fa-map-marker fa-fw"></i> Recintos</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-user fa-fw"></i> Jugadores</a>
+                            <a href="?controlador=Usuario&accion=adminJugadores"><i class="fa fa-user fa-fw"></i> Jugadores</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-comments fa-fw"></i> Comentarios</a>
+                            <a href="?controlador=Comentario&accion=adminComentarios"><i class="fa fa-comments fa-fw"></i> Comentarios</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-users fa-fw"></i> Equipos</a>
+                            <a href="?controlador=Equipo&accion=adminEquipos"><i class="fa fa-users fa-fw"></i> Equipos</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-futbol-o fa-fw"></i> Desafíos</a>
+                            <a href="?controlador=Desafio&accion=adminDesafios"><i class="fa fa-futbol-o fa-fw"></i> Desafíos</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-map-marker fa-fw"></i> Locales</a>
+                            <a href="?controlador=Local&accion=adminLocales"><i class="fa fa-map-marker fa-fw"></i> Locales</a>
                         </li>
                     </ul>
                 </div>

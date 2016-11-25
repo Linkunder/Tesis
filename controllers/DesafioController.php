@@ -181,6 +181,12 @@ class DesafioController{
         $this->view->show("_verRespuestas.php", $data);
     }
 
+    /*    MODULO DE ADMINISTRACION  */
+    public function adminDesafios(){
+      $desafios = $this->Desafio->getDesafiosAdmin();
+      $data['desafios'] = $desafios;
+      $this->view->show('adminDesafios.php',$data);
+    }
 
 
 

@@ -35,6 +35,10 @@ class UsuarioController{
 		$this->view->show('formularioRegistro.php');
 	}
 
+	public function pruebaCrearUsuario(){
+		$this->view->show('pruebaCrearUsuario.php');
+	}
+
 	public function formularioRegistro2(){
 		$this->view->show('testform.php');
 	}
@@ -205,6 +209,118 @@ class UsuarioController{
 
 
 
+
+
+
+
+
+ 	// Registrar usuario en la base de datos. 
+	public function pruebaRegistrarUsuario(){
+		$usuarios = $this->Usuario->getUsuarios();
+		$idUsuarioAnterior = end($usuarios)['idUsuario'];
+		$nombre = $_POST['nombre'];
+		$apellido= $_POST['apellido'];
+		$nickname= $_POST['nickname'];
+		$fechaNacimiento= $_POST['date'];
+		//echo $fechaNacimiento;
+		$mail= $_POST['mail'];
+		$telefono= $_POST['telefono'];
+		$password = $_POST['password'];
+		$password_cifrada = password_hash($password,PASSWORD_DEFAULT); 
+		/* Coste de la función por defecto: 10
+			password_hash($password,PASSWORD_DEFAULT,array("cost")=>12);
+			http://php.net/manual/es/faq.passwords.php
+		*/
+		//echo $password_cifrada;
+		$sexo= $_POST['sexo'];
+		$fotografia = "no";
+		
+		$this->Usuario->setUsuario($nombre,$apellido,$nickname, $mail, $sexo, $fotografia, $password_cifrada, $telefono, $fechaNacimiento,1,1);
+		
+		$usuarios = $this->Usuario->getUsuarios();
+		$idUsuario = end($usuarios)['idUsuario'];
+		$subirImagen = $this->pruebaGuardarImagen($idUsuario);
+		/*
+		if ($idUsuarioAnterior != $idUsuario){
+			$mensaje = 1;
+		}*/
+		
+		$mensaje = 0;
+		if ($subirImagen == 0){
+			$mensaje = 0;
+			//$this->Usuario->eliminarUsuario($idUsuario);
+		} else {
+			$usuarioNuevo = $this->Usuario->getUsuario($idUsuario);
+			$data['nuevoUsuario'] = $usuarioNuevo;
+		}
+		$data['resultado'] = $mensaje;
+		$this->view->show('pruebaCrearUsuarioResultado.php',$data);
+		//header('Location: ?controlador=Index&accion=inicio');
+	}
+
+	// Subir imagen 
+	private function pruebaGuardarImagen($idUsuario){
+		$target_dir = "assets/images/usuarios/";
+		$target_file = $target_dir.basename($_FILES["imagen"]["name"]);
+		//echo $target_file;
+		$uploadOk = 1;
+		$imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
+		// Asignar nuevo nombre: idUsuario.extensionFotografia
+		$newName = $idUsuario.".".$imageFileType;
+		$newDir = $target_dir.$newName;
+		// Chequear si es o no una imagen
+		if(isset($_POST["submit"])) {
+		    $check = getimagesize($_FILES["imagen"]["tmp_name"]);
+		    if($check !== false){
+		        $uploadOk = 1;
+				$message = "Archivo es una imagen - " . $check["mime"] . ".";;
+		    } else {
+		        $message = "Archivo no es una imagen.";
+		        $uploadOk = 0;
+		    }
+		}
+		/*/ Chequear si el archivo existe o no (no deberia)
+		if (file_exists($target_file)) {
+		    $message = "Lo sentimos pero esta imagen ya existe.";
+		    $uploadOk = 0;
+		}*/
+		// Chequear el tamaño de la imagen. 
+		if ($_FILES["imagen"]["size"] > 5000000) {
+		    $message = "Lo sentimos, pero el archivo es muy grande.";
+		    $uploadOk = 0;
+		}
+		// Chequear extension
+		if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+		&& $imageFileType != "gif" && $imageFileType != "JPG" && $imageFileType != "PNG" && $imageFileType != "JPEG"
+		&& $imageFileType != "GIF") {
+		    $message = "Lo sentimos , solo archivos con JPG, JPEG, PNG & GIF son permitidos.";
+		    $uploadOk = 0;
+		}
+		// Chequear la variable $uploadOk = 0
+		if ($uploadOk == 0) {
+		    $message =  "Lo sentimos, tu archivo no se puede subir.";
+		// OK, Intenta subir imagen.
+		} else {
+		    if (move_uploaded_file($_FILES["imagen"]["tmp_name"], $newDir)) {
+		    	$this->Usuario->setFotografia($idUsuario,$newName);
+		    	return 1;
+		    	//echo "ok";
+		    } else {
+		    	return 0;
+		        $message = "Lo sentimos, hubo un error al subir el archivo."; // No debiese entrar aqui.
+		    }
+		}		
+	}
+
+
+
+
+    /*    MODULO DE ADMINISTRACION  */
+    public function adminJugadores(){
+      $jugadores = $this->Usuario->getUsuarios();
+      $data['jugadores'] = $jugadores;
+      $this->view->show('adminJugadores.php',$data);
+    }
 
 
 }

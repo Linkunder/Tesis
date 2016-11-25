@@ -121,6 +121,15 @@ class Desafio{
 	}
 
 
+	public function getDesafiosAdmin(){
+		$sql = "SELECT * FROM Desafio";
+		$query = $this->db->prepare($sql);
+		$query->execute();
+		$resultado = $query->fetchAll();
+		return $resultado;
+	}
+
+
 
 }
 

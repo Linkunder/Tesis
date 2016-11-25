@@ -38,6 +38,14 @@ class LocalController{
     }
 
 
+    /*    MODULO DE ADMINISTRACION  */
+    public function adminLocales(){
+      $locales = $this->local->getLocales();
+      $data['locales'] = $locales;
+      $this->view->show('adminLocales.php',$data);
+    }
+
+
 }
 
 
