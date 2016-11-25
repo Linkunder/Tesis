@@ -75,7 +75,7 @@
                         <i class="fa fa-user fa-fw"></i> Admin <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <li><a href="?controlador=Sesion&accion=logout"><i class="fa fa-sign-out fa-fw"></i> Cerrar sesión</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
