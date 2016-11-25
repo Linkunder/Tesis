@@ -87,6 +87,7 @@ class Encuentro{
 	public function getSolicitudes($idUsuario){
 		$sql = "SELECT Encuentro.idEncuentro, Encuentro.idDesafio, 
 			(DATE_FORMAT(Desafio.fecha,'%d-%m-%Y')) as fechaPartido , 
+			Recinto.nombre as nombreRecinto,
 			Recinto.tipo as tipoPartido, Equipo.nombre as equipo1, 
 			(select nombre from Equipo where idEquipo = Desafio.idEquipo) as equipo2, 
 			Encuentro.estadoSolicitud 

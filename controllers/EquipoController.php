@@ -44,7 +44,7 @@ class EquipoController{
 	public function gestionarEquipo(){
 		$equipo = new Equipo();
 		$idUsuario = $_SESSION['login_user_id'];
-		$idEquipo = $_GET['idEquipo'];
+		$idEquipo = $_POST['idEquipo'];
 		$data['equipo'] = $equipo->getEquipo($idEquipo);
 		$listaMiembrosEquipo = $equipo->getMiembrosEquipo($idEquipo); 		// Contactos que ya están en el equipo.
 		$data['listaMiembrosEquipo']= $listaMiembrosEquipo;

@@ -6,9 +6,14 @@ include('layout/headerJugador.php');
 
 $equipos = $vars['listaEquipos'];
 $desafios = $vars['listaDesafios'];
-
 $recintos = $vars['listaRecintos'];
+$solicitudes = $vars['listaSolicitudes'];
+$historialDesafios = $vars['historialDesafios'];
 
+
+$nroDesafios = count($desafios);
+$nroSolicitudes = count($solicitudes);
+$nroHistorial = count($historialDesafios);
 
 
 
@@ -121,92 +126,98 @@ $recintos = $vars['listaRecintos'];
     </div>
 
 
-
     <?php
-    if (count($desafios)==0){          // CASO 1: NO TENER DESAFIOS
-      ?>
-      
-      <p class="centered">No has realizado desafíos en MatchDay. Puedes crear un nuevo desafío o
-              visitar el vestíbulo de desafíos de MatchDay, para enfrentarte a otros equipos.
-      </p>
-
-      <div class="row">
-        <div class="col-md-4 col-md-offset-4">
-          <table class="table">
-            <tr>
-              <th style="border-top:transparent; text-align:center;">
-                <button type="button" class="btn btn-md btn-primary" href="#" data-toggle="modal" data-target="#modal-1" >Crear desafío 
-                  <i class="fa fa-plus-circle"></i>
-                </button>
-              </th>
-              <th style="border-top:transparent; text-align:center;">
-                <button type="button" class="btn btn-md btn-primary" href="#" data-toggle="modal" data-target="#modal-2" >Visitar vestíbulo
-                  <i class="fa fa-info-circle" aria-hidden="true"></i>
-                </button>
-              </th>
-            </tr>
-          </table>
-        </div>
-      </div>
-      <br>
-
-      <?php
-
-      } else {    // CASO 2: TENER EQUIPOS COMO CAPITAN
+    if (isset($vars['accion'])){
+      if ($vars['accion'] == 1){
         ?>
-
-        <p class="centered">A continuación puedes ver los desafíos enviados por tus equipos en MatchDay. Además puedes crear un nuevo desafío o
-              visitar el vestíbulo de desafíos de MatchDay, para enfrentarte a otros equipos.
-        </p>
-
-
-            <div class="row">
-              <div class="col-md-4 col-md-offset-4">
-                  <table class="table">
-                    <tr>
-                      <th style="border-top:transparent; text-align:center;">
-                          <button type="button" class="btn btn-md btn-primary" href="#" data-toggle="modal" data-target="#modal-1" >Crear desafío 
-                          <i class="fa fa-plus-circle"></i>
-                          </button>
-                      </th>
-                      <th style="border-top:transparent; text-align:center;">
-                          <button type="button" class="btn btn-md btn-primary" href="#" data-toggle="modal" data-target="#modal-2" >Ver vestíbulo
-                          <i class="fa fa-info-circle" aria-hidden="true"></i>
-                          </button>
-                      </th>
-                    </tr>
-                  </table>
-              </div>
-            </div>
-
-
-
-            <br>
-  
-        <div class="panel-group">
-          <div class="panel panel-primary">
-            <div class="panel-heading">
-              <a data-toggle="collapse" href="#misDesafios">
-                <h4 class="panel-title">
-                  Mis desafios
-                </h4>
-              </a>
-            </div>
-          </div>
+        <div class="alert alert-success alert-dismissible">
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+          <strong>Bien hecho!</strong> Tu desafío ha sido ingresado exitosamente.
         </div>
+        <?php
+      }
+      if ($vars['accion'] == 2){
+        ?>
+        <div class="alert alert-success alert-dismissible">
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+          <strong>Bien hecho!</strong> Has respondido el desafío exitosamente.
+        </div>
+        <?php
+      }
+      if ($vars['accion'] == 3){
+        ?>
+        <div class="alert alert-info alert-dismissible">
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+          <strong>Excelente!</strong> Has aceptado el encuentro. Ahora debes agendar el partido.
+        </div>
+        <?php
+      }
+      if ($vars['accion'] == 4){
+        ?>
+        <div class="alert alert-warning alert-dismissible">
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+          <strong>Bien hecho!</strong> Has rechazado el desafío propuesto. 
+        </div>
+        <?php
+      }
+    }
+    ?>
+
+    <div class="row">
+      <div class="col-md-4 col-md-offset-4">
+        <table class="table">
+          <tr>
+            <th style="border-top:transparent; text-align:center;">
+              <button type="button" class="btn btn-md btn-primary" href="#" data-toggle="modal" data-target="#modal-1" >Crear desafío 
+                <i class="fa fa-plus-circle"></i>
+              </button>
+            </th>
+            <th style="border-top:transparent; text-align:center;">
+              <button type="button" class="btn btn-md btn-primary" href="#" data-toggle="modal" data-target="#modal-2" >Ver vestíbulo
+                <i class="fa fa-info-circle" aria-hidden="true"></i>
+              </button>
+            </th>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <br/>
 
 
-        <!-- TABLA DE MIS DESAFIOS -->
-        <div class="row collapse" id="misDesafios">
-          <div class="col-md-8 col-md-offset-2">
-            <!--div class="table-responsive"-->
-              <table id="example" class="table table-striped table-hover display responsive nowrap"  cellspacing="0" width="100%">
+    <!-- Container -->
+    <div class="container">
+      <ul class="nav nav-tabs nav-justified">
+        <li><a data-toggle="tab" href="#menu1">Mis desafíos <span class="label label-success"><?php echo $nroDesafios?></span></a></li>
+        <li><a data-toggle="tab" href="#menu2">Mis respuestas <span class="label label-info"><?php echo $nroSolicitudes?></span></a></li>
+        <li><a data-toggle="tab" href="#menu3">Historial de desafíos <i class="fa fa-calendar-o" aria-hidden="true"></i></a></li>
+      </ul>
+
+      <div class="tab-content">
+        <!-- Tab Mis desafios -->
+        <div id="menu1" class="tab-pane fade">
+          <div class="col-md-12">
+            <br>
+
+            <?php
+            if ($nroDesafios == 0){
+              ?>
+              <div class="alert alert-warning">
+                <strong>Atención</strong>, no tienes desafíos activos en MatchDay
+              </div>
+              <?php
+            } else {
+
+
+            ?>
+
+            <table id="example" class="table table-striped table-hover display responsive nowrap"  cellspacing="0" width="100%">
                 <thead id ="position-table">
                   <tr id="color-encabezado">
                     <th id="encabezado-especial">#</th>
                     <th id="encabezado-especial">Equipo</th>
                     <th id="encabezado-especial">Fecha</th>
-                    <th id="encabezado-especial">Tipo de partido</th>
+                    <th id="encabezado-especial">Recinto</th>
                     <th id="encabezado-especial">Estado</th>
                     <th></th>
                   </tr>
@@ -230,21 +241,7 @@ $recintos = $vars['listaRecintos'];
                     <?php echo $item['fechaPartido']?>
                   </td>
                   <td>
-                    <?php
-
-                    
-                    $tipo = $item['tipoPartido'];
-                    if ($tipo==0){
-                      echo "Fútbol";
-                    }
-                    if ($tipo==1){
-                      echo "Futbolito";
-                    }
-                    if ($tipo==2){
-                      echo "Baby-Fútbol";
-                    }
-                    
-                    ?>
+                    <?php echo $item['nombreRecinto']?>
                   </td>
                   <td>
                     <?php 
@@ -271,29 +268,15 @@ $recintos = $vars['listaRecintos'];
                     $idEquipo = $item['idEquipo'];
                     ?>
                   <input type="text" id="id_desafio" value="<?php echo $idDesafio?>" hidden/>
-                  <!--td>
-                    <a href="#" class="btn btn-danger fa fa-trash-o" onclick="setValue2(<?php echo $idDesafio;?>)" data-placement="right" data-toggle="tooltip" title="Cancelar desafío"></a>
-                  </td-->
+
                   <td>
-
-
-                    <!--a class="btn btn-primary" href="javascript:void(0);" data-toggle="modal" data-target="#modal-3" onclick="carga_ajax('<?php echo $idDesafio?>','modal-3','views/detalleDesafio.php');">Con Ajax <i class="fa fa-search-plus" aria-hidden="true"></i></a-->
-
-                    <!--a class="btn btn-primary" href="javascript:void(0);" data-toggle="modal" data-target="#modal-3" onClick="carga_ajax('1','modal-3','ajax_1.php');">
-                      <i class="fa fa-search-plus" aria-hidden="true"></i>
-                    </a-->
-
-                    <!--button class="btn btn-primary" title="Ver detalle" href="#" data-toggle="modal" data-target="#modal-3">
-                      <i class="fa fa-search-plus" aria-hidden="true"></i>
-                    </button-->
-
-
                     
 
                     <?php
                     if ($item['estadoDesafio']==2){
                       ?>
-                      <button type="button" class="btn btn-primary fa fa-search-plus" href="javascript:void(0);" data-toggle="modal" data-target="#modal"  onclick="carga_ajax('modal','<?php echo $idDesafio?>','desafio');"></button>
+                      <button type="button" class="btn btn-primary fa fa-search-plus" href="javascript:void(0);" 
+                      data-toggle="modal" data-target="#modal"  onclick="carga_ajax('modal','<?php echo $idDesafio?>','desafio');"></button>
 
 
                       <?php
@@ -301,7 +284,8 @@ $recintos = $vars['listaRecintos'];
 
                     if ($item['estadoDesafio']==1){
                       ?>
-                      <button type="button" class="btn btn-primary fa fa-search-plus" href="javascript:void(0);" data-toggle="modal" data-target="#modal"  onclick="carga_ajax('modal','<?php echo $idDesafio?>','respuestas');"></button>
+                      <button type="button" class="btn btn-primary fa fa-search-plus" href="javascript:void(0);" 
+                      data-toggle="modal" data-target="#modal"  onclick="carga_ajax('modal','<?php echo $idDesafio?>','respuestas');"></button>
                       <?php
                     }
                     
@@ -309,7 +293,8 @@ $recintos = $vars['listaRecintos'];
 
                     if ($item['estadoDesafio']==0){
                       ?>
-                      <button type="button" class="btn btn-primary fa fa-search-plus" href="javascript:void(0);" data-toggle="modal" data-target="#modal"  onclick="carga_ajax('modal','<?php echo $idDesafio?>','respuestas');"></button>
+                      <button type="button" class="btn btn-primary fa fa-search-plus" href="javascript:void(0);" 
+                      data-toggle="modal" data-target="#modal"  onclick="carga_ajax('modal','<?php echo $idDesafio?>','respuestas');"></button>
                       <?php
                     }
                     ?>
@@ -329,90 +314,45 @@ $recintos = $vars['listaRecintos'];
                   ?>
                 </tbody>
               </table>
-            <!--/div-->
+              <?php
+            }
+              ?>
+
           </div>
         </div>
-        <!-- /TABLA DE MIS DESAFIOS -->
-
-
-        
-        <script type="text/javascript">
-          $(document).ready(function() {
-            $('#example').DataTable({
-              responsive: true
-            });
-        } );
-        </script>
+        <!-- /Tab Mis desafios -->
 
 
 
 
 
+        <!-- Tab Mis respuestas -->
+        <div id="menu2" class="tab-pane fade">
+          <div class="col-md-12">
+            <br>
+
+            <?php
+            if ($nroSolicitudes == 0){
+              ?>
+              <div class="alert alert-danger">
+                <strong>Atención!</strong> No has respondido a desafíos de MatchDay
+              </div>
+              <?php
+            } else {
 
 
+            ?>
 
-
-
-
-
-<?php
-}
-?>
-
-
-
-
-        <?php
-        $solicitudes = $vars['listaSolicitudes'];
-        if (count($solicitudes) == 0 ){
-          ?>
-
-
-          <?php
-        } else {
-          ?>
-          <br/>
-
-
-
-
-
-
-        <div class="panel-group">
-          <div class="panel panel-primary">
-            <div class="panel-heading">
-              <a data-toggle="collapse" href="#misRespuestas">
-                <h4 class="panel-title">
-                  Mis respuestas
-                </h4>
-              </a>
-            </div>
-          </div>
-        </div>
-
-
-
-
-
-      <!-- TABLA DE MIS SOLICITUDES -->
-
-          
-
-
-          <div class="row collapse" id="misRespuestas">
-            <p class="centered">En esta sección, puedes ver las solicitudes que has realizado en el vestíbulo de partidos de MatchDay.</p>
-          <div class="col-md-8 col-md-offset-2">
-            <!--div class="table-responsive"-->
-
-
-              <table id="example2" class="table table-striped table-hover display responsive nowrap" cellspacing="0" width="100%">
+            
+            <table id="example2" class="table table-striped table-hover display responsive nowrap" cellspacing="0" width="100%">
                 <thead id ="position-table">
                   <tr id="color-encabezado">
                     <!--th id="encabezado-especial">Enc</th>
                     <th id="encabezado-especial">Des</th-->
+                    <th id="encabezado-especial">#</th>
                     <th id="encabezado-especial">Tu Equipo</th>
                     <th id="encabezado-especial">Rival</th>
-                    <th id="encabezado-especial">Tipo de partido</th>
+                    <th id="encabezado-especial">Recinto</th>
                     <th id="encabezado-especial">Fecha</th>
                     <th id="encabezado-especial">Estado</th>
                     <th></th>
@@ -420,7 +360,9 @@ $recintos = $vars['listaRecintos'];
                 </thead>
                 <tbody id="texto-contactos" class="center">
                   <?php
+                  $j = 0;
                   foreach ($solicitudes as $item) {
+                    $j++;
                     $idEncuentro = $item['idEncuentro'];
                   ?>
                   <tr>
@@ -430,6 +372,8 @@ $recintos = $vars['listaRecintos'];
                     <td>
                       <?php echo $item['idDesafio']?>
                     </td-->
+                    <td><?php echo $j?> </td>
+                    
                   <td>
                     <?php echo $item['equipo1']?>
                   </td>
@@ -437,20 +381,7 @@ $recintos = $vars['listaRecintos'];
                     <?php echo $item['equipo2']?>
                   </td>
                   <td>
-                    <?php 
-                    
-                    $tipo = $item['tipoPartido'];
-                    if ($tipo==0){
-                      echo "Fútbol";
-                    }
-                    if ($tipo==1){
-                      echo "Futbolito";
-                    }
-                    if ($tipo==2){
-                      echo "Baby-Fútbol";
-                    }
-                    
-                    ?>
+                    <?php echo $item['nombreRecinto']?>
                   </td>
                   <td>
                     <?php echo $item['fechaPartido']?>
@@ -475,7 +406,8 @@ $recintos = $vars['listaRecintos'];
 
                   </td>
                     <td>
-                      <button type="button" class="btn btn-primary fa fa-search-plus" href="javascript:void(0);" data-toggle="modal" data-target="#modal"  onclick="carga_ajax('modal','<?php echo $idEncuentro?>','encuentro');"></button>
+                      <button type="button" class="btn btn-primary fa fa-search-plus" href="javascript:void(0);" 
+                      data-toggle="modal" data-target="#modal"  onclick="carga_ajax('modal','<?php echo $idEncuentro?>','encuentro');"></button>
                     </td>
 
 
@@ -485,77 +417,56 @@ $recintos = $vars['listaRecintos'];
                   ?>
                 </tbody>
               </table>
-            <!--/div-->
+              <?php
+              }
+              ?>
           </div>
         </div>
-
-        <!-- / TABLA DE MIS DESAFIOS -->
-
-
-        <script type="text/javascript">
-          $(document).ready(function() {
-            $('#example2').DataTable({
-              responsive: true
-            });
-        } );
-        </script>
+        <!-- /Tab Mis respuestas -->
 
 
-
-          <?php
-        }
-        ?>
-
-        <br/>
-
-
-
-
-        <?php
-        $historialDesafios = $vars['historialDesafios'];
-        if ( !empty($historialDesafios) ){
-          ?>
+        <!-- Tab historial -->
+        <div id="menu3" class="tab-pane fade">
+          <div class="col-md-12">
+              <br>
+            <?php
+            if ($nroHistorial == 0){
+              ?>
+              <div class="alert alert-danger">
+                <strong>Atención!</strong> No has llevado a cabo ningún desafío de MatchDay.
+              </div>
+              <?php
+            } else {
 
 
-        <div class="panel-group">
-          <div class="panel panel-primary">
-            <div class="panel-heading">
-              <a data-toggle="collapse" href="#historialDesafios">
-                <h4 class="panel-title">
-                  Historial de desafios
-                </h4>
-              </a>
-            </div>
-          </div>
-        </div>
-
-
-        <div class="row collapse" id="historialDesafios">
-          <p class="centered">En esta sección, puedes ver el historial de desafíos realizados por tus equipos en MatchDay</p>
-          <div class="col-md-8 col-md-offset-2">
-            <!--div class="table-responsive"-->
-              <table id="example3" class="table table-striped table-hover display responsive nowrap" cellspacing="0" width="100%">
+            ?>
+            
+            <table id="example3" class="table table-striped table-hover display responsive nowrap" cellspacing="0" width="100%">
                 <thead id ="position-table">
                   <tr id="color-encabezado">
                     <!--th id="encabezado-especial">Enc</th>
                     <th id="encabezado-especial">Des</th-->
+                    <th id="encabezado-especial">#</th>
                     <th id="encabezado-especial">Tu Equipo</th>
                     <th id="encabezado-especial">Rival</th>
-                    <th id="encabezado-especial">Tipo de partido</th>
+                    <th id="encabezado-especial">Recinto</th>
                     <th id="encabezado-especial">Fecha</th>
                     <th></th>
                   </tr>
                 </thead>
                 <tbody id="texto-contactos" class="center">
                   <?php
+                  $k = 0;
                   foreach ($historialDesafios as $item) {
-                    //$idEncuentro = $item['idEncuentro'];
+                    $k ++;
+                    $idEncuentro = $item['idEncuentro'];
                   ?>
                   <tr>
-                    <!--td>
+                    <!--td><?php echo $k?></td-->
+                    <td>
                       <?php echo $item['idEncuentro']?>
                     </td>
-                    <td>
+                    <!--td>
                       <?php echo $item['idDesafio']?>
                     </td-->
                   <td>
@@ -565,27 +476,14 @@ $recintos = $vars['listaRecintos'];
                     <?php echo $item['equipo2']?>
                   </td>
                   <td>
-                    <?php 
-                    
-                    $tipo = $item['tipoPartido'];
-                    if ($tipo==0){
-                      echo "Fútbol";
-                    }
-                    if ($tipo==1){
-                      echo "Futbolito";
-                    }
-                    if ($tipo==2){
-                      echo "Baby-Fútbol";
-                    }
-                    
-                    ?>
+                    <?php echo $item['nombreRecinto']?>
                   </td>
                   <td>
                     <?php echo $item['fechaPartido']?>
                   </td>
                   <td>
                      <button type="button" class="btn btn-primary fa fa-search-plus" href="javascript:void(0);" 
-                     data-toggle="modal" data-target="#modal" onclick="carga_ajax('modal','<?php echo $idEncuentro?>','encuentro');">
+                     data-toggle="modal" data-target="#modal" onclick="carga_ajax('modal','<?php echo $idEncuentro?>','resumen');">
                    </button>
                   </td>
                   
@@ -598,9 +496,42 @@ $recintos = $vars['listaRecintos'];
                   ?>
                 </tbody>
               </table>
-            <!--/div-->
+
+              <?php
+              }
+              ?>
           </div>
         </div>
+        <!-- /Tab historial -->
+
+      </div>
+    </div>
+    <!-- / Fin Container -->
+  
+
+
+
+
+
+
+        
+        <script type="text/javascript">
+          $(document).ready(function() {
+            $('#example').DataTable({
+              responsive: true
+            });
+        } );
+        </script>
+
+
+        <script type="text/javascript">
+          $(document).ready(function() {
+            $('#example2').DataTable({
+              responsive: true
+            });
+        } );
+        </script>
+
 
 
         <script type="text/javascript">
@@ -610,10 +541,6 @@ $recintos = $vars['listaRecintos'];
             });
         } );
         </script>
-
-        <?php
-        }
-        ?>
 
 
 
@@ -757,9 +684,9 @@ $recintos = $vars['listaRecintos'];
                       <div class="well">
                         <div class="row">
                           <div class="col-sm-12">
-                            <b class="texto-modal-negro">18</b>
+                            <b class="texto-modal-negro">18  &nbsp;&nbsp;</b>
                             <input id="ex2" name="edad" type="text" class="span2" value="" data-slider-min="18" data-slider-max="60" data-slider-step="1" data-slider-value="[18,60]"/>
-                            <b class="texto-modal-negro">60</b>
+                            <b class="texto-modal-negro">&nbsp;&nbsp;60  </b>
                           </div>
                         </div>
                       </div>
@@ -776,6 +703,7 @@ $recintos = $vars['listaRecintos'];
               </div>
             </div>
           </div>
+          <input name="accion" value="1" hidden/>
         <div class="modal-footer">
           <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar <i class="fa fa-times" aria-hidden="true"></i></button>
           <button type="submit" class="btn btn-primary">Aceptar <i class="fa fa-check" aria-hidden="true"></i></button>
@@ -860,16 +788,15 @@ $recintos = $vars['listaRecintos'];
                       <div class="well">
                         <div class="row">
                           <div class="col-sm-12">
-                            <b class="texto-modal-negro">18</b>
-                            <input style='width:100px' id="ex3" name="edad" type="text" class="span2" value="" data-slider-min="18" data-slider-max="60" data-slider-step="1" data-slider-value="[18,60]"/>
-                            <b class="texto-modal-negro">60</b>
+                            <b class="texto-modal-negro">18  &nbsp;&nbsp;</b>
+                            <input id="ex3" name="edad" type="text" class="span2" value="" data-slider-min="18" data-slider-max="60" data-slider-step="1" data-slider-value="[18,60]"/>
+                            <b class="texto-modal-negro">&nbsp;&nbsp;60  </b>
                           </div>
                         </div>
                       </div>
                       
                 </div>
               </div>
-            </div>
           </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar <i class="fa fa-times" aria-hidden="true"></i></button>
@@ -897,216 +824,6 @@ $aux = 1;
 $nroEncuentros = $vars['nroEncuentros'];
 ?>
 
-
-
-
-<!-- MODAL PARA VER RESPUESTAS -->
-<div class="container">
-  <div class="modal fade" id="myModal">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <?php $desafioActual = $_GET['idDesafio']; ?>
-          <h4 class="modal-title" id="myModalLabelDesafio">
-            Detalle desafío
-          </h4>
-        </div>
-        <div class="modal-body">
-        <h5 class="texto-modal-negro"><?php echo $nombre?>, a continuación puedes ver el detalle y respuesta(s) de tus desafios.</h5>
-
-        <?php
-
-        if (!isset($vars['listaEncuentros'.$desafioActual])){
-          ?>
-          <br/>
-          <div class="container-fluid">
-            <div class="alert alert-danger fade in">
-              <strong>Error!</strong> No estás autorizado para acceder a esta información.
-            </div>
-          </div>
-          <?php
-        } else {
-
-        $encuentroActual = $vars['listaEncuentros'.$desafioActual];
-
-        if ($encuentroActual != 0){
-
-          foreach ($encuentroActual as $item) { ?>
-
-
-          <div class="panel-group">
-              <div class="panel panel-primary">
-                <div class="panel-heading">
-                  <?php
-                   if ($item['estado'] != 2){
-                    ?>
-                    <a data-toggle="collapse" href="#collapse<?php echo $item['idEncuentro']?>">
-                      <h4 class="panel-title">
-                        Propuesta N°<?php echo $aux.": Equipo ".$item['nombreEquipo']?>
-                      </h4>
-                    </a>
-                    </div>
-                    <div id="collapse<?php echo $item['idEncuentro']?>" class="panel-collapse collapse">
-                    <?php
-                   } else {
-                    ?>
-                    <h4 class="panel-title">
-                      Rival: <?php echo $item['nombreEquipo']?>
-                    </h4>
-                    </div>
-                    <div id="collapse<?php echo $item['idEncuentro']?>">
-                    <?php
-                   }
-                  ?>
-                  
-                
-                  <br>
-                  <div class="container">
-                    <div class="col-sm-12">
-                      <!-- MOSTRAR JUGADORES -->
-
-                      <div class="row">
-                        
-                        <div class="col-md-3">
-                          <br>
-                          <div class="profile-userpic">
-                          <img class="img-responsive" style="width: 100px; height: 100px;" src="assets/images/usuarios/<?php echo $item['fotografia']?>">
-                          <div class="profile-usertitle">
-                            <div class="profile-usertitle-name">
-                              <?php echo "Capitán: ".$item['nombreCap']." ".$item['apellidoCap']; ?>
-                            </div>
-                          </div>
-                          <br>
-                        </div>
-                        </div>
-                        <div class="col-md-6">
-
-
-                          <br/>
-                          <div class="row">
-                            <label>Equipo: </label><?php echo " ".$item['nombreEquipo']?>
-                            <br>
-                            <label>Puntuación: </label><?php echo " ".$item['puntuacion']?>
-                            <br>
-                            <label>Promedio de edad: </label><?php echo " ".$item['edadPromedio']." años"?>
-                            <br>
-                          </div>
-
-
-                          <div class="row">
-                            <br/>
-
-                            <?php
-
-                            if ($item['estado'] == 2){
-                              ?>
-
-                          <div class="row">
-                            <table class="table">
-                              <tr>
-                                <th style="border-top:transparent; text-align:center;">
-                                  <form action="?controlador=Partido&accion=agendarDesafio" method="post">
-                                    <input type="text" name="desafio" value="<?php echo $item['idDesafio']?>" hidden/>
-                                    <input type="text" name="encuentro" value="<?php echo $item['idEncuentro']?>" hidden/>
-                                    <input type="text" name="equipo" value="<?php echo $item['idEquipo']?>" hidden/>
-                                  <button type="submit" class="btn btn-md btn-primary">Agendar partido
-                                    <i class="fa fa-futbol-o" aria-hidden="true"></i>
-                                  </button>
-                                  </form>
-                                </th>
-                              </tr>
-                            </table>
-                          </div>
-
-                              <?php
-                            } else {
-                              ?>
-
-                              <table class="table">
-                              <tr>
-                                <th style="border-top:transparent; text-align:center;">
-                                  <form action="?controlador=Encuentro&accion=cancelarEncuentro" method="post">
-                                    <input type="text" name="desafio" value="<?php echo $item['idDesafio']?>" hidden/>
-                                    <input type="text" name="equipo" value="<?php echo $item['idEquipo']?>" hidden/>
-                                  <button type="submit" class="btn btn-md btn-danger">Rechazar solicitud 
-                                    <i class="fa fa-times"></i>
-                                  </button>
-                                </form>
-                                </th>
-                                <th style="border-top:transparent; text-align:center;">
-                                  <form action="?controlador=Encuentro&accion=aceptarEncuentro" method="post">
-                                    <input type="text" name="desafio" value="<?php echo $item['idDesafio']?>" hidden/>
-                                    <input type="text" name="equipo" value="<?php echo $item['idEquipo']?>" hidden/>
-                                  <button type="submit" class="btn btn-md btn-primary">Aceptar solicitud
-                                    <i class="fa fa-check" aria-hidden="true"></i>
-                                  </button>
-                                  </form>
-                                </th>
-                              </tr>
-                            </table>
-                              <?php
-                            }
-
-                            ?>
-                            
-                              
-                            
-                            
-                          </div>
-                        </div>
-
-
-                      </div>
-                    </div>                    
-                  </div>
-                  
-                </div>
-              </div>
-            </div>
-            
-
-
-
-
-
-
-
-          <?php
-          $aux++;
-          }
-        } else {
-          ?>
-          <br/>
-          <div class="container-fluid">
-            <div class="alert alert-warning fade in">
-              <strong>Atención!</strong> Este desafío no ha sido respondido aún por los usuarios de MatchDay. Vuelve a intentarlo próximamente.
-            </div>
-          </div>
-          <?php
-        }
-
-        ?>
-
-        <?php
-        } 
-        ?>
-
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-dismiss="modal">Volver <i class="fa fa-arrow-circle-left" aria-hidden="true"></i></button>
-        </div>
-      </div>
-
-      <div class="modal-footer">
-        
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<!-- /MODAL PARA VER RESPUESTAS -->
 
 
 
@@ -1144,13 +861,6 @@ $nroEncuentros = $vars['nroEncuentros'];
 </div>
 
 <!-- FIN MODAL -->
-
-
-
-
-
-
-
 
 
 
@@ -1250,7 +960,7 @@ window.onload = function() {
             function carga_ajax(div, id,tipo){
               if (tipo == 'encuentro'){
                      $.post(
-                    '?controlador=Encuentro&accion=detalleEncuentro&idEncuentro='+id,
+                    '?controlador=Desafio&accion=detalleEncuentro&idEncuentro='+id,
                     function(resp){
                         $("#"+div+"").html(resp);
                     }
@@ -1267,6 +977,14 @@ window.onload = function() {
               if (tipo == 'respuestas'){
                  $.post(
                     '?controlador=Desafio&accion=verRespuestas&idDesafio='+id,
+                    function(resp){
+                        $("#"+div+"").html(resp);
+                    }
+                    ); 
+              }
+              if (tipo == 'resumen'){
+                 $.post(
+                    '?controlador=Desafio&accion=resumenDesafio&idEncuentro='+id,
                     function(resp){
                         $("#"+div+"").html(resp);
                     }

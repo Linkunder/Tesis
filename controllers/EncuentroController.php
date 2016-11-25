@@ -16,56 +16,8 @@ class EncuentroController{
 	}
 
 
-	// Set Encuentro
-	public function setEncuentro(){
-		$encuentro = new Encuentro();
-		$desafio = new Desafio();
-		
-		$idDesafio = $_POST['desafio'];
-		$idEquipo = $_POST['equipo'];
-		$estado = 1;
-		$respuesta = $_POST["comentario"];
 
 
-		//echo "desafio: ".$idDesafio." equipo: ".$idEquipo." estado: ".$estado;
-		$encuentro->setEncuentro($idDesafio, $idEquipo, $respuesta, $estado); // Se inserta en la base de datos
-		$desafio->cambiarEstado($idDesafio, $estado);				// Se cambia el estado del desafio (sin respuestas->con respuestas)
-		header('Location: ?controlador=Desafio&accion=listaDesafios');
-	}
-
-	// Se acepto una solicitud de este desafio, por lo tanto se registra que el desafio será jugado y las demas solicitudes se rechazan.
-	public function aceptarEncuentro(){
-		$encuentro = new Encuentro();
-		$desafio = new Desafio();
-		$idDesafio = $_POST['idDesafio'];
-		$idEquipo = $_POST['idEquipo'];
-		$idEncuentro = $_POST['idEncuentro'];
-		$estado = 2;
-		$desafio->cambiarEstado($idDesafio, $estado);
-		$encuentro->cambiarEstado($idDesafio, $estado);
-		$encuentro->eliminarEncuentros($idDesafio, $idEquipo);
-		header('Location: ?controlador=Desafio&accion=listaDesafios');
-	}
-
-	// Se elimina una tupla de la tabla encuentro.
-	public function cancelarEncuentro(){
-		$encuentro = new Encuentro();
-		$idEncuentro = $_POST['idEncuentro'];
-		echo $idEncuentro;
-		//$idEquipo = $_POST['idEquipo'];
-		$encuentro->cancelarEncuentro($idEncuentro);
-		//echo "encuentro: ".$idEncuentro." equipo: ".$idEquipo;
-		header('Location: ?controlador=Desafio&accion=listaDesafios');
-	}
-
-
-	public function detalleEncuentro(){
-		$idEncuentro = $_GET['idEncuentro'];
-		$encuentro = $this->Encuentro->getEncuentro($idEncuentro);
-		$data['encuentro'] = $encuentro;
-	    //$data['equipoSeleccionado'] = $_SESSION['equipoSeleccionado'];
-	    $this->view->show("_detalleEncuentro.php", $data);
-	}
 
 
 

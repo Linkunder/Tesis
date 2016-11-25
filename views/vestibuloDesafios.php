@@ -107,7 +107,7 @@ $_SESSION['idEncuentro']=NULL;
             <table id="example" class="table table-striped table-hover display responsive nowrap" cellspacing="0" width="100%">
               <thead>
                 <tr id="color-encabezado">
-                  <th id="encabezado-especial">Desafio</th>
+                  <th id="encabezado-especial">#</th>
                   <th id="encabezado-especial">Equipo</th>
                   <th id="encabezado-especial">Fecha</th>
                   <th id="encabezado-especial">Tipo de partido</th>
@@ -118,16 +118,19 @@ $_SESSION['idEncuentro']=NULL;
               <tbody id="texto-contactos" class="center">
                 <?php
                 $nroDesafios = $vars['nroDesafios'];
+                $j = 0;
                 for ($i=1; $i <= $nroDesafios; $i++) {
                   $desafio = $vars['listaDesafiosSistema'.$i];
+                  
                 foreach ($desafio as $item) {
+                  $j++;
                   $idDesafio = $item['idDesafio'];
                   $idEquipo = $item['idEquipo'];
                   if ($item['estadoDesafio']!=2){
                 ?>
                 <tr>
                   <td>
-                    <?php echo $item['idDesafio']?>
+                    <?php echo $j?>
                   </td>
                   <td id="nombre-equipo">
                     <?php echo $item['nombreEquipo']?>

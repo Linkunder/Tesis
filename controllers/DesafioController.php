@@ -12,6 +12,7 @@ class DesafioController{
 	function __construct(){
 		$this->view = new View();
 		$this->Desafio = new Desafio();
+		$this->Encuentro = new Encuentro();
 	}
 
 	public function index(){
@@ -34,6 +35,7 @@ class DesafioController{
 
 		$historialDesafios = $desafios->getHistorialDesafios($idUsuario);
 		$data['historialDesafios'] = $historialDesafios;
+
 		$nroEncuentros = 0;
 		foreach ($listaDesafios as $desafio) {
 			$idDesafio = $desafio['idDesafio'];
@@ -56,6 +58,11 @@ class DesafioController{
 		$data['listaRecintos'] = $listaRecintos;
 		//$listaDesafiosSistema = $desafios->getDesafiosSistema($idUsuario);	// Desafios de los equipos del usuario
 		//$data['listaDesafiosSistema'] = $listaDesafiosSistema;
+
+		if (isset($_SESSION['accion'])){
+			$data['accion'] = $_SESSION['accion'];
+		}
+		$_SESSION['accion'] = 0;
 		$this->view->show('desafios.php',$data);
 	}
 
@@ -79,6 +86,7 @@ class DesafioController{
 		$comentario = $_POST["comentario"];
 		//echo "Inferior: ".$limInf." Superior: ".$limSup;
 		$desafio->setDesafio($fechaPartido, $limInf, $limSup, $comentario, $idEquipo, $recinto, "0");
+		$_SESSION['accion'] = 1;
 		header('Location: ?controlador=Desafio&accion=listaDesafios');
 	}
 
@@ -180,6 +188,82 @@ class DesafioController{
         $data['listaEncuentros'] = $listaEncuentros;
         $this->view->show("_verRespuestas.php", $data);
     }
+
+
+
+	// Set Encuentro
+	public function setEncuentro(){
+		$encuentro = new Encuentro();
+		$desafio = new Desafio();
+		
+		$idDesafio = $_POST['desafio'];
+		$idEquipo = $_POST['equipo'];
+		$estado = 1;
+		$respuesta = $_POST["comentario"];
+
+
+		//echo "desafio: ".$idDesafio." equipo: ".$idEquipo." estado: ".$estado;
+		$encuentro->setEncuentro($idDesafio, $idEquipo, $respuesta, $estado); // Se inserta en la base de datos
+		$desafio->cambiarEstado($idDesafio, $estado);
+		$_SESSION['accion'] = 2;				// Se cambia el estado del desafio (sin respuestas->con respuestas)
+		header('Location: ?controlador=Desafio&accion=listaDesafios');
+	}
+
+
+	// Se acepto una solicitud de este desafio, por lo tanto se registra que el desafio será jugado y las demas solicitudes se rechazan.
+	public function aceptarEncuentro(){
+		$encuentro = new Encuentro();
+		$desafio = new Desafio();
+		$idDesafio = $_POST['idDesafio'];
+		$idEquipo = $_POST['idEquipo'];
+		$idEncuentro = $_POST['idEncuentro'];
+		$estado = 2;
+		$desafio->cambiarEstado($idDesafio, $estado);
+		$encuentro->cambiarEstado($idDesafio, $estado);
+		$encuentro->eliminarEncuentros($idDesafio, $idEquipo);
+		$_SESSION['accion'] = 3;
+		header('Location: ?controlador=Desafio&accion=listaDesafios');
+	}
+
+	// Se elimina una tupla de la tabla encuentro.
+	public function cancelarEncuentro(){
+		$encuentro = new Encuentro();
+		$idEncuentro = $_POST['idEncuentro'];
+		echo $idEncuentro;
+		//$idEquipo = $_POST['idEquipo'];
+		$encuentro->cancelarEncuentro($idEncuentro);
+		//echo "encuentro: ".$idEncuentro." equipo: ".$idEquipo;
+		$_SESSION['accion'] = 4;
+		header('Location: ?controlador=Desafio&accion=listaDesafios');
+	}
+
+
+	public function detalleEncuentro(){
+		$idEncuentro = $_GET['idEncuentro'];
+		$encuentro = $this->Encuentro->getEncuentro($idEncuentro);
+		$data['encuentro'] = $encuentro;
+	    //$data['equipoSeleccionado'] = $_SESSION['equipoSeleccionado'];
+	    $data['accion'] = 1;
+	    $this->view->show("_detalleEncuentro.php", $data);
+	}
+
+	public function resumenDesafio(){
+		$idEncuentro = $_GET['idEncuentro'];
+		$encuentro = $this->Encuentro->getEncuentro($idEncuentro);
+		$data['encuentro'] = $encuentro;
+	    //$data['equipoSeleccionado'] = $_SESSION['equipoSeleccionado'];
+	    $data['accion'] = 2;
+	    $this->view->show("_resumenDesafio.php", $data);
+	}
+
+
+
+
+
+
+
+
+
 
     /*    MODULO DE ADMINISTRACION  */
     public function adminDesafios(){

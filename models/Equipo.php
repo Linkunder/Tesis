@@ -89,7 +89,7 @@ class Equipo{
 			WHERE Contacto.idUsuario = '".$idUsuario."' AND Usuario.idUsuario NOT IN 
 									(SELECT Usuario.idUsuario FROM Usuario 
 										JOIN MiembrosEquipo ON Usuario.idUsuario = MiembrosEquipo.idUsuario 
-										WHERE miembrosequipo.idEquipo = '".$idEquipo."' )");
+										WHERE MiembrosEquipo.idEquipo = '".$idEquipo."' )");
 		$query->execute();
 		$resultado = $query->fetchAll();
 		return $resultado;
@@ -114,12 +114,12 @@ class Equipo{
 	// Equipos del capitan en los que no esta su contacto.
 	public function getEquiposCapitan($idContacto, $idUsuario){
 		$query = $this->db->prepare(
-			"SELECT DISTINCT equipo.idEquipo, equipo.nombre 
-			from miembrosequipo 
-			join equipo on miembrosequipo.idEquipo = equipo.idEquipo 
-			where equipo.idCapitan = '".$idUsuario."' 
-			and miembrosequipo.idEquipo not in 
-			(SELECT miembrosequipo.idEquipo from miembrosequipo where miembrosequipo.idUsuario = '".$idContacto."')");
+			"SELECT DISTINCT Equipo.idEquipo, Equipo.nombre 
+			from MiembrosEquipo 
+			join Equipo on MiembrosEquipo.idEquipo = Equipo.idEquipo 
+			where Equipo.idCapitan = '".$idUsuario."' 
+			and MiembrosEquipo.idEquipo not in 
+			(SELECT MiembrosEquipo.idEquipo from MiembrosEquipo where MiembrosEquipo.idUsuario = '".$idContacto."')");
 		$query->execute();
 		$resultado = $query->fetchAll();
 		return $resultado;

@@ -104,13 +104,10 @@ $nroContactos = count($contactos);
                       <?php echo $item['edadPromedio']?>
                     </td>
                     <td class="centered">
-                      <a href="?controlador=Equipo&accion=gestionarEquipo&idEquipo=<?php echo $item['idEquipo']?>">
-                        <!--button type="button" class="btn btn-md btn-success" data-toggle="modal" data-target="#myModal"-->
-                        <button type="button" class="btn btn-md btn-success">
-                        Gestionar 
-                        <i class="fa fa-pencil-square-o"></i>
-                        </button>
-                      </a>
+                      <form action="?controlador=Equipo&accion=gestionarEquipo" method="post">
+                        <input name="idEquipo" value="<?php echo $item['idEquipo']?>" hidden/> 
+                        <button class="btn btn-md btn-success" type="submit">Gestionar</button>
+                      </form>
                     </td>
                 </tr>
                   <?php

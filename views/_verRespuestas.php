@@ -116,14 +116,14 @@
                     <?php echo $item['edadPromedio']?>
                   </td>
                   <td>
-                    <form id="demoform" action="?controlador=Encuentro&accion=cancelarEncuentro" method="post">
+                    <form id="demoform" action="?controlador=Desafio&accion=cancelarEncuentro" method="post">
                       <input type="text" name="idEncuentro" value="<?php echo $item['idEncuentro']?>" hidden/>
                       <input type="text" name="idEquipo" value="<?php echo $item['idEquipo']?>" hidden/>
                       <button type="submit" class="btn btn-danger" >Rechazar <i class="fa fa-times-circle" aria-hidden="true"></i></button>
                     </form>
                   </td>
                   <td>
-                    <form id="demoform" action="?controlador=Encuentro&accion=aceptarEncuentro" method="post">
+                    <form id="demoform" action="?controlador=Desafio&accion=aceptarEncuentro" method="post">
                       <input type="text" name="idEncuentro" value="<?php echo $item['idEncuentro']?>" hidden/>
                       <input type="text" name="idEquipo" value="<?php echo $item['idEquipo']?>" hidden/>
                       <input type="text" name="idDesafio" value="<?php echo $item['idDesafio']?>" hidden/>
