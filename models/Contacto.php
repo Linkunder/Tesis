@@ -21,7 +21,7 @@ class Contacto{
 	}
 
 	public function setContacto($idUsuario, $idContacto){
-		$query = $this->db->prepare("INSERT INTO Contacto (idUsuario, idContacto) VALUES ('$idUsuario','$idContacto');");
+		$query = $this->db->prepare("INSERT INTO Contacto (idUsuario, idContacto) VALUES ('".$idUsuario."','".$idContacto."');");
 		$query->execute();
 	}
 

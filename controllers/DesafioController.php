@@ -152,7 +152,7 @@ class DesafioController{
         session_start(); 
         } */
       $idDesafio = $_GET['idDesafio']; // POST o algo
-      $desafio = $this->Desafio->getDesafio($idDesafio);
+      	
       $data['desafio'] = $desafio;
       $data['equipoSeleccionado'] = $_SESSION['equipoSeleccionado'];
       $this->view->show("_detalleDesafio.php", $data);
@@ -229,7 +229,7 @@ class DesafioController{
 	public function cancelarEncuentro(){
 		$encuentro = new Encuentro();
 		$idEncuentro = $_POST['idEncuentro'];
-		echo $idEncuentro;
+		//echo $idEncuentro;
 		//$idEquipo = $_POST['idEquipo'];
 		$encuentro->cancelarEncuentro($idEncuentro);
 		//echo "encuentro: ".$idEncuentro." equipo: ".$idEquipo;
@@ -255,7 +255,6 @@ class DesafioController{
 	    $data['accion'] = 2;
 	    $this->view->show("_resumenDesafio.php", $data);
 	}
-
 
 
 

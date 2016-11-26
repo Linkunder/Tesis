@@ -30,7 +30,7 @@ include('layout/headerAdmin.php');
                                 </div>
                             </div>
                         </div>
-                        <a href="#">
+                        <a href="?controlador=Recinto&accion=adminRecintos">
                             <div class="panel-footer">
                                 <span class="pull-left">Ver detalles</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -52,7 +52,7 @@ include('layout/headerAdmin.php');
                                 </div>
                             </div>
                         </div>
-                        <a href="#">
+                        <a href="?controlador=Usuario&accion=adminJugadores">
                             <div class="panel-footer">
                                 <span class="pull-left">Ver detalles</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -74,7 +74,7 @@ include('layout/headerAdmin.php');
                                 </div>
                             </div>
                         </div>
-                        <a href="#">
+                        <a href="?controlador=Comentario&accion=adminComentarios">
                             <div class="panel-footer">
                                 <span class="pull-left">Ver detalles</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -96,7 +96,7 @@ include('layout/headerAdmin.php');
                                 </div>
                             </div>
                         </div>
-                        <a href="#">
+                        <a href="?controlador=Desafio&accion=adminDesafios">
                             <div class="panel-footer">
                                 <span class="pull-left">Ver detalles</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>

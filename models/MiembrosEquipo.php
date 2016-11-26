@@ -18,7 +18,7 @@ class MiembrosEquipo{
 			"SELECT Miembrosequipo.idUsuario, 
 			Equipo.idEquipo, 
 			Equipo.nombre 
-			from Miembrosequipo JOIN Equipo on Equipo.idequipo = Miembrosequipo.idEquipo where Miembrosequipo.idEquipo in 
+			from Miembrosequipo INNER JOIN Equipo on Equipo.idequipo = Miembrosequipo.idEquipo where Miembrosequipo.idEquipo in 
 			(select idEquipo from Equipo where idCapitan='".$idUsuario."')");
 		$query->execute();
 		$resultado = $query->fetchAll();

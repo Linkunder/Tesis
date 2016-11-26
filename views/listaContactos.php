@@ -29,7 +29,7 @@ $equipos = $vars['listaEquipos'];
 
 
 <!--MODAL IMPLEMENTOS-->
-    <div class="modal fade" id="modal" tabindex="-1" role="dialog" >
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" >
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -62,12 +62,14 @@ $equipos = $vars['listaEquipos'];
       </ol>
 
       <?php 
+
       if (count($contactos)==0){ ?>
       <div class="page-header">
           <h2> No tienes contactos <i class="fa fa-frown-o" aria-hidden="true"></i>  </h2>
       </div>
       <p class="centered">Para agregar un nuevo contacto haz click 
         <button href="#" data-toggle="modal" data-target="#modal-1" type="button" class="btn btn-md btn-primary" action="">aquí <i class="fa fa-plus-circle"></i></button>.
+      </p>
     </div>
   </div>
 
@@ -78,7 +80,21 @@ $equipos = $vars['listaEquipos'];
 
       <?php
       include('layout/footer.php'); 
-      } else {
+      } 
+      else {
+      ?>
+
+      <?php
+      if (isset($vars['accion'])){
+        if ($vars['accion'] == 1){
+      ?>
+        <div class="alert alert-success alert-dismissible">
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+          <strong>Listo!</strong> Tu contacto ha sido agregado exitosamente
+        </div>
+        <?php
+        }
+      }
       ?>
       <div class="page-header">
           <h2> Mis contactos <i class="fa fa-users" aria-hidden="true"></i> </h2>
@@ -137,7 +153,8 @@ $equipos = $vars['listaEquipos'];
                           ?>
 
                           <!--a href="#" class="btn btn-success btn-xs fa fa-plus-circle" onclick="setValue(<?php echo $idContacto.",'$nombreContacto'";?>)" title="Agregar"-->
-                          <button type="button" class="btn btn-primary" href="javascript:void(0);" data-toggle="modal" data-target="#modal"  onclick="carga_ajax('modal','<?php echo $idContacto?>');">Agregar <i class="fa fa-plus-circle" aria-hidden="true"></i></button>
+                          <button type="button" class="btn btn-primary" href="javascript:void(0);" data-toggle="modal" 
+                          data-target="#modal"  onclick="carga_ajax('modal','<?php echo $idContacto?>');">Agregar <i class="fa fa-plus-circle" aria-hidden="true"></i></button>
 
                           <?php
                         } 
@@ -281,6 +298,8 @@ foreach ($equipos as $equipo ) {
 
 
 
+
+
 ?>
 
 
@@ -353,57 +372,16 @@ foreach ($equipos as $equipo ) {
 
 
 
-<script type="text/javascript">
-var idContact="0";
-var nombreContacto="";
-function setValue(id,nombre){
-  idContact= id;
-  document.getElementById("id_contacto").value = idContact;
-  nombreContacto = nombre;
-  window.location.href="?controlador=Contacto&accion=listaContactos&idContact="+id+"&n="+nombreContacto;
+
+
+
+<script>
+function carga_ajax(div, id){
+  $.post(
+    '?controlador=Contacto&accion=nuevoMiembro&idContacto='+id,
+    function(resp){
+      $("#"+div+"").html(resp);
+    }
+    );
 }
-
-  window.onload = function() {
-          function getParameterByName(name) {
-            name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-            var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-            results = regex.exec(location.search);
-            return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-        }
-       var a = getParameterByName('idContact');
-       var n = getParameterByName('n');
-       if(a == ""){
-       }else{
-        document.getElementById("id_contacto").value = a;
-
-        document.getElementById("myModalLabelContact").innerHTML="Selecciona el equipo al cual deseas incluir a "+n;
-         $('#myModal').modal();
-       }
-};
-
 </script>
-
-
-
- <script>
-            /*
-            $('#modalImplementos').on('show.bs.modal', function(){
-                alert("Hola");
-                //$('#modalImplementos').load('?controlador=Recinto&accion=implementosRecinto');
-                $('#modalImplementos').load('?controlador=Recinto&accion=implementosRecinto');
-                 
-            })
-            */
-            function carga_ajax(div, id){
-
-                     $.post(
-                    '?controlador=Contacto&accion=nuevoMiembro&idContacto='+id,
-                    function(resp){
-                        $("#"+div+"").html(resp);
-                    }
-                    ); 
-              
-            }
-
-            
-        </script>

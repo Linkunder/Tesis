@@ -32,6 +32,8 @@
                     <th>Tipo de partido</th>
                     <td><?php 
                     $tipoPartido = $item['tipoPartido'];
+                    echo $tipoPartido;
+                    /*
                     if ($tipoPartido == 0){
                       echo "Fútbol";
                     }
@@ -40,7 +42,7 @@
                     }
                     if ($tipoPartido == 2){
                       echo "Baby-fútbol";
-                    }
+                    }*/
                     ?></td>
                   </tr>
                   <tr>

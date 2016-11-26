@@ -3,6 +3,7 @@
 require 'models/Equipo.php';
 require 'models/Contacto.php';
 require 'models/Usuario.php';
+require 'models/Desafio.php';
 
 session_start();
 
@@ -10,6 +11,9 @@ class EquipoController{
 	function __construct(){
 		$this->view = new View();
 		$this->Equipo = new Equipo();
+		$this->Contacto = new Contacto();
+		$this->Desafio = new Desafio();
+		$this->Usuario = new Usuario();
 	}
 
 	public function index(){
@@ -37,6 +41,10 @@ class EquipoController{
 			$listaMiembrosEquipo = $equipos->getMiembrosEquipo($idEquipo); 		// Jugadores de un determinado equipo.
 			$data['listaMiembrosEquipo'.$idEquipo]= $listaMiembrosEquipo;
 		}
+		if (isset($_SESSION['accion'])){
+			$data['accion'] = $_SESSION['accion'];
+		}
+		$_SESSION['accion'] = 0;
 		$this->view->show('listaEquipos.php',$data);
 	}
 
@@ -50,6 +58,10 @@ class EquipoController{
 		$data['listaMiembrosEquipo']= $listaMiembrosEquipo;
 		$listaContactos = $equipo->getContactosEquipo($idUsuario,$idEquipo);				// Contactos que no estan en el equipo
 		$data['listaContactos']= $listaContactos;
+
+		// Desafios del equipo 
+		$listaDesafios = $this->Equipo->getDesafiosEquipo($idEquipo);
+		$data['listaDesafios'] = $listaDesafios;
 		$this->view->show('gestionarEquipo.php',$data);
 	}
 
@@ -102,6 +114,7 @@ class EquipoController{
 		$nroJugadores = count($miembros);
 		$this->Equipo->setMiembros($idEquipo,$edadPromedio, $nroJugadores);
 		$equipo->agregarMiembroEquipo($idUsuario,$idEquipo);
+		$_SESSION['accion'] = 1;
 		header('Location: ?controlador=Equipo&accion=listaEquipos');
 	}
 

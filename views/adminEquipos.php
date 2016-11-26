@@ -57,8 +57,8 @@ $equipos = $vars['equipos'];
                                         <td><?php echo $key['partidosDisputados']?></td>
                                         <td><?php echo $key['partidosCancelados']?></td>
                                         <td><?php echo $key['idCapitan']?></td>
-                                        <td class="center">
-                                            <button type="button" class="btn btn-primary btn-md">Modificar</button>
+                                        <td class="centrado">
+                                            <button type="button" class="btn btn-primary btn-sm col-xs-12">Modificar</button>
                                         </td>
                                     </tr>
                                     <?php

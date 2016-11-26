@@ -29,10 +29,10 @@ class Encuentro{
 		Equipo.puntuacion, 
 		Equipo.edadPromedio 
 			FROM Encuentro 
-			join Desafio on Encuentro.idDesafio = Desafio.idDesafio 
-			join Recinto on Desafio.idRecinto = Recinto.idRecinto
-			join Equipo on Equipo.idEquipo = Encuentro.idEquipo 
-			join Usuario on Equipo.idCapitan = Usuario.idUsuario
+			INNER JOIN Desafio on Encuentro.idDesafio = Desafio.idDesafio 
+			INNER JOIN Recinto on Desafio.idRecinto = Recinto.idRecinto
+			INNER JOIN Equipo on Equipo.idEquipo = Encuentro.idEquipo 
+			INNER JOIN Usuario on Equipo.idCapitan = Usuario.idUsuario
 			WHERE Encuentro.idDesafio = '".$idDesafio."' ";
 		$query = $this->db->prepare($sql);
 		$query->execute();
@@ -47,7 +47,7 @@ class Encuentro{
 	public function getRespuestas($idDesafio){
 		$query = $this->db->prepare("SELECT Encuentro.estadoSolicitud as estadoSolicitud 
 			FROM Desafio 
-			JOIN Encuentro ON Desafio.idDesafio = Encuentro.idDesafio
+			INNER JOIN Encuentro ON Desafio.idDesafio = Encuentro.idDesafio
 			WHERE Desafio.idDesafio = '".$idDesafio."'");
 		$query->execute();
 		$resultado = $query->fetchAll();
@@ -92,9 +92,9 @@ class Encuentro{
 			(select nombre from Equipo where idEquipo = Desafio.idEquipo) as equipo2, 
 			Encuentro.estadoSolicitud 
 			from Encuentro 
-			join Desafio on Encuentro.idDesafio = Desafio.idDesafio 
-			join Recinto on Recinto.idRecinto = Desafio.idRecinto 
-			join Equipo on Encuentro.idEquipo = Equipo.idEquipo 
+			INNER JOIN Desafio on Encuentro.idDesafio = Desafio.idDesafio 
+			INNER JOIN Recinto on Recinto.idRecinto = Desafio.idRecinto 
+			INNER JOIN Equipo on Encuentro.idEquipo = Equipo.idEquipo 
 			WHERE Equipo.idCapitan= '".$idUsuario."';";
 		$query = $this->db->prepare($sql);
 		$query->execute();
@@ -113,9 +113,9 @@ class Encuentro{
 		(select nombre from Equipo where idEquipo = Desafio.idEquipo) as equipo2, 
 		Encuentro.estadoSolicitud 
 		from Encuentro 
-		join Desafio on Encuentro.idDesafio = Desafio.idDesafio 
-		join Recinto on Desafio.idRecinto = Recinto.idRecinto
-		join Equipo on Encuentro.idEquipo = Equipo.idEquipo WHERE Encuentro.idEncuentro= '".$idEncuentro."';";
+		INNER JOIN Desafio on Encuentro.idDesafio = Desafio.idDesafio 
+		INNER JOIN Recinto on Desafio.idRecinto = Recinto.idRecinto
+		INNER JOIN Equipo on Encuentro.idEquipo = Equipo.idEquipo WHERE Encuentro.idEncuentro= '".$idEncuentro."';";
 		//echo $sql;
 		$query = $this->db->prepare($sql);
 		$query->execute();
@@ -130,8 +130,8 @@ class Encuentro{
 		Equipo.nombre as nombreEquipo2,
 		Encuentro.respuesta
 		from Encuentro 
-		join Desafio on Encuentro.idDesafio = Desafio.idDesafio 
-		join Equipo on Encuentro.idEquipo = Equipo.idEquipo WHERE Encuentro.idDesafio= '".$idDesafio."';";
+		INNER JOIN Desafio on Encuentro.idDesafio = Desafio.idDesafio 
+		INNER JOIN Equipo on Encuentro.idEquipo = Equipo.idEquipo WHERE Encuentro.idDesafio= '".$idDesafio."';";
 		//echo $sql;
 		$query = $this->db->prepare($sql);
 		$query->execute();

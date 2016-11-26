@@ -85,10 +85,10 @@ class Equipo{
 		$query = $this->db->prepare(
 			"SELECT Usuario.idUsuario, Usuario.nombre, Usuario.apellido, Usuario.Fotografia 
 			FROM Usuario 
-			JOIN Contacto ON Usuario.idUsuario = Contacto.idContacto 
+			INNER JOIN Contacto ON Usuario.idUsuario = Contacto.idContacto 
 			WHERE Contacto.idUsuario = '".$idUsuario."' AND Usuario.idUsuario NOT IN 
 									(SELECT Usuario.idUsuario FROM Usuario 
-										JOIN MiembrosEquipo ON Usuario.idUsuario = MiembrosEquipo.idUsuario 
+										INNER JOIN MiembrosEquipo ON Usuario.idUsuario = MiembrosEquipo.idUsuario 
 										WHERE MiembrosEquipo.idEquipo = '".$idEquipo."' )");
 		$query->execute();
 		$resultado = $query->fetchAll();
@@ -116,7 +116,7 @@ class Equipo{
 		$query = $this->db->prepare(
 			"SELECT DISTINCT Equipo.idEquipo, Equipo.nombre 
 			from MiembrosEquipo 
-			join Equipo on MiembrosEquipo.idEquipo = Equipo.idEquipo 
+			INNER JOIN Equipo on MiembrosEquipo.idEquipo = Equipo.idEquipo 
 			where Equipo.idCapitan = '".$idUsuario."' 
 			and MiembrosEquipo.idEquipo not in 
 			(SELECT MiembrosEquipo.idEquipo from MiembrosEquipo where MiembrosEquipo.idUsuario = '".$idContacto."')");
@@ -124,6 +124,21 @@ class Equipo{
 		$resultado = $query->fetchAll();
 		return $resultado;
 	}
+
+
+	// Desafios del equipo
+	public function getDesafiosEquipo($idEquipo){
+		$sql = 
+		"SELECT Desafio.idRecinto, Recinto.tipo FROM Equipo 
+		INNER JOIN Desafio ON Equipo.idEquipo = Desafio.idEquipo 
+		INNER JOIN Recinto ON Desafio.idRecinto = Recinto.idRecinto
+		WHERE Desafio.idEquipo = '".$idEquipo."'";
+		$query = $this->db->prepare($sql);
+		$query->execute();
+		$resultado = $query->fetchAll();
+		return $resultado;
+	}
+
 
 
 

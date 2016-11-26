@@ -6,9 +6,34 @@ include('layout/headerAdmin.php');
 
 
 $jugadores = $vars['jugadores'];
-
+$arrayEdades = $vars['edades'];
 
 ?>
+
+
+
+<!--MODAL -->
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Cargando información</h4>
+      </div>
+      <div class="modal-body">
+        <div class="progress">
+            <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+            </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+<!--Modal-->
+
+
 
 
 <!-- DataTables CSS -->
@@ -29,6 +54,26 @@ $jugadores = $vars['jugadores'];
             </div>
             <!-- /.row -->
 
+                <?php
+                if (isset($vars['accionAdmin'])){
+                  if ($vars['accionAdmin'] == 1){
+                    ?>
+                    <div class="alert alert-warning alert-dismissible">
+                      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                      <strong>Listo!</strong> El jugador ha sido inhabilitado.
+                    </div>
+                    <?php
+                  }
+                  if ($vars['accionAdmin'] == 2){
+                    ?>
+                    <div class="alert alert-info alert-dismissible">
+                      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                      <strong>Listo!</strong> El jugador ha sido habilitado.
+                    </div>
+                    <?php
+                  }
+                }
+                ?>
 
 
             <div class="row">
@@ -50,14 +95,20 @@ $jugadores = $vars['jugadores'];
                                 </thead>
                                 <tbody>
                                     <?php
+                                    $i = 0;
                                     foreach ($jugadores as $key) {
+                                        $idJugador = $key['idUsuario'];
                                     ?>
                                     <tr class="odd gradeX">
                                         <td><?php echo $key['nombre']." ".$key['apellido']?></td>
                                         <td><?php echo $key['mail']?></td>
                                         <td><?php echo $key['telefono']?></td>
-                                        <td>Edad</td>
-                                        <td class="center-block">
+                                        <td>
+                                            <?php
+                                            echo $arrayEdades[$i];
+                                            ?>
+                                        </td>
+                                        <td class="centrado">
                                             <?php 
                                             if ($key['estado'] == 1){
                                                 ?>
@@ -76,30 +127,48 @@ $jugadores = $vars['jugadores'];
                                             }
                                             ?>
                                         </td>
-                                        <td class="center">
+                                        <td class="centrado">
                                             <?php 
                                             if ($key['estado'] == 1){
                                                 ?>
-                                                <button type="button" class="btn btn-warning btn-md">Inhabilitar</button>
+                                                <form action="?controlador=Usuario&accion=cambiarEstado" method="post">
+                                                    <input name="idJugador" value="<?php echo $idJugador?>" hidden>
+                                                    <input name="estado" value="2" hidden>
+                                                    <button type="submit" class="btn btn-warning btn-sm col-xs-12">Inhabilitar 
+                                                        <i class="fa fa-ban" aria-hidden="true"></i>
+                                                    </button>    
+                                                </form>
+                                                
                                                 <?php
                                             }
                                             if ($key['estado'] == 2){
                                                 ?>
-                                                <button type="button" class="btn btn-success btn-md">Habilitar</button>
+                                                <form action="?controlador=Usuario&accion=cambiarEstado" method="post">
+                                                    <input name="idJugador" value="<?php echo $idJugador?>" hidden>
+                                                    <input name="estado" value="1" hidden>
+                                                    <button type="submit" class="btn btn-success btn-sm col-xs-12">Habilitar 
+                                                        <i class="fa fa-check-circle" aria-hidden="true"></i>
+                                                    </button>    
+                                                </form>
                                                 <?php
                                             }
                                             if ($key['estado'] == 3){
                                                 ?>
-                                                <button type="button" class="btn btn-success btn-md">Nose</button>
+                                                <button type="button" class="btn btn-success btn-sm col-xs-12">Invitar</button>
                                                 <?php
                                             }
                                             ?>
                                         </td>
-                                        <td class="center">
-                                            <button type="button" class="btn btn-primary btn-md">Ver información</button>
+                                        <td class="centrado">
+                                            <button type="button" class="btn btn-primary btn-sm col-xs-12" href="javascript:void(0);" 
+                                            data-toggle="modal" data-target="#modal" onclick="carga_ajax('modal','<?php echo $idJugador?>','jugador');">
+                                            Ver información 
+                                                <i class="fa fa-search-plus" aria-hidden="true"></i>
+                                            </button>
                                         </td>
                                     </tr>
                                     <?php
+                                    $i++;
                                     }
                                     ?>
                                 </tbody>
@@ -139,3 +208,18 @@ include('layout/footerAdmin.php');
         });
     });
     </script>
+
+<script>
+ 
+function carga_ajax(div, id, tipo){
+
+  if (tipo == 'jugador'){
+    $.post(
+      '?controlador=Usuario&accion=detalleJugador&idJugador='+id,
+      function(resp){
+        $("#"+div+"").html(resp);
+      }
+      ); 
+  }
+}
+</script>

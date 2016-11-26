@@ -39,6 +39,19 @@ $nroContactos = count($contactos);
     </ol>
 
     <?php
+      if (isset($vars['accion'])){
+        if ($vars['accion'] == 1){
+      ?>
+        <div class="alert alert-success alert-dismissible">
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+          <strong>Listo!</strong>Tu equipo ha sido creado exitosamente
+        </div>
+        <?php
+        }
+      }
+      ?>
+
+    <?php
 
 
       if (count($equipos)==0){          // CASO 1: NO TENER EQUIPOS COMO CAPITAN

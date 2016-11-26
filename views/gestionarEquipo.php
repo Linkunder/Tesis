@@ -13,6 +13,9 @@ $listaContactos = $vars['listaContactos'];
 $equipo = $vars['equipo'];
 
 
+// Desafios del equipo
+$desafios = $vars['listaDesafios'];
+
 
 ?>
 
@@ -70,7 +73,7 @@ $equipo = $vars['equipo'];
                     <div class="row">
                         <div class="col-md-6">
                             <div class="panel-heading">
-                                <h3 class="panel-title" align="center"><strong>Número de partidos</strong></h3>
+                                <h3 class="panel-title" align="center"><strong>Desafíos </strong></h3>
                             </div>
                             <div class="panel-equipo">
                                 <div class="panel-body">
@@ -84,7 +87,7 @@ $equipo = $vars['equipo'];
                         </div>
                         <div class="col-md-6">
                             <div class="panel-heading">
-                                <h3 class="panel-title" align="center"><strong>Edad de jugadores</strong></h3>
+                                <h3 class="panel-title" align="center"><strong>Tipo de desafíos </strong></h3>
                             </div>
                             <div class="panel-equipo">
                                 <div class="panel-body">
@@ -159,6 +162,27 @@ include('layout/footer.php');
 
 
 
+<?php
+if (count($desafios) > 0){
+    $baby = 0;
+    $futbol = 0;
+    $futbolito = 0;
+    foreach ($desafios as $key) {
+        $tipoRecinto = $key['tipo'];
+        if ($tipoRecinto == "Futbolito"){
+            $futbolito++;
+        } 
+        if ($tipoRecinto == "Baby-futbol"){
+            $baby++;
+        }
+        if ($tipoRecinto == "Fútbol"){
+            $futbol++;
+        }
+    }
+}
+
+?>
+
 <script type="text/javascript" src="assets/js/chartjs/chart.min.js"></script>
 
 
@@ -166,26 +190,26 @@ include('layout/footer.php');
 <script type="text/javascript">
 
 
-var PieDoughnutChartSampleData = [
-    {
-        value: 300,
-        color:"#F7464A",
-        highlight: "#FF5A5E",
-        label: "Red"
-    },
-    {
-        value: 50,
-        color: "#46BFBD",
-        highlight: "#5AD3D1",
-        label: "Green"
-    },
-    {
-        value: 100,
-        color: "#FDB45C",
-        highlight: "#FFC870",
-        label: "Yellow"
-    }
-]
+        var PieDoughnutChartSampleData = [
+            {
+                value: <?php echo $futbol?>,
+                color:"#F7464A",
+                highlight: "#FF5A5E",
+                label: "Fútbol"
+            },
+            {
+                value: <?php echo $futbolito?>,
+                color: "#46BFBD",
+                highlight: "#5AD3D1",
+                label: "Futbolito"
+            },
+            {
+                value: <?php echo $baby?>,
+                color: "#FDB45C",
+                highlight: "#FFC870",
+                label: "Baby-fútbol"
+            }
+        ]
 
 
         var PieDoughnutChartSampleData4 = [
@@ -212,8 +236,8 @@ var PieDoughnutChartSampleData = [
             });
 
              window.PieChartSample = new Chart(document.getElementById("pie-chart-sample").getContext("2d")).Pie(PieDoughnutChartSampleData,{
-        responsive:true
-  });
+                responsive:true
+            });
 
         };
 

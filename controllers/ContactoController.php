@@ -26,10 +26,7 @@ class ContactoController{
 		$contactos = new Contacto();
 		$equipos = new Equipo();
 		$miembrosEquipo = new MiembrosEquipo();
-		if (isset($_GET['jugador'])){
-			$idContacto = $_GET['jugador'];
-			$nuevoContacto = $contactos->setContacto($idUsuario,$idContacto);
-		}
+		
 		$listaContactos = $contactos->getContactos($idUsuario);
 		$arrayEdades = array();
 		$i = 0;
@@ -44,7 +41,21 @@ class ContactoController{
 		$data['listaEquipos'] = $listaEquipos;				// Listar equipos del usuario (para que un contacto sea agregado a uno de ellos)
 		$listaMiembrosEquiposJugador = $miembrosEquipo->getMiembrosEquiposJugador($idUsuario);
 		$data['listaMiembrosEquiposJugador'] = $listaMiembrosEquiposJugador;	// Miembros de los equipos de los cuales el jugador es el capitan.
+
+		if (isset($_SESSION['accion'])){
+			$data['accion'] = $_SESSION['accion'];
+		}
+		$_SESSION['accion'] = 0;
+
 		$this->view->show('listaContactos.php',$data); 
+	}
+
+	public function agregarContacto(){
+		$idUsuario = $_SESSION['login_user_id'];
+		$idContacto = $_POST['idJugador'];
+		$this->Contacto->setContacto($idUsuario,$idContacto);
+		$_SESSION['accion'] = 1;
+		header('Location: ?controlador=Contacto&accion=listaContactos');
 	}
 
 	public function nuevoMiembro(){

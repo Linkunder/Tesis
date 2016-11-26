@@ -32,6 +32,14 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <link rel="shortcut icon" href="assets/images/soccer.ico">
+
+        <!-- Centrado de tablas -->
+    <style type="text/css">
+    .centrado{
+        text-align: center;
+    }
+    </style>
 
 </head>
 
@@ -61,7 +69,7 @@
                         <li>
                             <a href="#">
                                 <div>
-                                    <i class="fa fa-bell" aria-hidden="true"></i> Nuevo recinto 
+                                    Nuevos recintos! <?php echo "4"?>
                                 </div>
                             </a>
                         </li>

@@ -32,6 +32,8 @@
                     <th>Tipo de partido</th>
                     <td><?php 
                     $tipoPartido = $item['tipoPartido'];
+                    echo $tipoPartido;
+                    /*
                     if ($tipoPartido == 0){
                       echo "Fútbol";
                     }
@@ -40,12 +42,12 @@
                     }
                     if ($tipoPartido == 2){
                       echo "Baby-fútbol";
-                    }
+                    }*/
                     ?></td>
                   </tr>
                   <tr>
                     <th>Desafiante</th>
-                    <td><?php echo $item['nombreEquipo']?></td>
+                    <td><?php echo $item['nombreEquipo']." de color ".$item['colorEquipo']?></td>
                   </tr>
                   <tr>
                     <th>Capitán</th>

@@ -139,14 +139,15 @@ class UsuarioController{
  		if (!count($nuevoContacto)==0){
 	  		$consulta = $contacto->verificarContacto($nuevoContacto, $idUsuario);
 	  		if ($consulta == "3"){
-	  			$data['excepcion']= "3";
-	  		} else {
-	  			if ($consulta == "2"){ // Es true, el contacto ya lo tiene.
-	  				$data['contacto']= true;
-		  		} else {
-		  			$data['contacto']= false;
-		  		}
+	  			$data['respuesta']= 3; // Es el mismo
 	  		}
+	  		if ($consulta == "2"){ // Es true, el contacto ya lo tiene.
+	  			$data['respuesta']= 2;
+	  		}
+	  		if ($consulta == "1"){
+	  			$data['respuesta']= 1; // No lo tiene
+	  		}
+	  		
  		}
   		$data['usuarios']=$nuevoContacto;
  		$this->view->show('busquedaJugador.php',$data);
@@ -186,18 +187,23 @@ class UsuarioController{
 		$idUsuario = $_SESSION['login_user_id'];
 		$modificarPerfil = $usuario->getUsuario($idUsuario);
 		$data['modificarPerfil'] = $modificarPerfil;
+		if (isset($_SESSION['accion'])){
+			$data['accion'] = $_SESSION['accion'];
+		}
+		$_SESSION['accion'] = 0;
 		$this->view->show('modificarPerfil.php',$data);
  	}
 
  	// Actualizar información del usuario en la BD
  	public function actualizarInformacion(){
  		$idUsuario = $_SESSION['login_user_id'];
+ 		$nombre = $_POST['nombre'];
+ 		$apellido = $_POST['apellido'];
  		$nickname= $_POST['nickname'];
 		$mail= $_POST['mail'];
 		$telefono= $_POST['telefono'];
-		$fotografia = "actualice foto";
-		$fechaNacimiento = $_POST['fechaNacimiento'];
-		$this->Usuario->updateUsuario($idUsuario, $nickname,$mail,$telefono,$fotografia, $fechaNacimiento);
+		$this->Usuario->updateUsuario($idUsuario, $nombre, $apellido, $nickname,$mail,$telefono);
+		$_SESSION['accion'] = 1;
 		header('Location: ?controlador=Usuario&accion=modificarPerfil');
  	}
 
@@ -317,10 +323,43 @@ class UsuarioController{
 
     /*    MODULO DE ADMINISTRACION  */
     public function adminJugadores(){
-      $jugadores = $this->Usuario->getUsuarios();
+      $jugadores = $this->Usuario->getUsuariosAdmin();
       $data['jugadores'] = $jugadores;
+      $arrayEdades = array(); 
+      $i = 0;
+      foreach ($jugadores as $key ) {
+      	$fechaNacimiento = $key['fechaNacimiento'];
+      	$arrayEdades[$i] = $this->calcularEdad($fechaNacimiento);
+      	$i++;
+      }
+      $data['edades'] = $arrayEdades;
+      if (isset($_SESSION['accionAdmin'])){
+			$data['accionAdmin'] = $_SESSION['accionAdmin'];
+		}
+		$_SESSION['accionAdmin'] = 0;
       $this->view->show('adminJugadores.php',$data);
     }
+
+    public function cambiarEstado(){
+    	$idJugador = $_POST['idJugador'];
+    	$estado = $_POST['estado'];
+    	$this->Usuario->cambiarEstadoJugador($idJugador, $estado);
+    	if ($estado == 1){
+    		$_SESSION['accionAdmin'] = 2;
+    	}
+    	if ($estado == 2){
+    		$_SESSION['accionAdmin'] = 1;
+    	}
+    	header('Location: ?controlador=Usuario&accion=adminJugadores');
+    }
+
+
+	public function detalleJugador(){
+		$idJugador = $_GET['idJugador'];
+		$jugador = $this->Usuario->getUsuario($idJugador);
+		$data['jugador'] = $jugador;
+	    $this->view->show("_detalleJugador.php", $data);
+	}
 
 
 }

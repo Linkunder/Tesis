@@ -48,12 +48,13 @@ class Usuario{
 		$query->execute();
 	}
 
-	public function updateUsuario($idUsuario, $nickname,$mail,$telefono,$fotografia,$fechaNacimiento){
+	public function updateUsuario($idUsuario, $nombre, $apellido, $nickname,$mail,$telefono){
 		$sql = "UPDATE Usuario SET 
+			nombre = '".$nombre."',
+			apellido = '".$apellido."',
 			nickname = '".$nickname."',
 			mail = '".$mail."',
-			telefono = '".$telefono."',
-			fechaNacimiento = '".$fechaNacimiento."'
+			telefono = '".$telefono."'
 			WHERE idUsuario = '".$idUsuario."'";
 		$query = $this->db->prepare($sql);
 		$query->execute();
@@ -72,6 +73,21 @@ class Usuario{
 		$query->execute();
 		$resultado = $query->fetchAll();
 		return $resultado;
+	}
+
+	public function getUsuariosAdmin(){
+		$query = $this->db->prepare('SELECT * FROM Usuario WHERE perfil != 2');
+		$query->execute();
+		$resultado = $query->fetchAll();
+		return $resultado;
+	}
+
+	public function cambiarEstadoJugador($idJugador, $estado){
+		$sql = "UPDATE Usuario SET 
+			estado = '".$estado."'
+			WHERE idUsuario = '".$idJugador."'";
+		$query = $this->db->prepare($sql);
+		$query->execute();
 	}
 
 }

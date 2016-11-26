@@ -54,8 +54,8 @@ $comentarios = $vars['comentarios'];
                                         <td><?php echo $key['fecha']?></td>
                                         <td><?php echo $key['hora']?></td>
                                         <td><?php echo $key['contenido']?></td>
-                                        <td class="center">
-                                            <button type="button" class="btn btn-danger btn-md">Eliminar</button>
+                                        <td class="centrado">
+                                            <button type="button" class="btn btn-danger btn-sm col-xs-12">Eliminar</button>
                                         </td>
                                     </tr>
                                     <?php

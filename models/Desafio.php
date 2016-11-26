@@ -32,12 +32,13 @@ class Desafio{
 			Equipo.idEquipo as idEquipoOrganizador, 
 			Equipo.idCapitan, 
 			Equipo.nombre as nombreEquipo,
+			Equipo.color as colorEquipo,
 			Usuario.nombre, 
 			Usuario.apellido 
 			FROM Desafio 
-			JOIN Recinto ON Desafio.idRecinto = Recinto.idRecinto  
-			JOIN Equipo ON Desafio.idEquipo = Equipo.idEquipo 
-			JOIN Usuario ON Usuario.idUsuario = Equipo.idCapitan 
+			INNER JOIN Recinto ON Desafio.idRecinto = Recinto.idRecinto  
+			INNER JOIN Equipo ON Desafio.idEquipo = Equipo.idEquipo 
+			INNER JOIN Usuario ON Usuario.idUsuario = Equipo.idCapitan 
 			WHERE Desafio.idDesafio = '".$idDesafio."'
 			");
 		$query->execute();
@@ -57,8 +58,8 @@ class Desafio{
 			Equipo.nombre as nombreEquipo, 
 			Equipo.idEquipo
 			FROM Desafio
-			JOIN Recinto ON Desafio.idRecinto = Recinto.idRecinto  
-			JOIN Equipo ON Desafio.idEquipo = Equipo.idEquipo 
+			INNER JOIN Recinto ON Desafio.idRecinto = Recinto.idRecinto  
+			INNER JOIN Equipo ON Desafio.idEquipo = Equipo.idEquipo 
 			WHERE Equipo.idCapitan = '".$idUsuario."' 
 			AND Desafio.estado != 3";
 		$query = $this->db->prepare($sql);
@@ -79,8 +80,8 @@ class Desafio{
 			Usuario.nombre, 
 			Usuario.Apellido 
 			FROM Desafio 
-			JOIN Equipo ON Desafio.idEquipo = Equipo.idEquipo 
-			JOIN Usuario ON Usuario.idUsuario = Equipo.idCapitan 
+			INNER JOIN Equipo ON Desafio.idEquipo = Equipo.idEquipo 
+			INNER JOIN Usuario ON Usuario.idUsuario = Equipo.idCapitan 
 			WHERE Equipo.idCapitan != '".$idUsuario."' 
 			AND Desafio.limInferior >= '".$limInf."' 
 			AND Desafio.limSuperior <= '".$limSup."'
@@ -111,9 +112,9 @@ class Desafio{
 			Encuentro.idEncuentro,
 			(select nombre from Equipo where idEquipo = Encuentro.idEquipo) as equipo2
 			FROM Desafio
-			JOIN Encuentro ON Desafio.idDesafio = Encuentro.idDesafio
-			JOIN Recinto ON Desafio.idRecinto = Recinto.idRecinto  
-			JOIN Equipo ON Desafio.idEquipo = Equipo.idEquipo 
+			INNER JOIN Encuentro ON Desafio.idDesafio = Encuentro.idDesafio
+			INNER JOIN Recinto ON Desafio.idRecinto = Recinto.idRecinto  
+			INNER JOIN Equipo ON Desafio.idEquipo = Equipo.idEquipo 
 			WHERE Equipo.idCapitan = '".$idUsuario."' 
 			AND Desafio.estado = 3");
 		$query->execute();
