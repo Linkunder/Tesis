@@ -13,12 +13,12 @@ foreach ($recinto as $key ) {
       <form action="?controlador=Recinto&accion=updateRecinto" method="post">
         <div class="form-group">
           <label for="nombre">Nombre</label>
-          <input type="text" class="form-control" id="nombre" name="nombre" value="<?php echo $key['nombre']?>">
+          <input type="text" class="form-control" id="nombre" name="nombre" value="<?php echo $key['nombre']?>" required>
           <!--small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small-->
         </div>
         <div class="form-group">
           <label for="tipo">Tipo de recinto</label>
-          <select class="form-control" id="tipo" name="tipo">
+          <select class="form-control" id="tipo" name="tipo" required>
             <option selected value="<?php echo $key['tipo']?>"><?php echo $key['tipo']?></option>
             <?php
             if ($key['tipo'] == "Futbolito"){
@@ -45,15 +45,15 @@ foreach ($recinto as $key ) {
         </div>
         <div class="form-group">
           <label for="superficie">Superficie</label>
-          <input type="text" class="form-control" id="superficie" name="superficie" value="<?php echo $key['superficie']?>">
+          <input type="text" class="form-control" id="superficie" name="superficie" value="<?php echo $key['superficie']?>" required>
         </div>
         <div class="form-group">
           <label for="direccion">Dirección</label>
-          <input type="text" class="form-control" id="direccion" name="direccion" value="<?php echo $key['direccion']?>">
+          <input type="text" class="form-control" id="direccion" name="direccion" value="<?php echo $key['direccion']?>" required>
         </div>
         <div class="form-group">
           <label for="telefono">Teléfono</label>
-          <input type="text" class="form-control" id="telefono" name="telefono" value="<?php echo $key['telefono']?>">
+          <input type="text" class="form-control" id="telefono" name="telefono" value="<?php echo $key['telefono']?>" required>
         </div>
         <input name="idRecinto" value="<?php echo $key['idRecinto']?>" hidden/>
         <!--div class="form-group">

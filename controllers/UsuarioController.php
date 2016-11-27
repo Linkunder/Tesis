@@ -76,18 +76,16 @@ class UsuarioController{
 			$this->view->show('formularioRegistro.php', $data);
 		} else {
 
-			$usuarios = $this->Usuario->getUsuarios();
-			$idUsuario = end($usuarios)['idUsuario'];
-			$subirImagen = $this->guardarImagen($idUsuario);
+			$subirImagen = $this->guardarImagen($idUsuarioNuevo);
 			$mensaje = 0;
 			if ($subirImagen == 0 ){	// hubo un error
 				$data['error'] = 0;
-				$this->Usuario->eliminarUsuario($idUsuario);
+				$this->Usuario->eliminarUsuario($idUsuarioNuevo);
 				$this->view->show('formularioRegistro.php', $data);
 			} else {	// todo ok
-				$usuarioNuevo = $this->Usuario->getUsuario($idUsuario);
+				$usuarioNuevo = $this->Usuario->getUsuario($idUsuarioNuevo);
 				$data['nuevoUsuario'] = $usuarioNuevo;
-				header('Location: ?controlador=Usuario&accion=adminJugadores');
+				header('Location: ?controlador=Index&accion=inicio');
 				//$this->view->show('inicio.php', $data);
 			}
 		}

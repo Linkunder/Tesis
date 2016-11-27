@@ -47,9 +47,6 @@ class RecintoController{
                       $data['search']=$search;
                       $listadoComentarios = $comentario->getComentarios();
                        $data['comentarios'] = $listadoComentarios;
-                       $listadoContactos= $this->Contacto->getContactos($idCapitan);
-                       $numeroContactos=count($listadoContactos);
-                       $data['numeroContactos'] = $numeroContactos;
 
             }
     		$listadoRecintos = $recinto->getRecintos();
@@ -69,11 +66,15 @@ class RecintoController{
                           $data['search']=$search;
                           $listadoComentarios = $comentario->getComentarios();
                           $data['comentarios'] = $listadoComentarios; 
-
+                          
+                       $listadoContactos= $this->Contacto->getContactos($idCapitan);
+                       $numeroContactos=count($listadoContactos);
+                       $data['numeroContactos'] = $numeroContactos;
                           $listadoPuntuacion = $puntuacion->getPuntuaciones($idUsuario);
                           $listadoPartidos = $partido->getPartidosUsuario($idUsuario);
                           $data['partidos'] = $listadoPartidos;
                           $data['puntuaciones'] = $listadoPuntuacion;
+
             }
 
     		$listadoRecintos = $recinto->getRecintos();
@@ -193,6 +194,18 @@ class RecintoController{
       $this->Recinto->actualizarRecinto($idRecinto, $nombre, $tipo, $superficie, $direccion, $telefono);
       $_SESSION['recintoAdmin'] = 3;
       header('Location: ?controlador=Recinto&accion=adminRecintos');
+    }
+
+    public function agregarRecinto(){
+      $nombre = $_POST['nombre'];
+      $tipo = $_POST['tipo'];
+      $superficie = $_POST['superficie'];
+      $direccion = $_POST['direccion'];
+      $telefono = $_POST['telefono'];
+      $estado = $_POST['estado'];
+      $puntuacion = 0;
+      $idUsuario = $_SESSION['login_user_id'];
+      $this->Recinto->setRecinto($nombre,$tipo,$superficie,$direccion,$telefono,$estado, $puntuacion, $idUsuario);
     }
 
 }
