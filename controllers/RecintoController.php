@@ -66,8 +66,8 @@ class RecintoController{
                           $data['search']=$search;
                           $listadoComentarios = $comentario->getComentarios();
                           $data['comentarios'] = $listadoComentarios; 
-                          
-                       $listadoContactos= $this->Contacto->getContactos($idCapitan);
+
+                       $listadoContactos= $this->Contacto->getContactos($_SESSION['login_user_id']);
                        $numeroContactos=count($listadoContactos);
                        $data['numeroContactos'] = $numeroContactos;
                           $listadoPuntuacion = $puntuacion->getPuntuaciones($idUsuario);

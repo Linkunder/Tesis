@@ -39,31 +39,7 @@ class Recinto{
 				)");
 		$consulta->execute();
 	}
-	public function setRecinto($nombre,$tipo,$superficie,$direccion,$numeroCanchas,$telefono,$fotografia,$puntuacion,$estado,$idUsuario){
-		$consulta = $this->db->prepare("
-			INSERT INTO Recinto (
-				nombre,
-				tipo,
-				superficie,
-				direccion,
-				numeroCanchas,
-				telefono,
-				fotografia,
-				puntuacion,
-				estado,
-				idUsuario) VALUES (
-				'".$nombre."',
-				'".$tipo."',
-				'".$superficie."',
-				'".$direccion."',
-				'".$numeroCanchas."',
-				'".$telefono."',
-				'".$fotografia."',
-				'".$puntuacion."',
-				'".$estado."',
-				'".$idUsuario."')");
-		$consulta->execute();
-	}
+
 
 	public function updateRecinto($idRecinto,$nombre,$tipo,$superficie,$direccion,$numeroCanchas,$telefono,$fotografia,$puntuacion,$estado,$idUsuario){
 
@@ -126,6 +102,28 @@ class Recinto{
 			telefono	 = '$telefono'
 			WHERE idRecinto = '$idRecinto'");
 		
+		$consulta->execute();
+	}
+
+	public function setRecinto($nombre,$tipo,$superficie,$direccion,$telefono,$estado, $puntuacion, $idUsuario){
+		$consulta = $this->db->prepare(
+			"INSERT INTO Recinto (
+				nombre,
+				tipo,
+				superficie,
+				direccion,
+				telefono,
+				estado,
+				puntuacion,
+				idUsuario) VALUES (
+				'".$nombre."',
+				'".$tipo."',
+				'".$superficie."',
+				'".$direccion."',
+				'".$telefono."',
+				'".$estado."',
+				'".$puntuacion."',
+				'".$idUsuario."')");
 		$consulta->execute();
 	}
 
