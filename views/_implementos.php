@@ -8,7 +8,7 @@
       <?php     if(count($vars['implementos'])!=0){ ?>
       <table id="implementos" class="table bootstrap-datatable table-striped label-partido">
     <thead>
-        <tr>
+        <tr id="color-encabezado">
             <th>Nombre</th>
             <th>Precio</th>
         </tr>

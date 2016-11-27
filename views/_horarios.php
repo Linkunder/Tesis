@@ -6,9 +6,9 @@
       </div>
       <div class="modal-body">
       <?php     if(count($vars['horarios'])!=0){ ?>
-      <table id="tablaHorarios" class="table bootstrap-datatable table-striped label-partido">
+      <table id="tablaHorarios"  class="table bootstrap-datatable table-striped label-partido">
 <thead>
-		<tr>
+		<tr id="color-encabezado">
 			<th>Nombre</th>
 			<th>Horas</th>
 			<th>Dias</th>
