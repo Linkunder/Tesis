@@ -5,7 +5,9 @@ require 'models/Puntuacion.php';
 require 'models/Partido.php';
 require 'models/Horario.php';
 require 'models/Implemento.php';
+require 'models/Contacto.php';
 
+session_start();
 
 class RecintoController{
 
@@ -14,6 +16,7 @@ class RecintoController{
         $this->Recinto = new Recinto();
         $this->Horario = new Horario();
         $this->Implemento = new Implemento();
+        $this->Contacto = new Contacto();
     }
 
     public function index()
@@ -44,6 +47,9 @@ class RecintoController{
                       $data['search']=$search;
                       $listadoComentarios = $comentario->getComentarios();
                        $data['comentarios'] = $listadoComentarios;
+                       $listadoContactos= $this->Contacto->getContactos($idCapitan);
+                       $numeroContactos=count($listadoContactos);
+                       $data['numeroContactos'] = $numeroContactos;
 
             }
     		$listadoRecintos = $recinto->getRecintos();
@@ -134,12 +140,6 @@ class RecintoController{
       $this->view->show("_horarios.php", $data);
     }
 
-    /*    MODULO DE ADMINISTRACION  */
-    public function adminRecintos(){
-      $recintos = $this->Recinto->getRecintos();
-      $data['recintos'] = $recintos;
-      $this->view->show('adminRecintos.php',$data);
-    }
 
     public function pruebaRecintos(){
       $recintos = $this->Recinto->getRecintos();
@@ -147,8 +147,53 @@ class RecintoController{
       $this->view->show('pruebaRecintos.php',$data);
     }
 
-    
 
+
+
+    /*    MODULO DE ADMINISTRACION  */
+    public function adminRecintos(){
+      $recintos = $this->Recinto->getRecintos();
+      $data['recintos'] = $recintos;
+      if (isset($_SESSION['recintoAdmin'])){
+        $data['recintoAdmin'] = $_SESSION['recintoAdmin'];
+      }
+      $_SESSION['recintoAdmin'] = 0;
+      $this->view->show('adminRecintos.php',$data);
+    }
+
+
+    public function cambiarEstadoRecinto(){
+      $idRecinto = $_POST['idRecinto'];
+      $estado = $_POST['estado'];
+      $this->Recinto->cambiarEstadoRecinto($idRecinto, $estado);
+      if ($estado == 1){
+        $_SESSION['recintoAdmin'] = 2;
+      }
+      if ($estado == 2){
+        $_SESSION['recintoAdmin'] = 1;
+      }
+      header('Location: ?controlador=Recinto&accion=adminRecintos');
+    }
+
+    public function editarRecinto(){
+      $idRecinto = $_GET['idRecinto'];
+      $recinto = $this->Recinto->getRecinto($idRecinto);
+      $data['recinto'] = $recinto;
+      $this->view->show("_adminEditarRecinto.php", $data);
+    }
+
+
+    public function updateRecinto(){
+      $idRecinto = $_POST['idRecinto'];
+      $nombre = $_POST['nombre'];
+      $tipo = $_POST['tipo'];
+      $superficie = $_POST['superficie'];
+      $direccion = $_POST['direccion'];
+      $telefono = $_POST['telefono'];
+      $this->Recinto->actualizarRecinto($idRecinto, $nombre, $tipo, $superficie, $direccion, $telefono);
+      $_SESSION['recintoAdmin'] = 3;
+      header('Location: ?controlador=Recinto&accion=adminRecintos');
+    }
 
 }
 ?>

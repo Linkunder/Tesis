@@ -55,6 +55,27 @@ include('layout/header.php');
     </div>
 
 
+    <?php
+    if (isset($vars['error'])){
+      if ($vars['error'] == 0){
+        ?>
+        <div class="alert alert-danger alert-dismissible">
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+          <strong>Error!</strong> Debes ingresar solo archivos con formato de imágenes, éstas deben pesar menos de 5Mb.
+        </div>
+        <?php
+      }
+      if ($vars['error'] == 1){
+        ?>
+        <div class="alert alert-danger alert-dismissible">
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+          <strong>Error!</strong> El email o el nickname ingresados ya existen. Intenta nuevamente. 
+        </div>
+        <?php
+      }
+    }
+    ?>
+
 
     <div class="row">
       <div class="col-sm-6 col-sm-offset-3 form-box">
@@ -81,7 +102,7 @@ include('layout/header.php');
               <div class="form-group">
                 <label class="sr-only" for="form-last-name">Fecha de nacimiento</label>
                 <!--input type="date" name="fechaNacimiento" class="form-last-name form-control" required-->
-                <input class="form-control" id="date" name="date" placeholder="Ingresa fecha de nacimiento" type="text" required/>
+                <input class="form-control" id="date" name="date" placeholder="Ingresa fecha de nacimiento" type="text" max="1998-01-01" required/>
               </div>
 
               <div class="form-group">

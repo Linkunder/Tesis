@@ -32,11 +32,11 @@ class Usuario{
 		return $resultado;
 	}
 
-	public function setUsuario($nombre, $apellido, $nickname, $mail, $sexo, $fotografia,
+	public function setUsuario($nombre, $apellido, $nickname, $mail, $sexo, 
 								 $password, $telefono, $fechaNacimiento, 
 								$perfil, $estado){
-		$sql = "INSERT INTO Usuario (nombre, apellido, nickname, mail, sexo, fotografia, password, telefono, fechaNacimiento, perfil, estado) 
-				VALUES ('$nombre', '$apellido', '$nickname', '$mail', '$sexo', '$fotografia','$password', '$telefono', (STR_TO_DATE('".$fechaNacimiento."', '%d-%m-%Y')), '$perfil', '$estado');";
+		$sql = "INSERT INTO Usuario (nombre, apellido, nickname, mail, sexo,  password, telefono, fechaNacimiento, perfil, estado) 
+				VALUES ('$nombre', '$apellido', '$nickname', '$mail', '$sexo', '$password', '$telefono', (STR_TO_DATE('".$fechaNacimiento."', '%d-%m-%Y')), '$perfil', '$estado');";
 		//echo $sql;
 		$query = $this->db->prepare($sql);
 		$query->execute();
@@ -88,6 +88,15 @@ class Usuario{
 			WHERE idUsuario = '".$idJugador."'";
 		$query = $this->db->prepare($sql);
 		$query->execute();
+	}
+
+	public function eliminarUsuario($idUsuario){
+		$consulta = $this->db->prepare('
+			DELETE FROM Usuario WHERE idUsuario = $idUsuario
+			');
+		$consulta->execute();
+		$resultado = $consulta->fetchAll();
+		return $resultado;
 	}
 
 }

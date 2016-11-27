@@ -106,5 +106,28 @@ class Recinto{
 	}
 
 
+
+	/* Admin */
+	public function cambiarEstadoRecinto($idRecinto, $estado){
+		$sql = "UPDATE Recinto SET 
+			estado = '".$estado."'
+			WHERE idRecinto = '".$idRecinto."'";
+		$query = $this->db->prepare($sql);
+		$query->execute();
+	}
+
+	public function actualizarRecinto($idRecinto, $nombre, $tipo, $superficie, $direccion, $telefono){
+		$consulta = $this->db->prepare(
+			"UPDATE Recinto SET 
+			nombre 		 = '$nombre',
+			tipo 		 = '$tipo',
+			superficie	 = '$superficie',
+			direccion	 = '$direccion',
+			telefono	 = '$telefono'
+			WHERE idRecinto = '$idRecinto'");
+		
+		$consulta->execute();
+	}
+
 }
 ?>
