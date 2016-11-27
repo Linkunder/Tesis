@@ -7,7 +7,7 @@ class Horario{
 
 	public function getHorariosRecinto($idRecinto){
 		$consulta = $this->db->prepare("
-			SELECT * FROM Horario WHERE idRecinto = '$idRecinto';
+			SELECT idHorario, DATE_FORMAT(horaInicio,'%l:%i %p') as horaInicio, DATE_FORMAT(horaFin,'%l:%i %p') as horaFin,nombre, dias, precio, idRecinto FROM Horario WHERE idRecinto = '$idRecinto';
 			");
 		$consulta->execute();
 		$resultado	=	$consulta->fetchAll();
