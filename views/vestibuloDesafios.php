@@ -110,7 +110,7 @@ $_SESSION['idEncuentro']=NULL;
                   <th id="encabezado-especial">#</th>
                   <th id="encabezado-especial">Equipo</th>
                   <th id="encabezado-especial">Fecha</th>
-                  <th id="encabezado-especial">Tipo de partido</th>
+                  <th id="encabezado-especial">Recinto</th>
                   <th id="encabezado-especial">Estado</th>
                   <th></th>
                 </tr>
@@ -142,15 +142,7 @@ $_SESSION['idEncuentro']=NULL;
                     <?php 
                     
                     $tipo = $item['tipoPartido'];
-                    if ($tipo==0){
-                      echo "Fútbol";
-                    }
-                    if ($tipo==1){
-                      echo "Futbolito";
-                    }
-                    if ($tipo==2){
-                      echo "Baby-Fútbol";
-                    }
+                    echo $tipo;
                     
                     ?>
                   </td>

@@ -11,6 +11,28 @@ $equipos = $vars['equipos'];
 ?>
 
 
+<!--MODAL -->
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Cargando información</h4>
+      </div>
+      <div class="modal-body">
+        <div class="progress">
+            <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+            </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+<!--Modal-->
+
+
 <!-- DataTables CSS -->
 <link href="assets/assetsAdmin/vendor/datatables-plugins/dataTables.bootstrap.css" rel="stylesheet">
 
@@ -40,25 +62,30 @@ $equipos = $vars['equipos'];
                                 <thead>
                                     <tr>
                                         <th>Nombre </th>
-                                        <th>Puntuacion</th>
-                                        <th>PJ</th>
-                                        <th>PC</th>
                                         <th>Capitán</th>
+                                        <th width='15%'>Puntuacion</th>
+                                        <th width='10%'>PJ</th>
+                                        <th width='10%'>PC</th>
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php
                                     foreach ($equipos as $key) {
+                                        $idEquipo = $key['idEquipo'];
                                     ?>
                                     <tr class="odd gradeX">
                                         <td><?php echo $key['nombre']?></td>
+                                        <td><?php echo $key['nombreCap']." ".$key['apellidoCap']?></td>
                                         <td><?php echo $key['puntuacion']?></td>
                                         <td><?php echo $key['partidosDisputados']?></td>
                                         <td><?php echo $key['partidosCancelados']?></td>
-                                        <td><?php echo $key['idCapitan']?></td>
                                         <td class="centrado">
-                                            <button type="button" class="btn btn-primary btn-sm col-xs-12">Modificar</button>
+                                            <button type="button" class="btn btn-primary btn-sm col-xs-12" href="javascript:void(0);" 
+                                            data-toggle="modal" data-target="#modal" onclick="carga_ajax('modal','<?php echo $idEquipo?>','equipo');">
+                                            Más información 
+                                                <i class="fa fa-search-plus" aria-hidden="true"></i>
+                                            </button>
                                         </td>
                                     </tr>
                                     <?php
@@ -101,3 +128,18 @@ include('layout/footerAdmin.php');
         });
     });
     </script>
+
+<script>
+ 
+function carga_ajax(div, id, tipo){
+
+  if (tipo == 'equipo'){
+    $.post(
+      '?controlador=Equipo&accion=detalleEquipo&idEquipo='+id,
+      function(resp){
+        $("#"+div+"").html(resp);
+      }
+      ); 
+  }
+}
+</script>

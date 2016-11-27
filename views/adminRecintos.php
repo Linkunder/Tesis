@@ -42,7 +42,7 @@ $recintos = $vars['recintos'];
 
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Recintos 
+                    <h1 class="page-header">Recintos  
 
                         <button type="button" class="btn btn-success btn-md" data-toggle="modal" data-target="#myModal">
                             Nuevo recinto
@@ -81,6 +81,14 @@ $recintos = $vars['recintos'];
                     </div>
                     <?php
                   }
+                  if ($vars['recintoAdmin'] == 4){
+                    ?>
+                    <div class="alert alert-success alert-dismissible">
+                      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                      <strong>Listo!</strong> El recinto ha sido agregado exitosamente.
+                    </div>
+                    <?php
+                  }
                 } 
                 ?>
 
@@ -113,14 +121,22 @@ $recintos = $vars['recintos'];
                                             <?php 
                                             if ($key['estado'] == 1){
                                                 ?>
-                                                <span class="label label-success">Activo</span>
+                                                <span class="label label-success col-xs-12">Activo</span>
                                                 <?php
                                             }
-                                            if ($key['estado'] == 2){
+                                            if ($key['estado'] == 2 && $key['idUsuario'] != $idUsuario){
                                                 ?>
-                                                <span class="label label-danger">Inactivo</span>
+                                                <span class="label label-warning col-xs-12">Notificado</span>
+                                                <?php
+                                            } else {
+                                              if ($key['estado'] == 2){
+                                                ?>
+                                                <span class="label label-danger col-xs-12">Inactivo</span>
                                                 <?php
                                             }
+
+                                            }
+                                            
                                             ?>
                                         </td>
                                         <td class="centrado">
@@ -147,6 +163,7 @@ $recintos = $vars['recintos'];
                                                 </form>
                                                 <?php
                                             }
+                                            
                                             ?>
                                         </td>
                                         <td class="centrado">
@@ -211,7 +228,7 @@ include('layout/footerAdmin.php');
                 <h4 class="modal-title" id="myModalLabel">Agrega un nuevo recinto</h4>
             </div>
             <div class="modal-body">     
-              <form action="?controlador=Recinto&accion=agregarRecinto" method="post">
+              <form action="?controlador=Recinto&accion=agregarRecinto" method="post" enctype="multipart/form-data">
                 <div class="form-group">
                   <label for="nombre">Nombre</label>
                   <input type="text" class="form-control" id="nombre" name="nombre" required>
@@ -220,7 +237,7 @@ include('layout/footerAdmin.php');
                 <div class="form-group">
                   <label for="tipo">Tipo de recinto</label>
                   <select class="form-control" id="tipo" name="tipo" required>
-                    <option selected disabled value="0">Selecciona el tipo de cancha</option>
+                    <option value="" selected disabled>Selecciona el tipo de cancha</option>
                     <option value="Baby-futbol">Baby-futbol</option>
                     <option value="Futbolito">Futbolito</option>
                     <option value="Futbol">Futbol</option>
@@ -241,12 +258,12 @@ include('layout/footerAdmin.php');
                 </div>
                 <div class="form-group">
                   <label for="fotografia">Fotografía</label>
-                  <input type="file" class="form-control-file" id="fotografia" name="fotografia" aria-describedby="fileHelp" required>
+                  <input type="file" class="form-control-file" id="imagen" name="imagen" aria-describedby="fileHelp" required>
                 </div>
                 <div class="form-group">
                   <label for="tipo">Estado inicial</label>
                   <select class="form-control" id="estado" name="estado" required>
-                    <option selected disabled value="0">Selecciona el estado inicial de la cancha</option>
+                    <option value="" selected disabled>Selecciona el estado inicial de la cancha</option>
                     <option value="1">Activo</option>
                     <option value="2">Inactivo</option>
                   </select>

@@ -205,8 +205,82 @@ class RecintoController{
       $estado = $_POST['estado'];
       $puntuacion = 0;
       $idUsuario = $_SESSION['login_user_id'];
+
       $this->Recinto->setRecinto($nombre,$tipo,$superficie,$direccion,$telefono,$estado, $puntuacion, $idUsuario);
+
+      $recintos = $this->Recinto->getRecintos();
+      $idNuevoRecinto = end($recintos)['idRecinto'];
+
+
+      $subirImagen = $this->guardarImagen($idNuevoRecinto);
+
+      if ($subirImagen == 0 ){  // hubo un error
+        $data['error'] = 0;
+        //$this->Recinto->eliminarRecinto($idNuevoRecinto);
+        $this->view->show('adminRecintos.php', $data);
+      } else {  // todo ok
+        $_SESSION['recintoAdmin'] = 4;
+        header('Location: ?controlador=Recinto&accion=adminRecintos');
+        //$this->view->show('inicio.php', $data);
+      }
     }
+
+
+  private function guardarImagen($idNuevoRecinto){
+    $target_dir = "assets/images/recintos/";
+    $target_file = $target_dir.basename($_FILES["imagen"]["name"]);
+    //echo $target_file;
+    $uploadOk = 1;
+    $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
+    // Asignar nuevo nombre: idUsuario.extensionFotografia
+    $newName = $idNuevoRecinto.".".$imageFileType;
+    $newDir = $target_dir.$newName;
+    // Chequear si es o no una imagen
+    if(isset($_POST["submit"])) {
+        $check = getimagesize($_FILES["imagen"]["tmp_name"]);
+        if($check !== false){
+            $uploadOk = 1;
+        $message = "Archivo es una imagen - " . $check["mime"] . ".";;
+        } else {
+            $message = "Archivo no es una imagen.";
+            $uploadOk = 0;
+        }
+    }
+    /*/ Chequear si el archivo existe o no (no deberia)
+    if (file_exists($target_file)) {
+        $message = "Lo sentimos pero esta imagen ya existe.";
+        $uploadOk = 0;
+    }*/
+    // Chequear el tamaño de la imagen. 
+    if ($_FILES["imagen"]["size"] > 5000000) {
+        $message = "Lo sentimos, pero el archivo es muy grande.";
+        $uploadOk = 0;
+    }
+    // Chequear extension
+    if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+    && $imageFileType != "gif" && $imageFileType != "JPG" && $imageFileType != "PNG" && $imageFileType != "JPEG"
+    && $imageFileType != "GIF") {
+        $message = "Lo sentimos , solo archivos con JPG, JPEG, PNG & GIF son permitidos.";
+        $uploadOk = 0;
+    }
+    // Chequear la variable $uploadOk = 0
+    if ($uploadOk == 0) {
+        $message =  "Lo sentimos, tu archivo no se puede subir.";
+    // OK, Intenta subir imagen.
+    } else {
+        if (move_uploaded_file($_FILES["imagen"]["tmp_name"], $newDir)) {
+          $this->Recinto->setFotografia($idNuevoRecinto,$newName);
+          return 1;
+          //echo "ok";
+        } else {
+            $message = "Lo sentimos, hubo un error al subir el archivo."; // No debiese entrar aqui.
+            return 0;
+        }
+    }   
+  }
+
+
+
 
 }
 ?>

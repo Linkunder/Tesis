@@ -19,6 +19,18 @@ foreach ($recinto as $key ) {
         <div class="form-group">
           <label for="tipo">Tipo de recinto</label>
           <select class="form-control" id="tipo" name="tipo" required>
+            <?php
+            if ($key['tipo'] == null){
+              ?>
+              <option selected disabled value="">Selecciona el tipo de cancha</option>
+              <option>Futbol</option>
+              <option>Baby-futbol</option>
+              <option>Futbolito</option>
+              <?php
+            } else {
+
+            
+            ?>
             <option selected value="<?php echo $key['tipo']?>"><?php echo $key['tipo']?></option>
             <?php
             if ($key['tipo'] == "Futbolito"){
@@ -26,19 +38,23 @@ foreach ($recinto as $key ) {
               <option>Baby-futbol</option>
               <option>Futbol</option>
               <?php
+            } else {
+              if ($key['tipo'] == "Baby-futbol"){
+                ?>
+                <option>Futbolito</option>
+                <option>Futbol</option>
+                <?php
+              } else {
+                if ($key['tipo'] == "Futbol"){
+                  ?>
+                  <option>Baby-futbol</option>
+                  <option>Futbolito</option>
+                  <?php
+                } 
+              }
             }
-            if ($key['tipo'] == "Baby-futbol"){
-              ?>
-              <option>Futbolito</option>
-              <option>Futbol</option>
-              <?php
             }
-            if ($key['tipo'] == "Futbol"){
-              ?>
-              <option>Baby-futbol</option>
-              <option>Futbolito</option>
-              <?php
-            }
+            
             ?>
           </select>
           <small id="emailHelp" class="form-text text-muted">Selecciona si es una cancha de fútbol, futbolito o baby-fútbol</small>

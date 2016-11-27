@@ -2,6 +2,8 @@
 
 require 'models/Comentario.php';
 
+session_start();
+
 class ComentarioController{
 		function __construct(){
         $this->view = new View();
@@ -16,7 +18,7 @@ class ComentarioController{
     		$idRecinto = $_GET['idRecinto'];
     		$comentario = new Comentario();
     		$listadoComentarios = $comentario->getComentarios($idRecinto);
-            var_dump($listadoComentarios);
+            //var_dump($listadoComentarios);
     		$data['comentarios']= $listadoComentarios;
     	    return $data;
     }
@@ -36,9 +38,20 @@ class ComentarioController{
 
     /*    MODULO DE ADMINISTRACION  */
     public function adminComentarios(){
-      $comentarios = $this->Comentario->getComentarios();
-      $data['comentarios'] = $comentarios;
-      $this->view->show('adminComentarios.php',$data);
+        $comentarios = $this->Comentario->getComentariosAdmin();
+        $data['comentarios'] = $comentarios;
+        if (isset($_SESSION['adminComentarios'])){
+            $data['adminComentarios'] = $_SESSION['adminComentarios'];
+        }
+        $_SESSION['adminComentarios'] = 0;
+        $this->view->show('adminComentarios.php',$data);
+    }
+
+    public function eliminarComentario(){
+        $idComentario = $_POST['idComentario'];
+        $this->Comentario->eliminarComentario($idComentario);
+        $_SESSION['adminComentarios'] = 1;
+        header('Location: ?controlador=Comentario&accion=adminComentarios');
     }
 }
 ?>

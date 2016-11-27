@@ -28,7 +28,18 @@ $comentarios = $vars['comentarios'];
             </div>
             <!-- /.row -->
 
-
+                <?php
+                if (isset($vars['adminComentarios'])){
+                  if ($vars['adminComentarios'] == 1){
+                    ?>
+                    <div class="alert alert-warning alert-dismissible">
+                      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                      <strong>Listo!</strong> El comentario ha sido eliminado.
+                    </div>
+                    <?php
+                  }
+                } 
+                ?>
 
             <div class="row">
                 <div class="col-lg-12">
@@ -41,6 +52,7 @@ $comentarios = $vars['comentarios'];
                                         <th>Usuario </th>
                                         <th>Fecha</th>
                                         <th>Hora</th>
+                                        <th>Recinto</th>
                                         <th>Contenido</th>
                                         <th></th>
                                     </tr>
@@ -53,11 +65,16 @@ $comentarios = $vars['comentarios'];
                                         <td><?php echo $key['nombre']." ".$key['apellido']?></td>
                                         <td><?php echo $key['fecha']?></td>
                                         <td><?php echo $key['hora']?></td>
+                                        <td><?php echo $key['nombreRecinto']?></td>
                                         <td><?php echo $key['contenido']?></td>
                                         <td class="centrado">
-                                            <button type="button" class="btn btn-danger btn-sm col-xs-12">Eliminar
-                                                <i class="fa fa-trash" aria-hidden="true"></i>
-                                            </button>
+                                            <form action="?controlador=Comentario&accion=eliminarComentario" method="post">
+                                                <input name="idComentario" value="<?php echo $key['idComentario']?>" hidden>
+                                                <button type="submit" class="btn btn-danger btn-sm col-xs-12">Eliminar 
+                                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                                </button>    
+                                            </form>  
+
                                         </td>
                                     </tr>
                                     <?php

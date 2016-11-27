@@ -1,6 +1,29 @@
 <!DOCTYPE html>
 <html lang="es">
+<?php
 
+
+// Obtener datos del usuario de la sesión.
+if (!isset($_SESSION['login_user_name'])){
+  session_start();
+}
+
+if (isset($_SESSION['login_user_id'])){
+  $idUsuario= $_SESSION['login_user_id'];
+}
+
+if (isset($_SESSION['login_user_name'])){
+  $nombre= $_SESSION['login_user_name'];
+}
+
+if (isset($_SESSION['login_user_email'])){
+  $mail= $_SESSION['login_user_email'];
+}
+
+if (isset($_SESSION['notificaciones'])){
+    $notificaciones = $_SESSION['notificaciones'];
+}
+?>
 <head>
 
     <meta charset="utf-8">
@@ -67,20 +90,31 @@
                     </a>
                     <ul class="dropdown-menu dropdown-user">
                         <li>
-                            <a href="#">
+                            <?php
+                            if ($notificaciones > 0 ){
+                                ?>
+                                <a href="#">
                                 <div>
-                                    Nuevos recintos! <?php echo "4"?>
+                                    Recintos <span class="badge"><?php echo $notificaciones?></span>
                                 </div>
-                            </a>
+                                 </a>
+                                <?php
+                            } else {
+                                ?>
+                                <div>
+                                    No hay nuevos recintos
+                                </div>
+                                <?php
+                            }
+                            ?>
                         </li>
-                        <li class="divider"></li>
                     </ul>
                     <!-- /.dropdown-alerts -->
                 </li>
                 <!-- /.dropdown -->
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-user fa-fw"></i> Admin <i class="fa fa-caret-down"></i>
+                        <i class="fa fa-user fa-fw"></i> <?php echo $nombre?> <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
                         <li><a href="?controlador=Sesion&accion=logout"><i class="fa fa-sign-out fa-fw"></i> Cerrar sesión</a>

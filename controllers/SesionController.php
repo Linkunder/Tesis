@@ -1,12 +1,14 @@
 <?php
 
 require 'models/Login.php';
+require 'models/Recinto.php';
 
 class SesionController{
 
 	function __construct(){
 		$this->view = new View();
 		$this->Login = new Login();
+        $this->Recinto = new Recinto(); 
 	}
 
 
@@ -40,6 +42,8 @@ class SesionController{
                     header('Location: ?controlador=Index&accion=indexJugador');
                 }
                 if ( $_SESSION['login_user_perfil'] == 2 ){
+                    $recintos = $this->Recinto->getNotificacionesRecintos($_SESSION['login_user_id']);
+                    $_SESSION['notificaciones'] = count($recintos);
                     header('Location: ?controlador=Index&accion=indexAdmin');
                 }
                 // Direccionar a la pantalla de inicio del jugador

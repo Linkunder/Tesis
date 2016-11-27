@@ -152,7 +152,7 @@ class DesafioController{
         session_start(); 
         } */
       $idDesafio = $_GET['idDesafio']; // POST o algo
-      	
+      	$desafio = $this->Desafio->getDesafio($idDesafio);
       $data['desafio'] = $desafio;
       $data['equipoSeleccionado'] = $_SESSION['equipoSeleccionado'];
       $this->view->show("_detalleDesafio.php", $data);
@@ -270,6 +270,21 @@ class DesafioController{
       $data['desafios'] = $desafios;
       $this->view->show('adminDesafios.php',$data);
     }
+
+    public function detalleDesafioAdmin(){
+    	$idDesafio = $_GET['idDesafio'];
+    	$estado = $_GET['estado'];
+    	$data['idDesafio'] = $idDesafio;
+    	$data['estado'] = $estado;
+    	$desafio = $this->Desafio->getDesafio($idDesafio);
+    	$data['desafio'] = $desafio;
+    	if ($estado == 3){
+    		$encuentro = $this->Encuentro->getEncuentroAcordado($idDesafio);
+    		$data['encuentro'] = $encuentro;
+    	}
+	    $this->view->show("_adminDetalleDesafio.php", $data);
+    }
+
 
 
 

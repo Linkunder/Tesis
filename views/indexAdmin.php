@@ -1,6 +1,14 @@
 <?php
 include('layout/headerAdmin.php');
 
+
+$recintos = $vars['recintos'];
+$comentarios = $vars['comentarios'];
+$desafios = $vars['desafios'];
+$usuarios = $vars['usuarios'];
+
+
+
 ?>
 
 
@@ -25,7 +33,7 @@ include('layout/headerAdmin.php');
                                     <i class="fa fa-futbol-o fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">26</div>
+                                    <div class="huge"><?php echo $recintos?></div>
                                     <div>Recintos</div>
                                 </div>
                             </div>
@@ -47,7 +55,7 @@ include('layout/headerAdmin.php');
                                     <i class="fa fa-users fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">150</div>
+                                    <div class="huge"><?php echo $usuarios?></div>
                                     <div>Jugadores</div>
                                 </div>
                             </div>
@@ -69,7 +77,7 @@ include('layout/headerAdmin.php');
                                     <i class="fa fa-comments fa-fw fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">124</div>
+                                    <div class="huge"><?php echo $comentarios?></div>
                                     <div>Comentarios</div>
                                 </div>
                             </div>
@@ -91,7 +99,7 @@ include('layout/headerAdmin.php');
                                     <i class="fa fa-flag fa-fw fa-5x" aria-hidden="true"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">28</div>
+                                    <div class="huge"><?php echo $desafios?></div>
                                     <div>Desafíos</div>
                                 </div>
                             </div>

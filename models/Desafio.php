@@ -122,8 +122,29 @@ class Desafio{
 		return $resultado;
 	}
 
-
+	/* Admin */
 	public function getDesafiosAdmin(){
+		$sql = 
+		"SELECT 
+		Desafio.idDesafio,
+		Desafio.comentario,
+		Desafio.estado,
+		Equipo.idEquipo,
+		Equipo.nombre as nombreEquipo,
+		Recinto.nombre as nombreRecinto
+		FROM Desafio 
+		INNER JOIN Equipo ON Desafio.idEquipo = Equipo.idEquipo
+		INNER JOIN Recinto ON Desafio.idRecinto = Recinto.idRecinto";
+		$query = $this->db->prepare($sql);
+		$query->execute();
+		$resultado = $query->fetchAll();
+		return $resultado;
+	}
+
+
+
+	// Obtener los desafios de los equipos de un usuario.
+	public function getDesafiosIndex(){
 		$sql = "SELECT * FROM Desafio";
 		$query = $this->db->prepare($sql);
 		$query->execute();

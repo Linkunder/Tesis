@@ -112,17 +112,17 @@ $arrayEdades = $vars['edades'];
                                             <?php 
                                             if ($key['estado'] == 1){
                                                 ?>
-                                                <span class="label label-success">Activo</span>
+                                                <span class="label label-success col-xs-12">Activo</span>
                                                 <?php
                                             }
                                             if ($key['estado'] == 2){
                                                 ?>
-                                                <span class="label label-danger">Inactivo</span>
+                                                <span class="label label-danger col-xs-12">Inactivo</span>
                                                 <?php
                                             }
                                             if ($key['estado'] == 3){
                                                 ?>
-                                                <span class="label label-warning">Invitado</span>
+                                                <span class="label label-warning col-xs-12">Invitado</span>
                                                 <?php
                                             }
                                             ?>

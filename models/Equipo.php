@@ -140,6 +140,29 @@ class Equipo{
 	}
 
 
+	/* ADMIN */
+
+
+		// Obtener equipos
+	public function getEquiposAdmin(){
+		$query = $this->db->prepare(
+			"SELECT 
+			Equipo.idEquipo,
+			Equipo.nombre,
+			Equipo.puntuacion,
+			Equipo.partidosDisputados,
+			Equipo.partidosCancelados,
+			Usuario.nombre as nombreCap,
+			Usuario.apellido as apellidoCap
+			FROM Equipo
+			INNER JOIN Usuario ON Usuario.idUsuario = Equipo.idCapitan"
+			);
+		$query->execute();
+		$resultado = $query->fetchAll();
+		return $resultado;
+	}
+
+
 
 
 

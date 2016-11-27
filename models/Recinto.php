@@ -127,5 +127,19 @@ class Recinto{
 		$consulta->execute();
 	}
 
+
+	public function setFotografia($idRecinto, $imagen){
+		$sql = "UPDATE Recinto SET fotografia = '".$imagen."' WHERE idRecinto = '".$idRecinto."' ";
+		$query = $this->db->prepare($sql);
+		$query->execute();
+	}
+
+	public function getNotificacionesRecintos($idUsuario){
+		$consulta = $this->db->prepare("SELECT idRecinto FROM Recinto WHERE idUsuario != '".$idUsuario."' ");
+		$consulta->execute();
+		$resultado = $consulta->fetchAll();
+		return $resultado;	
+	} 
+
 }
 ?>
