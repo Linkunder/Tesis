@@ -9,6 +9,7 @@ require 'models/Equipo.php';
 require 'models/TercerTiempo.php';
 require 'models/Local.php';
 require 'models/Horario.php';
+require 'models/Mail.php';
 
 
       if(!isset($_SESSION)) { 
@@ -477,15 +478,7 @@ class PartidoController{
 		$data['recinto'] = $recinto;
 
 		//Liberamos las variables globales
-		unset($_SESSION['tipoPartido']);
-		unset($_SESSION['fecha']);
-		unset($_SESSION['hora']);
-		unset($_SESSION['cantidad']);
-		unset($_SESSION['color']);
-		unset($_SESSION['idRecinto']);
-		unset($_SESSION['tipoPartido']);
-		unset($_SESSION['idPartido']);
-		unset($_SESSION['idTercer']);
+
 		//enviamos los datos a la vista del resumen del partido
 		$this->view->show("resumenPartido2.php",$data);		
 	}
@@ -583,8 +576,7 @@ class PartidoController{
 		$idUsuario= $_SESSION['idUsuario'];
 		$idRecinto= $_SESSION['idRecinto']; //Recinto seleccionado
 		$cantidad = $_SESSION['cantidad'];
-		
-		$idTercer = $_SESSION['idTercer'];
+		$tipoPartido= $_SESSION['tipoPartido'];
 		$correo=$_SESSION['login_user_email'];
         $nombreJugador= $_SESSION['login_user_name'];
     
@@ -604,10 +596,11 @@ $partidoSeleccionado = $this->Partido->getPartido($idPartido);
 
 
 $idLocal=0;
-
-
+$nombreLugar="";
+$direcciontercertiempo="";
 
 if ($existenciaTercerTiempo != 0) { // Si es 0, no hay tercer tiempo 
+	$idTercer = $_SESSION['idTercerTiempo'];
 	foreach ($tercerTiempoPartido as $TercerTiempo) {
 	$idLocal = $TercerTiempo['idLocal'];
 	}
@@ -676,7 +669,7 @@ $message .= "<head>";
 $message .= "<title>HTML email</title>";
 $message .= "</head>";
 $message .= "<body>";
-$message .= '<div style="height:auto; width:auto;"><img src="" alt="Website Change Request" /></div>';
+$message .= '<div style="height:auto; width:auto;"><center><img src="assets/images/logoCorreo.png" alt="Website Change Request" /></center></div>';
 $message .= '<div style="height:auto; width:auto;"><img src="http://maps.googleapis.com/maps/api/staticmap?center='. $dir . '&zoom=14&scale=false&size=600x300&maptype=roadmap&format=png&visual_refresh=true&markers=size:small%7Ccolor:0xff0000%7Clabel:%7C'.$dir.'" alt="Website Change Request" /></div>';
 $message .= "<p>El jugador " .$nombre.  ", te ha invitado a un partido.</p>";
 $message .= "<table>";
@@ -700,6 +693,53 @@ $message .= "<tr>";
 $message .= "<td>Monto a Pagar por persona:</td>";
 $message .= "<td>".$pagoporpersona."</td>";
 $message .= "</tr>";
+
+//Por tipo de partido
+//Revuelta
+if($tipoPartido==1){
+$message .= "<tr>";
+$message .= "<td>Tipo de Partido:</td>";
+$message .= "<td>Revuelta</td>";
+$message .= "</tr>";
+$message .= "<tr>";
+$message .= "<td>Colores a llevar:</td>";
+$message .= "<td>".$_SESSION['color']." , ".$_SESSION['color2']."</td>";
+$message .= "</tr>";
+
+}
+//Equipo Propio
+if($tipoPartido==2){
+$message .= "<tr>";
+$message .= "<td>Tipo de Partido:</td>";
+$message .= "<td>Equipo Propio</td>";
+$message .= "</tr>";
+$message .= "<tr>";
+$message .= "<td>Color de Camiseta:</td>";
+$message .= "<td>".$_SESSION['color']."</td>";
+$message .= "</tr>";
+
+	
+}
+//A vs B
+if($tipoPartido==3){
+$message .= "<tr>";
+$message .= "<td>Tipo de partido:</td>";
+$message .= "<td>A v/s B</td>";
+$message .= "</tr>";
+
+$message .= "<tr>";
+$message .= "<td>Color de Camiseta:</td>";
+$message .= "<td>Color</td>";
+$message .= "</tr>";
+
+}
+if($tipoPartido==4){
+$message .= "<tr>";
+$message .= "<td>Monto a Pagar por persona:</td>";
+$message .= "<td>".$pagoporpersona."</td>";
+$message .= "</tr>";
+	
+}
 $message .= "</table>";
 
 if($existenciaTercerTiempo!=0){
@@ -721,7 +761,16 @@ $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
 $headers .= 'From: <partidomatchday@gmail.com>' . "\r\n"; //
 $headers .= 'Cc: partidomatchday@gmail.com' . "\r\n"; // 
 
-mail($to,$subject,$message,$headers);
+		unset($_SESSION['tipoPartido']);
+		unset($_SESSION['fecha']);
+		unset($_SESSION['hora']);
+		unset($_SESSION['cantidad']);
+		unset($_SESSION['color']);
+		unset($_SESSION['idRecinto']);
+		unset($_SESSION['tipoPartido']);
+		unset($_SESSION['idPartido']);
+		unset($_SESSION['idTercer']);
+send($message,$to);
  //Email response
  
   

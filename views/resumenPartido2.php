@@ -41,6 +41,13 @@ if (isset($vars['tipoPartido'])) {
     if($idTipo == 3){
       $tipo="A v/s B";
     }
+
+    //Variables Correo
+    $_SESSION['idPartido']=$idPartido;
+    $_SESSION['idUsuario']=$idUsuario;
+    $_SESSION['idRecinto']=$idRecinto;
+    $_SESSION['cantidad'] =$cantidad;
+
   }
 
 
@@ -59,6 +66,7 @@ foreach ($vars['recinto'] as $key ) {
 if (isset($vars['tercerTiempo'])){
   // Variable local
   $tercerTiempo= end($vars['tercerTiempo']);
+  $_SESSION['idTercerTiempo']= $tercerTiempo['idTercerTiempo'];
   $local = $tercerTiempo['idLocal'];
   $vectorLocales = $vars['local'];
   $vectorTercerTiempo = $vars['tercerTiempo'];

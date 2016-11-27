@@ -529,6 +529,24 @@ $_SESSION['idRecinto']=NULL;
   </div>
 </div>
 
+<!--MODAL ADVERTENCIA A / V -->
+<div class="modal fade" id="modalAdvertenciaAB" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">No puedes agendar un partido A v/s B</h4>
+      </div>
+      <div class="modal-body">
+        <p>Necesitas tener al menos 9 contactos para agendar este tipo de partidos</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 <!--MODAL IMPLEMENTOS-->
 <div class="modal fade" id="modal" tabindex="-1" role="dialog" >
   <div class="modal-dialog" role="document">
@@ -569,7 +587,15 @@ $_SESSION['idRecinto']=NULL;
                                                     <button id=openEquipoPropio type="button" class="btn btn-primary center-block" data-dismiss="modal" data-toggle="modal" data-target="#modalEquipoPropio">Equipo Propio</button>
                                                 </div>
                                                 <div class="col-md-4">
+                                                <?php 
+                                                //Se comprueba que el jugador tiene los contactos necesarios para acceder a esta opcion
+                                                    if($vars['numeroContactos'] < 10){ ?>
+                                                    <button type="button" class="btn btn-primary center-block"  data-toggle="modal" data-target="#modalAdvertenciaAB" >A v/s B</button>
+
+                                                <?php }else{
+                                                ?>
                                                     <button type="button" class="btn btn-primary center-block" data-dismiss="modal" data-toggle="modal" data-target="#modalAB" >A v/s B</button>
+                                                <?php }  ?>
                                                 </div>
                                             </div>
                                         </div>
@@ -783,11 +809,19 @@ $_SESSION['idRecinto']=NULL;
                                 <div class="col-sm-8">
                                     <div class="form-group">
                                       <label for="cantidad">Cantidad total de jugadores</label>
-                                      <select  class="form-control"  name="cantidad" required="required"  >
+                                      <select  class="form-control"  name="cantidad" required="required">
+                                        <?php if($vars['numeroContactos'] >= 9 ){ ?>
                                             <option type="number" value="10" >10</option>
+                                        <?php    if($vars['numeroContactos'] >= 11){ ?>
                                             <option type="number" value="12" >12</option>
+                                        <?php        if($vars['numeroContactos'] >= 13){ ?>
                                             <option type="number" value="14" >14</option>
+                                        <?php            if($vars['numeroContactos'] >=21){ ?>
                                             <option type="number" value="10" >22</option>
+                                        <?php            }
+                                                }
+                                            }
+                                         } ?>
                                         </select>
                                     </div>
                                 </div>

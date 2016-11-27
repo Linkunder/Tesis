@@ -518,7 +518,8 @@ $nroHistorial = count($historialDesafios);
         <script type="text/javascript">
           $(document).ready(function() {
             $('#example').DataTable({
-              responsive: true
+              responsive: true,
+              "languaje": idioma_espanol
             });
         } );
         </script>
