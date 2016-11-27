@@ -250,22 +250,62 @@ class PartidoController{
 		$color	=	$_POST['color'];
 		$color2 =	$_POST['color2'];
 		$idHorario	=	$_POST['idHorario'];
+		$idRecinto = $_POST['idRecinto'];
+		$_SESSION['idRecinto'] =$idRecinto;
+		//Aqui guardamos el equipo del capitán
+		$equipoCapitan = $_POST['equipo'];
 		//Contactos del jugador capitan
 		$listadoContactos=$this->Contacto->getContactos($idCapitan);
 		//Recinto deportivo en el cual se efectuara el partido
-		$recinto = $this->Recinto->getRecinto($_SESSION['idRecinto']);
+		$recinto = $this->Recinto->getRecinto($idRecinto);
 		//Datos del partido hacia la vista
 		$data['fecha'] = $fecha;
 		$data['hora']  = $hora;
 		$data['cantidad'] = $cantidad;
 		$data['color']= $color;
-		$data['color2']= $color;
-		//Revuelta = 1
+		$data['color2']= $color2;
+		//Letra del equipo
+		$data['equipoCapitan'] = $equipoCapitan;
+		$data['idHorario']= $idHorario;
+	
 		$data['tipoPartido'] = 3;
 		$data['recintoSeleccionado']= $recinto;
 		$data['contactos']=$listadoContactos;
-		$this->view->show("eleccionJugadoresAB.php",$data);
+		//Enviamos la información a una vista intermedia que le provee al usuario la capacidad de elegir los jugadores de su equipo
+		$this->view->show("eleccionJugadoresABCapitan.php",$data);
 
+	}
+
+	public function equipoCapitanAB(){
+		//Debido a que esta funcion es ajax "Cambio a POST"
+		//Contiene el arreglo de los id de los jugadores elegidos
+		$jugadoresEquipoCap	= $_POST['jugadoresEquipoCap'];
+		//Agregamos al equipo capitan y su equipo 
+		$arregloJugadores = explode(',', $jugadoresEquipoCap);
+		$_SESSION['jugadoresEquipo1'] = $arregloJugadores;
+		$listadoTotalContactos=$this->Contacto->getContactos($_SESSION['login_user_id']);
+		$listadoContactos;
+		//realizamos una filtración de los contactos
+		$num=0;
+		foreach ($listadoTotalContactos AS $contacto) {
+			$cont=0;
+			for($i=0; $i<count($arregloJugadores); $i++){
+				//Se comprueba si ya fue elegido
+				if($contacto['idUsuario'] == $arregloJugadores[$i]){
+					$cont++;
+				}
+			}
+			if($cont == 0){
+				$listadoContactos[$num] = $contacto;
+				$num++;
+			}
+		}
+		$recinto = $this->Recinto->getRecinto($_SESSION['idRecinto']);
+		$data['recintoSeleccionado'] =$recinto;
+		$data['contactos'] = $listadoContactos;
+		//vamos a la vista del otro equipo
+		$this->view->show("eleccionJugadoresABOtro.php",$data);
+		
 	}
 	public function agendarPartido(){
 		//debemos identificar que tipo de partido es
@@ -333,6 +373,56 @@ class PartidoController{
 			$this->Partido->setJugadoresRevuelta($idPartido, $idCapitan, $color, $color2);
 	}
 	public function agendarPartidoAB(){
+		$idTipo =	$_SESSION['tipoPartido'];
+		$idCapitan	= $_SESSION['login_user_id'];
+		$fecha	=	$_SESSION['fecha'];
+		$hora	=	$_SESSION['hora'];
+		$cantidad	= $_SESSION['cantidadTotal'];
+		$color	=	$_SESSION['color'];
+		$color2 = $_SESSION['color2'];
+		$idRecinto = $_SESSION['idRecinto'];
+		$idHorario = $_SESSION['idHorario'];
+
+		//Jugadores del capitan
+		$equipoCapitan =$_SESSION['equipoCapitan'];
+		$jugadoresEquipo1 = $_SESSION['jugadoresEquipo1'];
+		$jugadoresEquipo2 =json_decode($_POST['jObject'], true);
+		$idEstado = "1";
+		$horario = $this->Horario->getHorario($idHorario);
+		$cuota = end($horario)['precio']/$cantidad;
+		$idTipo=3;
+		$_SESSION['tipoPartido'] = $idTipo;
+		//Ingresar Partido
+		$idPartido = $this->Partido->setPartido($idCapitan,$fecha, $hora, $cuota, $idTipo, $idEstado, $idRecinto, $cantidad);
+		$_SESSION['idPartido'] = $idPartido;
+
+
+		for($i=0; $i<sizeof($jugadoresEquipo1); $i++){
+			$id=$jugadoresEquipo1[$i];
+			if($equipoCapitan == "A"){
+				$this->Partido->setJugadoresAB($idPartido,$id,"A",$color);
+			}else{
+				$this->Partido->setJugadoresAB($idPartido,$id,"B",$color2);
+			}
+		}
+
+		for($i=0; $i<sizeof($jugadoresEquipo2); $i++){
+			$id=$jugadoresEquipo2[$i];
+
+			if($equipoCapitan == "A"){
+				$this->Partido->setJugadoresAB($idPartido,$id,"B",$color2);
+			}else{
+				$this->Partido->setJugadoresAB($idPartido,$id,"A",$color);
+			}
+		}
+
+			if($equipoCapitan == "A"){
+				$this->Partido->setJugadoresAB($idPartido,$idCapitan,"A",$color);
+			}else{
+				$this->Partido->setJugadoresAB($idPartido,$idCapitan,"B",$color2);
+			}
+
+
 
 	}
 

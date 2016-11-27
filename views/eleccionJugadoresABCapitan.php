@@ -10,17 +10,31 @@ require_once('controllers/JSON.php');
     }
 
 //Toda la informacion de partida la vamos a manejar via variable de session desde aqui, similiar a lo que hace un "carrito de compras jaja"
-
+//Información del Partido
 $_SESSION['fecha'] = $vars['fecha'];
 $_SESSION['hora'] = $vars['hora'];
-$_SESSION['cantidad'] = $vars['cantidad'];
+//Manejamos la cantidad, debemos dividir en 2 
+$_SESSION['cantidad'] = ($vars['cantidad']/2);
+$_SESSION['cantidadTotal']= $vars['cantidad'];
 $_SESSION['color']  = $vars['color'];
 $_SESSION['color2'] = $vars['color2'];
+$_SESSION['equipoCapitan'] = $vars['equipoCapitan'];
+$_SESSION['idHorario'] = $vars['idHorario'];
+
+
+//Sesetea el mensaje de la pantalla de eleccion de jugadores del equipo
+$mensaje= "Elige a los jugadores del Equipo ";
+if($_SESSION['equipoCapitan'] == "A"){
+  $mensaje= $mensaje."A";
+}else{
+  $mensaje= $mensaje."B";
+}
+
 
 // Si quiero 10 jugadores, pero tengo solo 4 contactos, deberia notificar un partido a los demás jugadores.
 
 $numeroContactos = count($vars['contactos']);
-$jugadoresPartido = $_SESSION['cantidad'];
+$jugadoresPartido = $_SESSION['cantidadTotal'];
 
     
 $faltanJugadores=false;
@@ -114,9 +128,9 @@ $(function(){
          arrayJugador[elem.data("numsoltar")-1]=(ui.draggable.data("id"));
 
          //alert(""+ arrayJugador+""); NO BORRAR SIRVE PARA DEBUGGEAR 
-     
+         //jugadoresEquipoCap
          if(elem.data("numsoltar")==maximo-1){
-         
+          document.getElementById("jugadoresEquipoCap").setAttribute("value", arrayJugador);
           $("#sig").click();
          }
       }
@@ -163,23 +177,6 @@ $(function(){
     }//fin foreach
       ?> 
       });
-  
-  function setValue(){
-    //arv= arrayJugador.join(","); //Funciona
-    var jObject={};
-    for(i in arrayJugador){
-      jObject[i] = arrayJugador[i];
-    }
-
-
-    jObject=JSON.stringify(jObject);
-      $.ajax({
-          type:'post',
-          cache:false,
-          url:"?controlador=Partido&accion=agendarPartidoAB",
-          data:{jObject:jObject}
-    });
-    }
 
 
   </script>
@@ -193,7 +190,7 @@ $(function(){
 
 	      <div class="heading-a text-center">
 
-        <h2>Elige a los jugadores del Equipo A</h2>
+        <h2><?php echo $mensaje;?></h2>
         <h3>Mueve tus jugadores al terreno de juego.</h3>
 <?php  foreach ($vars['recintoSeleccionado'] as $key ) {?>
         <h4>Recinto: <?php echo $key['nombre'];?></h4>
@@ -367,7 +364,7 @@ foreach ($vars['contactos'] as $Contacto) {
            <div class="modal-body">
 
             <!--Resumen Partido-->
-            <form  method="post" action="?controlador=Partido&accion=resumenPartido" class="design-form" > <!-- Falta definir  la accion -->
+            <!-- Falta definir  la accion -->
        
               <div class="container">  
   
@@ -375,21 +372,20 @@ foreach ($vars['contactos'] as $Contacto) {
               <div class="row">
                   <div class="col-sm-8">
 
-          
+                    <form method="POST" action="?controlador=Partido&accion=equipoCapitanAB">
                       <div class="form-group">
-                        <h2 class="center">¿Deseas agendar un tercer tiempo?<h2>
+                        <h2 class="center">Equipo seleccionado ¿Continuar?<h2>
+                          <input id="jugadoresEquipoCap" hidden name="jugadoresEquipoCap" value="">
+                        <button  type="submit" class="btn-submit" >Si</button>
                        
-                        <button class="btn-submit" type="submit" onClick="setValue()" formaction="tercerTiempo.php">Si</button>
-                       
-                        <button type="submit" class="btn-submit" onClick="setValue()" >No</button>
+                        <button  class="btn-submit"  data-dismiss="modal" >No</button>
                         
                       </div>
                 
-
+                    </form>
 
                     </div>
-
-              </form>   
+  
               </div>
            </div>
            <?php }?>

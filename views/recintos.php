@@ -782,7 +782,7 @@ $_SESSION['idRecinto']=NULL;
                             <div class="row">
                                 <div class="col-sm-8">
                                     <div class="form-group">
-                                      <label for="cantidad">Cantidad total de jguadores</label>
+                                      <label for="cantidad">Cantidad total de jugadores</label>
                                       <select  class="form-control"  name="cantidad" required="required"  >
                                             <option type="number" value="10" >10</option>
                                             <option type="number" value="12" >12</option>
@@ -800,6 +800,7 @@ $_SESSION['idRecinto']=NULL;
                                             <option  value="A" >A</option>
                                             <option  value="B" >B</option>
                                         </select>
+                                        <small id="emailHelp" class="form-text text-muted">El equipo elegido es en el que jugarás</small>
                                     </div>
                                 </div>
                             </div>
@@ -985,7 +986,7 @@ $_SESSION['idRecinto']=NULL;
         textfield.value = textfield.value.replace(regex, function($0, $1){return $1 + ""});
                                             }   
         }
-        </script>        .
+        </script>        
         <script type="text/javascript">
         var idRecinto;
 

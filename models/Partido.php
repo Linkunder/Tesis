@@ -63,6 +63,24 @@ class Partido{
 			");
 		$consulta->execute();
 	}
+	public function setJugadoresAB($idPartido, $idUsuario, $equipo, $color){
+		$consulta = $this->db->prepare("
+			INSERT INTO JugadoresPartido 
+			(idPartido, 
+			 idUsuario, 
+			 equipo, 
+			 color1, 
+			 estado)
+			VALUES(
+			'$idPartido',
+			'$idUsuario',
+			'$equipo',
+			'".$color."',
+			'0'
+			);
+			");
+		$consulta->execute();
+	}
 	public function setPartido($idOrganizador,$fecha, $hora, $cuota, $tipo, $estado, $idRecinto, $cantidad){
 		$consulta= $this->db->prepare("
 			INSERT INTO Partido (
