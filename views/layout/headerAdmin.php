@@ -93,7 +93,7 @@ if (isset($_SESSION['notificaciones'])){
                             <?php
                             if ($notificaciones > 0 ){
                                 ?>
-                                <a href="#">
+                                <a href="?controlador=Recinto&accion=recintosNotificados">
                                 <div>
                                     Recintos <span class="badge"><?php echo $notificaciones?></span>
                                 </div>

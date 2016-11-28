@@ -280,6 +280,10 @@ class UsuarioController{
 	public function detalleJugador(){
 		$idJugador = $_GET['idJugador'];
 		$jugador = $this->Usuario->getUsuario($idJugador);
+		foreach ($jugador as $key ) {
+			$fechaNac = $key['fechaNacimiento'];
+		}
+		$data['edadJugador'] = $this->calcularEdad($fechaNac);
 		$data['jugador'] = $jugador;
 	    $this->view->show("_adminInfoJugador.php", $data);
 	}

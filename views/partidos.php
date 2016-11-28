@@ -45,7 +45,7 @@ $nroPartidosSistema = count($partidosSistema);
 
 <script src='assets/js/moment.min.js'></script>
 <script src="assets/js/es.js"></script>
-<script src='assets/lang-all.js'></script>
+<script src="assets/lang-all.js"></script>
 <script src='assets/js/fullcalendar.min.js'></script>
 
 
@@ -83,7 +83,7 @@ $nroPartidosSistema = count($partidosSistema);
         {
           title: '<?php echo $key['idPartido']?>',
           url: 'http://google.com/',
-          start: '<?php echo $key['fecha']."T".$key['hora'];?>',
+          start: '<?php echo $key['fechaPartido']?>',
         },
         <?php }?>
         ]

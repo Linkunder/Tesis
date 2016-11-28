@@ -153,10 +153,16 @@ class RecintoController{
 
     /*    MODULO DE ADMINISTRACION  */
     public function adminRecintos(){
-      $recintos = $this->Recinto->getRecintos();
+      $recintos = $this->Recinto->getRecintosAdmin();
       $data['recintos'] = $recintos;
       if (isset($_SESSION['recintoAdmin'])){
         $data['recintoAdmin'] = $_SESSION['recintoAdmin'];
+        if ($_SESSION['recintoAdmin'] == 5 || $_SESSION['recintoAdmin'] == 6){
+          $data['horarioRecinto'] = $_SESSION['horarioRecinto'];
+        }
+        if ($_SESSION['recintoAdmin'] == 8 || $_SESSION['recintoAdmin'] == 9){
+          $data['implementoRecinto'] = $_SESSION['implementoRecinto'];
+        }
       }
       $_SESSION['recintoAdmin'] = 0;
       $this->view->show('adminRecintos.php',$data);
@@ -183,6 +189,8 @@ class RecintoController{
       $this->view->show("_adminEditarRecinto.php", $data);
     }
 
+
+   
 
     public function updateRecinto(){
       $idRecinto = $_POST['idRecinto'];
@@ -280,6 +288,142 @@ class RecintoController{
   }
 
 
+  public function verImplementos(){
+    $idRecinto = $_GET['idRecinto'];
+    $implementos = $this->Implemento->getImplementosRecinto($idRecinto);
+    $data['implementos'] = $implementos;
+    $data['idRecinto'] = $idRecinto;
+    $this->view->show("_adminVerImplementos.php", $data);
+  }
+
+  public function verHorarios(){
+    $idRecinto = $_GET['idRecinto'];
+    $horarios = $this->Horario->getHorariosRecinto($idRecinto);;
+    $data['horarios'] = $horarios;
+    $data['idRecinto'] = $idRecinto;
+    $this->view->show("_adminVerHorarios.php", $data);
+  }
+
+  public function agregarHorario(){
+    $idRecinto = $_POST['idRecinto'];
+    $nombre = $_POST['nombre'];
+    $horaInicio = $_POST['horaInicio'];
+    $horaFin = $_POST['horaFin'];
+    $listaDias = $_POST['listaDias'];
+    $dias = implode(",", $listaDias);
+    $precio = $_POST['precio'];
+    $this->Horario->setHorarioRecinto($horaInicio, $horaFin, $nombre, $dias, $precio, $idRecinto);
+    $_SESSION['recintoAdmin'] = 5;
+    $_SESSION['horarioRecinto'] = $idRecinto;
+    header('Location: ?controlador=Recinto&accion=adminRecintos');
+  }
+
+
+  public function eliminarHorario(){
+    $idRecinto = $_POST['idRecinto'];
+    $idHorario = $_POST['idHorario'];
+    $this->Horario->eliminarHorarioRecinto($idRecinto, $idHorario);
+    $_SESSION['recintoAdmin'] = 6;
+    $_SESSION['horarioRecinto'] = $idRecinto;
+    header('Location: ?controlador=Recinto&accion=adminRecintos');
+  }
+
+  public function editarHorario(){
+    $idHorario = $_GET['idHorario'];
+    $horario = $this->Horario->getHorario($idHorario);
+    $data['horario'] = $horario;
+    $this->view->show("_adminEditarHorario.php", $data);
+  }
+
+  public function actualizarHorario(){
+    $idHorario = $_POST['idHorario'];
+    $nombre = $_POST['nombre'];
+    $horaInicio = $_POST['horaInicio'];
+    $horaFin = $_POST['horaFin'];
+    $listaDias = $_POST['listaDias'];
+    $dias = implode(",", $listaDias);
+    $precio = $_POST['precio'];
+    $this->Horario->actualizarHorarioRecinto($idHorario, $horaInicio, $horaFin, $nombre, $dias, $precio);
+    $_SESSION['recintoAdmin'] = 7;
+    //$_SESSION['horarioRecinto'] = $idRecinto;
+    header('Location: ?controlador=Recinto&accion=adminRecintos');
+  }
+
+
+  public function agregarImplemento(){
+    $idRecinto = $_POST['idRecinto'];
+    $nombre = $_POST['nombre'];
+    $precio = $_POST['precio'];
+    $this->Implemento->agregarImplementoRecinto($nombre, $precio, $idRecinto);
+    $_SESSION['recintoAdmin'] = 8;
+    $_SESSION['implementoRecinto'] = $idRecinto;
+    header('Location: ?controlador=Recinto&accion=adminRecintos');
+  }
+
+  public function eliminarImplemento(){
+    $idRecinto = $_POST['idRecinto'];
+    $idImplemento = $_POST['idImplemento'];
+    $this->Implemento->eliminarImplementoRecinto($idRecinto, $idImplemento);
+    $_SESSION['recintoAdmin'] = 9;
+    $_SESSION['implementoRecinto'] = $idRecinto;
+    header('Location: ?controlador=Recinto&accion=adminRecintos');
+  }
+
+  public function editarImplemento(){
+    $idImplemento = $_GET['idImplemento'];
+    $implemento = $this->Implemento->getImplemento($idImplemento);
+    $data['implemento'] = $implemento;
+    $this->view->show("_adminEditarImplemento.php", $data);
+  }
+
+  public function actualizarImplementoRecinto(){
+    $idImplemento = $_POST['idImplemento'];
+    $nombre = $_POST['nombre'];
+    $precio = $_POST['precio'];
+    $this->Implemento->actualizarImplementoRecinto($idImplemento, $nombre, $precio);
+    $_SESSION['recintoAdmin'] = 10;
+    //$_SESSION['horarioRecinto'] = $idRecinto;
+    header('Location: ?controlador=Recinto&accion=adminRecintos');
+  }
+
+  public function recintosNotificados(){
+      $recintos = $this->Recinto->getRecintosNotificados();
+      $data['recintos'] = $recintos;
+      if (isset($_SESSION['notiAdmin'])){
+        $data['notiAdmin'] = $_SESSION['notiAdmin'];
+      }
+      $_SESSION['notiAdmin'] = 0;
+      $this->view->show('adminNotificaciones.php',$data);
+  }
+
+  public function eliminarNotificacion(){
+    $idRecinto = $_POST['idRecinto'];
+    $this->Recinto->eliminarNotificacion($idRecinto);
+    $_SESSION['notiAdmin'] = 1;
+    header('Location: ?controlador=Recinto&accion=recintosNotificados');
+  }
+
+    public function activarNotificacion(){
+      $idRecinto = $_GET['idRecinto'];
+      $recinto = $this->Recinto->getRecinto($idRecinto);
+      $data['recinto'] = $recinto;
+      $this->view->show("_adminActivarNotificacion.php", $data);
+    }
+
+    public function registrarNotificacion(){
+      $idRecinto = $_POST['idRecinto'];
+      $nombre = $_POST['nombre'];
+      $tipo = $_POST['tipo'];
+      $superficie = $_POST['superficie'];
+      $direccion = $_POST['direccion'];
+      $telefono = $_POST['telefono'];
+      $estado = $_POST['estado'];
+      $idUsuario = $_POST['idUsuario'];
+      $this->Recinto->registrarNotificacion($idRecinto, $nombre, $tipo, $superficie, $direccion, $telefono,$estado, $idUsuario);
+      $subirImagen = $this->guardarImagen($idRecinto);
+      $_SESSION['notiAdmin'] = 2;
+      header('Location: ?controlador=Recinto&accion=recintosNotificados');
+    }
 
 
 }

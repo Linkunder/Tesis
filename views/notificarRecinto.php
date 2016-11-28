@@ -43,15 +43,15 @@
             <div class="form-bottom">
               <div class="form-group">
                 <label class="sr-only" for="form-first-name">Nombre</label>
-                    <input type="text" name="nombre" id="nombre" class="form-control" placeholder="Nombre" >
+                    <input type="text" name="nombre" id="nombre" class="form-control" placeholder="Nombre" required >
               </div>
               <div class="form-group">
                 <label class="sr-only" for="form-last-name">Telefono</label>
-                      <input type="text" name="fono" id="fono" class="form-control" placeholder="Telefono" >
+                      <input type="text" name="fono" id="fono" class="form-control" placeholder="Telefono" required>
               </div>
               <div class="form-group">
                 <label class="sr-only" for="form-last-name">Dirección</label>
-                <input type="text" name="direccion" id="direccion" class="form-control" placeholder="Dirección" >
+                <input type="text" name="direccion" id="direccion" class="form-control" placeholder="Dirección" required>
               </div>
               <div class="form-group">
                   <input name="idUsuario" id="idUsuario" class="hide" value="<?php echo $_SESSION['login_user_id'] ?>" class="form-control">

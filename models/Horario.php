@@ -21,7 +21,46 @@ class Horario{
 		return $resultado;
 	}
 
-	public function setHorarioRecinto(){
+	public function setHorarioRecinto($horaInicio, $horaFin, $nombre, $dias, $precio, $idRecinto){
+		$consulta = $this->db->prepare(
+			"INSERT INTO Horario (
+				horaInicio,
+				horaFin,
+				nombre,
+				dias,
+				precio,
+				idRecinto
+				)VALUES(
+				'$horaInicio',
+				'$horaFin',
+				'$nombre',
+				'$dias',
+				'$precio',
+				'$idRecinto'
+				)");
+		$consulta->execute();
+	}
+
+	public function eliminarHorarioRecinto($idRecinto, $idHorario){
+		$consulta = $this->db->prepare(
+			"DELETE FROM Horario WHERE idRecinto = '".$idRecinto."' AND idHorario = '".$idHorario."'
+			");
+		$consulta->execute();
+		$resultado = $consulta->fetchAll();
+		return $resultado;
+	}
+
+	public function actualizarHorarioRecinto($idHorario, $horaInicio, $horaFin, $nombre, $dias, $precio){
+		$sql = "UPDATE Horario 
+		SET 
+		horaInicio = '".$horaInicio."',
+		horaFin = '".$horaFin."', 
+		nombre = '".$nombre."', 
+		dias = '".$dias."', 
+		precio = '".$precio."'
+		WHERE idHorario = '".$idHorario."' ";
+		$query = $this->db->prepare($sql);
+		$query->execute();
 	}
 
 }

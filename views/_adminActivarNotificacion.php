@@ -16,7 +16,7 @@ foreach ($recinto as $key ) {
       </h3> 
     </div>
     <div class="modal-body">
-      <form action="?controlador=Recinto&accion=updateRecinto" method="post">
+      <form action="?controlador=Recinto&accion=registrarNotificacion" method="post" enctype="multipart/form-data">
         <div class="form-group">
           <label for="nombre">Nombre</label>
           <input type="text" class="form-control" id="nombre" name="nombre" value="<?php echo $key['nombre']?>" required>
@@ -25,49 +25,16 @@ foreach ($recinto as $key ) {
         <div class="form-group">
           <label for="tipo">Tipo de recinto</label>
           <select class="form-control" id="tipo" name="tipo" required>
-            <?php
-            if ($key['tipo'] == null){
-              ?>
               <option selected disabled value="">Selecciona el tipo de cancha</option>
               <option>Futbol</option>
               <option>Baby-futbol</option>
               <option>Futbolito</option>
-              <?php
-            } else {
-
-            
-            ?>
-            <option selected value="<?php echo $key['tipo']?>"><?php echo $key['tipo']?></option>
-            <?php
-            if ($key['tipo'] == "Futbolito"){
-              ?>
-              <option>Baby-futbol</option>
-              <option>Futbol</option>
-              <?php
-            } else {
-              if ($key['tipo'] == "Baby-futbol"){
-                ?>
-                <option>Futbolito</option>
-                <option>Futbol</option>
-                <?php
-              } else {
-                if ($key['tipo'] == "Futbol"){
-                  ?>
-                  <option>Baby-futbol</option>
-                  <option>Futbolito</option>
-                  <?php
-                } 
-              }
-            }
-            }
-            
-            ?>
           </select>
           <small id="emailHelp" class="form-text text-muted">Selecciona si es una cancha de fútbol, futbolito o baby-fútbol</small>
         </div>
         <div class="form-group">
           <label for="superficie">Superficie</label>
-          <input type="text" class="form-control" id="superficie" name="superficie" value="<?php echo $key['superficie']?>" required>
+          <input type="text" class="form-control" id="superficie" name="superficie" required>
         </div>
         <div class="form-group">
           <label for="direccion">Dirección</label>
@@ -77,11 +44,23 @@ foreach ($recinto as $key ) {
           <label for="telefono">Teléfono</label>
           <input type="text" class="form-control" id="telefono" name="telefono" value="<?php echo $key['telefono']?>" required>
         </div>
-
-
-
+        <div class="form-group">
+          <label for="fotografia">Fotografía</label>
+          <input type="file" class="form-control-file" id="imagen" name="imagen" aria-describedby="fileHelp" required>
+        </div>
+        <div class="form-group">
+          <label for="tipo">Estado inicial</label>
+          <select class="form-control" id="estado" name="estado" required>
+            <option value="" selected disabled>Selecciona el estado inicial de la cancha</option>
+            <option value="1">Activo</option>
+            <option value="2">Inactivo</option>
+          </select>
+          <small id="emailHelp" class="form-text text-muted">Si seleccionas estado activo, quedará visible para todos los jugadores
+           de MatchDay, de lo contrario, podrás activarlo más adelante.</small>
+         </div>
 
         <input name="idRecinto" value="<?php echo $key['idRecinto']?>" hidden/>
+        <input name="idUsuario" value="<?php echo $_SESSION['login_user_id']?>" hidden/>
         <!--div class="form-group">
           <label for="exampleInputFile">File input</label>
           <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp">
@@ -90,7 +69,7 @@ foreach ($recinto as $key ) {
 
         <div class="row">
           <div class="col-xs-4">
-            <button type="submit" class="btn btn-primary col-xs-12">Actualizar <i class="fa fa-paper-plane"></i></button>
+            <button type="submit" class="btn btn-primary col-xs-12">Activar <i class="fa fa-paper-plane"></i></button>
           </div>
           <div class="col-xs-4">
             <button type="reset" class="btn btn-warning col-xs-12">Reiniciar <i class="fa fa-eraser fa-1x"></i></button>

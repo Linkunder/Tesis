@@ -10,15 +10,7 @@ foreach ($equipo as $key ) {
       <h3 class="modal-title"><?php echo $key['nombre']?></h3>
     </div>
     <div class="modal-body">
-      <div class="col-md-4">
-        
-      </div>
-      <div class="col-md-4">
-        
-      </div>
-      <div class="col-md-4">
-        
-      </div>
+      
     </div>
     <div class="modal-footer">
       

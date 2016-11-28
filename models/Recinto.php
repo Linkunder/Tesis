@@ -141,5 +141,45 @@ class Recinto{
 		return $resultado;	
 	} 
 
+	public function getRecintosAdmin(){
+		$consulta = $this->db->prepare('SELECT * FROM Recinto WHERE idUsuario = 5');
+		$consulta->execute();
+		$resultado = $consulta->fetchAll();
+		return $resultado;
+	}
+
+	public function getRecintosNotificados(){
+		$consulta = $this->db->prepare('SELECT * FROM Recinto WHERE idUsuario != 5');
+		$consulta->execute();
+		$resultado = $consulta->fetchAll();
+		return $resultado;
+	}
+
+
+	public function eliminarNotificacion($idRecinto){
+		$consulta = $this->db->prepare(
+			"DELETE FROM Recinto WHERE idRecinto = '".$idRecinto."'
+			");
+		$consulta->execute();
+		$resultado = $consulta->fetchAll();
+		return $resultado;
+	}
+
+	public function registrarNotificacion($idRecinto, $nombre, $tipo, $superficie, $direccion, $telefono,$estado, $idUsuario){
+		$consulta = $this->db->prepare(
+			"UPDATE Recinto SET 
+			nombre 		 = '$nombre',
+			tipo 		 = '$tipo',
+			superficie	 = '$superficie',
+			direccion	 = '$direccion',
+			telefono	 = '$telefono',
+			estado		 = '$estado',
+			idUsuario	 = '$idUsuario'
+			WHERE idRecinto = '$idRecinto'");
+		
+		$consulta->execute();
+	}
+
+
 }
 ?>

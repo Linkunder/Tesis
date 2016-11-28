@@ -89,6 +89,55 @@ $recintos = $vars['recintos'];
                     </div>
                     <?php
                   }
+                  if ($vars['recintoAdmin'] == 5){
+                    ?>
+                    <div class="alert alert-success alert-dismissible">
+                      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                      <strong>Listo!</strong> El horario del recinto <?php echo $vars['horarioRecinto']?> ha sido agregado exitosamente.
+                    </div>
+                    <?php
+                  }
+                  if ($vars['recintoAdmin'] == 6){
+                    ?>
+                    <div class="alert alert-warning alert-dismissible">
+                      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                      <strong>Listo!</strong> El horario del recinto <?php echo $vars['horarioRecinto']?> ha sido eliminado exitosamente.
+                    </div>
+                    <?php
+                  }
+                  if ($vars['recintoAdmin'] == 7){
+                    ?>
+                    <div class="alert alert-info alert-dismissible">
+                      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                      <strong>Listo!</strong> El horario del recinto ha sido actualizado exitosamente.
+                    </div>
+                    <?php
+                  }
+                  if ($vars['recintoAdmin'] == 8){
+                    ?>
+                    <div class="alert alert-info alert-dismissible">
+                      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                      <strong>Listo!</strong> El implemento del recinto <?php echo $vars['implementoRecinto']?> ha sido agregado exitosamente.
+                    </div>
+                    <?php
+                  }
+                  if ($vars['recintoAdmin'] == 9){
+                    ?>
+                    <div class="alert alert-warning  alert-dismissible">
+                      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                      <strong>Listo!</strong> El implemento del recinto <?php echo $vars['implementoRecinto']?> ha sido eliminado exitosamente.
+                    </div>
+                    <?php
+                  }
+                  if ($vars['recintoAdmin'] == 10){
+                    ?>
+                    <div class="alert alert-warning  alert-dismissible">
+                      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                      <strong>Listo!</strong> El implemento ha sido actualizado exitosamente.
+                    </div>
+                    <?php
+                  }
+
                 } 
                 ?>
 
@@ -106,6 +155,8 @@ $recintos = $vars['recintos'];
                                         <th>Estado</th>
                                         <th></th>
                                         <th></th>
+                                        <th></th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -115,8 +166,8 @@ $recintos = $vars['recintos'];
                                     ?>
                                     <tr class="odd gradeX">
                                         <td><?php echo $key['nombre']?></td>
-                                        <td><?php echo $key['tipo']?></td>
-                                        <td><?php echo $key['superficie']?></td>
+                                        <td ><?php echo $key['tipo']?></td>
+                                        <td ><?php echo $key['superficie']?></td>
                                         <td class="centrado">
                                             <?php 
                                             if ($key['estado'] == 1){
@@ -146,7 +197,7 @@ $recintos = $vars['recintos'];
                                                 <form action="?controlador=Recinto&accion=cambiarEstadoRecinto" method="post">
                                                     <input name="idRecinto" value="<?php echo $idRecinto?>" hidden>
                                                     <input name="estado" value="2" hidden>
-                                                    <button type="submit" class="btn btn-warning btn-sm col-xs-12">Desactivar 
+                                                    <button type="submit" class="btn btn-warning btn-sm col-xs-12"> 
                                                         <i class="fa fa-ban" aria-hidden="true"></i>
                                                     </button>    
                                                 </form>
@@ -157,7 +208,7 @@ $recintos = $vars['recintos'];
                                                 <form action="?controlador=Recinto&accion=cambiarEstadoRecinto" method="post">
                                                     <input name="idRecinto" value="<?php echo $idRecinto?>" hidden>
                                                     <input name="estado" value="1" hidden>
-                                                    <button type="submit" class="btn btn-success btn-sm col-xs-12">Activar 
+                                                    <button type="submit" class="btn btn-success btn-sm col-xs-12"> 
                                                         <i class="fa fa-check-circle" aria-hidden="true"></i>
                                                     </button>    
                                                 </form>
@@ -169,8 +220,22 @@ $recintos = $vars['recintos'];
                                         <td class="centrado">
                                             <button type="button" class="btn btn-primary btn-sm col-xs-12" href="javascript:void(0);" 
                                             data-toggle="modal" data-target="#modal" onclick="carga_ajax('modal','<?php echo $idRecinto?>','editar');">
-                                            Editar
+                                                 
                                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                            </button>
+                                        </td>
+                                        <td class="centrado">
+                                            <button type="button" class="btn btn-primary btn-sm col-xs-12" href="javascript:void(0);" 
+                                            data-toggle="modal" data-target="#modal" onclick="carga_ajax('modal','<?php echo $idRecinto?>','horarios');">
+                                               
+                                                <i class="fa fa-calendar" aria-hidden="true"></i>
+                                            </button>
+                                        </td>
+                                        <td  class="centrado">
+                                            <button type="button" class="btn btn-primary btn-sm col-xs-12" href="javascript:void(0);" 
+                                            data-toggle="modal" data-target="#modal" onclick="carga_ajax('modal','<?php echo $idRecinto?>','implementos');">
+                                            
+                                                <i class="fa fa-futbol-o" aria-hidden="true"></i>
                                             </button>
                                         </td>
                                     </tr>
@@ -335,5 +400,26 @@ function carga_ajax(div, id, tipo){
       }
       ); 
   }
+
+
+  if (tipo == 'implementos'){
+    $.post(
+      '?controlador=Recinto&accion=verImplementos&idRecinto='+id,
+      function(resp){
+        $("#"+div+"").html(resp);
+      }
+      ); 
+  }
+
+  if (tipo == 'horarios'){
+    $.post(
+      '?controlador=Recinto&accion=verHorarios&idRecinto='+id,
+      function(resp){
+        $("#"+div+"").html(resp);
+      }
+      );
+  }
+
+
 }
 </script>
