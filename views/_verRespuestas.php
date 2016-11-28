@@ -1,3 +1,34 @@
+
+<!--MODAL -->
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" >
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Cargando ...</h4>
+      </div>
+      <div class="modal-body">
+        <h1></h1>
+      </div>
+      <div class="modal-footer">
+            <h4></h4>
+      </div>
+    </div>
+  </div>
+</div>
+<!--Modal-->
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -104,6 +135,8 @@
                 <tbody id="texto-contactos" class="center">
                   <?php
                   foreach ($encuentros as $item) {
+                    $idEncuentro = $item['idEncuentro'];
+                    $idDesafio = $item['idDesafio'];
                   ?>
                   <tr>
                   <td>
@@ -122,16 +155,23 @@
                     <form id="demoform" action="?controlador=Desafio&accion=cancelarEncuentro" method="post">
                       <input type="text" name="idEncuentro" value="<?php echo $item['idEncuentro']?>" hidden/>
                       <input type="text" name="idEquipo" value="<?php echo $item['idEquipo']?>" hidden/>
+                      <input type="text" name="idDesafio" value="<?php echo $idDesafio?>" hidden/>
                       <button type="submit" class="btn btn-danger" >Rechazar <i class="fa fa-times-circle" aria-hidden="true"></i></button>
                     </form>
                   </td>
                   <td>
-                    <form id="demoform" action="?controlador=Desafio&accion=aceptarEncuentro" method="post">
+                    <button type="button" class="btn btn-success" href="javascript:void(0);" 
+                      data-toggle="modal" data-target="#modal2"  onclick="carga_ajax8('modal','<?php echo $idEncuentro?>','agendar');">
+                      Aceptar <i class="fa fa-check-circle" aria-hidden="true"></i></button>
+                    </button>
+                    <!--form id="demoform" action="?controlador=Desafio&accion=aceptarEncuentro" method="post">
                       <input type="text" name="idEncuentro" value="<?php echo $item['idEncuentro']?>" hidden/>
                       <input type="text" name="idEquipo" value="<?php echo $item['idEquipo']?>" hidden/>
                       <input type="text" name="idDesafio" value="<?php echo $item['idDesafio']?>" hidden/>
                       <button type="submit" class="btn btn-success" >Aceptar <i class="fa fa-check-circle" aria-hidden="true"></i></button>
-                    </form>
+                    </form-->
+
+
                   </td>
                 </tr>
                   <?php
@@ -159,3 +199,22 @@
       
     </div>
   </div>
+
+
+
+
+
+
+<script>
+
+function carga_ajax8(div, id,tipo){
+  if (tipo == 'agendar'){
+    $.post(
+      '?controlador=Desafio&accion=agendarPartido&idEncuentro='+id,
+      function(resp){
+        $("#"+div+"").html(resp);
+      }
+      );
+  }
+}
+</script>

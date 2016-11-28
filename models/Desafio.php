@@ -68,7 +68,7 @@ class Desafio{
 		return $resultado;
 	}
 
-
+	// Vestibulo
 	public function getDesafiosSistema($idUsuario, $limInf, $limSup){
 		$sql = "SELECT Desafio.idDesafio, 
 			Desafio.fecha, 

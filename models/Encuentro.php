@@ -11,7 +11,8 @@ class Encuentro{
 
 	//	Obtener respuestas de un desafio
 	public function getEncuentros($idDesafio){
-		$sql = "SELECT DISTINCT 
+		$sql = "SELECT DISTINCT
+		Desafio.idDesafio,
 		Desafio.estado,
 		Desafio.fecha as fechaPartido,
 		Desafio.comentario, 
@@ -84,6 +85,12 @@ class Encuentro{
 		$query->execute();
 	}
 
+	public function cambiarEstadoEncuentro($idEncuentro, $estadoDesafio){
+		$sql = "UPDATE Encuentro SET estadoSolicitud = '".$estadoDesafio."' WHERE idEncuentro = '".$idEncuentro."' ;";
+		$query = $this->db->prepare($sql);
+		$query->execute();
+	}
+
 	public function getSolicitudes($idUsuario){
 		$sql = "SELECT Encuentro.idEncuentro, Encuentro.idDesafio, 
 			(DATE_FORMAT(Desafio.fecha,'%d-%m-%Y')) as fechaPartido , 
@@ -95,7 +102,7 @@ class Encuentro{
 			INNER JOIN Desafio on Encuentro.idDesafio = Desafio.idDesafio 
 			INNER JOIN Recinto on Recinto.idRecinto = Desafio.idRecinto 
 			INNER JOIN Equipo on Encuentro.idEquipo = Equipo.idEquipo 
-			WHERE Equipo.idCapitan= '".$idUsuario."';";
+			WHERE Equipo.idCapitan= '".$idUsuario."' ;";
 		$query = $this->db->prepare($sql);
 		$query->execute();
 		$resultado = $query->fetchAll();
@@ -105,12 +112,18 @@ class Encuentro{
 	public function getEncuentro($idEncuentro){
 		$sql = "SELECT Encuentro.idEncuentro, 
 		Encuentro.idDesafio, 
+		Encuentro.respuesta,
+		Encuentro.idEquipo as idEquipo1,
 		(DATE_FORMAT(Desafio.fecha,'%d-%m-%Y')) as fechaPartido , 
+		Desafio.comentario,
+		Recinto.idRecinto,
 		Recinto.tipo as tipoPartido,
 		Recinto.fotografia as fotoRecinto, 
 		Recinto.nombre as nombreRecinto, 
 		Equipo.nombre as equipo1,
-		(select nombre from Equipo where idEquipo = Desafio.idEquipo) as equipo2, 
+		(select idEquipo from Equipo where idEquipo = Desafio.idEquipo) as idEquipo2,
+		(select nombre from Equipo where idEquipo = Desafio.idEquipo) as equipo2,
+		(select idCapitan from Equipo where idEquipo = Desafio.idEquipo) as idOrganizador, 
 		Encuentro.estadoSolicitud 
 		from Encuentro 
 		INNER JOIN Desafio on Encuentro.idDesafio = Desafio.idDesafio 

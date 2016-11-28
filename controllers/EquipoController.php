@@ -93,10 +93,10 @@ class EquipoController{
 		$nombre = $_POST["nombre"];
 		$color = $_POST["color"];
 		$idUsuario = $_SESSION['login_user_id'];
-		//$this->Equipo->setEquipo($nombre,$color,$idUsuario);
+		$this->Equipo->setEquipo($nombre,$color,$idUsuario);
 		$miembros = $_POST["arrayContactos"];
-		var_dump($miembros);
-		/*$equipos = $this->Equipo->getEquipos();
+		//var_dump($miembros);
+		$equipos = $this->Equipo->getEquipos();
 		$idEquipo = end($equipos)['idEquipo'];
 		$arrayEdades = array(); 
 		for ($i=0; $i<count($miembros) ; $i++) {
@@ -116,7 +116,7 @@ class EquipoController{
 		$this->Equipo->setMiembros($idEquipo,$edadPromedio, $nroJugadores);
 		$equipo->agregarMiembroEquipo($idUsuario,$idEquipo);
 		$_SESSION['accion'] = 1;
-		header('Location: ?controlador=Equipo&accion=listaEquipos');*/
+		header('Location: ?controlador=Equipo&accion=listaEquipos');
 	}
 
 

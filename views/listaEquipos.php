@@ -311,7 +311,9 @@ $nroContactos = count($contactos);
         </form>
 
         <script>
-            var demo1 = $('select[name="arrayContactos[]"]').bootstrapDualListbox();
+            var demo1 = $('select[name="arrayContactos[]"]').bootstrapDualListbox({
+              selectorMinimalHeight:'100'
+            });
 
         </script>
 
@@ -325,15 +327,3 @@ $nroContactos = count($contactos);
   </div>
 </div>
 
-<script type="text/javascript">
-  demo1.on('change',function(){
-    var size=demo1.find(":selected").size();
-    if(size>3){
-        demo1.find(":selected").each(function(ind,sel){            
-            if(ind>2)
-                $(this).prop("selected", false)
-        })
-        demo1.bootstrapDualListbox('refresh', true);
-    }
-})  
-</script>

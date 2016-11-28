@@ -10,6 +10,7 @@ require 'models/TercerTiempo.php';
 require 'models/Local.php';
 require 'models/Horario.php';
 require 'models/Mail.php';
+require 'models/Encuentro.php';
 
 
       if(!isset($_SESSION)) { 
@@ -28,6 +29,7 @@ class PartidoController{
 		$this->tercerTiempo = new TercerTiempo();
 		$this->local = new Local();
 		$this->Horario = new Horario();
+		$this->Encuentro = new Encuentro();
 	}
 
 	public function index(){
@@ -519,6 +521,9 @@ class PartidoController{
 		$idRival = $_POST['rival'];
 		$_SESSION['idEquipo2'] = $idRival;
 		$idDesafio = $_POST['desafio'];
+		$idEncuentro = $_POST['idEncuentro'];
+
+
 		$horaPartido = $_POST['hora'];
 		$desafio = $this->Desafio->getDesafio($idDesafio);
 		foreach ($desafio as $item) {
@@ -529,12 +534,14 @@ class PartidoController{
 			$equipoOrganizador = $item['nombreEquipo'];
 			$cuota = 0;
 		}
+
 		$estado = 1; // Activo.
 		$estadoDesafio = 3; // Agendado.
 		$tipoPartido = 4; // Desafio.
 
 		// Enviar datos a la BD
 		$this->Desafio->cambiarEstado($idDesafio, $estadoDesafio);
+		$this->Encuentro->cambiarEstadoEncuentro($idEncuentro, $estadoDesafio);
 		$this->Partido->setPartidoDesafio($idOrganizador,$fechaPartido, $horaPartido, $cuota, $tipoPartido, $estado, $idRecinto);
 
 		$partidos = $this->Partido->getPartidos();

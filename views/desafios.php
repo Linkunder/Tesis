@@ -393,7 +393,7 @@ $nroHistorial = count($historialDesafios);
                       <span class="label label-warning">Esperando respuesta <i class="fa fa-clock-o" aria-hidden="true"></i></span>
                     <?php
                     }
-                     if ($item['estadoSolicitud']==2){
+                     if ($item['estadoSolicitud']==3){
                       ?>
                       <span class="label label-primary">Encuentro aceptado <i class="fa fa-check-circle" aria-hidden="true"></i></span>
                     <?php

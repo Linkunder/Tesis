@@ -5,6 +5,7 @@ require 'models/Desafio.php';
 require 'models/Usuario.php';
 require 'models/Encuentro.php';
 require 'models/Recinto.php';
+require 'models/Horario.php';
 
 session_start();
 
@@ -13,6 +14,10 @@ class DesafioController{
 		$this->view = new View();
 		$this->Desafio = new Desafio();
 		$this->Encuentro = new Encuentro();
+		$this->Equipo = new Equipo();
+		$this->Usuario = new Usuario();
+		$this->Recinto = new Recinto();
+		$this->Horario = new Horario();
 	}
 
 	public function index(){
@@ -22,18 +27,13 @@ class DesafioController{
 	// Entregar lista de desafios realizados por el equipo.
 	public function listaDesafios(){
 		$idUsuario = $_SESSION['login_user_id'];
-		$equipos = new Equipo();
-		$desafios = new Desafio();
-		$usuarios = new Usuario();
-		$encuentros = new Encuentro();
-		$recintos = new Recinto();
-		$listaEquipos = $equipos->getEquiposJugador($idUsuario); 			// Equipos en los que el jugador es el capitan.
+		$listaEquipos = $this->Equipo->getEquiposJugador($idUsuario); 			// Equipos en los que el jugador es el capitan.
 		$data['listaEquipos'] = $listaEquipos;
-		$listaDesafios = $desafios->getDesafios($idUsuario);				// Desafios de los equipos del usuario
+		
+		$listaDesafios = $this->Desafio->getDesafios($idUsuario);					// Desafios de los equipos del usuario
 		$data['listaDesafios'] = $listaDesafios;
 
-
-		$historialDesafios = $desafios->getHistorialDesafios($idUsuario);
+		$historialDesafios =  $this->Desafio->getHistorialDesafios($idUsuario);
 		$data['historialDesafios'] = $historialDesafios;
 
 		$nroEncuentros = 0;
@@ -42,7 +42,7 @@ class DesafioController{
 			//$detalleDesafio = $desafios->getDesafio($idDesafio);
 			//$data['detalleDesafio'.$idDesafio] = $detalleDesafio;
 			//var_dump($detalleDesafio);
-			$listaEncuentros = $encuentros->getEncuentros($idDesafio);		// Encuentros de los desafios hechos por el jugador de la sesión.
+			$listaEncuentros = $this->Encuentro->getEncuentros($idDesafio);		// Encuentros de los desafios hechos por el jugador de la sesión.
 			if (!empty($listaEncuentros)){
 				$data['listaEncuentros'.$idDesafio] = $listaEncuentros;
 				$nroEncuentros++;
@@ -51,10 +51,10 @@ class DesafioController{
 			}
 			
 		}
-		$listaSolicitudes = $encuentros->getSolicitudes($idUsuario);	// Lista de solicitudes realizadas por el jugador.
+		$listaSolicitudes = $this->Encuentro->getSolicitudes($idUsuario);	// Lista de solicitudes realizadas por el jugador.
 		$data['listaSolicitudes'] = $listaSolicitudes;
 		$data['nroEncuentros'] = $nroEncuentros;
-		$listaRecintos = $recintos->getRecintosActivos();
+		$listaRecintos = $this->Recinto->getRecintosActivos();
 		$data['listaRecintos'] = $listaRecintos;
 		//$listaDesafiosSistema = $desafios->getDesafiosSistema($idUsuario);	// Desafios de los equipos del usuario
 		//$data['listaDesafiosSistema'] = $listaDesafiosSistema;
@@ -69,8 +69,6 @@ class DesafioController{
 
 	//	Crear un desafio
 	public function crearDesafio(){
-		$desafio = new Desafio();
-		$equipo = new Equipo();
 		$recinto = $_POST["recinto"];
 		$fechaPartido = $_POST["date"]."";
 		$idEquipo = $_POST["equipo"];
@@ -85,7 +83,7 @@ class DesafioController{
 		}
 		$comentario = $_POST["comentario"];
 		//echo "Inferior: ".$limInf." Superior: ".$limSup;
-		$desafio->setDesafio($fechaPartido, $limInf, $limSup, $comentario, $idEquipo, $recinto, "0");
+		$this->Desafio->setDesafio($fechaPartido, $limInf, $limSup, $comentario, $idEquipo, $recinto, "0");
 		$_SESSION['accion'] = 1;
 		header('Location: ?controlador=Desafio&accion=listaDesafios');
 	}
@@ -93,9 +91,6 @@ class DesafioController{
 
 	// Ver vestibulo de partidos
 	public function verVestibuloDesafios(){
-		$desafios = new Desafio();
-		$equipo = new Equipo();
-		$encuentro = new Encuentro();
 		$idUsuario = $_SESSION['login_user_id'];
 		$idEquipoJugador = $_POST["equipo"];
 		$_SESSION['equipoSeleccionado'] = $idEquipoJugador;
@@ -109,8 +104,8 @@ class DesafioController{
 			$limSup = $edades[1];
 		}
 
-		$desafiosSistema = $desafios->getDesafiosSistema($idUsuario, $limInf, $limSup);	// equipos con desafios donde el usuario no es capitan
-		$miembrosEquipo = $equipo->getMiembrosEquipo($idEquipoJugador);	// miembros del equipo que eligio el usuario
+		$desafiosSistema = $this->Desafio->getDesafiosSistema($idUsuario, $limInf, $limSup);	// equipos con desafios donde el usuario no es capitan
+		$miembrosEquipo = $this->Equipo->getMiembrosEquipo($idEquipoJugador);	// miembros del equipo que eligio el usuario
 		//$auxDesafio = array();
 		$auxDesafiosSistema = 0;
 		$auxEncuentros = 0;
@@ -119,7 +114,7 @@ class DesafioController{
 			$cont = 0;
 			foreach ($miembrosEquipo as $usuario) {
 				$idUsuario = $usuario['idUsuario'];
-				$respuesta = $equipo->verificarMiembro($idUsuario, $idEquipo);
+				$respuesta = $this->Equipo->verificarMiembro($idUsuario, $idEquipo);
 				if (count($respuesta)>0){	// El miembro pertenece al equipo que tiene un desafio, donde el jugador no es capitan
 					$cont++;
 				}
@@ -127,9 +122,9 @@ class DesafioController{
 			if ($cont==0){
 				//$auxDesafio[$aux] = $key['idDesafio'];
 				$idDesafio = $key['idDesafio'];
-				$desafioDisponible = $desafios->getDesafio($idDesafio);
+				$desafioDisponible = $this->Desafio->getDesafio($idDesafio);
 				//$data['listaDesafiosSistema'.$aux] = $desafioDisponible;
-				$encuentroAcordado = $encuentro->verificarEncuentro($idEquipoJugador, $idDesafio);
+				$encuentroAcordado = $this->Encuentro->verificarEncuentro($idEquipoJugador, $idDesafio);
 				if (!empty($encuentroAcordado)){
 					$auxEncuentros++;
 					$data['encuentroAcordado'.$auxEncuentros] = $encuentroAcordado;
@@ -163,6 +158,17 @@ class DesafioController{
       /*if(!isset($_SESSION)) { 
         session_start(); 
         } */
+        $idEncuentro = $_GET['idEncuentro'];
+        $encuentro = $this->Encuentro->getEncuentro($idEncuentro);
+        foreach ($encuentro as $key ) {
+        	$idRecinto = $key['idRecinto'];
+        }
+        $horarios = $this->Horario->getHorariosRecinto($idRecinto);
+        $data['horarios'] = $horarios;
+        $data['encuentro'] = $encuentro;
+        $this->view->show("_agendarDesafio.php", $data);
+
+        /*
       $idDesafio = $_GET['idDesafio'];
       $desafio = $this->Desafio->getDesafio($idDesafio);
       $encuentro = new Encuentro();
@@ -173,18 +179,17 @@ class DesafioController{
       	$data['idRival'] = $key['idRival'];
       }
       $data['desafio'] = $desafio;
-      $this->view->show("_agendarDesafio.php", $data);
+      $this->view->show("_agendarDesafio.php", $data);*/
     }
 
     public function verRespuestas(){
       /*if(!isset($_SESSION)) { 
         session_start(); 
         } */
-        $encuentros = new Encuentro();
         $idDesafio = $_GET['idDesafio'];
         $desafio = $this->Desafio->getDesafio($idDesafio);
         $data['desafio'] = $desafio;
-        $listaEncuentros = $encuentros->getEncuentros($idDesafio);
+        $listaEncuentros = $this->Encuentro->getEncuentros($idDesafio);
         $data['listaEncuentros'] = $listaEncuentros;
         $this->view->show("_verRespuestas.php", $data);
     }
@@ -193,9 +198,7 @@ class DesafioController{
 
 	// Set Encuentro
 	public function setEncuentro(){
-		$encuentro = new Encuentro();
-		$desafio = new Desafio();
-		
+
 		$idDesafio = $_POST['desafio'];
 		$idEquipo = $_POST['equipo'];
 		$estado = 1;
@@ -203,8 +206,8 @@ class DesafioController{
 
 
 		//echo "desafio: ".$idDesafio." equipo: ".$idEquipo." estado: ".$estado;
-		$encuentro->setEncuentro($idDesafio, $idEquipo, $respuesta, $estado); // Se inserta en la base de datos
-		$desafio->cambiarEstado($idDesafio, $estado);
+		$this->Encuentro->setEncuentro($idDesafio, $idEquipo, $respuesta, $estado); // Se inserta en la base de datos
+		$this->Desafio->cambiarEstado($idDesafio, $estado);
 		$_SESSION['accion'] = 2;				// Se cambia el estado del desafio (sin respuestas->con respuestas)
 		header('Location: ?controlador=Desafio&accion=listaDesafios');
 	}
@@ -212,26 +215,26 @@ class DesafioController{
 
 	// Se acepto una solicitud de este desafio, por lo tanto se registra que el desafio será jugado y las demas solicitudes se rechazan.
 	public function aceptarEncuentro(){
-		$encuentro = new Encuentro();
-		$desafio = new Desafio();
 		$idDesafio = $_POST['idDesafio'];
 		$idEquipo = $_POST['idEquipo'];
 		$idEncuentro = $_POST['idEncuentro'];
 		$estado = 2;
-		$desafio->cambiarEstado($idDesafio, $estado);
-		$encuentro->cambiarEstado($idDesafio, $estado);
-		$encuentro->eliminarEncuentros($idDesafio, $idEquipo);
+		$this->Desafio->cambiarEstado($idDesafio, $estado);
+		$this->Encuentro->cambiarEstado($idDesafio, $estado);
+		$this->Encuentro->eliminarEncuentros($idDesafio, $idEquipo);
 		$_SESSION['accion'] = 3;
 		header('Location: ?controlador=Desafio&accion=listaDesafios');
 	}
 
 	// Se elimina una tupla de la tabla encuentro.
 	public function cancelarEncuentro(){
-		$encuentro = new Encuentro();
 		$idEncuentro = $_POST['idEncuentro'];
+		$idDesafio = $_POST['idDesafio'];
 		//echo $idEncuentro;
 		//$idEquipo = $_POST['idEquipo'];
-		$encuentro->cancelarEncuentro($idEncuentro);
+		$this->Encuentro->cancelarEncuentro($idEncuentro);
+		$estado = 0;
+		$this->Desafio->cambiarEstado($idDesafio, $estado);
 		//echo "encuentro: ".$idEncuentro." equipo: ".$idEquipo;
 		$_SESSION['accion'] = 4;
 		header('Location: ?controlador=Desafio&accion=listaDesafios');
