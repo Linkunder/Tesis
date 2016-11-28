@@ -99,6 +99,38 @@ class Usuario{
 		return $resultado;
 	}
 
+	public function getCantidadPorSexo(){
+		$consulta = $this->db->prepare("SELECT count(*) as F FROM Usuario WHERE sexo= 'F'");
+		$consulta->execute();
+		$resultado[0] = $consulta->fetchAll();
+		$consulta = $this->db->prepare("SELECT count(*) as M FROM Usuario WHERE sexo= 'M'");
+		$consulta->execute();
+		$resultado[1] = $consulta->fetchAll();
+
+		return $resultado;
+
+
+	}
+	public function getEdades(){
+		$consulta = $this->db->prepare("SELECT YEAR( CURDATE() ) - YEAR(  `fechaNacimiento` ) + IF( DATE_FORMAT( CURDATE() ,  '%m-%d' ) > DATE_FORMAT( fechaNacimiento,  '%m-%d' ) , 0, -1 ) AS edad, COUNT( * ) AS cantidad
+		FROM  Usuario 
+		WHERE perfil =1
+		GROUP BY edad");
+		$consulta->execute();
+		$resultado = $consulta->fetchAll();
+
+		return $resultado;
+	}
+
+	public function getComentariosUsuario(){
+		$consulta = $this->db->prepare("SELECT Usuario.idUsuario , count(*) AS cantidad FROM Usuario NATURAL JOIN Comentario WHERE Usuario.Perfil = 1 GROUP BY idUsuario");
+		$consulta->execute();
+		$resultado = $consulta->fetchAll();
+		return $resultado;
+	}
+
+
+
 }
 
 ?>

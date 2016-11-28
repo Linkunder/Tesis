@@ -133,10 +133,14 @@ $usuarios = $vars['usuarios'];
                         Jugadores</a>
                       </h4>
                     </div>
-                    <div id="collapse1" class="panel-collapse collapse in">
+                    <div id="collapse1" class="panel-collapse collapse">
                       <div class="panel-body">
-                        <div class="flot-chart">
-                            <div class="flot-chart-content" id="flot-pie-chart"></div>
+                      <!--Aqui van los gráficos-->
+                        <div id="graficosJugadores">
+                                <div class="progress">
+            <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+            </div>
+        </div>
                         </div>
                       </div>
 
@@ -196,7 +200,6 @@ $usuarios = $vars['usuarios'];
 
 <?php
 include('layout/footerAdmin.php');
-
 ?>
 
     <!-- Flot Charts JavaScript -->
@@ -207,3 +210,21 @@ include('layout/footerAdmin.php');
     <script src="assets/assetsAdmin/vendor/flot/jquery.flot.time.js"></script>
     <script src="assets/assetsAdmin/vendor/flot-tooltip/jquery.flot.tooltip.min.js"></script>
     <script src="assets/assetsAdmin/data/flot-data.js"></script>
+    <script src="assets/assetsAdmin/js/highcharts.js"></script>
+    <script>
+        $("#collapse1").on('show.bs.collapse', function(){
+               
+            $('#graficosJugadores').load('?controlador=Usuario&accion=getGraficosJugadores');
+               /*  $.post(
+                    '?controlador=Usuario&accion=getGraficosJugadores',
+                    function(resp){
+                        $("#graficosJugadores").html(resp);
+                    }
+                    );
+                    */
+     
+        });
+
+
+
+    </script>

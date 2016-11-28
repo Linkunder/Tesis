@@ -288,6 +288,19 @@ class UsuarioController{
 	    $this->view->show("_adminInfoJugador.php", $data);
 	}
 
+	public function getGraficosJugadores(){
+		$cantidadPorSexo = $this->Usuario->getCantidadPorSexo();
+		$data['sexo'] = $cantidadPorSexo;
+
+		$edades = $this->Usuario->getEdades();
+		$data['edad'] = $edades;
+
+		$comentarios = $this->Usuario->getComentariosUsuario();
+		$data['comentario'] = $comentarios;
+
+		$this->view->show("_adminGraficosJugadores.php", $data);
+	}
+
 
 }
 
