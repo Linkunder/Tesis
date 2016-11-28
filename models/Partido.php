@@ -28,7 +28,7 @@ class Partido{
 
 	//PARTIDOS JUGADOS DEL USUARIO
 	public function getPartidosUsuario($idUsuario){
-		$consulta = $this->db->prepare("SELECT JugadoresPartido.idPartido, Partido.idRecinto FROM JugadoresPartido INNER JOIN Partido on Jugadorespartido.idPartido = Partido.idPartido WHERE Partido.estado = 2 AND JugadoresPartido.idUsuario = '$idUsuario'");
+		$consulta = $this->db->prepare("SELECT JugadoresPartido.idPartido, Partido.idRecinto FROM JugadoresPartido INNER JOIN Partido on JugadoresPartido.idPartido = Partido.idPartido WHERE Partido.estado = 2 AND JugadoresPartido.idUsuario = '$idUsuario'");
 		$consulta->execute();
 		$resultado = $consulta->fetchAll();
 		return $resultado;
@@ -117,7 +117,10 @@ class Partido{
 			 Usuario.apellido, 
 			 Usuario.nickname, 
 			 Usuario.fotografia, 
-			 Usuario.mail 
+			 Usuario.mail,
+			 JugadoresPartido.equipo,
+			 JugadoresPartido.color1,
+			 JugadoresPartido.color2
 			FROM JugadoresPartido 
 			INNER JOIN Usuario on JugadoresPartido.idUsuario = Usuario.idUsuario 
 			WHERE idPartido='$idPartido'");

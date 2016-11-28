@@ -23,6 +23,10 @@ class PuntuacionController{
         $idUsuario = $_POST['idUsuario'];
         $valoracion = $_POST['valoracion'];
 
+        if(isset($_POST['cambiar'])){
+            $this->Puntuacion->deletePuntuacion($idRecinto, $idUsuario);
+        }
+
         $this->Puntuacion->setPuntuacion($idRecinto, $idUsuario, $valoracion);
         $resultadoPuntuacion= $this->Puntuacion->getPuntuacionTotalRecinto($idRecinto);
         $puntuacion=end($resultadoPuntuacion)['puntuacion'];

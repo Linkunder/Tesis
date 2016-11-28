@@ -383,7 +383,6 @@ class PartidoController{
 		$color2 = $_SESSION['color2'];
 		$idRecinto = $_SESSION['idRecinto'];
 		$idHorario = $_SESSION['idHorario'];
-
 		//Jugadores del capitan
 		$equipoCapitan =$_SESSION['equipoCapitan'];
 		$jugadoresEquipo1 = $_SESSION['jugadoresEquipo1'];
@@ -727,10 +726,37 @@ $message .= "<td>Tipo de partido:</td>";
 $message .= "<td>A v/s B</td>";
 $message .= "</tr>";
 
-$message .= "<tr>";
-$message .= "<td>Color de Camiseta:</td>";
-$message .= "<td>Color</td>";
-$message .= "</tr>";
+if($_SESSION['equipoCapitan'] == "A"){
+	$message .= "<tr>";
+	$message .= "<td>Equipo A:</td>";
+	$message .= "<td>".$_SESSION['color']."</td>";
+	$message .= "</tr>";
+
+	$message .= "<tr>";
+	$message .= "<td>Equipo B:</td>";
+	$message .= "<td>".$_SESSION['color2']."</td>";
+	$message .= "</tr>";	
+}else{
+	$message .= "<tr>";
+	$message .= "<td>Equipo A:</td>";
+	$message .= "<td>".$_SESSION['color2']."</td>";
+	$message .= "</tr>";
+
+	$message .= "<tr>";
+	$message .= "<td>Equipo B:</td>";
+	$message .= "<td>".$_SESSION['color']."</td>";
+	$message .= "</tr>";
+
+}
+//Jugadores
+foreach ($vectorEquipo as $jugador) {
+	# code...
+
+	$message .= "<tr>";
+	$message .= "<td>".$jugador['nickname']." :</td>";
+	$message .= "<td>".$jugador['equipo']."</td>";
+	$message .= "</tr>";
+}
 
 }
 if($tipoPartido==4){
@@ -741,6 +767,8 @@ $message .= "</tr>";
 	
 }
 $message .= "</table>";
+
+
 
 if($existenciaTercerTiempo!=0){
 $message .= "<p>Tambien se te ha invitado a un evento post partido!</p>";
@@ -761,7 +789,12 @@ $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
 $headers .= 'From: <partidomatchday@gmail.com>' . "\r\n"; //
 $headers .= 'Cc: partidomatchday@gmail.com' . "\r\n"; // 
 
-		unset($_SESSION['tipoPartido']);
+
+//Le paso el mensaje, la lista de correos
+send($message,$to);
+
+ //Email response
+ 		unset($_SESSION['tipoPartido']);
 		unset($_SESSION['fecha']);
 		unset($_SESSION['hora']);
 		unset($_SESSION['cantidad']);
@@ -770,9 +803,6 @@ $headers .= 'Cc: partidomatchday@gmail.com' . "\r\n"; //
 		unset($_SESSION['tipoPartido']);
 		unset($_SESSION['idPartido']);
 		unset($_SESSION['idTercer']);
-send($message,$to);
- //Email response
- 
   
 
 	}

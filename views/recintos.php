@@ -161,7 +161,7 @@ $_SESSION['idRecinto']=NULL;
                                 <iframe
                                   width="600"   height="500"  frameborder="5" style="border:0"  maptype="satellite"
                                   src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDR2WyVnnd9GsSTKys5OEkowPu41kMpEUs
-                                    &q=Chile + Chillan + <?php echo $key['direccion'];?>" allowfullscreen>
+                                    &q=Chile + Chillan+ <?php echo $key['direccion'];?>" allowfullscreen>
                                 </iframe>
                                 <br>
                             </div>
@@ -216,19 +216,23 @@ $_SESSION['idRecinto']=NULL;
                                     
                                 </table>
                                     <div>
-                                        <span>Puntuación</span><?php 
+                                    <table width='100%'>
+                                        <tr>
+                                            <td width='50%'><span>Puntuación</span></td>
+                                        
+                                        <?php 
                                         //Si la puntuacion del recinto es 0 significa que no ha recibido puntuaciones por lo tanto debemos mostrar un mensaje, y si es distnto de 0 se muestra la puntuacion
-                                        if($key['puntuacion']== 0 ){
-                                            echo "Este recinto no tiene puntuaciones";
-                                        }else{
+                                        if($key['puntuacion']== 0 ){?>
+                                            <td width='50%'><?php echo "Este recinto no tiene puntuaciones";?></td>
+                                        <?php }else{ ?>
 
                                        
-                                        echo " ".round($key['puntuacion'],1);
-
+                                            <td width='50%'><?php echo round($key['puntuacion'],1); ?></td>
 
                                 
-                                    }?>
-                              
+                                  <?php  }?>
+                                    </tr>
+                                </table>
                                     <br/>
                                     <?php
                                      //Con este if se comprueba que el jusgador tenga un estado activo y no haya comentado en este recinto
@@ -251,12 +255,12 @@ $_SESSION['idRecinto']=NULL;
                                             }
 
                                                 //Si el contador es 0 significa que no ha puntuado el recinto
-                                                if($_SESSION['login_user_estado']==1 && $contadorPuntuacion == 0){?>
+                                                if($_SESSION['login_user_estado']==1){?>
 
                                     
                                   <?php 
                                   //Si ha jugado un partido en el recinto deportivo
-                                  if($contadorPartido == 1){ ?>
+                                  if($contadorPartido > 0 && $contadorPuntuacion == 0){ ?>
                                      <form method="post" action="?controlador=Puntuacion&accion=setPuntuacion" >
                                     <input  class ="with-gap" name="valoracion" type="radio" id="estrella1" value="1" />
                                     <label for="estrella1">1</label>
@@ -271,36 +275,40 @@ $_SESSION['idRecinto']=NULL;
                                     <input type="hidden" name="idUsuario" value="<?php  echo $_SESSION['login_user_id'] ?>" />
                                     <input type="hidden" name="idRecinto" value="<?php echo $key['idRecinto'] ?>" />
                                     <button class= "btn btn-success" type="submit" name="action">Puntuar</button>
-                                    <?php } else {?>   
+                                    <?php ?>   
 
                                
-                                        <?php }?>
+                                    
                                 </form>
 
                              <?php }else{
-                                    //Si ha jugado se guar
-                                    //$puntuacionUsuario= $jefePuntuacion->valoracionUsuario($_SESSION['idUsuario'],$key->getIdRecinto());
-                                    //
+
+                                    if($contadorPuntuacion > 0){
                                             ?>
 
-                            <form method="post" action="" >
-                                    <input  class ="with-gap" name="puntuacion" type="radio" id="estrella1"  value="1" <?php if($puntuacionUsuario==1){ echo "checked"; }else{ echo "disabled";}?>/>
+                            <form method="post" action="?controlador=Puntuacion&accion=setPuntuacion" >
+                                    <input  class ="with-gap" name="valoracion" type="radio" id="estrella1"  value="1" <?php if($puntuacionUsuario==1){ echo "checked"; }?>/>
                                     <label for="estrella1">1</label>
-                                    <input class ="with-gap" name="puntuacion" type="radio" id="estrella2" value="2" <?php if($puntuacionUsuario==2){ echo "checked"; }else{ echo "disabled";}?>/>
+                                    <input class ="with-gap" name="valoracion" type="radio" id="estrella2" value="2" <?php if($puntuacionUsuario==2){ echo "checked"; }?>/>
                                     <label for="estrella2">2</label>
-                                    <input class ="with-gap" name="puntuacion" type="radio" id="estrella3" value="3" <?php if($puntuacionUsuario==3){ echo "checked"; }else{ echo "disabled";}?>/>
+                                    <input class ="with-gap" name="valoracion" type="radio" id="estrella3" value="3" <?php if($puntuacionUsuario==3){ echo "checked"; }?>/>
                                     <label for="estrella3">3</label>
-                                    <input class ="with-gap" name="puntuacion" type="radio" id="estrella4"  value="4" <?php if($puntuacionUsuario==4){ echo "checked"; }else{ echo "disabled";}?>/>
+                                    <input class ="with-gap" name="valoracion" type="radio" id="estrella4"  value="4" <?php if($puntuacionUsuario==4){ echo "checked"; }?>/>
                                     <label for="estrella4">4</label>
-                                    <input class ="with-gap" name="puntuacion" type="radio" id="estrella5" value="5" <?php if($puntuacionUsuario==5){ echo "checked"; }else{ echo "disabled";}?>/>
+                                    <input class ="with-gap" name="valoracion" type="radio" id="estrella5" value="5" <?php if($puntuacionUsuario==5){ echo "checked"; }?>/>
                                     <label for="estrella5">5</label>
+                                    <input type="hidden" name="idUsuario" value="<?php  echo $_SESSION['login_user_id'] ?>" />
+                                    <input type="hidden" name="idRecinto" value="<?php echo $key['idRecinto'] ?>" />
+                                    <input type="hidden" name="cambiar" value="1" >
+                                    <button class= "btn btn-success" type="submit" name="action">Puntuar</button>
 
                                     
-                                    : Ya puntuaste este recinto. 
+                               
                                 </form>
-                                     <?php  }
-
-
+                                     <?php  
+                                 }
+}
+}
                                     } ?>
                                     </div>
                                     
@@ -336,7 +344,7 @@ $_SESSION['idRecinto']=NULL;
                             if($_SESSION['login_user_estado']==1 ){
 
 
-                            if($contadorPartido == 1){ 
+                            if($contadorPartido > 0){ 
                                 ?>
 
                             <div class="panel-body comments">

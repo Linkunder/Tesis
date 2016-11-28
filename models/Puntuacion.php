@@ -8,7 +8,7 @@ class Puntuacion{
 
 	public function getPuntuaciones($idUsuario){
 		$consulta = $this->db->prepare(
-			"SELECT puntuacion.idRecinto, puntuacion.idUsuario, puntuacion.valoracion FROM puntuacion INNER JOIN usuario ON puntuacion.idUsuario = usuario.idUsuario WHERE puntuacion.idUsuario = $idUsuario "
+			"SELECT Puntuacion.idRecinto, Puntuacion.idUsuario, Puntuacion.valoracion FROM Puntuacion INNER JOIN Usuario ON Puntuacion.idUsuario = Usuario.idUsuario WHERE Puntuacion.idUsuario = $idUsuario "
 			);
 		$consulta->execute();
 		$resultado = $consulta->fetchAll();
@@ -36,6 +36,10 @@ class Puntuacion{
 				'$idUsuario',
 				'$valoracion'
 			)");
+		$consulta->execute();
+	}
+	public function deletePuntuacion($idRecinto,$idUsuario){
+		$consulta = $this->db->prepare("DELETE FROM Puntuacion WHERE idRecinto= '$idRecinto' AND idUsuario='$idUsuario'");
 		$consulta->execute();
 	}
 
