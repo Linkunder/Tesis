@@ -8,7 +8,7 @@
         <h4 class="modal-title" id="myModalLabel">Cargando ...</h4>
       </div>
       <div class="modal-body">
-        <h1></h1>
+        <div class="preloader"> <i class="fa fa-circle-o-notch fa-spin"></i></div>
       </div>
       <div class="modal-footer">
             <h4></h4>

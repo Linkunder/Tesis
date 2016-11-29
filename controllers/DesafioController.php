@@ -244,6 +244,16 @@ class DesafioController{
 	public function detalleEncuentro(){
 		$idEncuentro = $_GET['idEncuentro'];
 		$encuentro = $this->Encuentro->getEncuentro($idEncuentro);
+		$estadoEncuentro = end($encuentro)['estadoSolicitud'];
+		if ($estadoEncuentro == 3){
+			// Necesito traer los jugadores
+			$idDesafio = end($encuentro)['idDesafio'];
+			$desafio = $this->Desafio->getDesafio($idDesafio);
+			$equipo1 = $this->Equipo->getMiembrosEquipo(end($desafio)['idEquipo']);
+			$equipo2=  $this->Equipo->getMiembrosEquipo(end($encuentro)['idEquipo']);
+			$data['equipo1'] = $equipo1;
+			$data['equipo2'] = $equipo2;
+		}
 		$data['encuentro'] = $encuentro;
 	    //$data['equipoSeleccionado'] = $_SESSION['equipoSeleccionado'];
 	    $data['accion'] = 1;
@@ -259,7 +269,10 @@ class DesafioController{
 	    $this->view->show("_resumenDesafio.php", $data);
 	}
 
-
+	public function cargarHorario(){
+		$idHorario = $_GET['idHorario'];
+		$horario = $this->Horario->getHorario($idHorario);
+	}
 
 
 

@@ -523,6 +523,11 @@ class PartidoController{
 		$idDesafio = $_POST['desafio'];
 		$idEncuentro = $_POST['idEncuentro'];
 
+		$horarioElegido = $_POST["idHorario"];
+		$horario = $this->Horario->getHorario($horarioElegido);
+		$montoHorario = end($horario)['precio'];
+		$montoPorEquipo = $montoHorario/2;
+
 
 		$horaPartido = $_POST['hora'];
 		$desafio = $this->Desafio->getDesafio($idDesafio);
@@ -532,7 +537,6 @@ class PartidoController{
 			$idEquipoOrganizador = $item['idEquipoOrganizador'];
 			$_SESSION['idEquipo1'] = $idEquipoOrganizador;
 			$equipoOrganizador = $item['nombreEquipo'];
-			$cuota = 0;
 		}
 
 		$estado = 1; // Activo.
@@ -542,11 +546,7 @@ class PartidoController{
 		// Enviar datos a la BD
 		$this->Desafio->cambiarEstado($idDesafio, $estadoDesafio);
 		$this->Encuentro->cambiarEstadoEncuentro($idEncuentro, $estadoDesafio);
-		$this->Partido->setPartidoDesafio($idOrganizador,$fechaPartido, $horaPartido, $cuota, $tipoPartido, $estado, $idRecinto);
-
-		$partidos = $this->Partido->getPartidos();
-		$ultimoPartido = end($partidos)['idPartido'];
-		$this->Partido->setEquiposDesafio($ultimoPartido, $idEquipoOrganizador, $idRival);
+		//
 
 		//Datos del partido
 		$data['tipoPartido'] = $tipoPartido;
@@ -555,15 +555,32 @@ class PartidoController{
 		$data['hora']	=	$horaPartido;
 		$data['cantidad']	=	0;
 		$data['color']	=	"Definidos por cada equipo"; // Falta traer estos datos.
-		//$cuota['cuota'] =	0;
+		$data['cuota'] =	$montoPorEquipo;
 
 		//Jugadores del equipo rival
 		$jugadoresEquipo1 = $this->Equipo->getMiembrosEquipo($idEquipoOrganizador);
 		$jugadoresEquipo2 = $this->Equipo->getMiembrosEquipo($idRival);
 
+		$nroJugadores = count($jugadoresEquipo1) + count($jugadoresEquipo2);
+
+
+		$ultimoPartido = $this->Partido->setPartidoDesafio($idOrganizador,$fechaPartido, $horaPartido, $montoPorEquipo, $tipoPartido, $estado, $idRecinto, $nroJugadores);
+		//$ultimoPartido = ($partido)['LAST_INSERT_ID()'];
+
+		/* NO necesario
+		$partidos = $this->Partido->getPartidos();
+		$ultimoPartido = end($partidos)['idPartido'];
+		*/
+
+
+		$this->Partido->setEquiposDesafio($ultimoPartido, $idEquipoOrganizador, $idRival);
+
+
+
 		$data['jugadoresEquipo1'] = $jugadoresEquipo1;
 		$data['jugadoresEquipo2'] = $jugadoresEquipo2;
-		//$data['jugadores']	= $jugadoresPartido;
+
+
 		//Recinto deportivo
 		$recinto = $this->Recinto->getRecinto($idRecinto);
 		$data['recinto'] = $recinto;

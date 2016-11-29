@@ -139,7 +139,7 @@ class Partido{
 		return $resultado;
 	}
 
-	public function setPartidoDesafio($idOrganizador,$fecha, $hora, $cuota, $tipo, $estado, $idRecinto){
+	public function setPartidoDesafio($idOrganizador,$fecha, $hora, $cuota, $tipo, $estado, $idRecinto, $nroJugadores){
 		$consulta= $this->db->prepare(
 			"INSERT INTO Partido (
 				idOrganizador,
@@ -148,7 +148,8 @@ class Partido{
 				cuota,
 				tipo,
 				estado,
-				idRecinto)
+				idRecinto,
+				nroJugadores)
 			VALUES(
 				'$idOrganizador',
 				(STR_TO_DATE('".$fecha."', '%d-%m-%Y')),
@@ -156,7 +157,8 @@ class Partido{
 				'$cuota',
 				'$tipo',
 				'$estado',
-				'$idRecinto'
+				'$idRecinto',
+				'$nroJugadores'
 				);
 			SELECT LAST_INSERT_ID() AS lastId;
 				");

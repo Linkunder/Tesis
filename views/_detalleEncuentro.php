@@ -9,6 +9,7 @@
       $encuentro = $vars['encuentro'];
       foreach ($encuentro as $item) {
         $idEncuentro = $item['idEncuentro'];
+        $estadoEncuentro = $item['estadoSolicitud'];
         ?>
       <div class="modal-body">
         <!--h6 class="texto-modal-negro">Si aceptas este desafío, el partido se llevará a cabo en la 
@@ -49,12 +50,53 @@
                   </tr-->
                 </table>
               </div>
+                <?php
+                  if ($estadoEncuentro == 3){
+                    $equipo1 = $vars['equipo1'];
+                    $equipo2 = $vars['equipo2'];
+                    ?>
+                    <div class="table-responsive">
+                      <table class="table">
+                        <tr>
+                          <th id="color-encabezado" ><?php echo $item['equipo2'] ?></th>
+                          <th id="color-encabezado" ><?php echo $item['equipo1'] ?></th>
+                        </tr>
+                        <tr>
+                          <td class="center">
+                          <?php
+                          foreach ($equipo1 as $key) {
+                            ?>
+                            <ul>
+                              <?php echo $key['nombre']." ".$key['apellido']?>
+                            </ul>
+                              <?php
+                            }
+                            ?>
+                          </td>
+
+                          <td class="center">
+                          <?php
+                          foreach ($equipo2 as $key) {
+                            ?>
+                            <ul>
+                              <?php echo $key['nombre']." ".$key['apellido']?>
+                            </ul>
+                              <?php
+                            }
+                            ?>
+                          </td>
+
+                        </tr>
+                      </table>
+                    </div>
+                    <?php
+                  }
+                  ?>
             </div>
           </div>
 
       </div>
       <?php 
-      $estadoEncuentro = $item['estadoSolicitud'];
       }
       ?>
       <br/>

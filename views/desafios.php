@@ -89,8 +89,7 @@ $nroHistorial = count($historialDesafios);
           <h4 class="modal-title" id="myModalLabelDesafio"></h4>
       </div>
       <div class="modal-body">
-          <h5 class="texto-modal-negro">Los jugadores de MatchDay están viendo tu desafío.
-          </h5>
+          <div class="preloader"> <i class="fa fa-circle-o-notch fa-spin"></i></div>
 
       </div>
       <div class="modal-footer">
@@ -462,10 +461,10 @@ $nroHistorial = count($historialDesafios);
                     $idEncuentro = $item['idEncuentro'];
                   ?>
                   <tr>
-                    <!--td><?php echo $k?></td-->
-                    <td>
+                    <td><?php echo $k?></td>
+                    <!--td>
                       <?php echo $item['idEncuentro']?>
-                    </td>
+                    </td-->
                     <!--td>
                       <?php echo $item['idDesafio']?>
                     </td-->
@@ -1062,7 +1061,7 @@ window.onload = function() {
               }
               if (tipo == 'resumen'){
                  $.post(
-                    '?controlador=Desafio&accion=resumenDesafio&idEncuentro='+id,
+                    '?controlador=Desafio&accion=detalleEncuentro&idEncuentro='+id,
                     function(resp){
                         $("#"+div+"").html(resp);
                     }
@@ -1072,3 +1071,4 @@ window.onload = function() {
 
             
         </script>
+

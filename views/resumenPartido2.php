@@ -19,6 +19,7 @@ if (isset($vars['tipoPartido'])) {
     $mensaje = "Se ha enviado una notificación a los jugadores de ambos equipos con la información del partido.";
     $idRecinto= $vars['idRecinto'];
     $idPartido = $vars['idPartido'];
+    $cuota =    $vars['cuota']." por equipo";
     $tipo="Desafio";
 
   } else {

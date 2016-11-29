@@ -120,6 +120,7 @@ class Encuentro{
 		Recinto.tipo as tipoPartido,
 		Recinto.fotografia as fotoRecinto, 
 		Recinto.nombre as nombreRecinto, 
+		Equipo.idEquipo,
 		Equipo.nombre as equipo1,
 		(select idEquipo from Equipo where idEquipo = Desafio.idEquipo) as idEquipo2,
 		(select nombre from Equipo where idEquipo = Desafio.idEquipo) as equipo2,
