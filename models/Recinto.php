@@ -180,6 +180,58 @@ class Recinto{
 		$consulta->execute();
 	}
 
+	public function getPartidosRecinto(){
+		$consulta = $this->db->prepare("
+			SELECT nombre, COUNT( * ) AS cantidad
+			FROM Recinto
+			INNER JOIN Partido ON Recinto.idRecinto = Partido.idRecinto
+			WHERE Partido.estado =2
+			GROUP BY Partido.idRecinto
+			ORDER BY cantidad DESC
+			LIMIT 0 , 10;
+			");
+		$consulta->execute();
+		$resultado = $consulta->fetchAll();
+		return $resultado;
+	}
+
+	public function getSuperficiesRecinto(){
+		$consulta= $this->db->prepare("SELECT superficie, count(*) as cantidad FROM Recinto GROUP BY superficie ORDER BY cantidad DESC LIMIT 0,10");
+		$consulta->execute();
+		$resultado = $consulta->fetchAll();
+		return $resultado;
+	}
+	public function getPreciosMaxRecinto(){
+		$consulta= $this->db->prepare("SELECT h.precio, count(*) as cantidad FROM Recinto R1 INNER JOIN (SELECT DISTINCT h1.idRecinto, h1.precio FROM Horario h1 INNER JOIN Horario h2 ON h1.precio > h2.precio GROUP BY h1.idRecinto) as h ON R1.idRecinto = h.idRecinto GROUP BY h.precio ORDER BY h.precio DESC 
+		");
+		$consulta->execute();
+		$resultado= $consulta->fetchAll();
+		return $resultado;
+	}
+
+	public function getPreciosMinRecinto(){
+		$consulta= $this->db->prepare("SELECT h.precio, count(*) as cantidad FROM Recinto R1 INNER JOIN (SELECT DISTINCT h1.idRecinto, h1.precio FROM Horario h1 INNER JOIN Horario h2 ON h1.precio < h2.precio GROUP BY h1.idRecinto) as h ON R1.idRecinto = h.idRecinto GROUP BY h.precio ORDER BY h.precio DESC 
+		");
+		$consulta->execute();
+		$resultado= $consulta->fetchAll();
+		return $resultado;
+	}
+
+	public function getComentariosRecinto(){
+		$consulta = $this->db->prepare("SELECT nombre, count(*) AS cantidad FROM Recinto JOIN Comentario ON Recinto.idRecinto=Comentario.idRecinto GROUP BY nombre");
+		$consulta->execute();
+		$resultado = $consulta->fetchAll();
+		return $resultado;
+	}
+
+	public function getTiposRecinto(){
+		$consulta = $this->db->prepare("SELECT tipo, count(*) as cantidad FROM Recinto GROUP BY tipo ORDER BY cantidad DESC");
+		$consulta->execute();
+		$resultado = $consulta->fetchAll();
+		return $resultado;
+	}
+
+
 
 }
 ?>

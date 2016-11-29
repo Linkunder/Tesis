@@ -213,11 +213,100 @@ $('#container3').highcharts({ //Comentarios
         }]
     });	
 	});
+
+
+$(function () {
+ $('#container4').highcharts({ //Comentarios
+        chart: {
+            type: 'bar'
+        },
+        title: {
+            text: 'Top 10 jugadores con mas partidos'
+        },
+        subtitle: {
+            text: 'Matchday'
+        },
+        xAxis: {
+            categories: [
+<?php
+              
+                foreach( $vars['topTen'] AS $res){
+?>
+
+                ['<?php echo $res['nombre']." ".$res['apellido'] ?>'],
+<?php
+}
+?>
+
+            ],
+            title: {
+                text: null
+            }
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Partidos ',
+                align: 'high'
+            },
+            labels: {
+                overflow: 'justify'
+            }
+        },
+        tooltip: {
+            valueSuffix: ''
+        },
+        plotOptions: {
+            bar: {
+                dataLabels: {
+                    enabled: true
+                }
+            }
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'top',
+            x: -40,
+            y: 100,
+            floating: true,
+            borderWidth: 1,
+            backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
+            shadow: true
+        },
+
+        credits: {
+            enabled: false
+        },
+        series: [{
+            name: 'Partidos',
+            data: [
+<?php
+                
+                foreach( $vars['topTen'] AS $res){
+?>
+
+                [<?php echo $res['partidos'] ?>],
+<?php
+}
+?>
+
+
+            ]
+        }]
+    });
+});
     </script>
 
     <div id="container1" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto">
     </div>
+    </br>
     <div id="container2" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto">
     </div>
+    </br>
     <div id="container3" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto">
     </div>
+    </br>
+    <div id="container4" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto">
+    </div>
+    </br>

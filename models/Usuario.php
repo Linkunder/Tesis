@@ -129,6 +129,20 @@ class Usuario{
 		return $resultado;
 	}
 
+	public function getTopTenJugadoresPartidos(){
+		$consulta = $this->db->prepare("SELECT JugadoresPartido.idUsuario, Usuario.nombre, Usuario.apellido, COUNT(*) AS partidos
+					FROM JugadoresPartido
+					INNER JOIN Partido ON JugadoresPartido.idPartido = Partido.idPartido
+					INNER JOIN Usuario ON JugadoresPartido.idUsuario = Usuario.idUsuario 
+					WHERE Partido.Estado =2
+					GROUP BY JugadoresPartido.idUsuario
+					ORDER BY partidos DESC 
+					LIMIT 0 , 10");
+		$consulta->execute();
+		$resultado = $consulta->fetchAll();
+		return $resultado;
+	}
+
 
 
 }

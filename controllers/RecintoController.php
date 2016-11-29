@@ -425,6 +425,31 @@ class RecintoController{
       header('Location: ?controlador=Recinto&accion=recintosNotificados');
     }
 
+    public function getGraficosRecintos(){
+
+      $partidosRecinto = $this->Recinto->getPartidosRecinto();
+      $data['partidos'] = $partidosRecinto;
+
+      $superficie = $this->Recinto->getSuperficiesRecinto();
+      $data['superficie'] = $superficie;
+
+      $precio = $this->Recinto->getPreciosMaxRecinto();
+      $data['precio'] = $precio;
+
+      $precioMin = $this->Recinto->getPreciosMinRecinto();
+      $data['precioMin'] = $precioMin;
+
+      $comentarios = $this->Recinto->getComentariosRecinto();
+      $data['comentario'] = $comentarios;
+
+      $tipos= $this->Recinto->getTiposRecinto();
+      $data['tipo'] = $tipos;
+
+
+      $this->view->show("_adminGraficosRecintos.php", $data);
+     }
+
+
 
 }
 ?>

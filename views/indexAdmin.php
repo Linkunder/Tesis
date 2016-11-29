@@ -138,9 +138,9 @@ $usuarios = $vars['usuarios'];
                       <!--Aqui van los gráficos-->
                         <div id="graficosJugadores">
                                 <div class="progress">
-            <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
-            </div>
-        </div>
+                                    <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                                    </div>
+                              </div>
                         </div>
                       </div>
 
@@ -157,11 +157,15 @@ $usuarios = $vars['usuarios'];
                       </h4>
                     </div>
                     <div id="collapse2" class="panel-collapse collapse">
-                      <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                      sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                      minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                      commodo consequat.</div>
+                      <div class="panel-body">
+                          <div id="graficosRecintos">
+                            <div class="progress">
+                                 <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                                 </div>
+                             </div>
+                      </div>
                     </div>
+                  </div>
                   </div>
                   <div class="panel panel-default">
                     <div class="panel-heading">
@@ -215,15 +219,17 @@ include('layout/footerAdmin.php');
         $("#collapse1").on('show.bs.collapse', function(){
                
             $('#graficosJugadores').load('?controlador=Usuario&accion=getGraficosJugadores');
-               /*  $.post(
-                    '?controlador=Usuario&accion=getGraficosJugadores',
-                    function(resp){
-                        $("#graficosJugadores").html(resp);
-                    }
-                    );
-                    */
-     
+
+
         });
+
+        $("#collapse2").on('show.bs.collapse', function(){
+               
+            $('#graficosRecintos').load('?controlador=Recinto&accion=getGraficosRecintos');
+
+        });
+
+        
 
 
 

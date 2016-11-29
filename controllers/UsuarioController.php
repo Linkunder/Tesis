@@ -298,6 +298,9 @@ class UsuarioController{
 		$comentarios = $this->Usuario->getComentariosUsuario();
 		$data['comentario'] = $comentarios;
 
+		$topTen = $this->Usuario->getTopTenJugadoresPartidos();
+		$data['topTen'] = $topTen;
+
 		$this->view->show("_adminGraficosJugadores.php", $data);
 	}
 
