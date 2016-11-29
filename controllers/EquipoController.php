@@ -145,6 +145,18 @@ class EquipoController{
 	    $this->view->show("_adminInfoEquipo.php", $data);
 	}
 
+	public function getGraficosEquipos(){
+
+		$partidosEquipo = $this->Equipo->getPartidosEquipo();
+		$data['partidos'] = $partidosEquipo;
+
+		$edadPromedio = $this->Equipo->getEdadesEquipo();
+		$data['edad'] = $edadPromedio;
+
+
+		$this->view->show("_adminGraficosEquipos.php", $data);
+	}
+
 
 }
 

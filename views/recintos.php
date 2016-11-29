@@ -589,21 +589,34 @@ $_SESSION['idRecinto']=NULL;
                                         <div class="container-fluid">
                                             <div class="row">
                                                 <div class="col-md-4">
-                                                    <button type="button" class="btn btn-primary center-block" data-dismiss="modal" data-toggle="modal" data-target="#modalRevuelta">Revuelta</button>
+                                                    <h4 class="center-block"><i class="fa fa-futbol-o fa-4x" aria-hidden="true"></i></h4>
+
+                                                    <button type="button" class="btn btn-primary center-block col-xs-12" data-dismiss="modal" data-toggle="modal" data-target="#modalRevuelta">Revuelta</button>
+                                                    <br><center><br><h4 class="texto-modal-negro " >Aquí podrás invitar a tus amigos,
+                                                    indicandóles un recinto y las equipaciones que deben llevar, los equipos los definen
+                                                    en el campo de juego. ¿No es increíble? </h4></center>
+                                                    
                                                 </div>
                                                 <div class="col-md-4">
-                                                    <button id=openEquipoPropio type="button" class="btn btn-primary center-block" data-dismiss="modal" data-toggle="modal" data-target="#modalEquipoPropio">Equipo Propio</button>
+                                                    <h4 class="center-block"><i class="fa fa-user-plus fa-4x" aria-hidden="true"></i></h4> 
+                                                    <button id=openEquipoPropio type="button" class="btn btn-primary center-block col-xs-12" data-dismiss="modal" data-toggle="modal" data-target="#modalEquipoPropio">Equipo Propio</button>
+                                                    <br><center><br><h4 class="texto-modal-negro " >Aquí puedes organizarte con tu equipo 
+                                                    para jugar un partido, no te preocupes si el equipo rival no está en MatchDay ¡Ellos
+                                                    se lo pierden!</h4></center>
                                                 </div>
                                                 <div class="col-md-4">
+                                                    <h4 class="center-block"><i class="fa fa-users fa-4x" aria-hidden="true"></i></h4>
                                                 <?php 
                                                 //Se comprueba que el jugador tiene los contactos necesarios para acceder a esta opcion
                                                     if($vars['numeroContactos'] < 10){ ?>
-                                                    <button type="button" class="btn btn-primary center-block"  data-toggle="modal" data-target="#modalAdvertenciaAB" >A v/s B</button>
+                                                    <button type="button" class="btn btn-primary center-block col-xs-12"  data-toggle="modal" data-target="#modalAdvertenciaAB" >A v/s B</button>
 
                                                 <?php }else{
                                                 ?>
-                                                    <button type="button" class="btn btn-primary center-block" data-dismiss="modal" data-toggle="modal" data-target="#modalAB" >A v/s B</button>
+                                                    <button type="button" class="btn btn-primary center-block col-xs-12" data-dismiss="modal" data-toggle="modal" data-target="#modalAB" >A v/s B</button>
                                                 <?php }  ?>
+                                                <br><center><br><h4 class="texto-modal-negro " >¿Quieres jugar con tus amigos y tienes las alineaciones
+                                                perfectas para el partido? Aquí puedes indicarles que equipación debe llevar cada uno.  </h4></center>
                                                 </div>
                                             </div>
                                         </div>

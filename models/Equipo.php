@@ -162,6 +162,30 @@ class Equipo{
 		return $resultado;
 	}
 
+	public function getPartidosEquipo(){
+		$consulta = $this->db->prepare("SELECT nombre, count(*) as partidos FROM
+			(SELECT Equipo.nombre  FROM EquiposPartido INNER JOIN Partido ON EquiposPartido.idPartido = Partido.idPartido INNER JOIN Equipo ON EquiposPartido.idEquipo = Equipo.idEquipo WHERE estado = 1  
+
+			UNION ALL
+
+			SELECT Equipo.nombre FROM EquiposPartido INNER JOIN Partido ON EquiposPartido.idPartido = Partido.idPartido INNER JOIN Equipo ON EquiposPartido.idEquipo2 = Equipo.idEquipo WHERE estado = 1) AS equipitos GROUP BY(nombre) ORDER BY partidos DESC
+			LIMIT 0,10
+
+			");
+		$consulta->execute();
+		$resultado = $consulta->fetchAll();
+		return $resultado;
+	}
+
+	public function getEdadesEquipo(){
+		$consulta= $this->db->prepare("SELECT edadPromedio, COUNT( * ) AS cantidad
+				FROM Equipo
+				GROUP BY edadPromedio");
+		$consulta->execute();
+		$resultado = $consulta->fetchAll();
+		return $resultado;
+	}
+
 
 
 

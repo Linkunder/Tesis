@@ -830,5 +830,20 @@ send($message,$to);
   
 
 	}
+
+
+public function getGraficosPartidos(){
+
+	$horas = $this->Partido->getHorasPartido();
+	$data['hora'] = $horas;
+
+	$estados = $this->Partido->getEstadosPartido();
+	$data['estado'] = $estados;
+
+	$dias = $this->Partido->getDiasPartido();
+	$data['dia'] = $dias;
+
+	$this->view->show('_adminGraficosPartidos.php',$data);
+}
 }
 ?>

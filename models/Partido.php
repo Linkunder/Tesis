@@ -333,6 +333,32 @@ class Partido{
 		$query->execute();
 	}
 
+	public function getHorasPartido(){
+		$consulta = $this->db->prepare("SELECT hora, COUNT(*) AS cantidad
+					FROM Partido
+					GROUP BY hora
+					ORDER BY hora");
+		$consulta->execute();
+		$resultado = $consulta->fetchAll();
+		return $resultado;
+	}
+	public function getEstadosPartido(){
+		$consulta = $this->db->prepare("SELECT estado, count(*) as cantidad FROM Partido 
+				WHERE estado = 1 or estado = 2 or estado = 3
+				group by estado 
+			");
+		$consulta->execute();
+		$resultado = $consulta->fetchAll();
+		return $resultado;
+	}
+	public function getDiasPartido(){
+		$consulta = $this->db->prepare("SELECT CONCAT(ELT(WEEKDAY(fecha) + 1, 'Lunes', 'Martes', 'Miercoles', 'Juevez', 'Viernes', 'Sabado', 'Domingo')) AS dia, count(*) as cantidad FROM Partido WHERE estado = 2  GROUP BY dia");
+		$consulta->execute();
+		$resultado = $consulta->fetchAll();
+		return $resultado;
+	}
+
+
 
 }
 ?>

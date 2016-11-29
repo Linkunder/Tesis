@@ -175,10 +175,14 @@ $usuarios = $vars['usuarios'];
                       </h4>
                     </div>
                     <div id="collapse3" class="panel-collapse collapse">
-                      <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                      sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                      minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                      commodo consequat.</div>
+                      <div class="panel-body">
+                             <div id="graficosPartidos">
+                                    <div class="progress">
+                                         <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                                         </div>
+                                     </div>
+                              </div>
+                      </div>
                     </div>
                   </div>
                   <div class="panel panel-default">
@@ -189,10 +193,14 @@ $usuarios = $vars['usuarios'];
                       </h4>
                     </div>
                     <div id="collapse4" class="panel-collapse collapse">
-                      <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                      sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                      minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                      commodo consequat.</div>
+                      <div class="panel-body">
+                          <div id="graficosEquipos">
+                            <div class="progress">
+                                 <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                                 </div>
+                             </div>
+                      </div>                              
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -228,6 +236,16 @@ include('layout/footerAdmin.php');
             $('#graficosRecintos').load('?controlador=Recinto&accion=getGraficosRecintos');
 
         });
+         $("#collapse3").on('show.bs.collapse', function(){
+               
+            $('#graficosPartidos').load('?controlador=Partido&accion=getGraficosPartidos');
+        });
+        $("#collapse4").on('show.bs.collapse', function(){
+               
+            $('#graficosEquipos').load('?controlador=Equipo&accion=getGraficosEquipos');
+
+        });
+
 
         
 
