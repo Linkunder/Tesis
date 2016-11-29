@@ -123,10 +123,20 @@ class Recinto{
 				'".$telefono."',
 				'".$estado."',
 				'".$puntuacion."',
-				'".$idUsuario."')");
+				'".$idUsuario."');
+		SELECT LAST_INSERT_ID() AS lastId;
+		");
 		$consulta->execute();
 	}
 
+	public function eliminarRecinto($idNuevoRecinto){
+		$consulta = $this->db->prepare(
+			"DELETE FROM Recinto WHERE idRecinto = '".$idNuevoRecinto."'
+			");
+		$consulta->execute();
+		$resultado = $consulta->fetchAll();
+		return $resultado;	
+	}
 
 	public function setFotografia($idRecinto, $imagen){
 		$sql = "UPDATE Recinto SET fotografia = '".$imagen."' WHERE idRecinto = '".$idRecinto."' ";

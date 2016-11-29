@@ -25,13 +25,13 @@ $horario = $vars['horario'];
 
                 <div class="form-group">
                   <label for="horaInicio">Hora inicio</label>
-                  <input type="time" name="horaInicio" placeholder="Hora" class="form-control" id="horaInicio" required="required" min="09:00:00" max="23:00:00" value="<?php echo $key['horaInicio']?>">
+                  <input type="time" name="horaInicio" placeholder="Hora" class="form-control" id="horaInicio" required="required" min="09:00:00" max="23:00:00" step="3600" value="<?php echo $key['horaInicio']?>">
                   <!--small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small-->
                 </div>
 
                 <div class="form-group">
                   <label for="horaFin">Hora fin</label>
-                  <input type="time" name="horaFin" placeholder="Hora" class="form-control" id="horaFin" required="required" min="09:00:00" max="23:00:00" value="<?php echo $key['horaFin']?>">
+                  <input type="time" name="horaFin" placeholder="Hora" class="form-control" id="horaFin" required="required" min="09:00:00" max="23:00:00" step="3600" value="<?php echo $key['horaFin']?>">
                   <!--small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small-->
                 </div>
 

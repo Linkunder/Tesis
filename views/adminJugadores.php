@@ -48,6 +48,7 @@ $arrayEdades = $vars['edades'];
             <div class="row">
                 <div class="col-lg-12">
                     <h1 class="page-header">Jugadores 
+
                     </h1>
                 </div>
                 <!-- /.col-lg-12 -->
@@ -112,12 +113,12 @@ $arrayEdades = $vars['edades'];
                                             <?php 
                                             if ($key['estado'] == 1){
                                                 ?>
-                                                <span class="label label-success col-xs-12">Activo</span>
+                                                <span class="label label-success col-xs-12">Habilitado</span>
                                                 <?php
                                             }
                                             if ($key['estado'] == 2){
                                                 ?>
-                                                <span class="label label-danger col-xs-12">Inactivo</span>
+                                                <span class="label label-danger col-xs-12">Deshabilitado</span>
                                                 <?php
                                             }
                                             if ($key['estado'] == 3){

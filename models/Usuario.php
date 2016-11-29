@@ -76,7 +76,7 @@ class Usuario{
 	}
 
 	public function getUsuariosAdmin(){
-		$query = $this->db->prepare('SELECT * FROM Usuario WHERE perfil != 2');
+		$query = $this->db->prepare('SELECT * FROM Usuario WHERE perfil != 2 AND estado != 3');
 		$query->execute();
 		$resultado = $query->fetchAll();
 		return $resultado;

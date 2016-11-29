@@ -31,6 +31,21 @@ include('layout/header.php');
 
 
 
+              <script>
+                  $(document).ready(function(){
+                    var date_input=$('input[name="date"]'); //our date input has the name "date"
+                    var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+                    var options={
+                      format: 'dd-mm-yyyy',
+                      container: container,
+                      todayHighlight: true,
+                      autoclose: true,
+                      startView: 2,
+                      endDate: "01-01-1998",
+                    };
+                    date_input.datepicker(options);
+                  })
+              </script>
 
 
 
@@ -102,7 +117,7 @@ include('layout/header.php');
               <div class="form-group">
                 <label class="sr-only" for="form-last-name">Fecha de nacimiento</label>
                 <!--input type="date" name="fechaNacimiento" class="form-last-name form-control" required-->
-                <input class="form-control" id="date" name="date" placeholder="Ingresa fecha de nacimiento" type="text" max="1998-01-01" required/>
+                <input class="form-control" id="date" name="date" placeholder="Ingresa fecha de nacimiento" type="text"  required/>
               </div>
 
               <div class="form-group">
@@ -193,20 +208,6 @@ include('layout/header.php');
 
   
 
-              <script>
-                  $(document).ready(function(){
-                    var date_input=$('input[name="date"]'); //our date input has the name "date"
-                    var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
-                    var options={
-                      format: 'dd-mm-yyyy',
-                      container: container,
-                      todayHighlight: true,
-                      autoclose: true,
-                      startView: 2,
-                    };
-                    date_input.datepicker(options);
-                  })
-              </script>
 
 
   <!--script src="assets/js/jquery.js"></script-->

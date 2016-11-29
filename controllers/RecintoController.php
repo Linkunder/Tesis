@@ -210,7 +210,7 @@ class RecintoController{
       $superficie = $_POST['superficie'];
       $direccion = $_POST['direccion'];
       $telefono = $_POST['telefono'];
-      $estado = $_POST['estado'];
+      $estado = 4;
       $puntuacion = 0;
       $idUsuario = $_SESSION['login_user_id'];
 
@@ -224,12 +224,13 @@ class RecintoController{
 
       if ($subirImagen == 0 ){  // hubo un error
         $data['error'] = 0;
-        //$this->Recinto->eliminarRecinto($idNuevoRecinto);
+        $this->Recinto->eliminarRecinto($idNuevoRecinto);
         $this->view->show('adminRecintos.php', $data);
       } else {  // todo ok
-        $_SESSION['recintoAdmin'] = 4;
+         $_SESSION['recintoAdmin'] = 4;  //Esto lo debo agregar en el modal del archivo al cual lo enviare.
+        //$data['idRecinto'] = $idNuevoRecinto;
+        //$this->view->show('adminRecintos.php', $data);
         header('Location: ?controlador=Recinto&accion=adminRecintos');
-        //$this->view->show('inicio.php', $data);
       }
     }
 
@@ -313,6 +314,13 @@ class RecintoController{
     $dias = implode(",", $listaDias);
     $precio = $_POST['precio'];
     $this->Horario->setHorarioRecinto($horaInicio, $horaFin, $nombre, $dias, $precio, $idRecinto);
+
+    $estadoRecinto = end($this->Recinto->getRecinto($idRecinto))['estado'];
+    if ($estadoRecinto == 4){
+      $estado = 1;
+      $this->Recinto->cambiarEstadoRecinto($idRecinto, $estado);
+    }
+    
     $_SESSION['recintoAdmin'] = 5;
     $_SESSION['horarioRecinto'] = $idRecinto;
     header('Location: ?controlador=Recinto&accion=adminRecintos');

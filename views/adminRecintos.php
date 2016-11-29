@@ -61,7 +61,7 @@ $recintos = $vars['recintos'];
                     ?>
                     <div class="alert alert-warning alert-dismissible">
                       <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                      <strong>Listo!</strong> El recinto ha sido dessactivado.
+                      <strong>Listo!</strong> El recinto ha sido desactivado.
                     </div>
                     <?php
                   }
@@ -85,7 +85,10 @@ $recintos = $vars['recintos'];
                     ?>
                     <div class="alert alert-success alert-dismissible">
                       <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                      <strong>Listo!</strong> El recinto ha sido agregado exitosamente.
+                      <strong>Listo!</strong> El recinto ha sido agregado exitosamente. Para activarlo agrega un horario en el botón 
+                      <button type="button" class="btn btn-primary btn-sm col-xs-12" >
+                      <i class="fa fa-calendar" aria-hidden="true"></i>
+                                            </button>
                     </div>
                     <?php
                   }
@@ -173,6 +176,11 @@ $recintos = $vars['recintos'];
                                             if ($key['estado'] == 1){
                                                 ?>
                                                 <span class="label label-success col-xs-12">Activo</span>
+                                                <?php
+                                            }
+                                            if ($key['estado'] == 4){
+                                                ?>
+                                                <span class="label label-primary col-xs-12">¡Nuevo!</span>
                                                 <?php
                                             }
                                             if ($key['estado'] == 2 && $key['idUsuario'] != $idUsuario){
@@ -321,6 +329,7 @@ include('layout/footerAdmin.php');
             </div>
             <div class="modal-body">     
               <form action="?controlador=Recinto&accion=agregarRecinto" method="post" enctype="multipart/form-data">
+              <!--form  method="post" enctype="multipart/form-data" id="nuevoRecinto"-->
                 <div class="form-group">
                   <label for="nombre">Nombre</label>
                   <input type="text" class="form-control" id="nombre" name="nombre" required>
@@ -352,7 +361,9 @@ include('layout/footerAdmin.php');
                   <label for="fotografia">Fotografía</label>
                   <input type="file" class="form-control-file" id="imagen" name="imagen" aria-describedby="fileHelp" required>
                 </div>
-                <div class="form-group">
+
+
+                <!--div class="form-group">
                   <label for="tipo">Estado inicial</label>
                   <select class="form-control" id="estado" name="estado" required>
                     <option value="" selected disabled>Selecciona el estado inicial de la cancha</option>
@@ -361,11 +372,13 @@ include('layout/footerAdmin.php');
                   </select>
                   <small id="emailHelp" class="form-text text-muted">Si seleccionas estado activo, quedará visible para todos los jugadores de MatchDay, de
                     lo contrario, podrás activarlo más adelante.</small>
-                </div>
-
+                </div-->
+                <small id="emailHelp" class="form-text text-muted">Este recinto se inicializará como inactivo,
+                  luego de ingresar un horario podrás activar el recinto para ser visto por los 
+                  usuarios de MatchDay.</small>
                 <div class="row modal-footer">
                   <div class="col-xs-6">
-                    <button type="submit" class="btn btn-primary col-xs-12">Agregar <i class="fa fa-plus-circle fa-1x" aria-hidden="true"></i></button>
+                    <button type="submit" class="btn btn-primary col-xs-12">Siguiente <i class="fa fa-plus-circle fa-1x" aria-hidden="true"></i></button>
                   </div>
                   <div class="col-xs-6">             
                     <button data-dismiss="modal" class="btn btn-danger col-xs-12">Volver <i class="fa fa-arrow-left fa-1x"></i></button>
@@ -382,6 +395,27 @@ include('layout/footerAdmin.php');
 
 
 
+<script type="text/javascript">
+  
+  $(document).ready(function () {
+
+    $('#openBtn').click(function () {
+        $('#myModal').modal({
+            show: true
+        })
+    });
+
+        $(document).on('show.bs.modal', '.modal', function (event) {
+            var zIndex = 1040 + (10 * $('.modal:visible').length);
+            $(this).css('z-index', zIndex);
+            setTimeout(function() {
+                $('.modal-backdrop').not('.modal-stack').css('z-index', zIndex - 1).addClass('modal-stack');
+            }, 0);
+        });
+
+
+});
+</script>
 
 
 
@@ -421,5 +455,8 @@ function carga_ajax(div, id, tipo){
   }
 
 
+
 }
 </script>
+
+
