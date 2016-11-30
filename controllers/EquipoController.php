@@ -67,22 +67,38 @@ class EquipoController{
 
 	//	Actualizar información del equipo (nombre, color, jugadores)
 	public function updateEquipo(){
-		$equipo = new Equipo();
 		$nombre = $_POST["nombre"];
 		$color = $_POST["color"];
 		$idEquipo =  $_SESSION['idEquipo'];
-		$equipo->updateEquipo($idEquipo,$nombre,$color);
+		$this->Equipo->updateEquipo($idEquipo,$nombre,$color);
+		$edades = 0; 
+		// Suma de edad de miembros del equipo
+		$miembrosEquipo = $this->Equipo->getMiembrosEquipo($idEquipo);
+		$cont = 0;
+		foreach ($miembrosEquipo as $key ) {
+			$edades = $edades + $this->calcularEdad($key['fechaNacimiento']);
+			$cont++;
+		}
+
+
 		if (isset($_POST["arrayContactos"])){
 			$miembros = $_POST["arrayContactos"];
 			for ($i=0; $i<count($miembros) ; $i++) {
 				$idMiembro = $miembros[$i];
-				$resultado = $equipo->verificarMiembro($idMiembro,$idEquipo);
+				$resultado = $this->Equipo->verificarMiembro($idMiembro,$idEquipo);
 				$respuesta = count($resultado);
+				$fechaNacimiento = end($this->Usuario->getFechaNac($idMiembro))['fechaNacimiento'];
+				$edades =  $edades + $this->calcularEdad($fechaNacimiento);
 				if ($respuesta == 0){
-					$equipo->agregarMiembroEquipo($idMiembro,$idEquipo);
+					$cont++;
+					$this->Equipo->agregarMiembroEquipo($idMiembro,$idEquipo);
+
 				}
 			}
+			$edadPromedio = $edades/$cont;
+			$this->Equipo->actualizarEdadPromedio($idEquipo, $edadPromedio);
 		}
+		$_SESSION['accion'] = 2;
 		header('Location: ?controlador=Equipo&accion=listaEquipos');
 	}
 

@@ -87,10 +87,18 @@ $equipos = $vars['listaEquipos'];
       <?php
       if (isset($vars['accion'])){
         if ($vars['accion'] == 1){
-      ?>
+        ?>
         <div class="alert alert-success alert-dismissible">
           <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-          <strong>Listo!</strong> Tu contacto ha sido agregado exitosamente
+          <strong>Listo!</strong> Tu contacto ha sido agregado exitosamente.
+        </div>
+        <?php
+        }
+          if ($vars['accion'] == 2){
+        ?>
+        <div class="alert alert-success alert-dismissible">
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+          <strong>Listo!</strong> Tu contacto ha sido agregado al equipo exitosamente.
         </div>
         <?php
         }

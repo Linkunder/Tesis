@@ -165,13 +165,6 @@ $nroPartidosSistema = count($partidosSistema);
       <h2> Partidos <i class="fa fa-futbol-o" aria-hidden="true"></i> </h2>
     </div>
 
-  
-    <div class="well">
-      <p id="texto-input-black">Para jugar un partido disponible en el sistema, debes ingresar a la opción "Partidos MatchDay". Si quieres
-        publicar uno de tus partidos en los cuales faltan jugadores, publícalo en el sistema mediante la opción "Mis Partidos". 
-      </p>
-
-    </div>
 
 
 
@@ -179,7 +172,7 @@ $nroPartidosSistema = count($partidosSistema);
 <div class="container">
   
   <ul class="nav nav-tabs nav-justified">
-    <li><a data-toggle="tab" href="#menu1">Partidos Matchday <span class="label label-success"><?php echo $nroPartidosSistema?></span></a></li>
+    <li class="active"><a data-toggle="tab" href="#menu1">Partidos Matchday <span class="label label-success"><?php echo $nroPartidosSistema?></span></a></li>
     <li><a data-toggle="tab" href="#menu2">Mis partidos <span class="label label-info"><?php echo $nroPartidosUsuario?></span></a></li>
     <li><a data-toggle="tab" href="#menu3">Calendario <i class="fa fa-calendar-o" aria-hidden="true"></i></a></li>
   </ul>
@@ -192,7 +185,7 @@ $nroPartidosSistema = count($partidosSistema);
 
 
 
-    <div id="menu1" class="tab-pane fade">
+    <div id="menu1" class="tab-pane fade in active">
 
       <?php
       if ( $nroPartidosSistema == 0){
@@ -565,7 +558,6 @@ $nroPartidosSistema = count($partidosSistema);
 
 
     <div id="menu3" class="tab-pane fade">
-      <p>Calendario de partidos: partidos activos, jugados y cancelados.</p>
 
       <style>
       #calendar1 {
@@ -575,7 +567,7 @@ $nroPartidosSistema = count($partidosSistema);
       </style>
       <br/>
 
-      <div id='calendar1' ></div>
+      <div id="calendar1"></div>
 
 
     </div>

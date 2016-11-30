@@ -12,7 +12,7 @@ require 'models/Horario.php';
 require 'models/Mail.php';
 require 'models/Encuentro.php';
 
-
+ 
       if(!isset($_SESSION)) { 
         session_start(); 
         } 
@@ -42,38 +42,42 @@ class PartidoController{
 		$idUsuario = $_SESSION['login_user_id'];
 
 
-
-		if ( isset($_POST['idPartido']) && isset($_POST['accion'])){
-			$idPartido = $_POST['idPartido'];
-    		$accion = $_POST['accion'];
-    		if ($accion == 0){
-    			$data['accion'] = 0;
-    			$mensaje = "Tu solicitud ha sido enviada al capitán del encuentro. ";
-    			$data['mensaje'] = $mensaje;
-    		}
-    		if ($accion == 1){
-    			$data['accion'] = 1;
-    			$mensaje = "El partido ha sido cancelado y tus invitados han sido notificados vía mail.";
-    			$data['mensaje'] = $mensaje;
-    		}
-    		if ($accion == 2){
-    			$data['accion'] = 2;
-    			$mensaje = "El partido ha sido notificado a los jugadores de MatchDay. Debes estar atento a sus solicitudes";
-    			$data['mensaje'] = $mensaje;
-    		}
+		if ($_SESSION['partidos'] != -1 ){
 
 
-			$this->cambiarEstadoPartido($idPartido, $accion);
+			if ( isset($_POST['idPartido']) && isset($_POST['accion'])){
+				$idPartido = $_POST['idPartido'];
+	    		$accion = $_POST['accion'];
+	    		if ($accion == 0){
+	    			$data['accion'] = 0;
+	    			$mensaje = "Tu solicitud ha sido enviada al capitán del encuentro. ";
+	    			$data['mensaje'] = $mensaje;
+	    		}
+	    		if ($accion == 1){
+	    			$data['accion'] = 1;
+	    			$mensaje = "El partido ha sido cancelado y tus invitados han sido notificados vía mail.";
+	    			$data['mensaje'] = $mensaje;
 
-			if ($accion == 4){
-				$idSolicitante = $_POST['idUsuario'];
-				$respuesta = $_POST['respuesta'];
-				$this->cambiarEstadoSolicitud($idPartido, $idSolicitante, $respuesta, $accion);
-				$data['accion'] = 4;
-    			$mensaje = "La operación ha sido realizada con éxito. Al jugador se le notificará tu decisión.";
-    			$data['mensaje'] = $mensaje;
-    		}
+	    		}
+	    		if ($accion == 2){
+	    			$data['accion'] = 2;
+	    			$mensaje = "El partido ha sido notificado a los jugadores de MatchDay. Debes estar atento a sus solicitudes";
+	    			$data['mensaje'] = $mensaje;
+	    		}
+
+				$this->cambiarEstadoPartido($idPartido, $accion);
+
+				if ($accion == 4){
+					$idSolicitante = $_POST['idUsuario'];
+					$respuesta = $_POST['respuesta'];
+					$this->cambiarEstadoSolicitud($idPartido, $idSolicitante, $respuesta, $accion);
+					$data['accion'] = 4;
+	    			$mensaje = "La operación ha sido realizada con éxito. Al jugador se le notificará tu decisión.";
+	    			$data['mensaje'] = $mensaje;
+	    		}
+			}
 		}
+		$_SESSION['partidos'] = -1;
 
 
 		// Partidos organizados por el jugador de la sesion en estado pendiente.
@@ -96,6 +100,7 @@ class PartidoController{
       $partido = $this->Partido->getResumenPartido($idPartido);
       $data['partido'] = $partido;
       $data['accion'] = 0; // Solicitud
+      $_SESSION['partidos'] = 0;
       $this->view->show("_detallePartido.php",$data);
     }
 
@@ -105,6 +110,7 @@ class PartidoController{
       $partido = $this->Partido->getResumenPartido($idPartido);
       $data['partido'] = $partido;
       $data['accion'] = 1; // Cancelar
+      $_SESSION['partidos'] = 0;
       $this->view->show("_detallePartido.php",$data);
     }
 
@@ -113,6 +119,7 @@ class PartidoController{
       $partido = $this->Partido->getResumenPartido($idPartido);
       $data['partido'] = $partido;
       $data['accion'] = 2; // Notificar
+      $_SESSION['partidos'] = 0;
       $this->view->show("_detallePartido.php",$data);
     }
 
@@ -122,6 +129,7 @@ class PartidoController{
       $partido = $this->Partido->getResumenPartido($idPartido);
       $data['partido'] = $partido;
       $data['accion'] = 3; // Solicitud
+      $_SESSION['partidos'] = 0;
       $this->view->show("_detallePartido.php",$data);
     }
 
@@ -139,6 +147,7 @@ class PartidoController{
       	$i++;
       }
       $data['solicitudes'] = $solicitudes;
+      $_SESSION['partidos'] = 0;
       $this->view->show("_detallePartido.php",$data);
     }
 

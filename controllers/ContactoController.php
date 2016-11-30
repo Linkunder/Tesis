@@ -74,6 +74,8 @@ class ContactoController{
 		$idContacto = $_SESSION['idNuevoMiembro'];
 		$idEquipo = $_POST["equipo"];
 		$equipo->agregarMiembroEquipo($idContacto,$idEquipo);
+
+		$_SESSION['accion'] = 2;
 		header('Location: ?controlador=Contacto&accion=listaContactos');
 	}
 

@@ -111,6 +111,14 @@ class Equipo{
 	}
 
 
+	// Actualizar edad promedio al agregar uno o más jugadores
+	public function actualizarEdadPromedio($idEquipo, $edadPromedio){
+		$sql = "UPDATE Equipo SET edadPromedio = '".$edadPromedio."' WHERE idEquipo = '".$idEquipo."' ";
+		$query = $this->db->prepare($sql);
+		$query->execute();
+	}
+
+
 	// Equipos del capitan en los que no esta su contacto.
 	public function getEquiposCapitan($idContacto, $idUsuario){
 		$query = $this->db->prepare(

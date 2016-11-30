@@ -97,7 +97,7 @@ class RecintoController{
       $idUsuario = $_POST['idUsuario'];
 
       $recinto->setSolicitud($nombre, $fono, $direccion, $idUsuario);
-
+      
       header('Location: ?controlador=Recinto&accion=notificarRecinto&1');
     }
 

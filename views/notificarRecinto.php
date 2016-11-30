@@ -27,6 +27,23 @@
 <!-- Aqui empieza la pagina -->
 <div id="contact-us" class="parallax">
   <div class="container">
+
+          <br/>
+      <ol class="breadcrumb transparent">
+      <li class="breadcrumb-item"><a href="?controlador=Index&accion=indexJugador"> <i class="fa fa-home" aria-hidden="true"></i> Inicio</a></li>
+      <li class="breadcrumb-item active">Notificar recinto</li>
+      </ol>
+
+
+      
+
+
+
+
+
+
+
+
     <div class="row">
       <div class="col-sm-6 col-sm-offset-3 form-box">
         <form role="form" action="?controlador=Recinto&accion=ingresarRecinto" method="post" class="registration-form" >

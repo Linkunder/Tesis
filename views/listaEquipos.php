@@ -41,10 +41,18 @@ $nroContactos = count($contactos);
     <?php
       if (isset($vars['accion'])){
         if ($vars['accion'] == 1){
-      ?>
+        ?>
         <div class="alert alert-success alert-dismissible">
           <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-          <strong>Listo!</strong>Tu equipo ha sido creado exitosamente
+          <strong>Listo!</strong> Tu equipo ha sido creado exitosamente
+        </div>
+        <?php
+        }
+        if ($vars['accion'] == 2){
+        ?>
+        <div class="alert alert-success alert-dismissible">
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+          <strong>Listo!</strong> Tu equipo ha sido actualizado exitosamente
         </div>
         <?php
         }
