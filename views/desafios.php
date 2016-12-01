@@ -1072,3 +1072,31 @@ window.onload = function() {
             
         </script>
 
+
+<script>
+$(window).load(function(){
+    var accion = "<?php echo $vars['accion']?>";
+    if (accion == "1"){
+      //alert("text: ");
+      $.ajax({
+        type: 'post',
+        cache: false,
+        url: "?controlador=Desafio&accion=enviarCorreo"
+      });
+    }
+  //alert("hola mundo");
+});
+
+/*
+  $(document).ready(function (){
+    var accion = "<?php echo $vars['accion']?>";
+    if (accion == "1"){
+      alert("text: ");
+      $.ajax({
+        type: 'post',
+        cache: false,
+        url: "?controlador=Desafio&accion=enviarCorreo"
+      });
+    }
+  });*/
+</script>

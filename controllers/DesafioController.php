@@ -6,6 +6,7 @@ require 'models/Usuario.php';
 require 'models/Encuentro.php';
 require 'models/Recinto.php';
 require 'models/Horario.php';
+require 'models/mail.php';
 
 session_start();
 
@@ -85,6 +86,22 @@ class DesafioController{
 		//echo "Inferior: ".$limInf." Superior: ".$limSup;
 		$this->Desafio->setDesafio($fechaPartido, $limInf, $limSup, $comentario, $idEquipo, $recinto, "0");
 		$_SESSION['accion'] = 1;
+
+		$_SESSION['tipoCorreo'] = 1;
+
+		// Datos del desafio.
+		$_SESSION['idRecinto'] = $recinto;
+		$_SESSION['idEquipo'] = $idEquipo;
+		$_SESSION['fecha'] = $fechaPartido;
+		$_SESSION['comentario'] = $comentario;
+		$_SESSION['limInf'] = $limInf;
+		$_SESSION['limSup'] = $limSup;
+
+		//$this->enviarCorreo();
+
+		//echo '<script type="text/javascript">window.location =?controlador=Desafio&accion=listaDesafios</script>';
+
+
 		header('Location: ?controlador=Desafio&accion=listaDesafios');
 	}
 
@@ -273,6 +290,105 @@ class DesafioController{
 		$idHorario = $_GET['idHorario'];
 		$horario = $this->Horario->getHorario($idHorario);
 	}
+
+
+
+	public function enviarCorreo(){
+
+		if ($_SESSION['tipoCorreo'] == 1){
+			//$idDesafio = $_SESSION['idDesafio'];
+			$idRecinto = $_SESSION['idRecinto'];
+			$idEquipo = $_SESSION['idEquipo'];
+			$fecha = $_SESSION['fecha'];
+			$comentario = $_SESSION['comentario'];
+			$limInf = $_SESSION['limInf'];
+			$limSup = $_SESSION['limSup'];
+
+			$recinto = $this->Recinto->getRecinto($idRecinto);
+
+			foreach ($recinto as $key) {
+				$fotoRecinto = $key['fotografia'];
+				$direccionRecinto = $key['direccion'];
+				$nombreRecinto = $key['nombre'];
+			}
+
+			$equipo = $this->Equipo->getEquipo($idEquipo);
+
+			foreach ($equipo as $key) {
+				$nombreEquipo = $key['nombre'];
+			}
+
+			$miembros = $this->Equipo->getMiembrosEquipo($idEquipo);
+
+			$to = "pnsilva@alumnos.ubiobio.cl";
+
+			foreach ($miembros as $key ) {
+				$aux = $to;
+				$to = $aux.",".$key['mail'];
+			}
+
+			$dir = $direccionRecinto;
+
+			$subject = "Desafío Matchday";
+
+
+			$message = "<html>";
+			$message .= "<head>";
+			$message .= "<title>HTML email</title>";
+			$message .= "</head>";
+			$message .= "<body>";
+			$message .= '<div style="height:auto; width:auto;"><center><img src="assets/images/logoCorreo.png" alt="Website Change Request" /></center></div>';
+			$message .= '<div style="height:auto; width:auto;"><img src="http://maps.googleapis.com/maps/api/staticmap?center='. $dir . '&zoom=14&scale=false&size=600x300&maptype=roadmap&format=png&visual_refresh=true&markers=size:small%7Ccolor:0xff0000%7Clabel:%7C'.$dir.'" alt="Website Change Request" /></div>';
+			$message .= "<p>El capitán del equipo " .$nombreEquipo.  ", ha creado un desafío.</p>";
+			$message .= "<table>";
+			$message .= "<tr>";
+			$message .= "<td>Dirección:</td>";
+			$message .= "<td>".$direccionRecinto."</td>";
+			$message .= "</tr>";
+			$message .= "<tr>";
+			$message .= "<td>Fecha:</td>";
+			$message .= "<td>".$fecha."</td>";
+			$message .= "</tr>";
+			$message .= "</table>";
+
+			$message .= "<p>El desafío podrá ser visto por jugadores de entre ".$limInf." y ".$limSup." años.</p>";
+			$message .= "<center><b><p>© 2016. MatchDay.</p></b></center>";
+			$message .= "</body>";
+			$message .= "</html>";
+
+
+			// Always set content-type when sending HTML email
+			$headers = "MIME-Version: 1.0" . "\r\n";
+			$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+
+			// More headers
+			$headers .= 'From: <partidomatchday@gmail.com>' . "\r\n"; //
+			$headers .= 'Cc: pablonicolassilvabravo@gmail.com' . "\r\n"; // 
+
+			//Le paso el mensaje, la lista de correos
+			send($message,$to);
+
+	 		unset($_SESSION['idRecinto']);
+			unset($_SESSION['idEquipo']);
+			unset($_SESSION['fecha']);
+			unset($_SESSION['comentario']);
+			unset($_SESSION['limInf']);
+			unset($_SESSION['limSup']);
+			unset($_SESSION['tipoCorreo']);
+
+
+
+		}
+
+
+
+	}
+
+
+
+
+
+
 
 
 

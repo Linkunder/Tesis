@@ -71,7 +71,7 @@ class Equipo{
 
 	// Obtener miembros de un determinado equipo. - MODULO MODIFICAR EQUIPO
 	public function getMiembrosEquipo($idEquipo){
-		$query = $this->db->prepare("SELECT DISTINCT Usuario.idUsuario, Usuario.nombre, Usuario.apellido, Usuario.fotografia, Usuario.fechaNacimiento 
+		$query = $this->db->prepare("SELECT DISTINCT Usuario.idUsuario, Usuario.nombre, Usuario.apellido, Usuario.fotografia, Usuario.fechaNacimiento, Usuario.mail 
 			FROM Usuario 
 			INNER JOIN MiembrosEquipo ON Usuario.idUsuario = MiembrosEquipo.idUsuario 
 			WHERE MiembrosEquipo.idEquipo = '".$idEquipo."'");

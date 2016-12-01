@@ -9,7 +9,7 @@ require 'models/Equipo.php';
 require 'models/TercerTiempo.php';
 require 'models/Local.php';
 require 'models/Horario.php';
-require 'models/Mail.php';
+require 'models/mail.php';
 require 'models/Encuentro.php';
 
  
@@ -41,6 +41,7 @@ class PartidoController{
 	public function partidos(){
 		$idUsuario = $_SESSION['login_user_id'];
 
+		$_SESSION['partidos'] = -1;
 
 		if ($_SESSION['partidos'] != -1 ){
 

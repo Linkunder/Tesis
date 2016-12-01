@@ -1,7 +1,7 @@
 <?php
 ini_set('display_errors',1);
-require("libs/PHPMailer/class.phpmailer.php");
-require("libs/PHPMailer/class.smtp.php");
+require("libs/PHPmailer/class.phpmailer.php");
+require("libs/PHPmailer/class.smtp.php");
 
 //https://www.google.com/settings/security/lesssecureapps
 //http://phpmailer.worxware.com/
@@ -47,6 +47,7 @@ require("libs/PHPMailer/class.smtp.php");
 		$mail->Password = "matchdaycarrasco"; 
 		if($mail->Send())
 		{			
+			echo "Mailer Error: " . $mail->ErrorInfo;
 			return $body; 
 		}else
 		{
