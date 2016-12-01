@@ -4,11 +4,11 @@ ${demo.css}
         </style>
 
 
-<script src="assets/assetsAdmin/js/modules/exporting.js"></script>
+
 
 <script type="text/javascript">
 $(function () {
-        $('#container1').highcharts({ //Comentarios
+        $('#containerRecintos1').highcharts({ //Comentarios
         chart: {
             type: 'bar'
         },
@@ -87,7 +87,7 @@ $(function () {
     });
 });
 $(function () {
-$('#container2').highcharts({
+$('#containerRecintos2').highcharts({
         chart: {
             plotBackgroundColor: null,
             plotBorderWidth: null,
@@ -131,7 +131,7 @@ $('#container2').highcharts({
 });
 
 $(function () {
-$('#container3').highcharts({
+$('#containerRecintos3').highcharts({
         chart: {
             plotBackgroundColor: null,
             plotBorderWidth: null,
@@ -175,7 +175,7 @@ $('#container3').highcharts({
 });
 
 $(function () {
-$('#container4').highcharts({
+$('#containerRecintos4').highcharts({
         chart: {
             plotBackgroundColor: null,
             plotBorderWidth: null,
@@ -219,7 +219,7 @@ $('#container4').highcharts({
 
 $(function () {
 
-$('#container5').highcharts({ //Comentarios
+$('#containerRecintos5').highcharts({ //Comentarios
         chart: {
             type: 'bar'
         },
@@ -302,7 +302,7 @@ $('#container5').highcharts({ //Comentarios
 });
 
 $(function () {
-	$('#container6').highcharts({
+	$('#containerRecintos6').highcharts({
         chart: {
             plotBackgroundColor: null,
             plotBorderWidth: null,
@@ -353,21 +353,21 @@ $(function () {
 });*/
     </script>
 
-    <div id="container1" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto">
+    <div id="containerRecintos1" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto">
     </div>
     </br>
-    <div id="container2" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto">
+    <div id="containerRecintos2" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto">
     </div>
     </br>
-    <div id="container3" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto">
+    <div id="containerRecintos3" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto">
     </div>
     </br>
-    <div id="container4" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto">
+    <div id="containerRecintos4" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto">
     </div>
     </br>
-    <div id="container5" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto">
+    <div id="containerRecintos5" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto">
     </div>
     </br>
-    <div id="container6" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto">
+    <div id="containerRecintos6" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto">
     </div>
     </br>

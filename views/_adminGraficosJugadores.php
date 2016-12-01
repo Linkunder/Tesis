@@ -4,11 +4,11 @@ ${demo.css}
         </style>
 
 
-<script src="assets/assetsAdmin/js/modules/exporting.js"></script>
+
 
 <script type="text/javascript">
 $(function () {
-        $('#container1').highcharts({
+        $('#containerJugadores1').highcharts({
         chart: {
             type: 'pie',
             options3d: {
@@ -47,7 +47,7 @@ $(function () {
     });//Fin grafico hombre/mujer
 });
 $(function () {
-$('#container2').highcharts({
+$('#containerJugadores2').highcharts({
  chart: {
             type: 'bar'
         },
@@ -132,7 +132,7 @@ $('#container2').highcharts({
 });
 
 $(function () {
-$('#container3').highcharts({ //Comentarios
+$('#containerJugadores3').highcharts({ //Comentarios
         chart: {
             type: 'bar'
         },
@@ -216,7 +216,7 @@ $('#container3').highcharts({ //Comentarios
 
 
 $(function () {
- $('#container4').highcharts({ //Comentarios
+ $('#containerJugadores4').highcharts({ //Comentarios
         chart: {
             type: 'bar'
         },
@@ -298,15 +298,15 @@ $(function () {
 });
     </script>
 
-    <div id="container1" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto">
+    <div id="containerJugadores1" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto">
     </div>
     </br>
-    <div id="container2" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto">
+    <div id="containerJugadores2" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto">
     </div>
     </br>
-    <div id="container3" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto">
+    <div id="containerJugadores3" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto">
     </div>
     </br>
-    <div id="container4" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto">
+    <div id="containerJugadores4" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto">
     </div>
     </br>

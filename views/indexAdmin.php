@@ -129,12 +129,12 @@ $usuarios = $vars['usuarios'];
                   <div class="panel panel-default">
                     <div class="panel-heading">
                       <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse1" >
                         Jugadores</a>
                       </h4>
                     </div>
                     <div id="collapse1" class="panel-collapse collapse">
-                      <div class="panel-body">
+                      <div class="panel-body" id="bodyJugadores">
                       <!--Aqui van los gráficos-->
                         <div id="graficosJugadores">
                                 <div class="progress">
@@ -224,7 +224,13 @@ include('layout/footerAdmin.php');
     <script src="assets/assetsAdmin/vendor/flot-tooltip/jquery.flot.tooltip.min.js"></script>
     <script src="assets/assetsAdmin/data/flot-data.js"></script>
     <script src="assets/assetsAdmin/js/highcharts.js"></script>
+
+    <script src="assets/assetsAdmin/js/modules/exporting.js"></script>
     <script>
+
+
+
+    
         $("#collapse1").on('show.bs.collapse', function(){
                
             $('#graficosJugadores').load('?controlador=Usuario&accion=getGraficosJugadores');
@@ -240,14 +246,13 @@ include('layout/footerAdmin.php');
             $('#graficosPartidos').load('?controlador=Partido&accion=getGraficosPartidos');
         });
         $("#collapse4").on('show.bs.collapse', function(){
-               
+            
             $('#graficosEquipos').load('?controlador=Equipo&accion=getGraficosEquipos');
-
         });
 
+        //Cuando se cierre cada collapse
 
-
-
+ 
 
         
 

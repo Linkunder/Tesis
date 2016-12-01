@@ -4,13 +4,13 @@ ${demo.css}
         </style>
 
 
-<script src="assets/assetsAdmin/js/modules/exporting.js"></script>
+
 
 <script type="text/javascript">
 
 
 $(function () {
-	        $('#container1').highcharts({ //Comentarios
+	        $('#containerEquipos1').highcharts({ //Comentarios
         chart: {
             type: 'bar'
         },
@@ -91,7 +91,7 @@ $(function () {
 
 $(function () {
 
-	$('#container2').highcharts({
+	$('#containerEquipos2').highcharts({
  chart: {
             type: 'bar'
         },
@@ -186,8 +186,8 @@ $(function () {
 });*/
     </script>
 
-    <div id="container1" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto">
+    <div id="containerEquipos1" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto">
     </div>
     </br>
-    <div id="container2" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto">
+    <div id="containerEquipos2" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto">
     </div>

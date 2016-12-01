@@ -4,12 +4,12 @@ ${demo.css}
         </style>
 
 
-<script src="assets/assetsAdmin/js/modules/exporting.js"></script>
+
 
 <script type="text/javascript">
 
 $(function () {
- $('#container1').highcharts({
+ $('#containerPartidos1').highcharts({
         title: {
             text: 'Partidos agendados agrupados por hora'
         },
@@ -69,7 +69,7 @@ $(function () {
 
 $(function () {
 
-    $('#container3').highcharts({ //Comentarios
+    $('#containerPartidos3').highcharts({ //Comentarios
         chart: {
             type: 'bar'
         },
@@ -163,7 +163,7 @@ $(function () {
 });
 
 $(function () {
-     $('#container2').highcharts({
+     $('#containerPartidos2').highcharts({
         title: {
             text: 'Partidos jugados agrupados por dia'
         },
@@ -228,13 +228,10 @@ $(function () {
 });*/
     </script>
 
-    <div id="container1" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto">
+    <div id="containerPartidos1" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto">
     </div>
     </br>
-    <div id="container2" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto">
-    </div>
-    </br>
-    <div id="container3" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto">
+    <div id="containerPartidos2" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto">
     </div>
     </br>
 
