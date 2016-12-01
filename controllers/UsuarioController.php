@@ -301,6 +301,8 @@ class UsuarioController{
 		$topTen = $this->Usuario->getTopTenJugadoresPartidos();
 		$data['topTen'] = $topTen;
 
+	
+
 		$this->view->show("_adminGraficosJugadores.php", $data);
 	}
 

@@ -100,10 +100,10 @@ class Usuario{
 	}
 
 	public function getCantidadPorSexo(){
-		$consulta = $this->db->prepare("SELECT count(*) as F FROM Usuario WHERE sexo= 'F'");
+		$consulta = $this->db->prepare("SELECT count(*) as F FROM Usuario WHERE sexo= 'F' AND perfil = 1");
 		$consulta->execute();
 		$resultado[0] = $consulta->fetchAll();
-		$consulta = $this->db->prepare("SELECT count(*) as M FROM Usuario WHERE sexo= 'M'");
+		$consulta = $this->db->prepare("SELECT count(*) as M FROM Usuario WHERE sexo= 'M' AND perfil = 1");
 		$consulta->execute();
 		$resultado[1] = $consulta->fetchAll();
 
@@ -142,6 +142,7 @@ class Usuario{
 		$resultado = $consulta->fetchAll();
 		return $resultado;
 	}
+
 
 
 

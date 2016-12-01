@@ -148,7 +148,7 @@ $usuarios = $vars['usuarios'];
 
                       </div>
                     </div>
-                  </div>
+                 
                   <div class="panel panel-default">
                     <div class="panel-heading">
                       <h4 class="panel-title">
@@ -205,6 +205,7 @@ $usuarios = $vars['usuarios'];
                   </div>
                 </div>
             </div>
+             </div>
         </div>
         <!-- /#page-wrapper -->
 
@@ -227,8 +228,6 @@ include('layout/footerAdmin.php');
         $("#collapse1").on('show.bs.collapse', function(){
                
             $('#graficosJugadores').load('?controlador=Usuario&accion=getGraficosJugadores');
-
-
         });
 
         $("#collapse2").on('show.bs.collapse', function(){
@@ -245,6 +244,9 @@ include('layout/footerAdmin.php');
             $('#graficosEquipos').load('?controlador=Equipo&accion=getGraficosEquipos');
 
         });
+
+
+
 
 
         
