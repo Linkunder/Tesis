@@ -180,12 +180,8 @@ $(function(){
 
 
     jObject=JSON.stringify(jObject);
-      $.ajax({
-          type:'post',
-          cache:false,
-          url:"?controlador=Partido&accion=agendarPartidoAB",
-          data:{jObject:jObject}
-    });
+    $.post("?controlador=Partido&accion=agendarPartidoAB",{jObject:jObject});
+
     }
 
 
