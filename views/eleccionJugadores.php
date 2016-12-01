@@ -190,13 +190,11 @@ $(function(){
     if(tipoPartido == "3"){
       agendar="agendarPartidoAB";
     }
+
       jObject=JSON.stringify(jObject);
-      $.ajax({
-          type:'post',
-          cache:false,
-          url:"?controlador=Partido&accion="+agendar,
-          data:{jObject:jObject}
-      });
+      $.post(
+          "?controlador=Partido&accion="+agendar,
+          {jObject:jObject});
     }
 
   </script>

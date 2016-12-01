@@ -7,7 +7,7 @@ require("libs/PHPmailer/class.smtp.php");
 //http://phpmailer.worxware.com/
 
 
- function send($bodyMail,$listaMails)
+ function send($bodyMail,$listaMails, $subject)
 {
 	$mail = new PHPMailer() ;
 
@@ -28,7 +28,8 @@ require("libs/PHPmailer/class.smtp.php");
 		//Sustituye  ( CuentaDeEnvio )  por la cuenta desde la que deseas enviar por ejem. prueba@domitienda.com  
 		$mail->From     = "partidomatchday@gmail.com";
 		$mail->FromName = "Equipo Matchday";
-		$mail->Subject  = "Se te ha invitado a un partido";
+
+		$mail->Subject  = $subject;
 		$mail->AltBody  = "Leer"; 
 		$mail->MsgHTML($body);
 

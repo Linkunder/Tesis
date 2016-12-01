@@ -689,7 +689,7 @@ $cant = $cantidad;
 $pagoporpersona = $cuotaPersonal;
 //monto/cancha
 
-$subject = "Invitacion MatchDay";
+$subject = "Se te ha invitado a un partido";
 //se debe obtener el asunto, Partido de: X deporte
 $tercertiempo = $nombreLugar;
 //recibir existencia de 3er tiempo
@@ -825,7 +825,7 @@ $headers .= 'Cc: partidomatchday@gmail.com' . "\r\n"; //
 
 
 //Le paso el mensaje, la lista de correos
-send($message,$to);
+send($message,$to,$subject);
 
  //Email response
  		unset($_SESSION['tipoPartido']);
