@@ -185,6 +185,8 @@ class DesafioController{
         $data['encuentro'] = $encuentro;
         $this->view->show("_agendarDesafio.php", $data);
 
+
+
         /*
       $idDesafio = $_GET['idDesafio'];
       $desafio = $this->Desafio->getDesafio($idDesafio);
@@ -226,6 +228,14 @@ class DesafioController{
 		$this->Encuentro->setEncuentro($idDesafio, $idEquipo, $respuesta, $estado); // Se inserta en la base de datos
 		$this->Desafio->cambiarEstado($idDesafio, $estado);
 		$_SESSION['accion'] = 2;				// Se cambia el estado del desafio (sin respuestas->con respuestas)
+
+
+
+		$_SESSION['tipoCorreo'] = 2;
+
+
+
+
 		header('Location: ?controlador=Desafio&accion=listaDesafios');
 	}
 
@@ -274,6 +284,8 @@ class DesafioController{
 		$data['encuentro'] = $encuentro;
 	    //$data['equipoSeleccionado'] = $_SESSION['equipoSeleccionado'];
 	    $data['accion'] = 1;
+
+
 	    $this->view->show("_detalleEncuentro.php", $data);
 	}
 
@@ -295,6 +307,7 @@ class DesafioController{
 
 	public function enviarCorreo(){
 
+		// Enviar correo a los miembros del equipo que creó el desafío
 		if ($_SESSION['tipoCorreo'] == 1){
 			//$idDesafio = $_SESSION['idDesafio'];
 			$idRecinto = $_SESSION['idRecinto'];
@@ -379,6 +392,95 @@ class DesafioController{
 
 
 		}
+
+
+		// Enviar correo al capitan del equipo que creó el desafío
+		if ($_SESSION['tipoCorreo'] == 2){
+			//$idDesafio = $_SESSION['idDesafio'];
+
+			$idRecinto = $_SESSION['idRecinto'];
+			$idEquipo = $_SESSION['idEquipo'];
+			$fecha = $_SESSION['fecha'];
+			$comentario = $_SESSION['comentario'];
+			$limInf = $_SESSION['limInf'];
+			$limSup = $_SESSION['limSup'];
+
+			$recinto = $this->Recinto->getRecinto($idRecinto);
+
+			foreach ($recinto as $key) {
+				$fotoRecinto = $key['fotografia'];
+				$direccionRecinto = $key['direccion'];
+				$nombreRecinto = $key['nombre'];
+			}
+
+			$equipo = $this->Equipo->getEquipo($idEquipo);
+
+			foreach ($equipo as $key) {
+				$nombreEquipo = $key['nombre'];
+			}
+
+			$miembros = $this->Equipo->getMiembrosEquipo($idEquipo);
+
+			$to = "pnsilva@alumnos.ubiobio.cl";
+
+			foreach ($miembros as $key ) {
+				$aux = $to;
+				$to = $aux.",".$key['mail'];
+			}
+
+			$dir = $direccionRecinto;
+
+			$subject = "Tu equipo ha creado un desafío";
+
+
+			$message = "<html>";
+			$message .= "<head>";
+			$message .= "<title>HTML email</title>";
+			$message .= "</head>";
+			$message .= "<body>";
+			$message .= '<div style="height:auto; width:auto;"><center><img src="assets/images/logoCorreo.png" alt="Website Change Request" /></center></div>';
+			$message .= '<div style="height:auto; width:auto;"><img src="http://maps.googleapis.com/maps/api/staticmap?center='. $dir . '&zoom=14&scale=false&size=600x300&maptype=roadmap&format=png&visual_refresh=true&markers=size:small%7Ccolor:0xff0000%7Clabel:%7C'.$dir.'" alt="Website Change Request" /></div>';
+			$message .= "<p>El capitán del equipo " .$nombreEquipo.  ", ha creado un desafío.</p>";
+			$message .= "<table>";
+			$message .= "<tr>";
+			$message .= "<td>Dirección:</td>";
+			$message .= "<td>".$direccionRecinto."</td>";
+			$message .= "</tr>";
+			$message .= "<tr>";
+			$message .= "<td>Fecha:</td>";
+			$message .= "<td>".$fecha."</td>";
+			$message .= "</tr>";
+			$message .= "</table>";
+
+			$message .= "<p>El desafío podrá ser visto por jugadores de entre ".$limInf." y ".$limSup." años.</p>";
+			$message .= "<center><b><p>© 2016. MatchDay.</p></b></center>";
+			$message .= "</body>";
+			$message .= "</html>";
+
+
+			// Always set content-type when sending HTML email
+			$headers = "MIME-Version: 1.0" . "\r\n";
+			$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+
+			// More headers
+			$headers .= 'From: <partidomatchday@gmail.com>' . "\r\n"; //
+			$headers .= 'Cc: pablonicolassilvabravo@gmail.com' . "\r\n"; // 
+
+			//Le paso el mensaje, la lista de correos
+			send($message,$to,$subject);
+
+	 		unset($_SESSION['idRecinto']);
+			unset($_SESSION['idEquipo']);
+			unset($_SESSION['fecha']);
+			unset($_SESSION['comentario']);
+			unset($_SESSION['limInf']);
+			unset($_SESSION['limSup']);
+			unset($_SESSION['tipoCorreo']);
+
+
+
+		}
+
 
 
 

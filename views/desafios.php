@@ -1084,6 +1084,7 @@ $(window).load(function(){
         url: "?controlador=Desafio&accion=enviarCorreo"
       });
     }
+
   //alert("hola mundo");
 });
 
