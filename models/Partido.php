@@ -342,6 +342,7 @@ class Partido{
 		$resultado = $consulta->fetchAll();
 		return $resultado;
 	}
+
 	public function getEstadosPartido(){
 		$consulta = $this->db->prepare("SELECT estado, count(*) as cantidad FROM Partido 
 				WHERE estado = 1 or estado = 2 or estado = 3
@@ -358,7 +359,12 @@ class Partido{
 		return $resultado;
 	}
 
-
+	public function getEquiposPartido($idPartido){
+		$consulta = $this->db->prepare("SELECT * FROM EquiposPartido WHERE idPartido = '".$idPartido."' ;");
+		$consulta->execute();
+		$resultado = $consulta->fetchAll();
+		return $resultado;
+	}
 
 }
 ?>

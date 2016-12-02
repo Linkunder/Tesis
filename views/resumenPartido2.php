@@ -313,6 +313,9 @@ if (isset($vars['tercerTiempo'])){
 
     //Creo que hay un error en este script.
 
+
+if (<?php echo $vars['tipoPartido']?> != 4){
+
 $(document).ready(function() {     
   $.ajax({
     type:'post',
@@ -320,6 +323,8 @@ $(document).ready(function() {
     url:"?controlador=Partido&accion=enviarInvitaciones"
   });
 });
+
+}
 </script>
 
 <!-- /Aqui termina la pagina -->
@@ -368,3 +373,23 @@ function carga_ajax2(div, id, tipo){
 }
 </script>
 
+
+
+
+
+<script>
+$(window).load(function(){
+    var accion = "<?php echo $vars['accion']?>";
+    if (accion == "3"){
+      //alert("text: ");
+      $.ajax({
+        type: 'post',
+        cache: false,
+        url: "?controlador=Partido&accion=enviarCorreo"
+      });
+    }
+    
+
+});
+
+</script>

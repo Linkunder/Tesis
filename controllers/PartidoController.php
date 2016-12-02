@@ -584,9 +584,6 @@ class PartidoController{
 
 
 		$this->Partido->setEquiposDesafio($ultimoPartido, $idEquipoOrganizador, $idRival);
-
-
-
 		$data['jugadoresEquipo1'] = $jugadoresEquipo1;
 		$data['jugadoresEquipo2'] = $jugadoresEquipo2;
 
@@ -597,6 +594,18 @@ class PartidoController{
 
 		$data['idRecinto'] = $idRecinto;
 		$data['idPartido'] = $ultimoPartido;
+
+
+
+
+
+		// Enviar correo
+
+		$data['accion'] = 3;
+		$_SESSION['tipoCorreo'] = 3;
+		$_SESSION['idPartido'] = $ultimoPartido;
+
+		//$this->enviarCorreo();
 
 		$this->view->show("resumenPartido2.php",$data);	
 
@@ -840,6 +849,176 @@ send($message,$to,$subject);
   
 
 	}
+
+
+
+
+
+
+
+
+
+	public function enviarCorreo(){
+
+		// Enviar correo al capitan del equipo que creó el desafío
+		if ($_SESSION['tipoCorreo'] == 3){
+
+			//echo $_SESSION['tipoCorreo'];
+
+			$idPartido = $_SESSION['idPartido'];
+
+			//echo $idPartido;
+
+			$partido = $this->Partido->getPartido($idPartido);
+
+			foreach ($partido as $key ) {
+				$fecha = $key['fecha'];
+				$hora = $key['hora'];
+				$cuota = $key['cuota'];
+				$idRecinto = $key['idRecinto'];
+			}
+
+			$recinto = $this->Recinto->getRecinto($idRecinto);
+
+			foreach ($recinto as $key ) {
+				$nombreRecinto = $key['nombre'];
+				$direccionRecinto = $key['direccion'];
+				$fotografiaRecinto = $key['fotografia'];
+			}
+
+
+			$equipos = $this->Partido->getEquiposPartido($idPartido);
+			//var_dump($equipos);
+
+			foreach ($equipos as $key ) {
+				$idEquipo1 = $key['idEquipo'];
+				$idEquipo2 = $key['idEquipo2'];
+			}
+
+			$equipo1 = $this->Equipo->getEquipo($idEquipo1);
+
+			foreach ($equipo1 as $key) {
+				$nombreEquipo1 = $key['nombre'];
+				$idCapitanEquipo1 = $key['idCapitan'];
+			}
+
+			$equipo2 = $this->Equipo->getEquipo($idEquipo2);
+
+			foreach ($equipo2 as $key) {
+				$nombreEquipo2 = $key['nombre'];
+				$idCapitanEquipo2 = $key['idCapitan'];
+			}
+
+
+			$miembros1 = $this->Equipo->getMiembrosEquipo($idEquipo1);
+			$miembros2 = $this->Equipo->getMiembrosEquipo($idEquipo2);
+
+
+			$to = "pnsilva@alumnos.ubiobio.cl";
+
+			foreach ($miembros1 as $key ) {
+				$aux = $to;
+				$to = $aux.",".$key['mail'];
+			}
+
+
+			foreach ($miembros2 as $key ) {
+				$aux = $to;
+				$to = $aux.",".$key['mail'];
+			}
+
+			//$to = $mail."";
+
+
+
+			$dir = $direccionRecinto;
+
+			$subject = "Desafio agendado!";
+
+
+
+			$message = "<html>";
+			$message .= "<head>";
+			$message .= "<meta charset='utf-8'>";
+			$message .= "<title>HTML email</title>";
+			$message .= "<style>
+			.datagrid table { border-collapse: collapse; text-align: left; width: 100%; } 
+			.datagrid {font: normal 12px/150% Arial, Helvetica, sans-serif; background: #fff; overflow: hidden; border: 1px solid #006699; -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; }
+			.datagrid table td, 
+			.datagrid table th { padding: 3px 10px; }
+			.datagrid table th {background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #006699), color-stop(1, #00557F) );background:-moz-linear-gradient( center top, #006699 5%, #00557F 100% );filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#006699', endColorstr='#00557F');background-color:#006699; color:#FFFFFF; font-size: 12px; font-weight: bold; border-left: 1px solid #0070A8; } 
+			.datagrid table th:first-child { border: none; }
+			.datagrid table td { color: #00496B; border-left: 1px solid #E1EEF4;font-size: 12px;font-weight: normal; }
+			.datagrid table .alt td { background: #E1EEF4; color: #00496B; }
+			.datagrid table td:first-child { border-left: none; }
+			.datagrid table tr:last-child td { border-bottom: none; }
+			</style>";
+			$message .= "</head>";
+			$message .= "<body>";
+			$message .= '<div style="height:auto; width:auto;"><center><img src="assets/images/logoCorreo.png" alt="Website Change Request" /></center></div>';
+			$message .= "<h4>Se ha agendado un desafío: ".$nombreEquipo1. " V/S ".$nombreEquipo2." </h4>";
+
+			$message .= "<div class='datagrid'>";
+			$message .= "<table>";
+			$message .= "<tr>";
+			$message .= "<th>Equipos:</th>";
+			$message .= "<td>".$nombreEquipo1." vs ".$nombreEquipo2."</td>";
+			$message .= "</tr>";
+			$message .= "<tr>";
+			$message .= "<th>Fecha:</th>";
+			$message .= "<td>".$fecha."</td>";
+			$message .= "</tr>";
+			$message .= "<tr>";
+			$message .= "<th>Hora:</th>";
+			$message .= "<td>".$hora."</td>";
+			$message .= "</tr>";
+			$message .= "<tr>";
+			$message .= "<th>Recinto:</th>";
+			$message .= "<td>".$nombreRecinto."</td>";
+			$message .= "</tr>";
+
+			$message .= "<tr>";
+			$message .= "<th>Cuota:</th>";
+			$message .= "<td>$ ".$cuota." por equipo</td>";
+			$message .= "</tr>";
+
+			$message .= "</table>";
+			$message .= "</div>";
+
+
+
+			$message .= "<center><b><p>© 2016. MatchDay.</p></b></center>";
+			$message .= "</body>";
+			$message .= "</html>";
+
+
+			// Always set content-type when sending HTML email
+			$headers = "MIME-Version: 1.0" . "\r\n";
+			$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+
+			// More headers
+			$headers .= 'From: <partidomatchday@gmail.com>' . "\r\n"; //
+			$headers .= 'Cc: pablonicolassilvabravo@gmail.com' . "\r\n"; // 
+
+			//Le paso el mensaje, la lista de correos
+			send($message,$to,$subject);
+
+	 		unset($_SESSION['idPartido']);
+			unset($_SESSION['tipoCorreo']);
+
+
+
+
+		}
+
+
+
+
+	}
+
+
+
+
 
 
 public function getGraficosPartidos(){

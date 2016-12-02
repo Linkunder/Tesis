@@ -1084,6 +1084,14 @@ $(window).load(function(){
         url: "?controlador=Desafio&accion=enviarCorreo"
       });
     }
+    if (accion == "2"){
+      //alert("text: ");
+      $.ajax({
+        type: 'post',
+        cache: false,
+        url: "?controlador=Desafio&accion=enviarCorreo"
+      });
+    }
 
   //alert("hola mundo");
 });

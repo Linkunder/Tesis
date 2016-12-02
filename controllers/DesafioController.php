@@ -164,9 +164,13 @@ class DesafioController{
         session_start(); 
         } */
       $idDesafio = $_GET['idDesafio']; // POST o algo
-      	$desafio = $this->Desafio->getDesafio($idDesafio);
+      $desafio = $this->Desafio->getDesafio($idDesafio);
       $data['desafio'] = $desafio;
       $data['equipoSeleccionado'] = $_SESSION['equipoSeleccionado'];
+
+      
+
+
       $this->view->show("_detalleDesafio.php", $data);
     }
 
@@ -187,18 +191,6 @@ class DesafioController{
 
 
 
-        /*
-      $idDesafio = $_GET['idDesafio'];
-      $desafio = $this->Desafio->getDesafio($idDesafio);
-      $encuentro = new Encuentro();
-      $encuentroAcordado = $encuentro->getEncuentroAcordado($idDesafio);
-      foreach ($encuentroAcordado as $key ) {
-      	$data['nombreEquipo2'] = $key['nombreEquipo2'];
-      	$data['respuestaRival'] = $key['respuesta'];
-      	$data['idRival'] = $key['idRival'];
-      }
-      $data['desafio'] = $desafio;
-      $this->view->show("_agendarDesafio.php", $data);*/
     }
 
     public function verRespuestas(){
@@ -229,13 +221,23 @@ class DesafioController{
 		$this->Desafio->cambiarEstado($idDesafio, $estado);
 		$_SESSION['accion'] = 2;				// Se cambia el estado del desafio (sin respuestas->con respuestas)
 
-
-
 		$_SESSION['tipoCorreo'] = 2;
 
 
+		// Datos del desafio 
+		
+		$encuentros =$this->Encuentro->getEncuentrosSistema();
 
+		$encuentro = end($encuentros);
 
+		$idEncuentro = $encuentro['idEncuentro'];
+
+		$_SESSION['idEncuentro'] = $idEncuentro;
+
+		$_SESSION['idDesafio'] = $idDesafio;
+		//$_SESSION['idEquipo'] = $idEquipo;
+
+		//$this->enviarCorreo();
 		header('Location: ?controlador=Desafio&accion=listaDesafios');
 	}
 
@@ -307,6 +309,7 @@ class DesafioController{
 
 	public function enviarCorreo(){
 
+		//echo "tipo correo: ".$_SESSION['tipoCorreo'];
 		// Enviar correo a los miembros del equipo que creó el desafío
 		if ($_SESSION['tipoCorreo'] == 1){
 			//$idDesafio = $_SESSION['idDesafio'];
@@ -342,29 +345,47 @@ class DesafioController{
 
 			$dir = $direccionRecinto;
 
-			$subject = "Desafío Matchday";
+			$subject = "Desafio Matchday";
 
 
 			$message = "<html>";
 			$message .= "<head>";
+			$message .= "<meta charset='utf-8'>";
 			$message .= "<title>HTML email</title>";
+			$message .= "<style>
+			.datagrid table { border-collapse: collapse; text-align: left; width: 100%; } 
+			.datagrid {font: normal 12px/150% Arial, Helvetica, sans-serif; background: #fff; overflow: hidden; border: 1px solid #006699; -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; }
+			.datagrid table td, 
+			.datagrid table th { padding: 3px 10px; }
+			.datagrid table th {background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #006699), color-stop(1, #00557F) );background:-moz-linear-gradient( center top, #006699 5%, #00557F 100% );filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#006699', endColorstr='#00557F');background-color:#006699; color:#FFFFFF; font-size: 12px; font-weight: bold; border-left: 1px solid #0070A8; } 
+			.datagrid table th:first-child { border: none; }
+			.datagrid table td { color: #00496B; border-left: 1px solid #E1EEF4;font-size: 12px;font-weight: normal; }
+			.datagrid table .alt td { background: #E1EEF4; color: #00496B; }
+			.datagrid table td:first-child { border-left: none; }
+			.datagrid table tr:last-child td { border-bottom: none; }
+			</style>";
 			$message .= "</head>";
 			$message .= "<body>";
 			$message .= '<div style="height:auto; width:auto;"><center><img src="assets/images/logoCorreo.png" alt="Website Change Request" /></center></div>';
 			$message .= '<div style="height:auto; width:auto;"><img src="http://maps.googleapis.com/maps/api/staticmap?center='. $dir . '&zoom=14&scale=false&size=600x300&maptype=roadmap&format=png&visual_refresh=true&markers=size:small%7Ccolor:0xff0000%7Clabel:%7C'.$dir.'" alt="Website Change Request" /></div>';
-			$message .= "<p>El capitán del equipo " .$nombreEquipo.  ", ha creado un desafío.</p>";
+			$message .= "<h4>El capitán del equipo " .$nombreEquipo.  ", ha creado un desafío.</h4>";
+			
+
+			$message .= "<div class='datagrid'>";
 			$message .= "<table>";
 			$message .= "<tr>";
-			$message .= "<td>Dirección:</td>";
+			$message .= "<th>Dirección:</th>";
 			$message .= "<td>".$direccionRecinto."</td>";
 			$message .= "</tr>";
 			$message .= "<tr>";
-			$message .= "<td>Fecha:</td>";
+			$message .= "<th>Fecha:</th>";
 			$message .= "<td>".$fecha."</td>";
 			$message .= "</tr>";
 			$message .= "</table>";
+			$message .= "</div>";
 
 			$message .= "<p>El desafío podrá ser visto por jugadores de entre ".$limInf." y ".$limSup." años.</p>";
+
 			$message .= "<center><b><p>© 2016. MatchDay.</p></b></center>";
 			$message .= "</body>";
 			$message .= "</html>";
@@ -379,7 +400,7 @@ class DesafioController{
 			$headers .= 'Cc: pablonicolassilvabravo@gmail.com' . "\r\n"; // 
 
 			//Le paso el mensaje, la lista de correos
-			send($message,$to);
+			send($message,$to, $subject);
 
 	 		unset($_SESSION['idRecinto']);
 			unset($_SESSION['idEquipo']);
@@ -396,14 +417,49 @@ class DesafioController{
 
 		// Enviar correo al capitan del equipo que creó el desafío
 		if ($_SESSION['tipoCorreo'] == 2){
-			//$idDesafio = $_SESSION['idDesafio'];
 
-			$idRecinto = $_SESSION['idRecinto'];
-			$idEquipo = $_SESSION['idEquipo'];
-			$fecha = $_SESSION['fecha'];
-			$comentario = $_SESSION['comentario'];
-			$limInf = $_SESSION['limInf'];
-			$limSup = $_SESSION['limSup'];
+			//echo $_SESSION['tipoCorreo'];
+
+			$idDesafio = $_SESSION['idDesafio'];
+			$idEncuentro = $_SESSION['idEncuentro'];
+
+
+			$encuentro = $this->Encuentro->getEncuentro($idEncuentro);
+			//var_dump($encuentro);
+
+			foreach ($encuentro as $key ) {
+				$idEquipoRival = $key['idEquipo1'];
+				$respuestaRival = $key['respuesta'];
+			}
+
+			$equipoRival = $this->Equipo->getEquipo($idEquipoRival);
+
+			foreach ($equipoRival as $key) {
+				$nombreEquipoRival = $key['nombre'];
+				$idCapitanRival = $key['idCapitan'];
+			}
+
+
+			$capitanRival = $this->Usuario->getUsuario($idCapitanRival);
+
+
+			foreach ($capitanRival as $key) {
+				$nombreCapRival = $key['nombre'];
+				$apellidoCapRival = $key['apellido'];
+			}
+
+
+
+
+			$desafio = $this->Desafio->getDesafio($idDesafio);
+
+			foreach ($desafio as $key ) {
+				$fecha = $key['fechaPartido'];
+				$idEquipo = $key['idEquipo'];
+				$idRecinto = $key['idRecinto'];
+				$comentario = $key['comentario'];
+			}
+
 
 			$recinto = $this->Recinto->getRecinto($idRecinto);
 
@@ -417,42 +473,89 @@ class DesafioController{
 
 			foreach ($equipo as $key) {
 				$nombreEquipo = $key['nombre'];
+				$idCapitan = $key['idCapitan'];
 			}
 
-			$miembros = $this->Equipo->getMiembrosEquipo($idEquipo);
+			$destinatario = $this->Usuario->getUsuario($idCapitan);
 
-			$to = "pnsilva@alumnos.ubiobio.cl";
 
-			foreach ($miembros as $key ) {
-				$aux = $to;
-				$to = $aux.",".$key['mail'];
+			foreach ($destinatario as $key) {
+				$mail = $key['mail'];
 			}
+
+
+			//$miembros = $this->Equipo->getMiembrosEquipo($idEquipo);
+
+			$to = $mail."";
+
+
 
 			$dir = $direccionRecinto;
 
-			$subject = "Tu equipo ha creado un desafío";
+			$subject = "Respuesta desafio";
+
 
 
 			$message = "<html>";
 			$message .= "<head>";
+			$message .= "<meta charset='utf-8'>";
 			$message .= "<title>HTML email</title>";
+			$message .= "<style>
+			.datagrid table { border-collapse: collapse; text-align: left; width: 100%; } 
+			.datagrid {font: normal 12px/150% Arial, Helvetica, sans-serif; background: #fff; overflow: hidden; border: 1px solid #006699; -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; }
+			.datagrid table td, 
+			.datagrid table th { padding: 3px 10px; }
+			.datagrid table th {background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #006699), color-stop(1, #00557F) );background:-moz-linear-gradient( center top, #006699 5%, #00557F 100% );filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#006699', endColorstr='#00557F');background-color:#006699; color:#FFFFFF; font-size: 12px; font-weight: bold; border-left: 1px solid #0070A8; } 
+			.datagrid table th:first-child { border: none; }
+			.datagrid table td { color: #00496B; border-left: 1px solid #E1EEF4;font-size: 12px;font-weight: normal; }
+			.datagrid table .alt td { background: #E1EEF4; color: #00496B; }
+			.datagrid table td:first-child { border-left: none; }
+			.datagrid table tr:last-child td { border-bottom: none; }
+			</style>";
 			$message .= "</head>";
 			$message .= "<body>";
 			$message .= '<div style="height:auto; width:auto;"><center><img src="assets/images/logoCorreo.png" alt="Website Change Request" /></center></div>';
-			$message .= '<div style="height:auto; width:auto;"><img src="http://maps.googleapis.com/maps/api/staticmap?center='. $dir . '&zoom=14&scale=false&size=600x300&maptype=roadmap&format=png&visual_refresh=true&markers=size:small%7Ccolor:0xff0000%7Clabel:%7C'.$dir.'" alt="Website Change Request" /></div>';
-			$message .= "<p>El capitán del equipo " .$nombreEquipo.  ", ha creado un desafío.</p>";
+			$message .= "<h4>El siguiente desafio de tu equipo " .$nombreEquipo. " tiene una nueva respuesta.</h4>";
+
+			$message .= "<div class='datagrid'>";
 			$message .= "<table>";
 			$message .= "<tr>";
-			$message .= "<td>Dirección:</td>";
-			$message .= "<td>".$direccionRecinto."</td>";
+			$message .= "<th>Equipo:</th>";
+			$message .= "<td>".$nombreEquipo."</td>";
 			$message .= "</tr>";
 			$message .= "<tr>";
-			$message .= "<td>Fecha:</td>";
+			$message .= "<th>Fecha:</th>";
 			$message .= "<td>".$fecha."</td>";
 			$message .= "</tr>";
-			$message .= "</table>";
+			$message .= "<tr>";
+			$message .= "<th>Recinto:</th>";
+			$message .= "<td>".$nombreRecinto."</td>";
+			$message .= "</tr>";
+			$message .= "<tr>";
+			$message .= "<th>Comentario:</th>";
+			$message .= "<td>".$comentario."</td>";
+			$message .= "</tr>";
 
-			$message .= "<p>El desafío podrá ser visto por jugadores de entre ".$limInf." y ".$limSup." años.</p>";
+			$message .= "<tr>";
+			$message .= "<th>Equipo desafiante:</th>";
+			$message .= "<td>".$nombreEquipoRival."</td>";
+			$message .= "</tr>";
+			$message .= "<tr>";
+			$message .= "<th>Capitán del equipo rival:</th>";
+			$message .= "<td>".$nombreCapRival." ".$apellidoCapRival."</td>";
+			$message .= "</tr>";
+			$message .= "<tr>";
+			$message .= "<th>Comentario de ".$nombreCapRival.":</th>";
+			$message .= "<td>".$respuestaRival."</td>";
+			$message .= "</tr>";
+			$message .= "</table>";
+			$message .= "</div>";
+
+			$message .= "<h4>Para responder esta solicitud, ingresa a MatchDay desde  
+			<a href='http://parra.chillan.ubiobio.cl:8070/pnsilva/Matchday/'>aquí</a>
+			</h4>";
+
+
 			$message .= "<center><b><p>© 2016. MatchDay.</p></b></center>";
 			$message .= "</body>";
 			$message .= "</html>";
@@ -469,13 +572,10 @@ class DesafioController{
 			//Le paso el mensaje, la lista de correos
 			send($message,$to,$subject);
 
-	 		unset($_SESSION['idRecinto']);
-			unset($_SESSION['idEquipo']);
-			unset($_SESSION['fecha']);
-			unset($_SESSION['comentario']);
-			unset($_SESSION['limInf']);
-			unset($_SESSION['limSup']);
+	 		unset($_SESSION['idDesafio']);
+			unset($_SESSION['idEncuentro']);
 			unset($_SESSION['tipoCorreo']);
+
 
 
 

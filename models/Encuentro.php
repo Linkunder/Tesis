@@ -10,6 +10,17 @@ class Encuentro{
 	}
 
 	//	Obtener respuestas de un desafio
+	public function getEncuentrosSistema(){
+		$sql = "SELECT *
+			FROM Encuentro 
+			";
+		$query = $this->db->prepare($sql);
+		$query->execute();
+		$resultado = $query->fetchAll();
+		return $resultado;
+	}
+
+	//	Obtener respuestas de un desafio
 	public function getEncuentros($idDesafio){
 		$sql = "SELECT DISTINCT
 		Desafio.idDesafio,
