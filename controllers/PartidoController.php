@@ -985,7 +985,8 @@ send($message,$to,$subject);
 			$message .= "</table>";
 			$message .= "</div>";
 
-
+			$message .= '<div style="height:auto; width:auto;"><img src="http://maps.googleapis.com/maps/api/staticmap?center='. $dir . '&zoom=14&scale=false&size=600x300&maptype=roadmap&format=png&visual_refresh=true&markers=size:small%7Ccolor:0xff0000%7Clabel:%7C'.$dir.'" /></div>';		
+			$message .= "<center><b><a href='http://maps.google.com/?q=".$dir."'><h4>¿Cómo llegar?</h4></a></b></center>";
 
 			$message .= "<center><b><p>© 2016. MatchDay.</p></b></center>";
 			$message .= "</body>";
