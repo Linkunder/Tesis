@@ -7,9 +7,10 @@ class Comentario{
 	}
 
 	public function getComentariosRecinto($idRecinto){
-		$consulta = $this->db->prepare('
-			SELECT * FROM Comentario WHERE idRecinto = $idRecinto
-		');
+		$consulta = $this->db->prepare("
+						SELECT Comentario.idComentario, Comentario.idRecinto, Comentario.contenido, Comentario.fecha, Comentario.hora, concat(Usuario.nombre,' ',Usuario.apellido) as nombre, concat('assets/images/usuarios/',Usuario.fotografia) as fotografia 
+			FROM Comentario INNER JOIN Usuario on Comentario.idUsuario = Usuario.idUsuario WHERE Comentario.idRecinto = '".$idRecinto."' ORDER BY Comentario.idComentario DESC 
+		");
 		$consulta->execute();
 		$resultado = $consulta->fetchAll();
 		return $resultado;
@@ -40,9 +41,17 @@ class Comentario{
 				'$contenido',
 				CURRENT_DATE,
 				CURRENT_TIME
-				) 
+				);
+				SELECT LAST_INSERT_ID() AS lastId;
 			");
 		$consulta->execute();
+		$resultado = $this->db->lastInsertId();
+
+		$consulta = $this->db->prepare("SELECT Comentario.idComentario, Comentario.idRecinto, Comentario.contenido, Comentario.fecha, Comentario.hora, concat(Usuario.nombre,' ',Usuario.apellido) as nombre, concat('assets/images/usuarios/',Usuario.fotografia) as fotografia 
+			FROM Comentario INNER JOIN Usuario on Comentario.idUsuario = Usuario.idUsuario WHERE Comentario.idComentario = '".$resultado."'");
+		$consulta->execute();
+		$resultado = $consulta->fetchAll();
+		return $resultado;
 
 	}
 

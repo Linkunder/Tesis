@@ -35,6 +35,7 @@ class SesionController{
                 session_start();
                 $_SESSION['login_user_id'] = $resultado->idUsuario;
                 $_SESSION['login_user_name'] = $resultado->nombre;
+                $_SESSION['login_user_apellido'] = $resultado->apellido;
                 $_SESSION['login_user_email'] = $resultado->mail;
                 $_SESSION['login_user_estado'] = $resultado->estado;
                 $_SESSION['login_user_perfil'] = $resultado->perfil;
@@ -67,6 +68,7 @@ class SesionController{
         unset($_SESSION['login_user_id']);
         unset($_SESSION['login_user_name']);
         unset($_SESSION['login_user_email']);
+        unset($_SESSION['login_user_apellido']);
         //$data['cerrar_sesion'] = true;
         //$this->view->show("inicio.php", $data);
         session_destroy();

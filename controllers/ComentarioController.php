@@ -17,22 +17,46 @@ class ComentarioController{
     public function getComentarios(){
     		$idRecinto = $_GET['idRecinto'];
     		$comentario = new Comentario();
-    		$listadoComentarios = $comentario->getComentarios($idRecinto);
+    		$listadoComentarios = $comentario->getComentarios();
             //var_dump($listadoComentarios);
     		$data['comentarios']= $listadoComentarios;
+            var_dump($data['comentarios']);
     	    return $data;
     }
+    public function getComentariosRecinto(){
+            $idRecinto = $_GET['idRecinto'];
+            $listadoComentarios = $this->Comentario->getComentariosRecinto($idRecinto);
+
+
+            echo json_encode($listadoComentarios);
+
+           
+    }
+
 
     public function setComentario(){
-        $comentario = new Comentario();
-        $idRecinto = $_POST['idRecinto'];
-        $idUsuario = $_POST['idUsuario'];
-        $contenido = $_POST['contenido'];
 
-        $comentario->setComentario($idRecinto, $idUsuario, $contenido);
-        header('Location: ?controlador=Recinto&accion=busquedaRecintos&nuevo=1');
+        $contenido   =   $_POST['contenido'];
+        $idRecinto = $_GET['idRecinto'];
+        if(!isset($_SESSION)){
+            session_start();
+        }
+        $idUsuario = $_SESSION['login_user_id'];
+
+
+        $comentario = $this->Comentario->setComentario($idRecinto, $idUsuario, $contenido);
+
+        echo json_encode($comentario);
+
+        
         
     }
+
+        public function mostrarComentarios(){
+            $idRecinto = $_GET['idRecinto'];
+            $data['idRecinto'] = $idRecinto;
+            $this->view->show("_comentarios.php", $data);
+        }
 
 
 
@@ -53,5 +77,6 @@ class ComentarioController{
         $_SESSION['adminComentarios'] = 1;
         header('Location: ?controlador=Comentario&accion=adminComentarios');
     }
-}
+    }
+
 ?>
