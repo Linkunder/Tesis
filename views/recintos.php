@@ -113,13 +113,14 @@ $_SESSION['idRecinto']=NULL;
                         // AHORA VIENEN LOS RESULTADOS
                         ?>
                         
-                <h3>Resultados</h3>
+             
 
                 <ul class="nav nav-pills">
                     <li class="filter" data-filter="photo"></li>
                     <li class="filter" data-filter="identity"></li>
                 </ul>
                 <div id="single-project">
+
                     <?php
                     } // fin if search
                     foreach ($vars['recintos'] as $key) {   // foreach recintos
@@ -463,6 +464,9 @@ $_SESSION['idRecinto']=NULL;
                 }
                 ?>
             </ul>
+            <?php if ($cont == 0 && isset($vars['search'])) {?>
+                    <h3>No hay Resultados</h3>
+            <?php } ?>
 
 
 

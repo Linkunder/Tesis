@@ -294,7 +294,7 @@ http://viima.github.io/jquery-comments/*/
 
 .jquery-comments ul.navigation li.active,
 .jquery-comments ul.navigation li:hover {
-	color: #000;
+	color: #CCC;
 }
 
 .jquery-comments ul.navigation li.active:after {

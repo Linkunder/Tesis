@@ -24,7 +24,14 @@ if(!isset($_SESSION)){
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
 		<script type="text/javascript" src="assets/js/jquery-comments.js"></script>
 
-
+		<style type="text/css">
+			.textarea {
+				color: #000;
+			};
+			li.active {
+				color: #ccc;
+			}
+		</style>
 
 		<!-- Init jquery-comments -->
 		<script type="text/javascript">
@@ -47,6 +54,7 @@ if(!isset($_SESSION)){
 					enableEditing: false,
 					postCommentOnEnter: true,
 					enableUpvoting: false,
+					sendText: 'Comentar',
 
 
 
