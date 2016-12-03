@@ -320,37 +320,68 @@ class DesafioController{
 			$limInf = $_SESSION['limInf'];
 			$limSup = $_SESSION['limSup'];
 
+
+
+
 			$recinto = $this->Recinto->getRecinto($idRecinto);
 
 			foreach ($recinto as $key) {
 				$fotoRecinto = $key['fotografia'];
 				$direccionRecinto = $key['direccion'];
 				$nombreRecinto = $key['nombre'];
+				$tipoRecinto = $key['tipo'];
 			}
 
 			$equipo = $this->Equipo->getEquipo($idEquipo);
 
 			foreach ($equipo as $key) {
 				$nombreEquipo = $key['nombre'];
+				$idCapitan = $key['idCapitan'];
 			}
+
+			$capitan = $this->Usuario->getUsuario($idCapitan);
+
+			foreach ($capitan as $key ) {
+				$nombreCap = $key['nombre'];
+				$apellidoCap = $key['apellido'];
+			}
+
 
 			$miembros = $this->Equipo->getMiembrosEquipo($idEquipo);
 
 			$to = "pnsilva@alumnos.ubiobio.cl";
 
+			$arrayMiembros = array(); 
+			$i = 0;
 			foreach ($miembros as $key ) {
 				$aux = $to;
 				$to = $aux.",".$key['mail'];
+				$arrayMiembros[$i] = $key['nombre']." ".$key['apellido'];
+				$i++;
 			}
+
+			/*
+			foreach ($arrayMiembros as $key => $value ) {
+				echo $value;
+			}*/
+
+
+			$miembro = "";
+			foreach ($arrayMiembros as $key => $value ) {
+				$miembro = $miembro."".$value." <br>";
+			}
+			//var_dump($arrayMiembros);
+
+
 
 			$dir = $direccionRecinto;
 
-			$subject = "Desafio Matchday";
+			$subject = "Desafio Matchday ".$nombreEquipo." - ".$tipoRecinto;
 
 
 			$message = "<html>";
 			$message .= "<head>";
-			$message .= "<meta charset='utf-8'>";
+			$message .= '<meta charset="UTF-8">';
 			$message .= "<title>HTML email</title>";
 			$message .= "<style>
 			.datagrid table { border-collapse: collapse; text-align: left; width: 100%; } 
@@ -366,13 +397,15 @@ class DesafioController{
 			</style>";
 			$message .= "</head>";
 			$message .= "<body>";
-			$message .= '<div style="height:auto; width:auto;"><center><img src="assets/images/logoCorreo.png" alt="Website Change Request" /></center></div>';
-			$message .= '<div style="height:auto; width:auto;"><img src="http://maps.googleapis.com/maps/api/staticmap?center='. $dir . '&zoom=14&scale=false&size=600x300&maptype=roadmap&format=png&visual_refresh=true&markers=size:small%7Ccolor:0xff0000%7Clabel:%7C'.$dir.'" alt="Website Change Request" /></div>';
-			$message .= "<h4>El capitán del equipo " .$nombreEquipo.  ", ha creado un desafío.</h4>";
+			$message .= "<h4>".$nombreCap." ".$apellidoCap.", capitán de tu equipo " .$nombreEquipo.  ", ha creado un desafío.</h4>";
 			
 
 			$message .= "<div class='datagrid'>";
 			$message .= "<table>";
+			$message .= "<tr>";
+			$message .= "<th>Recinto:</th>";
+			$message .= "<td>".$nombreRecinto."</td>";
+			$message .= "</tr>";
 			$message .= "<tr>";
 			$message .= "<th>Dirección:</th>";
 			$message .= "<td>".$direccionRecinto."</td>";
@@ -381,11 +414,17 @@ class DesafioController{
 			$message .= "<th>Fecha:</th>";
 			$message .= "<td>".$fecha."</td>";
 			$message .= "</tr>";
+			$message .= "<tr>";
+			$message .= "<th>Jugadores:</th>";
+			$message .= "<td>";
+			$message .= $miembro."</td>";
+			$message .= "</tr>";
 			$message .= "</table>";
 			$message .= "</div>";
 
 			$message .= "<p>El desafío podrá ser visto por jugadores de entre ".$limInf." y ".$limSup." años.</p>";
 
+			$message .= '<div style="height:auto; width:auto;"><center><img src="assets/images/logoCorreo.png" alt="Website Change Request" /></center></div>';
 			$message .= "<center><b><p>© 2016. MatchDay.</p></b></center>";
 			$message .= "</body>";
 			$message .= "</html>";
@@ -408,7 +447,7 @@ class DesafioController{
 			unset($_SESSION['comentario']);
 			unset($_SESSION['limInf']);
 			unset($_SESSION['limSup']);
-			unset($_SESSION['tipoCorreo']);
+			//unset($_SESSION['tipoCorreo']);
 
 
 
