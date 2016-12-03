@@ -347,16 +347,8 @@ $_SESSION['idRecinto']=NULL;
                             if($contadorPartido > 0){ 
                                 ?>
 
-                            <div class="panel-body comments">
-                                <form method="post" action="?controlador=Comentario&accion=setComentario">
-                                    <input id="comentario" class="form-control comentario" onkeyup="clean('comentario');" onkeydown="clean('comentario');" name="contenido" placeholder="Escribe tu comentario" rows="2" required id="texto-input-white"></input>
-                                    <input type="hidden" name="idUsuario" value="<?php echo $_SESSION['login_user_id']  ?>">
-                                    <input type="hidden" name="idRecinto" value="<?php echo $idRecinto ?>">
-                                    <br>
-                                    <!--<a class="small pull-left" href="#">Entra y comenta</a>-->
-                                    <button type="button submit" class="btn btn-info pull-right" name="action" >Comentar</button>
-                                </form>
-                            </div>
+                               <div id="comentarios<?php echo $key['idRecinto']; ?>">
+                                </div>
                             <?php 
                             }else{?>
                          
@@ -367,7 +359,7 @@ $_SESSION['idRecinto']=NULL;
                                     </button>
                                     <strong>Aviso</strong> Juega en este recinto para comentar y puntuar
                                 </div>
-                                <br>
+                               
 
                            <?php }
                             }else{ //fin if estado 
@@ -379,7 +371,7 @@ $_SESSION['idRecinto']=NULL;
                                     </button>
                                    <strong>Aviso</strong> No puedes comentar, tu perfil se encuentra con restricciones.
                                 </div>
-                                <br>
+                               
 
                                 <?php }
                                
@@ -392,7 +384,7 @@ $_SESSION['idRecinto']=NULL;
                                     </button>
                                     <strong>Aviso</strong> Inicia sesión para comentar
                                 </div>
-                                <br>
+                                
                                 <?php 
                                 }
                                 //Si el jugador no ha jugado en el recinto deportivo
@@ -404,63 +396,24 @@ $_SESSION['idRecinto']=NULL;
                                     </button>
                                     <strong>Aviso</strong> Juega en este recinto para comentar y puntuar
                                 </div>
-                                <br>
+                               
+                                
                                 <?php 
                                 }
-                            }
+                            }?>
                              
-                            }
+                            <?php }
                             ?>
                             <br/>
-                            <ul class="media-list">
-                        <li class="media">
-                            <?php 
-                            //Traemos los comentarios
-                            $contComentario = 0; 
-
-                            if($vars['comentarios'] != NULL){
-                            foreach($vars['comentarios'] as $comentario){
-
-                                
-
-                                if ($comentario['idRecinto']==$idRecinto) {
-                                    $contComentario++;
-                                ?>
-                                    <div class="comment">
-                                        <div class="col-sm-2">
-                                            <div class="profile-userpic">
-                                            <img src="assets/images/usuarios/<?php echo $comentario['fotografia']; ?>" alt="" class="img-circle img-responsive" >
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-10">
-                                            <div class="media-body">
-                                             <strong class="text-success"><?php echo $comentario['nombre']." ".$comentario['apellido'];?></strong> 
-                                                <span class="text-muted">
-                                                    <small class="text-muted"><?php echo $comentario['fecha'] ?></small>
-                                                </span>
-                                                <p >
-                                                    <?php echo $comentario['contenido'] ?>
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <div class="clearfix"></div>
-                                    </div>
-                                    <hr/>
-
-                                <?php 
-                                } 
-
-                            }//FIN FOREACH COMENTARIOS
-
-                            if ($contComentario==0){
-                                echo "Este recinto no tiene comentarios.";
-                            }
+                           
+                           <?php if(!isset($_SESSION['login_user_id']) || !$contadorPartido>0){
+                           ?>
+                                <div id="comentariosLectura<?php echo $key['idRecinto']; ?>"></div>
 
 
-                            } 
-                            ?> 
-                        </li>
-                    </ul>
+                           <?php } ?>
+                            <!--Comentarios antiguos aqui se hacia el foreach-->
+                            
                         </div>
                         
 
@@ -495,7 +448,7 @@ $_SESSION['idRecinto']=NULL;
                 <li class="span4 mix web">
                 <div class="thumbnail">
                     <img src="assets/images/recintos/<?php echo $key['fotografia'];?>" height='640' width='400' alt="project 1">
-                    <a href="#single-project" class="more show_hide" rel="#slidingDiv<?php echo $cont?>">
+                    <a onclick="comentarios(<?php echo $key['idRecinto'];?>);comentariosLectura(<?php echo $key['idRecinto'];?>)"   href="#single-project" class="more show_hide" rel="#slidingDiv<?php echo $cont?>">
                         <i class="icon-plus"></i>
                     </a>
                     <h3> <?php echo "$nombre" ?> </h3>
@@ -958,7 +911,37 @@ $_SESSION['idRecinto']=NULL;
 </html>
 
 
+        <script type="text/javascript">
 
+
+
+            function comentarios(idRecinto){
+                var id = idRecinto;
+                var div;
+                div = "comentarios"+id;
+               // $("#"+div+"").load('?controlador=Comentario&accion=mostrarComentarios&idRecinto='+id);
+                 $.post(
+                    '?controlador=Comentario&accion=mostrarComentarios&idRecinto='+id,
+                    function(resp){
+                        $("#"+div+"").html(resp);
+                    }
+                    );   
+            }
+
+
+            function comentariosLectura(idRecinto){
+                var id = idRecinto;
+                var div;
+                div = "comentariosLectura"+id;
+               // $("#"+div+"").load('?controlador=Comentario&accion=mostrarComentarios&idRecinto='+id);
+                 $.post(
+                    '?controlador=Comentario&accion=mostrarComentariosLectura&idRecinto='+id,
+                    function(resp){
+                        $("#"+div+"").html(resp);
+                    }
+                    );   
+            }
+        </script>
         <script src="http://maps.googleapis.com/maps/api/js"></script>
         <script>
 
@@ -983,21 +966,6 @@ $_SESSION['idRecinto']=NULL;
                 window.setTimeout(initialize, 1000);
             }
         );
-        </script>
-        <script type="text/javascript">
-            $(function () {
-                $(".demo1").bootstrapNews({
-                    newsPerPage: 1,
-                    autoplay: true,
-                    pauseOnHover:true,
-                    direction: 'up',
-                    newsTickerInterval: 4000,
-                    onToDo: function () {
-                    
-                    }
-                });
-            });
-
         </script>
 
         <script>

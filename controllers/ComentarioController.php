@@ -57,7 +57,11 @@ class ComentarioController{
             $data['idRecinto'] = $idRecinto;
             $this->view->show("_comentarios.php", $data);
         }
-
+        public function mostrarComentariosLectura(){
+            $idRecinto = $_GET['idRecinto'];
+            $data['idRecinto'] = $idRecinto;
+            $this->view->show("_comentariosLectura.php", $data);
+        }
 
 
     /*    MODULO DE ADMINISTRACION  */

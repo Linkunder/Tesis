@@ -1,8 +1,6 @@
 <?php
 
-if(!isset($_SESSION)){
-	session_start();
-}
+
  require_once('controllers/JSON.php');?>
 
 
@@ -31,8 +29,7 @@ if(!isset($_SESSION)){
 
 
 			$(function() {
-				$('#comments-container<?php echo $vars['idRecinto'];?>').comments({
-					profilePictureURL: 'assets/images/usuarios/<?php echo $_SESSION['login_user_id'];?>.jpg',
+				$('#comments-container<?php echo $vars['idRecinto']?>').comments({
 					roundProfilePictures: true,
 					textareaRows: 1,
 					spinnerIconURL: '',
@@ -47,14 +44,14 @@ if(!isset($_SESSION)){
 					enableEditing: false,
 					postCommentOnEnter: true,
 					enableUpvoting: false,
+					readOnly: true,
 
 
 
 
-					youText: '<?php echo $_SESSION['login_user_name']." ".$_SESSION['login_user_apellido']?>',
-
-
-
+  				  refresh: function() {
+        			$('#comments-container').addClass('rendered');
+    				},
     				fieldMappings: {
 				  	    	id: 'idComentario',
 						    created: 'fecha',
@@ -95,5 +92,5 @@ if(!isset($_SESSION)){
 		</script>
 
 	
-		<div id="comments-container<?php echo $vars['idRecinto'];?>"></div>
+		<div id="comments-container<?php echo $vars['idRecinto']?>"></div>
 	
