@@ -81,6 +81,59 @@ class Partido{
 			");
 		$consulta->execute();
 	}
+
+
+
+	public function setJugadoresPartidoPropioCapitan($idPartido, $idUsuario, $equipo, $color){
+		$consulta = $this->db->prepare("
+			INSERT INTO JugadoresPartido (
+				idPartido, idUsuario, equipo, color1, estado) 
+				VALUES
+				('$idPartido',
+				'$idUsuario',
+				'$equipo',
+				'$color',
+				'1'
+				);
+			");
+		$consulta->execute();
+	}
+
+	public function setJugadoresRevueltaCapitan($idPartido, $idUsuario, $color, $color2){
+		$consulta = $this->db->prepare("
+			INSERT INTO JugadoresPartido (
+				idPartido, idUsuario, color1, color2, estado) 
+				VALUES
+				('$idPartido',
+				'$idUsuario',
+				'$color',
+				'$color2',
+				'1'
+				);
+			");
+		$consulta->execute();
+	}
+	public function setJugadoresABCapitan($idPartido, $idUsuario, $equipo, $color){
+		$consulta = $this->db->prepare("
+			INSERT INTO JugadoresPartido 
+			(idPartido, 
+			 idUsuario, 
+			 equipo, 
+			 color1, 
+			 estado)
+			VALUES(
+			'$idPartido',
+			'$idUsuario',
+			'$equipo',
+			'".$color."',
+			'1'
+			);
+			");
+		$consulta->execute();
+	}
+
+
+
 	public function setPartido($idOrganizador,$fecha, $hora, $cuota, $tipo, $estado, $idRecinto, $cantidad){
 		$consulta= $this->db->prepare("
 			INSERT INTO Partido (
@@ -215,7 +268,7 @@ class Partido{
 			Usuario.apellido as apellidoCap, 
 			Partido.idPartido, 
 			Partido.estado,
-			DATE_FORMAT(Partido.fecha,'%d-%m-%Y') as fechaPartido, 
+			Partido.fecha as fechaPartido, 
 			DATE_FORMAT(Partido.hora,'%l:%i %p') as horaPartido,
 			Recinto.nombre 
 			FROM Partido 
@@ -254,10 +307,10 @@ class Partido{
 	public function getResumenPartido($idPartido){
 		$sql = "SELECT 
 		Partido.idPartido,
-		Partido.fecha,
-		Partido.hora,
+		DATE_FORMAT(Partido.fecha,'%d-%m-%Y') as fechaPartido, 
+		DATE_FORMAT(Partido.hora,'%l:%i %p') as horaPartido,
 		Partido.cuota,
-		Partido.tipo, 
+		Recinto.tipo, 
 		Partido.estado,
 		Partido.idRecinto,
 		Recinto.nombre,
@@ -365,6 +418,28 @@ class Partido{
 		$resultado = $consulta->fetchAll();
 		return $resultado;
 	}
+
+
+	public function getInvitacionesPartido($idPartido){
+		$consulta = $this->db->prepare(
+			"SELECT 
+			Usuario.nombre,
+			Usuario.apellido,
+			Usuario.fotografia,
+			Partido.nroJugadores,
+			Partido.estado as estadoPartido,
+			JugadoresPartido.estado 
+			FROM Partido 
+			INNER JOIN JugadoresPartido ON Partido.idPartido = JugadoresPartido.idPartido 
+			INNER JOIN Usuario ON JugadoresPartido.idUsuario = Usuario.idUsuario
+			WHERE Partido.idPartido = '".$idPartido."' 
+			ORDER BY JugadoresPartido.estado ;"
+			);
+		$consulta->execute();
+		$resultado = $consulta->fetchAll();
+		return $resultado;
+	}
+
 
 }
 ?>

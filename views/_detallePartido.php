@@ -45,11 +45,14 @@
       foreach ($vars['partido'] as $key ) {
         $idPartido = $key['idPartido'];
         $idRecinto = $key['idRecinto'];
-        $fecha = $key['fecha'];
-        $hora = $key['hora'];
+        $fecha = $key['fechaPartido'];
+        $hora = $key['horaPartido'];
         $nombreRecinto = $key['nombre'];
         $fotoRecinto = $key['fotografia'];
         $organizador = $key['nombreCap']." ".$key['apellidoCap'];
+
+        $tipoRecinto = $key['tipo'];
+        $cuota = $key['cuota'];
 
 
       }
@@ -88,11 +91,11 @@
                     </tr>
                     <tr>
                       <th><span>Tipo</span></th>
-                      <td id="texto-blanco"><?php echo "no disponible";?></td>
+                      <td id="texto-blanco"><?php echo $tipoRecinto;?></td>
                     </tr>
                     <tr>
                       <th><span>Cuota</span></th>
-                      <td id="texto-blanco"><?php echo "no disponible";?></td>
+                      <td id="texto-blanco"><?php echo "$ ".$cuota;?></td>
                     </tr>
                     <tr>
                       <th><span>Jugadores</span></th>
@@ -345,7 +348,7 @@
             <br/>
             <div class="row">
               <div class="col-md-12 center-block">
-                <button type="button" class="btn btn-primary btn-lg " data-dismiss="modal">Volver <i class="fa fa-arrow-circle-left" aria-hidden="true"></i></button>
+                <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal">Volver <i class="fa fa-arrow-circle-left" aria-hidden="true"></i></button>
               </div>
             </div> 
           <?php

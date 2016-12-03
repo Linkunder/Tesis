@@ -43,7 +43,7 @@ class PartidoController{
 
 		$_SESSION['partidos'] = -1;
 
-		if ($_SESSION['partidos'] != -1 ){
+		//if ($_SESSION['partidos'] != -1 ){
 
 
 			if ( isset($_POST['idPartido']) && isset($_POST['accion'])){
@@ -77,7 +77,7 @@ class PartidoController{
 	    			$data['mensaje'] = $mensaje;
 	    		}
 			}
-		}
+		//}
 		$_SESSION['partidos'] = -1;
 
 
@@ -352,7 +352,7 @@ class PartidoController{
 			$this->Partido->setJugadoresPartidoPropio($idPartido, $id, "A", $color);
 		}
 			//Debido a que el capitan no se trae, se debe agregar.
-			$this->Partido->setJugadoresPartidoPropio($idPartido, $idCapitan,"A", $color);
+			$this->Partido->setJugadoresPartidoPropioCapitan($idPartido, $idCapitan,"A", $color);
 		}
 
 	public function agendarPartidoRevuelta(){
@@ -383,7 +383,7 @@ class PartidoController{
 			$this->Partido->setJugadoresRevuelta($idPartido, $id, $color, $color2);
 		}
 			//Debido a que el capitan no se trae, se debe agregar.
-			$this->Partido->setJugadoresRevuelta($idPartido, $idCapitan, $color, $color2);
+			$this->Partido->setJugadoresRevueltaCapitan($idPartido, $idCapitan, $color, $color2);
 	}
 	public function agendarPartidoAB(){
 		$idTipo =	$_SESSION['tipoPartido'];
@@ -429,9 +429,9 @@ class PartidoController{
 		}
 
 			if($equipoCapitan == "A"){
-				$this->Partido->setJugadoresAB($idPartido,$idCapitan,"A",$color);
+				$this->Partido->setJugadoresABCapitan($idPartido,$idCapitan,"A",$color);
 			}else{
-				$this->Partido->setJugadoresAB($idPartido,$idCapitan,"B",$color2);
+				$this->Partido->setJugadoresABCapitan($idPartido,$idCapitan,"B",$color2);
 			}
 
 
@@ -522,6 +522,32 @@ class PartidoController{
 		}
 		$data['tipoPartido'] = $tipoPartido;
 		$this->view->show("_jugadoresPartido.php", $data);
+	}
+
+
+	public function estadoInvitaciones(){
+		$idPartido = $_GET['idPartido'];
+
+		$invitaciones = $this->Partido->getInvitacionesPartido($idPartido);
+
+		$descartados = 0;
+		foreach ($invitaciones as $key ) {
+			$nroJugadores = $key['nroJugadores'];
+			$estadoPartido  = $key['estadoPartido'];
+			if ($key['estado'] == 2){
+				$descartados++;
+			}
+		}
+
+		$data['invitaciones'] = $invitaciones;
+		$data['idPartido'] = $idPartido;
+
+		$data['estadoPartido'] = $estadoPartido;
+
+		$data['nroJugadores'] = $nroJugadores;
+		$data['descartados'] = $descartados;
+
+		$this->view->show("_invitacionesPartido.php", $data);
 	}
 
 

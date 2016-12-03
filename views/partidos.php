@@ -172,8 +172,8 @@ $nroPartidosSistema = count($partidosSistema);
 <div class="container">
   
   <ul class="nav nav-tabs nav-justified">
-    <li class="active"><a data-toggle="tab" href="#menu1">Partidos Matchday <span class="label label-success"><?php echo $nroPartidosSistema?></span></a></li>
-    <li><a data-toggle="tab" href="#menu2">Mis partidos <span class="label label-info"><?php echo $nroPartidosUsuario?></span></a></li>
+    <li><a data-toggle="tab" href="#menu1">Partidos Matchday <span class="label label-success"><?php echo $nroPartidosSistema?></span></a></li>
+    <li  class="active"><a data-toggle="tab" href="#menu2">Mis partidos <span class="label label-info"><?php echo $nroPartidosUsuario?></span></a></li>
     <li><a data-toggle="tab" href="#menu3">Calendario <i class="fa fa-calendar-o" aria-hidden="true"></i></a></li>
   </ul>
 
@@ -185,7 +185,7 @@ $nroPartidosSistema = count($partidosSistema);
 
 
 
-    <div id="menu1" class="tab-pane fade in active">
+    <div id="menu1" class="tab-pane fade ">
 
       <?php
       if ( $nroPartidosSistema == 0){
@@ -214,6 +214,7 @@ $nroPartidosSistema = count($partidosSistema);
               <table id="example2" class="table table-striped table-hover display responsive nowrap"  cellspacing="0" width="100%">
                 <thead id ="position-table">
                   <tr id="color-encabezado">
+
                     <th id="encabezado-especial">Organizador</th>
                     <th id="encabezado-especial">Fecha</th>
                     <th id="encabezado-especial">Hora</th>
@@ -325,40 +326,38 @@ $nroPartidosSistema = count($partidosSistema);
           $(document).ready(function() {
             $('#example2').DataTable({
               responsive: true,
-                            "language": {
-    "sProcessing":     "Procesando...",
-    "sLengthMenu":     "Mostrar _MENU_ registros",
-    "sZeroRecords":    "No se encontraron resultados",
-    "sEmptyTable":     "Ningún dato disponible en esta tabla",
-    "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-    "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
-    "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
-    "sInfoPostFix":    "",
-    "sSearch":         "Buscar:",
-    "sUrl":            "",
-    "sInfoThousands":  ",",
-    "sLoadingRecords": "Cargando...",
-    "oPaginate": {
-        "sFirst":    "Primero",
-        "sLast":     "Último",
-        "sNext":     "Siguiente",
-        "sPrevious": "Anterior"
-    },
-    "oAria": {
-        "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
-        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-    }
-
-
+              "language": {
+                "sProcessing":     "Procesando...",
+                "sLengthMenu":     "Mostrar _MENU_ registros",
+                "sZeroRecords":    "No se encontraron resultados",
+                "sEmptyTable":     "Ningún dato disponible en esta tabla",
+                "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+                "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+                "sInfoPostFix":    "",
+                "sSearch":         "Buscar:",
+                "sUrl":            "",
+                "sInfoThousands":  ",",
+                "sLoadingRecords": "Cargando...",
+                "oPaginate": {
+                  "sFirst":    "Primero",
+                  "sLast":     "Último",
+                  "sNext":     "Siguiente",
+                  "sPrevious": "Anterior"
+                },
+                "oAria": {
+                  "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+                  "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                }
               }
             });
-        } );
-
-
+        });
         </script>
+        
+
         <?php
-      }
-      ?>
+        }
+        ?>
     </div>
 
 
@@ -367,7 +366,7 @@ $nroPartidosSistema = count($partidosSistema);
 
 
 
-    <div id="menu2" class="tab-pane fade">
+    <div id="menu2" class="tab-pane fade in active">
 
       <?php
       if ($nroPartidosUsuario == 0){
@@ -387,10 +386,12 @@ $nroPartidosSistema = count($partidosSistema);
               <table id="example" class="table table-striped table-hover display responsive nowrap"  cellspacing="0" width="100%">
                 <thead id ="position-table">
                   <tr id="color-encabezado">
+                    <th id="encabezado-especial">id partido</th>
                     <th id="encabezado-especial">Fecha</th>
                     <th id="encabezado-especial">Hora</th>
                     <th id="encabezado-especial">Recinto</th>
                     <th id="encabezado-especial">Estado</th>
+                    <th id="encabezado-especial"></th>
                     <th id="encabezado-especial"></th>
                     <th id="encabezado-especial"></th>
                   </tr>
@@ -405,6 +406,7 @@ $nroPartidosSistema = count($partidosSistema);
                     $estado = $item['estado'];
                   ?>
                   <tr>
+                    <td> <?php echo $idPartido?></td>
                     <td width='15%'>
                       <?php echo $fecha?>
                     </td>
@@ -501,6 +503,13 @@ $nroPartidosSistema = count($partidosSistema);
                         <?php
                       }
                     ?>
+
+                    <td>
+                      <button type="button" class="btn btn-info" href="javascript:void(0);" data-toggle="modal" data-target="#modal"  
+                      onclick="carga_ajax5('modal','<?php echo $idPartido?>');">
+                      <i class="fa fa-users" aria-hidden="true"></i>
+                      </button>
+                    </td>
 
                   </tr>
                   <?php
@@ -691,16 +700,40 @@ function carga_ajax4(div, id, tipo){
       }
       ); 
   
-
-
-
   
 }
 
 
+function carga_ajax5(div, id, tipo){
 
+
+    $.post(
+      '?controlador=Partido&accion=estadoInvitaciones&idPartido='+id,
+      function(resp){
+        $("#"+div+"").html(resp);
+      }
+      ); 
+  
+  
+}
 
  
+
+
+
+
+
+
+
+
+
+$('#modal').modal('hide');
+$('body').removeClass('modal-open');
+$('.modal-backdrop').remove();
+
+
+
+
 
 
 
