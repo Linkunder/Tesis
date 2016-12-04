@@ -441,5 +441,24 @@ class Partido{
 	}
 
 
+	public function getPartidoInvitado($idUsuario){
+		$consulta = $this->db->prepare(
+			"SELECT * FROM Partido 
+			INNER JOIN JugadoresPartido 
+			ON Partido.idPartido = JugadoresPartido.idPartido 
+			WHERE JugadoresPartido.idUsuario = '".$idUsuario."';");
+		$consulta->execute();
+		$resultado = $consulta->fetchAll();
+		return $resultado;
+	}
+
+	public function cambiarEstadoInvitacionPartido($idPartido, $idInvitado, $estado){
+		$sql = "UPDATE JugadoresPartido SET estado = '".$estado."' 
+		WHERE idPartido = '".$idPartido."' AND idUsuario = '".$idInvitado."';";
+		$query = $this->db->prepare($sql);
+		$query->execute();
+	}
+
+
 }
 ?>

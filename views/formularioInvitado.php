@@ -65,36 +65,25 @@ include('layout/header.php');
       <div class="page-header">
           <h2> Únete a MatchDay </h2>
       </div>
-      <p>En MatchDay, podrás agendar tus partidos, comentar tus canchas favoritas y agendar un tercer tiempo con tus amigos. Únete a la
-        mejor comunidad futbolera de Chile.</p>
+      <p>Antes de aceptar la invitación, regístrate en MatchDay para poder agendar tus partidos, comentar tus canchas favoritas y agendar un tercer tiempo con tus amigos de una manera
+        fácil y entretenida. Únete a la mejor comunidad futbolera del mundo.</p>
     </div>
 
 
     <?php
-    if (isset($vars['error'])){
-      if ($vars['error'] == 0){
-        ?>
-        <div class="alert alert-danger alert-dismissible">
-          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-          <strong>Error!</strong> Debes ingresar solo archivos con formato de imágenes, éstas deben pesar menos de 5Mb.
-        </div>
-        <?php
-      }
-      if ($vars['error'] == 1){
-        ?>
-        <div class="alert alert-danger alert-dismissible">
-          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-          <strong>Error!</strong> El email o el nickname ingresados ya existen. Intenta nuevamente. 
-        </div>
-        <?php
-      }
-    }
+
+    $invitado = end($vars['invitado']);
+
+    $idInvitado = $invitado['idUsuario'];
+    $mailInivitado = $invitado['mail'];
+
+
     ?>
 
 
     <div class="row">
       <div class="col-sm-6 col-sm-offset-3 form-box">
-        <form role="form" action="?controlador=Usuario&accion=registrarUsuario" method="post" class="registration-form" enctype="multipart/form-data">
+        <form role="form" action="?controlador=Invitado&accion=acceder" method="post" class="registration-form" enctype="multipart/form-data">
           <fieldset>
             <div class="form-top">
               <div class="form-top-left">
@@ -145,11 +134,12 @@ include('layout/header.php');
             <div class="form-bottom">
               <div class="form-group">
                 <label class="sr-only" for="form-email">Mail</label>
-                <input type="email" name="mail" placeholder="Ingresa tu mail" class="form-email form-control" required>
+                <input type="email" name="mail" placeholder="Ingresa tu mail" class="form-email form-control" value="<?php echo $mailInivitado ?>" required>
               </div>
               <div class="form-group">
                 <label class="sr-only" for="form-password">Password</label>
                 <input type="password" name="password" placeholder="Ingresa tu password" class="form-password form-control" required>
+                <!--small id="emailHelp" class="form-text text-muted">.</small-->
               </div>
               <div class="form-group">
                 <label class="sr-only" for="form-first-name">Nickname</label>
@@ -172,6 +162,9 @@ include('layout/header.php');
                 <label class="sr-only" for="imagen"></label>
                 <input type="file" id="imagen" name="imagen" required="required"  class="file" multiple data-min-file-count="1">
               </div>
+
+              <input name="idInvitado" value="<?php echo $idInvitado?>" />
+
 
               <button type="submit" class="btn btn-primary">Finalizar <i class="fa fa-paper-plane" aria-hidden="true"></i></button>
             </div>

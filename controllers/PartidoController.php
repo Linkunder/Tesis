@@ -41,9 +41,6 @@ class PartidoController{
 	public function partidos(){
 		$idUsuario = $_SESSION['login_user_id'];
 
-		$_SESSION['partidos'] = -1;
-
-		//if ($_SESSION['partidos'] != -1 ){
 
 
 			if ( isset($_POST['idPartido']) && isset($_POST['accion'])){
@@ -77,9 +74,6 @@ class PartidoController{
 	    			$data['mensaje'] = $mensaje;
 	    		}
 			}
-		//}
-		$_SESSION['partidos'] = -1;
-
 
 		// Partidos organizados por el jugador de la sesion en estado pendiente.
 		$partidosPendientes = $this->Partido->getPartidosPendientes($idUsuario);
@@ -551,6 +545,28 @@ class PartidoController{
 	}
 
 
+	public function cancelarInvitacion(){
+		$idInvitado = $_POST['idUsuario'];
+		$idPartido = $_POST['idPartido'];
+		$estado = 2;
+		$this->Partido->cambiarEstadoInvitacionPartido($idPartido, $idInvitado, $estado);
+		$estadoPartido = 4;
+		$this->Partido->cambiarEstado($idPartido,$estadoPartido);
+		$data['invitacion'] = 0;
+		$this->view->show("indexJugador.php",$data);
+	}
+
+
+	public function aceptarInvitacion(){
+		$idInvitado = $_POST['idUsuario'];
+		$idPartido = $_POST['idPartido'];
+		$estado = 1;
+		$this->Partido->cambiarEstadoInvitacionPartido($idPartido, $idInvitado, $estado);
+		$data['invitacion'] = 1;
+		$this->view->show("indexJugador.php",$data);
+	}
+
+
 	public function agendarDesafio(){
 		//$desafio = new Desafio();
 		$idOrganizador= $_POST['idUsuario'];
@@ -734,12 +750,30 @@ $direcciontercertiempo = $direcciontercertiempo;
 
 $message = "<html>";
 $message .= "<head>";
+			$message .= "<meta charset='utf-8'>";
 $message .= "<title>HTML email</title>";
+
+			$message .= "<style>
+			.datagrid table { border-collapse: collapse; text-align: left; width: 100%; } 
+			.datagrid {font: normal 12px/150% Arial, Helvetica, sans-serif; background: #fff; overflow: hidden; border: 1px solid #006699; -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; }
+			.datagrid table td, 
+			.datagrid table th { padding: 3px 10px; }
+			.datagrid table th {background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #006699), color-stop(1, #00557F) );background:-moz-linear-gradient( center top, #006699 5%, #00557F 100% );filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#006699', endColorstr='#00557F');background-color:#006699; color:#FFFFFF; font-size: 12px; font-weight: bold; border-left: 1px solid #0070A8; } 
+			.datagrid table th:first-child { border: none; }
+			.datagrid table td { color: #00496B; border-left: 1px solid #E1EEF4;font-size: 12px;font-weight: normal; }
+			.datagrid table .alt td { background: #E1EEF4; color: #00496B; }
+			.datagrid table td:first-child { border-left: none; }
+			.datagrid table tr:last-child td { border-bottom: none; }
+			</style>";
+
+
 $message .= "</head>";
 $message .= "<body>";
 $message .= '<div style="height:auto; width:auto;"><center><img src="assets/images/logoCorreo.png" alt="Website Change Request" /></center></div>';
 $message .= '<div style="height:auto; width:auto;"><img src="http://maps.googleapis.com/maps/api/staticmap?center='. $dir . '&zoom=14&scale=false&size=600x300&maptype=roadmap&format=png&visual_refresh=true&markers=size:small%7Ccolor:0xff0000%7Clabel:%7C'.$dir.'" alt="Website Change Request" /></div>';
 $message .= "<p>El jugador " .$nombre.  ", te ha invitado a un partido.</p>";
+
+$message .= "<div class='datagrid'>";
 $message .= "<table>";
 $message .= "<tr>";
 $message .= "<td>Direccion:</td>";
@@ -836,6 +870,10 @@ $message .= "</tr>";
 	
 }
 $message .= "</table>";
+$message .= "</div>";
+
+$message .= "<h4>Para responder esta invitación, ingresa a MatchDay desde <a href='http://parra.chillan.ubiobio.cl:8070/pnsilva/Matchday/?controlador=Invitado&accion=""'>aquí</a></h4>";
+
 
 
 
@@ -1017,6 +1055,7 @@ send($message,$to,$subject);
 			$message .= "<center><b><p>© 2016. MatchDay.</p></b></center>";
 			$message .= "</body>";
 			$message .= "</html>";
+
 
 
 			// Always set content-type when sending HTML email

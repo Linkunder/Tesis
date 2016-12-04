@@ -16,7 +16,7 @@ require("libs/PHPmailer/class.smtp.php");
 					 				 
 			$body .= "";
 
-		$mail->IsSMTP(); 
+//		$mail->IsSMTP(); 
 
 		//Sustituye (ServidorDeCorreoSMTP)  por el host de tu servidor de correo SMTP
  		$mail->Host = "smtp.gmail.com";		

@@ -45,8 +45,6 @@ class RecintoController{
     		if (isset($_POST['search'])) {
                       $search = $_POST['search'];
                       $data['search']=$search;
-                      $listadoComentarios = $comentario->getComentarios();
-                       $data['comentarios'] = $listadoComentarios;
 
             }
     		$listadoRecintos = $recinto->getRecintos();
@@ -64,8 +62,6 @@ class RecintoController{
                           if (isset($_POST['search'])) {
                           $search = $_POST['search'];
                           $data['search']=$search;
-                          $listadoComentarios = $comentario->getComentarios();
-                          $data['comentarios'] = $listadoComentarios; 
 
                        $listadoContactos= $this->Contacto->getContactos($_SESSION['login_user_id']);
                        $numeroContactos=count($listadoContactos);
@@ -425,7 +421,7 @@ class RecintoController{
       $superficie = $_POST['superficie'];
       $direccion = $_POST['direccion'];
       $telefono = $_POST['telefono'];
-      $estado = $_POST['estado'];
+      $estado = 4;
       $idUsuario = $_POST['idUsuario'];
       $this->Recinto->registrarNotificacion($idRecinto, $nombre, $tipo, $superficie, $direccion, $telefono,$estado, $idUsuario);
       $subirImagen = $this->guardarImagen($idRecinto);

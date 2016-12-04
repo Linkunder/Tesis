@@ -144,6 +144,31 @@ class Usuario{
 	}
 
 
+	public function getInvitado($token){
+		$query = $this->db->prepare("SELECT * FROM Usuario WHERE password = '".$token."'");
+		$query->execute();
+		$resultado = $query->fetchAll();
+		return $resultado;
+	}
+
+
+	public function setInvitado($idUsuario,$nombre,$apellido,$nickname, $mail, $sexo, $password_cifrada, $telefono, $fechaNacimiento, $estado){
+		$sql = "UPDATE Usuario SET 
+			nombre = '".$nombre."',
+			apellido = '".$apellido."',
+			nickname = '".$nickname."',
+			mail = '".$mail."',
+			sexo = '".$sexo."',
+			password = '".$password_cifrada."',
+			telefono = '".$telefono."',
+			fechaNacimiento = (STR_TO_DATE('".$fechaNacimiento."', '%d-%m-%Y')),
+			estado = '".$estado."'
+			WHERE idUsuario = '".$idUsuario."'";
+			//echo $sql;
+		$query = $this->db->prepare($sql);
+		$query->execute();
+	}
+
 
 
 }

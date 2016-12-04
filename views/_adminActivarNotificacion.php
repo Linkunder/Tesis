@@ -48,7 +48,7 @@ foreach ($recinto as $key ) {
           <label for="fotografia">Fotografía</label>
           <input type="file" class="form-control-file" id="imagen" name="imagen" aria-describedby="fileHelp" required>
         </div>
-        <div class="form-group">
+        <!--div class="form-group">
           <label for="tipo">Estado inicial</label>
           <select class="form-control" id="estado" name="estado" required>
             <option value="" selected disabled>Selecciona el estado inicial de la cancha</option>
@@ -57,7 +57,11 @@ foreach ($recinto as $key ) {
           </select>
           <small id="emailHelp" class="form-text text-muted">Si seleccionas estado activo, quedará visible para todos los jugadores
            de MatchDay, de lo contrario, podrás activarlo más adelante.</small>
-         </div>
+         </div-->
+
+         <small id="emailHelp" class="form-text text-muted">Este recinto se inicializará como inactivo,
+          luego de ingresar un horario podrás activar el recinto para ser visto por los 
+           usuarios de MatchDay.</small>
 
         <input name="idRecinto" value="<?php echo $key['idRecinto']?>" hidden/>
         <input name="idUsuario" value="<?php echo $_SESSION['login_user_id']?>" hidden/>

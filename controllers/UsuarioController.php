@@ -35,6 +35,7 @@ class UsuarioController{
 		$this->view->show('formularioRegistro.php');
 	}
 
+
 	public function pruebaCrearUsuario(){
 		$this->view->show('pruebaCrearUsuario.php');
 	}
@@ -147,6 +148,7 @@ class UsuarioController{
 		    }
 		}		
 	}
+
 
 
 

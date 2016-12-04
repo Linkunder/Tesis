@@ -13,6 +13,30 @@ include('layout/headerJugador.php');
 
     <header id="home">
 
+
+      <?php
+      if (isset($vars['invitado'])){
+        if ( $vars['invitado'] == 0){
+          ?>
+          <div class="alert alert-info alert-dismissible">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Listo!</strong> Se ha notificado al organizador tu decisión.
+          </div>
+          <?php
+        }
+        if ( $vars['invitado'] == 1){
+          ?>
+          <div class="alert alert-success alert-dismissible">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Listo!</strong> Se ha notificado al organizador tu participación en el partido.
+          </div>
+          <?php
+        }
+      }
+
+
+      ?>
+
     <div id="home-slider" class="carousel slide carousel-fade" data-ride="carousel">
       <div class="carousel-inner">
         <div class="item active" style="background-image: url(assets/images/slider/1.png)">

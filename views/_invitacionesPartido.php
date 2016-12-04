@@ -50,7 +50,7 @@
         <?php 
           if ($estadoPartido == 4){
             echo $vars['descartados']."  de los ".$vars['nroJugadores']." jugadores invitados no asistirán a este partido.";
-            echo "Puedes invitar a otros jugadores de MatchDay haciendo click ";
+            echo " Puedes invitar a otros jugadores de MatchDay haciendo click ";
             ?>
             <button type="button" class="btn btn-success" href="javascript:void(0);" data-toggle="modal" data-target="#modal2"  
             onclick="carga_ajax3('modal','<?php echo $idPartido?>','notificar');">
