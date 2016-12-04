@@ -169,6 +169,27 @@ class Usuario{
 		$query->execute();
 	}
 
+	public function crearInvitado($mail,$password){
+		$consulta = $this->db->prepare("INSERT INTO Usuario (mail,  password, perfil, estado, fotografia) 
+				VALUES ('$mail', '$password', 1, 3, 'default.jpg');
+				SELECT LAST_INSERT_ID() AS lastId;
+				");
+		$consulta->execute();
+		$resultado= $this->db->lastInsertId();
+		return $resultado;
+
+	}
+	public function existeCorreo($mail){
+		$consulta = $this->db->prepare("SELECT mail FROM Usuario WHERE mail ='$mail';");
+		$consulta->execute();
+		$resultado= $consulta->fetchAll();
+		if(count($resultado)==1){
+			return 1;
+		}else{
+			return 0;
+		}
+	}
+
 
 
 }

@@ -307,6 +307,12 @@ class UsuarioController{
 
 		$this->view->show("_adminGraficosJugadores.php", $data);
 	}
+	public function existeCorreo(){
+		$mail = $_GET['mail'];
+
+		$resultado = $this->Usuario->existeCorreo($mail);
+		echo $resultado;
+	}
 
 
 }

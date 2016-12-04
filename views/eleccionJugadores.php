@@ -11,6 +11,10 @@ require_once('controllers/JSON.php');
         
     }
 
+
+
+
+
 //Toda la informacion de partida la vamos a manejar via variable de session desde aqui, similiar a lo que hace un "carrito de compras jaja"
 
 $_SESSION['fecha'] = $vars['fecha'];
@@ -40,7 +44,7 @@ $json = new Services_JSON();
 
   <style>
   .draggable { 
-    width: 80px; height: 70px; padding:; float: left; float: ; margin: 0 10px 10px 0; font-size: 0.9em; color: white; text-align: center;
+    width: 80px; height: 70px; padding:; float: left; float: ; margin: 0 10px 48px 0; font-size: 0.9em; color: white; text-align: center;
     background-color: transparent;
     border-radius: 0.3em;
   }
@@ -69,6 +73,8 @@ font-size: 15px;
   <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
   <script src="//code.jquery.com/jquery-1.10.2.js"></script>
   <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+
 
 <script>
 $(function(){
@@ -176,6 +182,14 @@ $(function(){
     var agendar = "";
 
     var jObject={};
+
+    //FOR con los input
+
+    
+    //correos de prueba
+
+ 
+
     for(i in arrayJugador){
       jObject[i] = arrayJugador[i];
     }
@@ -192,10 +206,14 @@ $(function(){
     }
 
       jObject=JSON.stringify(jObject);
+      //correosInvitados = JSON.stringify(correosInvitados);
       $.post(
           "?controlador=Partido&accion="+agendar,
-          {jObject:jObject});
+          {jObject:jObject, correosInvitados:correosInvitados});
     }
+
+
+
 
   </script>
 
@@ -219,7 +237,10 @@ $(function(){
 		<p>Contactos:</p>
 
     <div class="com-md-6">
-    <input type="text" class="form-control" id="filter" name="filter" placeholder="Buscar Jugador...">
+    <input style="color: #ffffff" type="text" class="form-control" id="filter" name="filter" placeholder="Buscar Jugador...">
+     <button class="btn btn-primary cp" href="#" data-toggle="modal" data-target="#modalInvitados">
+     Invitar jugadores
+     </button> 
 
     </div>
 
@@ -280,6 +301,7 @@ foreach ($vars['contactos'] as $Contacto) {
 
 </div>
 
+
   
 <!-- /Aqui termina la pagina -->
 
@@ -331,6 +353,37 @@ foreach ($vars['contactos'] as $Contacto) {
   <script type="text/javascript" src="assets/js/main.js"></script>
 
   <script type="text/javascript" src="assets/js/fileinput.min.js"></script>
+
+
+  <div class="container">
+<div class="modal fade" id="modalInvitados" tabindex="-1" role="dialog" >
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Invita a los jugadores fuera del sistema</h4>
+      </div>
+      <div class="modal-body">
+
+        <div>
+            
+           <form id="formCorreos" onsubmit="return false;" >
+               <label class="label-partido" for="color">Invitados</label>
+               <div id="Correos">
+
+               </div>
+               <button type="submit" id="submitHidden" hidden="true"></button>
+         </form>
+        </div>
+  
+        </div>
+      </div>
+      <div class="modal-footer">
+            <h4></h4>
+      </div>
+    </div>
+  </div>
+  </div>
 
 
   <div class="container">
@@ -425,3 +478,157 @@ foreach ($vars['contactos'] as $Contacto) {
 </body>
 
 </html>
+
+
+<script type="text/javascript">
+
+          var faltantes;
+          var correosInvitados = {};
+          $('.cp').click(function (e){
+            e.preventDefault();
+            var div = document.getElementById("Correos");
+             faltantes = <?php echo $_SESSION['cantidad']; ?> - 1 - arrayJugador.length;
+        for (var i = 0; i < faltantes; i++) {
+              var divForm = document.createElement("div");
+              divForm.setAttribute("class", "form-group");
+              var input = document.createElement("input");
+              input.setAttribute("name","correo"+i);
+              input.setAttribute("class","form-control partido emails");
+              input.setAttribute("required","true");
+              input.setAttribute("placeholder","Ingresa el correo del jugador a invitar");
+              input.setAttribute("type","email");
+              //input.validate();
+              //input.rules("add",{ notEqualToGroup:['.emails'] });
+              
+              //Creamos un campo de error pequeño
+              var small = document.createElement("small");
+              small.setAttribute("id","alerta"+i);
+              small.setAttribute("class", "form-text text-muted");
+              small.setAttribute("style","color:red");
+              small.setAttribute("hidden","true");
+              small.innerHTML="El jugador ya se encuentra en Matchday";
+              
+              divForm.appendChild(input);
+              divForm.appendChild(small);
+              div.appendChild(divForm);  
+               
+        }
+        if(faltantes > 0){
+          var boton = document.createElement("button");
+          boton.setAttribute("type","button");
+          boton.setAttribute("class","btn btn-primary bc");
+         //boton.setAttribute("href","#");
+          boton.setAttribute("data-target","#modal-1");
+          boton.setAttribute("data-toogle","modal");
+          boton.setAttribute("id","botonCorreos");
+
+          
+           var inputHide = document.createElement("input");
+           inputHide.setAttribute("hidden","true");
+           inputHide.setAttribute("value",faltantes);
+           divForm.appendChild(inputHide);
+           div.appendChild(divForm);  
+         if(faltantes == 1){
+            boton.innerHTML = "Invitar Jugador";
+          }else{
+            boton.innerHTML = "Invitar Jugadores";
+          }
+           div.appendChild(boton);
+
+        }
+        });
+
+
+      //Se debe hacer de esta manera debido a que el elemento es generado dinamicamente
+    $(document).on('click','.bc' ,function(e){
+      e.preventDefault();
+      var cont=0;
+        //realizamos una validacion a los correos ingresados
+        var myForm = document.getElementById("formCorreos");
+
+        for (var i = 0; i < faltantes; i++) {
+
+            if ( myForm[i].value == null ||  (/^[^@\s]+@[^@\.\s]+(\.[^@\.\s]+)+$/.test(myForm[i].value))!=1 ) {
+
+                alert("Nulo o mal escrito");
+                cont++;
+                }
+
+            var comprobarMail = verificacionEmail(myForm[i].value);
+            if(comprobarMail == 1){
+              cont++;
+              document.getElementById("alerta"+i).removeAttribute("hidden");
+            }
+
+
+                // if (!myForm[i].checkValidity()) {
+                  //    cont++;
+              //}
+
+        }
+        if(cont != 0){
+           document.getElementById("submitHidden").click();
+         }else{
+            //formulario con los correos valido
+            //document.getElementById("submitHidden").click();
+            for (var i = 0; i < faltantes; i++) {
+              correosInvitados[i] = myForm[i].value;
+            }
+            //ahora que esta todo listo debemos abrir el modal de costumbre
+            $("#modal-1").modal("toggle");
+
+         }
+
+    });
+
+
+
+
+
+function verificacionEmail(comprueba_mail) {
+var comprueba_mail;
+if (window.XMLHttpRequest) {
+ajax_email=new XMLHttpRequest();
+} else {
+ajax_email=new ActiveXObject("Microsoft.XMLHTTP");
+}
+ajax_email.onreadystatechange=function() {
+if (ajax_email.readyState==4) {
+comprobarMail=ajax_email.responseText;
+}
+}
+ajax_email.open("GET","?controlador=Usuario&accion=existeCorreo&mail="+comprueba_mail, false);
+ajax_email.send();
+return comprobarMail;
+}
+
+
+
+
+
+
+        //modals
+$(document).on('show.bs.modal', '.modal', function () {
+    var zIndex = Math.max.apply(null, Array.prototype.map.call(document.querySelectorAll('*'), function(el) {
+  return +el.style.zIndex;
+})) + 10;
+    $(this).css('z-index', zIndex);
+    setTimeout(function() {
+        $('.modal-backdrop').not('.modal-stack').css('z-index', zIndex - 1).addClass('modal-stack');
+    }, 0);
+});
+$(document).on('hidden.bs.modal', '.modal', function () {
+    $('.modal:visible').length && $(document.body).addClass('modal-open');
+});
+
+$("#modalInvitados").on('hidden.bs.modal', function () {
+   $("#Correos").empty();
+});
+
+$("#modal-1").on('hidden.bs.modal', function () {
+   correosInvitados = {};
+});
+
+
+</script>
+

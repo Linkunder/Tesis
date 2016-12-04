@@ -21,8 +21,7 @@ class InvitadoController{
 
 	// Desplegar formulario de registro para invitado. Opción Registrarse.
 	public function invitacionPartido(){
-		//$token = $_GET['token']; 
-		$token = "$2y$10$7PAUwEHQKfFWrVGUWzGDKOkkzXAsBGd4nE00bjHpiOCUSMGVb8LTG";	// token -> "prueba"
+		$token = $_GET['token']; 	
 		$invitado = $this->Usuario->getInvitado($token);
 		$data['invitado'] = $invitado;
 

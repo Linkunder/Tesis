@@ -194,7 +194,7 @@ class PartidoController{
 	public function partidoEquipoPropio(){
 		//Datos del partido
 		$idCapitan	= $_SESSION['login_user_id'];
-		$fecha	=	$_POST['fecha'];
+		$fecha	=	$_POST['date'];
 		$hora	=	$_POST['hora'];
 		$cantidad	=	$_POST['cantidad'];
 		$color	=	$_POST['color'];
@@ -221,7 +221,7 @@ class PartidoController{
 	public function partidoRevuelta(){
 		//Datos del partido
 		$idCapitan	= $_SESSION['login_user_id'];
-		$fecha	=	$_POST['fecha'];
+		$fecha	=	$_POST['date'];
 		$hora	=	$_POST['hora'];
 		$cantidad	=	$_POST['cantidad'];
 		$color	=	$_POST['color'];
@@ -251,7 +251,7 @@ class PartidoController{
 	public function partidoAB(){
 		//Datos del partido
 		$idCapitan	= $_SESSION['login_user_id'];
-		$fecha	=	$_POST['fecha'];
+		$fecha	=	$_POST['date'];
 		$hora	=	$_POST['hora'];
 		$cantidad	=	$_POST['cantidad'];
 		$color	=	$_POST['color'];
@@ -347,6 +347,29 @@ class PartidoController{
 		}
 			//Debido a que el capitan no se trae, se debe agregar.
 			$this->Partido->setJugadoresPartidoPropioCapitan($idPartido, $idCapitan,"A", $color);
+
+		//Manejo de los jugadores invitados fuera del sistema
+			$idsJugadores;
+			if(count($_POST['correosInvitados']) > 0){
+				$correos = $_POST['correosInvitados'];
+				for($i = 0 ; $i< count($correos) ; $i++){
+					$today = date('YmdHi');
+					$startDate = date('YmdHi', strtotime('2012-03-14 09:06:00'));
+					$range = $today - $startDate;
+					$rand = rand(0, $range);
+
+					$password = $rand;
+					$password_cifrada = password_hash($password,PASSWORD_DEFAULT); 
+					$idsJugadores[$i] = $this->Usuario->crearInvitado($correos[$i], $password_cifrada);
+
+				}
+
+				//despues de ese for se tienen todos los id de los jugadores invitados
+				for($i = 0 ; $i< count($correos) ; $i++){
+					$this->Partido->setJugadoresPartidoPropio($idPartido, $idsJugadores[$i], "A", $color);
+					}
+			}
+
 		}
 
 	public function agendarPartidoRevuelta(){
@@ -378,6 +401,30 @@ class PartidoController{
 		}
 			//Debido a que el capitan no se trae, se debe agregar.
 			$this->Partido->setJugadoresRevueltaCapitan($idPartido, $idCapitan, $color, $color2);
+
+		//Manejo de los jugadores invitados fuera del sistema
+			$idsJugadores;
+			if(count($_POST['correosInvitados']) > 0){
+				$correos = $_POST['correosInvitados'];
+				for($i = 0 ; $i< count($correos) ; $i++){
+					$today = date('YmdHi');
+					$startDate = date('YmdHi', strtotime('2012-03-14 09:06:00'));
+					$range = $today - $startDate;
+					$rand = rand(0, $range);
+
+					$password = $rand;
+					$password_cifrada = password_hash($password,PASSWORD_DEFAULT); 
+					$idsJugadores[$i] = $this->Usuario->crearInvitado($correos[$i], $password_cifrada);
+
+				}
+
+				//despues de ese for se tienen todos los id de los jugadores invitados
+				for($i = 0 ; $i< count($correos) ; $i++){
+					$this->Partido->setJugadoresRevuelta($idPartido, $idsJugadores[$i], $color, $color2);
+					}
+			}
+
+
 	}
 	public function agendarPartidoAB(){
 		$idTipo =	$_SESSION['tipoPartido'];
@@ -713,11 +760,22 @@ if ($existenciaTercerTiempo != 0) { // Si es 0, no hay tercer tiempo
 		$vectorEquipo =	$this->Partido->getJugadoresPartido($_SESSION['idPartido']);
 
 $to = "partidomatchday@gmail.com";
+//Para los invitados fuera del sistema
+$toEstado3 = "partidomatchday@gmail.com"; 
+$jugadoresInvitados;
+$contadorInvitados = 0;
 foreach ($vectorEquipo as $Jugador) {
+				if($Jugador['estado'] != 3){
 					$aux = $to;
 					$to = $aux.", ".$Jugador['mail'];
-					
+				}else{
+					if($Jugador['estado'] == 3){
+
+					$jugadoresInvitados[$contadorInvitados]= $Jugador;
+					$contadorInvitados++;
+				}
 				}	
+				}
 //foreach para rellenar el campo con los correos de los jugadores
 //$query = "SELECT correo FROM jugador WHERE id_jugador IN (SELECT id_jugador FROM equipo where id_partido in (SELECT id_partido FROM partido))";
 //echo $query;
@@ -872,7 +930,7 @@ $message .= "</tr>";
 $message .= "</table>";
 $message .= "</div>";
 
-$message .= "<h4>Para responder esta invitación, ingresa a MatchDay desde <a href='http://parra.chillan.ubiobio.cl:8070/pnsilva/Matchday/?controlador=Invitado&accion=""'>aquí</a></h4>";
+
 
 
 
@@ -897,8 +955,16 @@ $headers .= 'From: <partidomatchday@gmail.com>' . "\r\n"; //
 $headers .= 'Cc: partidomatchday@gmail.com' . "\r\n"; // 
 
 
-//Le paso el mensaje, la lista de correos
-send($message,$to,$subject);
+			//Le paso el mensaje, la lista de correos para los jugadores del sistema
+			send($message,$to,$subject);
+			//Correos para jugadores fuera de sistema
+			for ($i=0; $i < count($jugadoresInvitados) ; $i++) { 
+				$aux=$message;
+			
+			$aux .= "<h4>Para responder esta invitación, ingresa a MatchDay desde <a href='http://parra.chillan.ubiobio.cl:8070/pnsilva/Matchday?controlador=invitado&accion=invitacionPartido&token=".$jugadoresInvitados[$i]['password'].">aquí</a></h4>";
+			send($aux, $jugadoresInvitados[$i]['mail'], $subject);
+
+		}
 
  //Email response
  		unset($_SESSION['tipoPartido']);
@@ -1068,6 +1134,7 @@ send($message,$to,$subject);
 
 			//Le paso el mensaje, la lista de correos
 			send($message,$to,$subject);
+
 
 	 		unset($_SESSION['idPartido']);
 			unset($_SESSION['tipoCorreo']);

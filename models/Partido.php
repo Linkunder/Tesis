@@ -173,7 +173,10 @@ class Partido{
 			 Usuario.mail,
 			 JugadoresPartido.equipo,
 			 JugadoresPartido.color1,
-			 JugadoresPartido.color2
+			 JugadoresPartido.color2,
+			 Usuario.estado,
+			 Usuario.password
+
 			FROM JugadoresPartido 
 			INNER JOIN Usuario on JugadoresPartido.idUsuario = Usuario.idUsuario 
 			WHERE idPartido='$idPartido'");
