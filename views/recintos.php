@@ -22,6 +22,7 @@ $_SESSION['idRecinto']=NULL;
 
 
 
+
         <!-- Portfolio section start -->
         <!--link rel="stylesheet" type="text/css" href="css/bootstrap.css" /-->
         <link href="assets/css/profile.css" rel="stylesheet">
@@ -600,7 +601,8 @@ $_SESSION['idRecinto']=NULL;
                                     <div class="form-group">
                                         <label class="label-partido" for="fecha">Fecha del partido</label>
 
-                                        <input type="date" name="fecha" placeholder="Fecha del partido" class="form-control" id="equipo" required="required" >
+                                        <!--input type="date" name="fecha" placeholder="Fecha del partido" class="form-control" id="equipo" required="required" -->
+                                        <input class="form-control" id="date" name="date" placeholder="Fecha del partido" type="text"  required/>
 
                                     </div>
                                 </div>
@@ -676,7 +678,8 @@ $_SESSION['idRecinto']=NULL;
                                 <div class="col-sm-8">
                                     <div class="form-group">
                                         <label class="label-partido" for="fecha">Fecha del partido</label>
-                                        <input type="date" name="fecha" placeholder="Fecha del partido" class="form-control" id="equipo" required="required" >
+                                        <!--input type="date" name="fecha" placeholder="Fecha del partido" class="form-control" id="equipo" required="required" -->
+                                        <input class="form-control" id="date" name="date" placeholder="Fecha del partido" type="text"  required/>
                                     </div>
                                 </div>
                             </div>
@@ -758,7 +761,8 @@ $_SESSION['idRecinto']=NULL;
                                 <div class="col-sm-8">
                                     <div class="form-group">
                                         <label class="label-partido" for="fecha">Fecha del partido</label>
-                                        <input type="date" name="fecha" placeholder="Fecha del partido" class="form-control" id="equipo" required="required" >
+                                        <!--input type="date" name="fecha" placeholder="Fecha del partido" class="form-control" id="equipo" required="required" -->
+                                        <input class="form-control" id="date" name="date" placeholder="Fecha del partido" type="text"  required/>
                                     </div>
                                 </div>
                             </div>
@@ -898,7 +902,7 @@ $_SESSION['idRecinto']=NULL;
 
 
 
-        <script type="text/javascript" src="assets/js/jquery.js"></script>
+        <!--script type="text/javascript" src="assets/js/jquery.js"></script-->
         <script type="text/javascript" src="assets/js/jquery.mixitup.js"></script>
         <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="assets/js/modernizr.custom.js"></script>
@@ -1060,3 +1064,47 @@ $(document).on('hidden.bs.modal', '.modal', function () {
 });
 </script>                          
 
+
+<style type="text/css">
+  .cropit-preview {
+  /* You can specify preview size in CSS */
+  width: 960px;
+  height: 540px;
+}
+</style>
+
+<link rel="stylesheet" href="assets/css/style-f.css">
+
+
+<!--  jQuery -->
+<script type="text/javascript" src="assets/js/jquery-1.11.3.min.js"></script>
+
+<!-- Isolated Version of Bootstrap, not needed if your site already uses Bootstrap -->
+<link rel="stylesheet" href="assets/css/bootstrap-iso.css" />
+
+<!-- Bootstrap Date-Picker Plugin -->
+<script type="text/javascript" src="assets/js/bootstrap-datepicker.min.js"></script>
+<link rel="stylesheet" href="assets/css/bootstrap-datepicker3.css"/>
+
+
+
+<script type="text/javascript" src="assets/js/cropbox.js"></script>
+
+<script type="text/javascript" src="assets/js/cropbox-min.js"></script>
+
+
+
+              <script>
+                  $(document).ready(function(){
+                    var date_input=$('input[name="date"]'); //our date input has the name "date"
+                    var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+                    var options={
+                      format: 'dd-mm-yyyy',
+                      container: container,
+                      todayHighlight: true,
+                      autoclose: true,
+                      startDate: "<?php echo "d-m-Y"?>",
+                    };
+                    date_input.datepicker(options);
+                  })
+              </script>
