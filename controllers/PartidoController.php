@@ -834,23 +834,23 @@ $message .= "<p>El jugador " .$nombre.  ", te ha invitado a un partido.</p>";
 $message .= "<div class='datagrid'>";
 $message .= "<table>";
 $message .= "<tr>";
-$message .= "<td>Direccion:</td>";
+$message .= "<th>Direccion:</th>";
 $message .= "<td>".$dir."</td>";
 $message .= "</tr>";
 $message .= "<tr>";
-$message .= "<td>Fecha:</td>";
+$message .= "<th>Fecha:</th>";
 $message .= "<td>".$fecha."</td>";
 $message .= "</tr>";
 $message .= "<tr>";
-$message .= "<td>Hora: :</td>";
+$message .= "<th>Hora: :</th>";
 $message .= "<td>".$hora."</td>";
 $message .= "</tr>";
 $message .= "<tr>";
-$message .= "<td>Monto total a pagar:</td>";
+$message .= "<th>Monto total a pagar:</th>";
 $message .= "<td>".$monto."</td>";
 $message .= "</tr>";
 $message .= "<tr>";
-$message .= "<td>Monto a Pagar por persona:</td>";
+$message .= "<th>Monto a Pagar por persona:</th>";
 $message .= "<td>".$pagoporpersona."</td>";
 $message .= "</tr>";
 
@@ -858,11 +858,11 @@ $message .= "</tr>";
 //Revuelta
 if($tipoPartido==1){
 $message .= "<tr>";
-$message .= "<td>Tipo de Partido:</td>";
+$message .= "<th>Tipo de Partido:</th>";
 $message .= "<td>Revuelta</td>";
 $message .= "</tr>";
 $message .= "<tr>";
-$message .= "<td>Colores a llevar:</td>";
+$message .= "<th>Colores a llevar:</th>";
 $message .= "<td>".$_SESSION['color']." , ".$_SESSION['color2']."</td>";
 $message .= "</tr>";
 
@@ -870,11 +870,11 @@ $message .= "</tr>";
 //Equipo Propio
 if($tipoPartido==2){
 $message .= "<tr>";
-$message .= "<td>Tipo de Partido:</td>";
+$message .= "<th>Tipo de Partido:</th>";
 $message .= "<td>Equipo Propio</td>";
 $message .= "</tr>";
 $message .= "<tr>";
-$message .= "<td>Color de Camiseta:</td>";
+$message .= "<th>Color de Camiseta:</th>";
 $message .= "<td>".$_SESSION['color']."</td>";
 $message .= "</tr>";
 
@@ -883,28 +883,28 @@ $message .= "</tr>";
 //A vs B
 if($tipoPartido==3){
 $message .= "<tr>";
-$message .= "<td>Tipo de partido:</td>";
+$message .= "<th>Tipo de partido:</th>";
 $message .= "<td>A v/s B</td>";
 $message .= "</tr>";
 
 if($_SESSION['equipoCapitan'] == "A"){
 	$message .= "<tr>";
-	$message .= "<td>Equipo A:</td>";
+	$message .= "<th>Equipo A:</th>";
 	$message .= "<td>".$_SESSION['color']."</td>";
 	$message .= "</tr>";
 
 	$message .= "<tr>";
-	$message .= "<td>Equipo B:</td>";
+	$message .= "<th>Equipo B:</th>";
 	$message .= "<td>".$_SESSION['color2']."</td>";
 	$message .= "</tr>";	
 }else{
 	$message .= "<tr>";
-	$message .= "<td>Equipo A:</td>";
+	$message .= "<th>Equipo A:</th>";
 	$message .= "<td>".$_SESSION['color2']."</td>";
 	$message .= "</tr>";
 
 	$message .= "<tr>";
-	$message .= "<td>Equipo B:</td>";
+	$message .= "<th>Equipo B:</th>";
 	$message .= "<td>".$_SESSION['color']."</td>";
 	$message .= "</tr>";
 
@@ -914,7 +914,7 @@ foreach ($vectorEquipo as $jugador) {
 	# code...
 
 	$message .= "<tr>";
-	$message .= "<td>".$jugador['nickname']." :</td>";
+	$message .= "<th>".$jugador['nickname']." :</th>";
 	$message .= "<td>".$jugador['equipo']."</td>";
 	$message .= "</tr>";
 }
@@ -922,7 +922,7 @@ foreach ($vectorEquipo as $jugador) {
 }
 if($tipoPartido==4){
 $message .= "<tr>";
-$message .= "<td>Monto a Pagar por persona:</td>";
+$message .= "<th>Monto a Pagar por persona:</th>";
 $message .= "<td>".$pagoporpersona."</td>";
 $message .= "</tr>";
 	
@@ -961,10 +961,11 @@ $headers .= 'Cc: partidomatchday@gmail.com' . "\r\n"; //
 			for ($i=0; $i < count($jugadoresInvitados) ; $i++) { 
 				$aux=$message;
 			
-			$aux .= "<h4>Para responder esta invitación, ingresa a MatchDay desde <a href='http://parra.chillan.ubiobio.cl:8070/pnsilva/Matchday?controlador=invitado&accion=invitacionPartido&token=".$jugadoresInvitados[$i]['password'].">aquí</a></h4>";
+			//$aux .= "<h4>Para responder esta invitación, ingresa a MatchDay desde <a href='http://parra.chillan.ubiobio.cl:8070/pnsilva/Matchday?controlador=Invitado&accion=invitacionPartido&token=".$jugadoresInvitados[$i]['password']."'>aquí</a></h4>";
+			$aux .= "<h4>Para responder esta invitación, ingresa a MatchDay desde <a href='localhost/Tesis/?controlador=Invitado&accion=invitacionPartido&token=".$jugadoresInvitados[$i]['password']."'>aquí</a></h4>";
 			send($aux, $jugadoresInvitados[$i]['mail'], $subject);
 
-		}
+			}
 
  //Email response
  		unset($_SESSION['tipoPartido']);

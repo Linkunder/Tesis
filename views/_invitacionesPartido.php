@@ -101,7 +101,13 @@
                   src="assets/images/usuarios/<?php echo $key['fotografia']?>"  />
               </td>
               <td>
-                <?php echo $key['nombre']." ".$key['apellido']?>
+                <?php 
+                if ($key['estadoJugador'] == 3){
+                  echo "Invitado externo";
+                } else {
+                  echo $key['nombre']." ".$key['apellido'];
+                }
+                ?>
               </td>
               <td>
                 <?php 

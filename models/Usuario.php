@@ -171,7 +171,7 @@ class Usuario{
 
 	public function crearInvitado($mail,$password){
 		$consulta = $this->db->prepare("INSERT INTO Usuario (mail,  password, perfil, estado, fotografia) 
-				VALUES ('$mail', '$password', 1, 3, 'default.jpg');
+				VALUES ('$mail', '$password', 1, 3, 'default.png');
 				SELECT LAST_INSERT_ID() AS lastId;
 				");
 		$consulta->execute();

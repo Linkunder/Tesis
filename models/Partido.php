@@ -429,6 +429,7 @@ class Partido{
 			Usuario.nombre,
 			Usuario.apellido,
 			Usuario.fotografia,
+			Usuario.estado as estadoJugador,
 			Partido.nroJugadores,
 			Partido.estado as estadoPartido,
 			JugadoresPartido.estado 
