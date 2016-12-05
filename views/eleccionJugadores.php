@@ -550,14 +550,17 @@ foreach ($vars['contactos'] as $Contacto) {
 
             if ( myForm[i].value == null ||  (/^[^@\s]+@[^@\.\s]+(\.[^@\.\s]+)+$/.test(myForm[i].value))!=1 ) {
 
-                alert("Nulo o mal escrito");
+                document.getElementById("alerta"+i).innerHTML="Correo mal escrito";
+                document.getElementById("alerta"+i).removeAttribute("hidden");
                 cont++;
                 }
 
             var comprobarMail = verificacionEmail(myForm[i].value);
             if(comprobarMail == 1){
               cont++;
+              document.getElementById("alerta"+i).innerHTML="El jugador ya se encuentra en Matchday";
               document.getElementById("alerta"+i).removeAttribute("hidden");
+
             }
 
 
