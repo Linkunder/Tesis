@@ -150,6 +150,9 @@ if (isset($_SESSION['notificaciones'])){
                         <li>
                             <a href="?controlador=Local&accion=adminLocales"><i class="fa fa-map-marker fa-fw"></i> Locales</a>
                         </li>
+                         <li>
+                            <a href="?controlador=Partido&accion=calendarioAdmin"><i class="fa fa-calendar fa-fw"></i> Calendario</a>
+                        </li>
                     </ul>
                 </div>
                 <!-- /.sidebar-collapse -->
