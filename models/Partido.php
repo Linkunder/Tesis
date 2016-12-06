@@ -464,5 +464,50 @@ class Partido{
 	}
 
 
+
+	public function getPartidosInvitado($idUsuario){
+		$consulta = $this->db->prepare(
+			"SELECT 
+			Usuario.nombre as nombreCap, 
+			Usuario.apellido as apellidoCap, 
+			Partido.fecha, 
+			DATE_FORMAT(Partido.hora,'%l:%i %p') as horaPartido,
+			Partido.cuota, 
+			Recinto.nombre as nombreRecinto, 
+			Partido.idPartido,
+			JugadoresPartido.estado as estadoInvitacion,
+			Partido.estado as estadoPartido
+			FROM Partido
+			INNER JOIN JugadoresPartido ON Partido.idPartido = JugadoresPartido.idPartido
+			INNER JOIN Usuario ON Partido.idOrganizador = Usuario.idUsuario
+			INNER JOIN Recinto ON Recinto.idRecinto = Partido.idRecinto
+			WHERE (JugadoresPartido.idUsuario = '".$idUsuario."') 
+			AND (Partido.estado = 1 OR  Partido.estado = 4 OR Partido.estado = 5)
+			AND (Partido.idOrganizador != '".$idUsuario."');");
+		$consulta->execute();
+		$resultado = $consulta->fetchAll();
+		return $resultado;
+	}
+
+	public function getProximosPartidosUsuario($idUsuario){
+		$consulta = $this->db->prepare(
+			"SELECT 
+			Partido.fecha, 
+			DATE_FORMAT(Partido.hora,'%l:%i %p') as horaPartido,
+			Recinto.nombre as nombreRecinto, 
+			Recinto.tipo as tipoRecinto,
+			Partido.idPartido,
+			JugadoresPartido.estado as estadoInvitacion,
+			Partido.estado as estadoPartido
+			FROM Partido
+			INNER JOIN JugadoresPartido ON Partido.idPartido = JugadoresPartido.idPartido
+			INNER JOIN Recinto ON Recinto.idRecinto = Partido.idRecinto
+			WHERE (JugadoresPartido.idUsuario = '".$idUsuario."') 
+			AND (Partido.estado = 1 OR Partido.estado = 4 OR Partido.estado = 5);");
+		$consulta->execute();
+		$resultado = $consulta->fetchAll();
+		return $resultado;
+	}
+
 }
 ?>

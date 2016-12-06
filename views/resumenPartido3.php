@@ -134,9 +134,6 @@ foreach ($partido as $key ) {
           </div>
         </div>
 
-
-
-
         <table class="table">
           <tr>
             <th style="border-top:transparent; text-align:center;" colspan="2"><h4>¿Deseas aceptar la invitación?</h4></th>
@@ -170,6 +167,7 @@ foreach ($partido as $key ) {
             </th>
           </tr>
         </table>
+
 
 
       </div>

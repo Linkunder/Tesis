@@ -821,6 +821,7 @@ a.fc-more:hover {
 
 .fc-toolbar h2 {
 	margin: 0;
+	color: #000;
 }
 
 /* button layering (for border precedence) */

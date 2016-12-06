@@ -16,19 +16,24 @@ include('layout/headerJugador.php');
 <?php
 
 // Recibir información de los partidos Pendientes como organizador
+/*
 $partidosPendientes = $vars['partidosPendientes'];
 $nroPartidosPendientes = count($partidosPendientes);
+*/
+
 
 $partidosUsuario = $vars['partidosUsuario'];
 $nroPartidosUsuario = count($partidosUsuario);
 
 
-
 $partidosSistema = $vars['partidosSistema'];
 $nroPartidosSistema = count($partidosSistema);
 
-// Accion que se realice en esta pantalla
 
+$partidosInvitado = $vars['partidosInvitado'];
+$nroPartidosInvitado = count($partidosInvitado);
+
+$proximosPartidos = $vars['proximosPartidosUsuario'];
 
 
 ?>
@@ -72,29 +77,56 @@ $nroPartidosSistema = count($partidosSistema);
         center: 'title',
         right: 'month,basicWeek,basicDay'
       },
+
       defaultDate: hoy,
       editable: false,
       eventLimit: true, // allow "more" link when too many events
 
       // Partidos
       events: [
-      <?php foreach ($partidosUsuario as $key ) {
+      <?php foreach ($proximosPartidos as $key ) {
         ?>
         {
-          title: '<?php echo $key['idPartido']?>',
-          url: 'http://google.com/',
-          start: '<?php echo $key['fechaPartido']?>',
+          title: '<?php echo $key['nombreRecinto']." ".$key['horaPartido']?>',
+          start: '<?php echo $key['fecha']?>',
+          description: '<?php echo $key['idPartido'].",".$key['tipoRecinto'].",".$key['nombreRecinto'].",".$key['horaPartido'].",".$key['fecha'].",".$key['estadoInvitacion'] ?>',  
+          <?php
+          if ($key['estadoPartido'] == 1){
+            ?>
+            backgroundColor: '#449d44'
+            <?php
+          }
+          if ($key['estadoPartido'] == 4){
+            ?>
+            backgroundColor: '#c9302c'
+            <?php
+          }
+          if ($key['estadoPartido'] == 5){
+            ?>
+            backgroundColor: '#ec971f'
+            <?php
+          }
+          ?>
         },
-        <?php }?>
-        ]
+        <?php 
+
+      }?>
+        ],
+
+        eventClick:  function(event, jsEvent, view) {
+            $('#modalTitle').html(event.title);
+            $('#modalBody').html(event.description);
+            $('#eventUrl').attr('href',event.url);
+            $('#fullCalModal').modal();
+        }
+
+
+        
       });
   });
 </script>
 
 <!--/Calendario -->
-
-
-
 
 
 
@@ -111,7 +143,21 @@ $nroPartidosSistema = count($partidosSistema);
 
 
 
-
+<div id="fullCalModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span> <span class="sr-only">close</span></button>
+                <h4 id="modalTitle" class="modal-title"></h4>
+            </div>
+            <div id="modalBody" class="modal-body"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button class="btn btn-primary"><a id="eventUrl" target="_blank">Event Page</a></button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <!--MODAL -->
@@ -122,7 +168,7 @@ $nroPartidosSistema = count($partidosSistema);
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel">Cargando ...</h4>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" id="modalBody">
         <div class="preloader"> <i class="fa fa-circle-o-notch fa-spin"></i></div>
       </div>
       <div class="modal-footer">
@@ -174,7 +220,7 @@ $nroPartidosSistema = count($partidosSistema);
   <ul class="nav nav-tabs nav-justified">
     <li><a data-toggle="tab" href="#menu1">Partidos Matchday <span class="label label-success"><?php echo $nroPartidosSistema?></span></a></li>
     <li  class="active"><a data-toggle="tab" href="#menu2">Mis partidos <span class="label label-info"><?php echo $nroPartidosUsuario?></span></a></li>
-    <li><a data-toggle="tab" href="#menu3">Calendario <i class="fa fa-calendar-o" aria-hidden="true"></i></a></li>
+    <li><a data-toggle="tab" href="#menu3">Invitaciones <span class="label label-warning"><?php echo $nroPartidosInvitado?></span> </a></li>
   </ul>
 
   <div class="tab-content">
@@ -525,7 +571,7 @@ $nroPartidosSistema = count($partidosSistema);
         
         <script type="text/javascript">
           $(document).ready(function() {
-            $('#example').DataTable({
+            $('#example3').DataTable({
               responsive: true,
               "language": {
     "sProcessing":     "Procesando...",
@@ -568,16 +614,140 @@ $nroPartidosSistema = count($partidosSistema);
 
     <div id="menu3" class="tab-pane fade">
 
-      <style>
-      #calendar1 {
-        max-width: 800px;
-        margin: 0 auto;
+
+      <?php
+      if ($nroPartidosInvitado == 0){
+        ?>
+        <br>
+        <div class="alert alert-danger">
+          <strong>Lo sentimos!</strong> No te han invitado a ningún partido <i class="fa fa-frown-o" aria-hidden="true"></i>.
+           Accede a la opción "Jugar" y disfruta de esta experiencia.
+        </div>
+        <?php
+      } else {
+        ?>
+        <!-- TABLA DE Partidos Pendientes -->
+        <br>
+
+          <div class="col-md-12">
+            <!--div class="table-responsive"-->
+              <table id="example3" class="table table-striped table-hover display responsive nowrap"  cellspacing="0" width="100%">
+                <thead id ="position-table">
+                  <tr id="color-encabezado">
+                    <th id="encabezado-especial">id partido</th>
+                    <th id="encabezado-especial">Capitan</th>
+                    <th id="encabezado-especial">Fecha</th>
+                    <th id="encabezado-especial">Hora</th>
+                    <th id="encabezado-especial">Recinto</th>
+                    <th id="encabezado-especial">Tu respuesta</th>
+                  </tr>
+                </thead>
+                <tbody id="texto-contactos" class="center">
+                  <?php
+                  foreach ($partidosInvitado as $item) {
+                    $idPartido = $item['idPartido'];
+                    $fecha = $item['fecha'];
+                    $hora = $item['horaPartido'];
+                    $recinto = $item['nombreRecinto'];
+                    $estado = $item['estadoInvitacion'];
+                    $capitan = $item['nombreCap']." ".$item['apellidoCap'];
+                  ?>
+                  <tr>
+                    <td> <?php echo $idPartido?></td>
+                    <td>
+                      <?php echo $capitan?>
+                    </td>
+                    <td>
+                      <?php echo $fecha?>
+                    </td>
+                    <td>
+                      <?php echo $hora?>
+                    </td>
+                    <td>
+                      <?php echo $recinto?>
+                    </td>
+                    <td>
+                      <?php
+                      if ($estado == 0){
+                        ?>
+                        <button type="button" class="btn btn-warning btn-sm" href="javascript:void(0);" data-toggle="modal" data-target="#modal"  
+                        onclick="carga_ajax6('modal','<?php echo $idPartido?>');">
+                        Aún no respondes
+                        <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                      </button>  
+                        <?php
+                      }
+                      if ($estado == 1){
+                        ?>
+                        <button type="button" class="btn btn-success btn-sm" href="javascript:void(0);" data-toggle="modal" data-target="#modal"  
+                        onclick="carga_ajax7('modal','<?php echo $idPartido?>');">
+                        Confirmado
+                        <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                      </button>     
+                        <?php
+                      }
+                      if ($estado == 2){
+                        ?>
+                        <button type="button" class="btn btn-danger btn-sm" href="javascript:void(0);" data-toggle="modal" data-target="#modal"  
+                        onclick="carga_ajax7('modal','<?php echo $idPartido?>');">
+                        Descartado
+                        <i class="fa fa-thumbs-down" aria-hidden="true"></i>
+                      </button>  
+                        <?php
+                      }
+                      ?>
+                    </td>                    
+
+                  </tr>
+                  <?php
+                  }
+                  ?>
+                </tbody>
+              </table>
+            <!--/div-->
+          </div>
+        <!-- /TABLA DE PARTIDOS Pendientes -->
+
+
+        
+        <script type="text/javascript">
+          $(document).ready(function() {
+            $('#example').DataTable({
+              responsive: true,
+              "language": {
+    "sProcessing":     "Procesando...",
+    "sLengthMenu":     "Mostrar _MENU_ registros",
+    "sZeroRecords":    "No se encontraron resultados",
+    "sEmptyTable":     "Ningún dato disponible en esta tabla",
+    "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+    "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+    "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+    "sInfoPostFix":    "",
+    "sSearch":         "Buscar:",
+    "sUrl":            "",
+    "sInfoThousands":  ",",
+    "sLoadingRecords": "Cargando...",
+    "oPaginate": {
+        "sFirst":    "Primero",
+        "sLast":     "Último",
+        "sNext":     "Siguiente",
+        "sPrevious": "Anterior"
+    },
+    "oAria": {
+        "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+    }
+
+
+              }
+            });
+        } );
+
+
+        </script>
+        <?php
       }
-      </style>
-      <br/>
-
-      <div id="calendar1"></div>
-
+      ?>
 
     </div>
 
@@ -589,6 +759,55 @@ $nroPartidosSistema = count($partidosSistema);
 </div>
 
 
+
+    <div class="page-header">
+      <h3> Próximos partidos <i class="fa fa-futbol-o" aria-hidden="true"></i> </h3>
+    </div>
+
+    <div class="container">
+          <style>
+          #calendar1 {
+            max-width: 800px;
+            margin: 0 auto;
+            color: #000;
+            font-size: 14px;
+          }
+
+          .fc-unthemed .fc-today{
+            background-color: #a4c5f9;
+          }
+          </style>
+          <br/>
+
+          <div class="jumbotron my-back">
+          <div id="calendar1"></div>  
+
+          <hr/>
+          <table class="table table-striped table-hover display responsive nowrap">
+            <thead id ="position-table">
+            <tr id="color-encabezado">
+              <th id="encabezado-especial">Estado</th>
+              <th id="encabezado-especial"></th>
+            </tr>
+            </thead>
+            <tbody id="texto-contactos" class="center">
+            <tr>
+              <td><span class="label label-success">Cancha - Hora</span> </td>
+              <td>Partido activo</td>
+            </tr>
+            <tr>
+              <td><span class="label label-warning">Cancha - Hora</span> </td>
+              <td>Partido MatchDay</td>
+            </tr>
+            <tr>
+              <td><span class="label label-danger">Cancha - Hora</span> </td>
+              <td>Partido pendiente</td>
+            </tr>
+          </tbody>
+          </table>
+        </div>
+
+    </div>
        
 
 
@@ -719,10 +938,33 @@ function carga_ajax5(div, id, tipo){
 
  
 
+function carga_ajax6(div, id, tipo){
+
+
+    $.post(
+      '?controlador=Partido&accion=responderInvitacion&idPartido='+id,
+      function(resp){
+        $("#"+div+"").html(resp);
+      }
+      ); 
+  
+  
+}
 
 
 
+function carga_ajax7(div, id, tipo){
 
+
+    $.post(
+      '?controlador=Partido&accion=verResumen&idPartido='+id,
+      function(resp){
+        $("#"+div+"").html(resp);
+      }
+      ); 
+  
+  
+}
 
 
 

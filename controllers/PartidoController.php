@@ -76,8 +76,9 @@ class PartidoController{
 			}
 
 		// Partidos organizados por el jugador de la sesion en estado pendiente.
+			/*
 		$partidosPendientes = $this->Partido->getPartidosPendientes($idUsuario);
-		$data['partidosPendientes'] = $partidosPendientes;
+		$data['partidosPendientes'] = $partidosPendientes;*/
 
 		$partidosUsuario = $this->Partido->getPartidosOrganizador($idUsuario);
 		$data['partidosUsuario'] = $partidosUsuario;
@@ -86,6 +87,13 @@ class PartidoController{
 		$partidosSistema = $this->Partido->getPartidosSistema($idUsuario);
 		$data['partidosSistema'] = $partidosSistema;
 
+		// Partidos donde el jugador ha sido invitado
+		$partidosInvitado = $this->Partido->getPartidosInvitado($idUsuario);
+		$data['partidosInvitado'] = $partidosInvitado;
+
+
+		$proximosPartidosUsuario = $this->Partido->getProximosPartidosUsuario($idUsuario);
+		$data['proximosPartidosUsuario'] = $proximosPartidosUsuario;
 
 		$this->view->show("partidos.php",$data);
 	}
@@ -154,6 +162,38 @@ class PartidoController{
     			$this->Partido->agregarJugador($idPartido, $idUsuario, $estado);
     		}
     	}
+    }
+
+	public function responderInvitacion(){
+      $idPartido = $_GET['idPartido'];
+      $partido = $this->Partido->getResumenPartido($idPartido);
+      $data['partido'] = $partido;
+      $data['accion'] = 5; // Solicitud
+      $_SESSION['partidos'] = 0;
+      $this->view->show("_detallePartido.php",$data);
+    }
+
+    public function verResumen(){
+      $idPartido = $_GET['idPartido'];
+      $partido = $this->Partido->getResumenPartido($idPartido);
+      $data['partido'] = $partido;
+      $data['accion'] = 6; // Solicitud
+      $_SESSION['partidos'] = 0;
+      $this->view->show("_detallePartido.php",$data);
+    }
+
+    public function verResumen2(){
+      $idPartido = $_GET['idPartido'];
+
+      $partido = $this->Partido->getResumenPartido($idPartido);
+      $data['partido'] = $partido;
+      $data['accion'] = 7;
+      $this->view->show("resumenPartido3.php", $data);
+      $partido = $this->Partido->getResumenPartido($idPartido);
+      $data['partido'] = $partido;
+      $data['accion'] = 7; // Solicitud
+      $_SESSION['partidos'] = 0;
+      $this->view->show("_detallePartido.php",$data);
     }
 
 
