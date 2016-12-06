@@ -3,8 +3,13 @@
 <?php
 
 // Obtener datos del usuario de la sesión.
-if (!isset($_SESSION['login_user_name'])){
+if (!isset($_SESSION)){
   session_start();
+  if(!isset($_SESSION['login_user_perfil']))
+    header('Location: ?controlador=Index&accion=inicio');
+}
+if ($_SESSION['login_user_perfil'] == 2 ){
+      header('Location: ?controlador=Index&accion=indexAdmin');
 }
 
 if (isset($_SESSION['login_user_id'])){

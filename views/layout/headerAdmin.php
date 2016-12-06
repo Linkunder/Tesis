@@ -4,9 +4,14 @@
 
 
 // Obtener datos del usuario de la sesión.
-if (!isset($_SESSION['login_user_name'])){
+if (!isset($_SESSION)){
   session_start();
+  if(!isset($_SESSION['login_user_perfil']))
+    header('Location: ?controlador=Index&accion=inicio');
 }
+if($_SESSION['login_user_perfil'] == 1 ){
+        header('Location: ?controlador=Index&accion=indexJugador');
+    }
 
 if (isset($_SESSION['login_user_id'])){
   $idUsuario= $_SESSION['login_user_id'];

@@ -5,11 +5,9 @@
 
 require_once('controllers/JSON.php');
 
-    if(isset($_SESSION['login_user_id'])){
+
         include('layout/headerJugador.php');
-    }else{
-        
-    }
+
 
 
 

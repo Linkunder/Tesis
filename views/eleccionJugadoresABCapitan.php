@@ -3,11 +3,9 @@
 
 require_once('controllers/JSON.php');
 
-    if(isset($_SESSION['login_user_id'])){
+
         include('layout/headerJugador.php');
-    }else{
-        
-    }
+
 
 //Toda la informacion de partida la vamos a manejar via variable de session desde aqui, similiar a lo que hace un "carrito de compras jaja"
 //Información del Partido
