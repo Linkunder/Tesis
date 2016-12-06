@@ -28,6 +28,19 @@ $usuario = $vars['perfilUsuario'];
       <li class="breadcrumb-item active">Perfil</li>
     </ol>
 
+    <?php 
+    if (isset($vars['accion'])){
+      if ($vars['accion'] == 1){
+        ?>
+        <div class="alert alert-success alert-dismissible">
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+          <strong>Listo!</strong> La información de tu perfil se ha actualizado exitosamente.
+        </div>
+        <?php
+      }
+    }
+    ?>
+
     <div class="page-header">
           <h2> Mi perfil <i class="fa fa-user" aria-hidden="true"></i> </h2>
         </div>

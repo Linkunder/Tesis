@@ -421,11 +421,68 @@
 
         if ($accion == 7){
 
-          ?>
+          $estadoInvitacion = $vars['invitacion'];
+
+          if ($estadoInvitacion == 0){
+            ?>
 
 
-          
-          <?php
+        <table class="table">
+          <tr>
+            <th style="border-top:transparent; text-align:center;" colspan="2"><h4>¿Deseas aceptar la invitación?</h4></th>
+          </tr>
+          <tr>
+            <th style="border-top:transparent; text-align:center;">
+
+              <form action="?controlador=Partido&accion=cancelarInvitacion" method="post">
+                <input name="idPartido" value="<?php echo $idPartido?>" hidden>
+                <input name="idUsuario" value="<?php echo $_SESSION['login_user_id']?>" hidden>
+                <button type="submit" class="btn btn-md btn-warning btn-lg col-xs-12">No
+                  <i class="fa fa-thumbs-down" aria-hidden="true"></i>
+                </button>
+              </form>
+
+
+            </th>
+            <th style="border-top:transparent; text-align:center;">
+
+
+              <form action="?controlador=Partido&accion=aceptarInvitacion" method="post">
+                <input name="idPartido" value="<?php echo $idPartido?>" hidden>
+                <input name="idUsuario" value="<?php echo $_SESSION['login_user_id']?>" hidden>
+                <button type="submit" class="btn btn-md btn-primary btn-lg col-xs-12">Si
+                  <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                </button>
+              </form>
+
+
+
+            </th>
+          </tr>
+        </table>
+
+
+            <?php
+          } 
+          if ($estadoInvitacion == 1){
+            ?>
+
+            <div class="alert alert-info alert-dismissible">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            Tu respuesta ha sido enviada a <?php echo $organizador?>
+          </div>
+
+            <br/>
+            <div class="row">
+              <div class="col-md-12 center-block">
+                <button type="button" class="btn btn-primary btn-lg " data-dismiss="modal">Volver <i class="fa fa-arrow-circle-left" aria-hidden="true"></i></button>
+              </div>
+            </div> 
+
+
+
+            <?php
+          }
 
         }
 

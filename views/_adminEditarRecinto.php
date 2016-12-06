@@ -16,7 +16,7 @@ foreach ($recinto as $key ) {
       </h3> 
     </div>
     <div class="modal-body">
-      <form action="?controlador=Recinto&accion=updateRecinto" method="post">
+      <form action="?controlador=Recinto&accion=updateRecinto" method="post" enctype="multipart/form-data">
         <div class="form-group">
           <label for="nombre">Nombre</label>
           <input type="text" class="form-control" id="nombre" name="nombre" value="<?php echo $key['nombre']?>" required>

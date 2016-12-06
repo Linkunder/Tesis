@@ -39,18 +39,7 @@ if (isset($vars['modificarPerfil']  )){
     </ol>
 
 
-    <?php
-    if (isset($vars['accion'])){
-      if ($vars['accion'] == 1){
-        ?>
-        <div class="alert alert-info alert-dismissible">
-          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-          <strong>Bien hecho!</strong> Tu información se ha actualizado exitosamente.
-        </div>
-        <?php
-      }
-    }
-    ?>
+
 
     <div class="page-header">
           <h2> Modificar perfil <i class="fa fa-user" aria-hidden="true"></i> </h2>
@@ -84,7 +73,7 @@ if (isset($vars['modificarPerfil']  )){
         </div>
         <div class="col-md-8">
           <div class="profile-sidebar col-offset-6 centered">
-                  <form role="form" action="?controlador=Usuario&accion=actualizarInformacion" method="post">
+                  <form role="form" action="?controlador=Usuario&accion=actualizarInformacion" method="post" enctype="multipart/form-data">
                       <table class="table table-form">
                        <tr>
                           <th>Nombre: </th>
@@ -104,8 +93,15 @@ if (isset($vars['modificarPerfil']  )){
                         </tr>
                         <tr>
                           <th>Telefono: </th>
-                          <th><input class="profile-form-control" name="telefono" id="telefono" value="<?php echo $key['telefono']?>"></th>
+                          <th><input class="profile-form-control" type="number" name="telefono" id="telefono" value="<?php echo $key['telefono']?>"></th>
                         </tr>
+                        <tr>
+                          <th>Fotografía</th>
+                          <th> <input type="file" id="imagen" name="imagen" required="required"  class="file"  data-min-file-count="1"></th>
+                        </tr>
+
+
+
                       </table>
                         <div class="col-md-4">
                         <button type="submit" class="btn btn-md btn-primary col-md-12">Actualizar <i class="fa fa-paper-plane fa-1x"></i></button>

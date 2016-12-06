@@ -170,6 +170,29 @@ class Equipo{
 		return $resultado;
 	}
 
+
+	public function getDetalleEquipoAdmin($idEquipo){
+		$query = $this->db->prepare(
+			"SELECT 
+			Equipo.idEquipo,
+			Equipo.nombre,
+			Equipo.puntuacion,
+			Equipo.partidosDisputados,
+			Equipo.partidosCancelados,
+			Usuario.nombre as nombreJugador,
+			Usuario.apellido as apellidoJugador,
+			Usuario.fotografia,
+			Usuario.estado 
+			FROM Equipo
+			INNER JOIN MiembrosEquipo ON MiembrosEquipo.idEquipo = Equipo.idEquipo
+			INNER JOIN Usuario ON Usuario.idUsuario = MiembrosEquipo.idUsuario
+			WHERE Equipo.idEquipo = '".$idEquipo."';"
+			);
+		$query->execute();
+		$resultado = $query->fetchAll();
+		return $resultado;
+	}
+
 	public function getPartidosEquipo(){
 		$consulta = $this->db->prepare("SELECT nombre, count(*) as partidos FROM
 			(SELECT Equipo.nombre  FROM EquiposPartido INNER JOIN Partido ON EquiposPartido.idPartido = Partido.idPartido INNER JOIN Equipo ON EquiposPartido.idEquipo = Equipo.idEquipo WHERE estado = 1  

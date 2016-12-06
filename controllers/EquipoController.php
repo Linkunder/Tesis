@@ -150,13 +150,15 @@ class EquipoController{
     /*    MODULO DE ADMINISTRACION  */
     public function adminEquipos(){
       $equipos = $this->Equipo->getEquiposAdmin();
+
       $data['equipos'] = $equipos;
       $this->view->show('adminEquipos.php',$data);
     }
 
 	public function detalleEquipo(){
 		$idEquipo = $_GET['idEquipo'];
-		$equipo = $this->Equipo->getEquipo($idEquipo);
+		$equipo = $this->Equipo->getDetalleEquipoAdmin($idEquipo);
+
 		$data['equipo'] = $equipo;
 	    $this->view->show("_adminInfoEquipo.php", $data);
 	}

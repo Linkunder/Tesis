@@ -89,7 +89,8 @@ $proximosPartidos = $vars['proximosPartidosUsuario'];
         {
           title: '<?php echo $key['nombreRecinto']." ".$key['horaPartido']?>',
           start: '<?php echo $key['fecha']?>',
-          description: '<?php echo $key['idPartido'].",".$key['tipoRecinto'].",".$key['nombreRecinto'].",".$key['horaPartido'].",".$key['fecha'].",".$key['estadoInvitacion'] ?>',  
+          description: '<?php echo $key['idPartido']?>',
+          id: '<?php echo $key['estadoInvitacion']?>',
           <?php
           if ($key['estadoPartido'] == 1){
             ?>
@@ -110,14 +111,29 @@ $proximosPartidos = $vars['proximosPartidosUsuario'];
         },
         <?php 
 
-      }?>
+      }
+      ?>
         ],
 
+        
         eventClick:  function(event, jsEvent, view) {
+
+      $.post(
+      '?controlador=Partido&accion=verResumenProximoPartido&idPartido='+event.description+'&invitacion='+event.id,
+      function(resp){
+        $("#modal").html(resp);
+        $("#modal").modal("toggle");
+      }
+      ); 
+          //carga_ajax7('modal', event.description);
+
+          /*
             $('#modalTitle').html(event.title);
             $('#modalBody').html(event.description);
             $('#eventUrl').attr('href',event.url);
             $('#fullCalModal').modal();
+            */
+            //alert(event.id);
         }
 
 
@@ -126,7 +142,21 @@ $proximosPartidos = $vars['proximosPartidosUsuario'];
   });
 </script>
 
+
+<!--script type="text/javascript">
+     $(document).on('click','.fc-event-container' ,function(e){
+        e.preventDefault();
+        alert("hice click");
+        var contenido = this.lastChild.lastChild.lastChild.innerHTML;
+        alert(contenido);
+        //pasar contenido a array y tomar lo primero
+});
+     </script-->
+
 <!--/Calendario -->
+
+
+
 
 
 
@@ -953,7 +983,7 @@ function carga_ajax6(div, id, tipo){
 
 
 
-function carga_ajax7(div, id, tipo){
+function carga_ajax7(div, id){
 
 
     $.post(

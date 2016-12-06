@@ -122,7 +122,7 @@ include('layout/header.php');
 
               <div class="form-group">
                 <label class="sr-only" for="form-last-name">Teléfono</label>
-                <input type="text" name="telefono" placeholder="Ingresa tu teléfono" class="form-last-name form-control" required>
+                <input type="number" name="telefono" placeholder="Ingresa tu teléfono" class="form-last-name form-control" required>
               </div>
               <div class="form-group">
                 <label class="sr-only" for="form-about-yourself">Selecciona tu sexo</label>
@@ -170,7 +170,7 @@ include('layout/header.php');
 
               <div class="form-group">
                 <label class="sr-only" for="imagen"></label>
-                <input type="file" id="imagen" name="imagen" required="required"  class="file" multiple data-min-file-count="1">
+                <input type="file" id="imagen" name="imagen" required="required"  class="file"  data-min-file-count="1">
               </div>
 
               <button type="submit" class="btn btn-primary">Finalizar <i class="fa fa-paper-plane" aria-hidden="true"></i></button>

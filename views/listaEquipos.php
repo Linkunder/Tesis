@@ -302,7 +302,7 @@ $nroContactos = count($contactos);
                         foreach($contactos as $item){
                         ?>
                         <option  value="<?php echo $item['idUsuario']?>" class="texto-modal-negro">
-                            <?php echo $item['idUsuario'].": ".$item['nombre']." ".$item['apellido']?>
+                            <?php echo $item['nombre']." ".$item['apellido']?>
                         </option>
                         <?php
                         }

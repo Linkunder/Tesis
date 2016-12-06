@@ -182,18 +182,15 @@ class PartidoController{
       $this->view->show("_detallePartido.php",$data);
     }
 
-    public function verResumen2(){
-      $idPartido = $_GET['idPartido'];
-
-      $partido = $this->Partido->getResumenPartido($idPartido);
-      $data['partido'] = $partido;
-      $data['accion'] = 7;
-      $this->view->show("resumenPartido3.php", $data);
-      $partido = $this->Partido->getResumenPartido($idPartido);
-      $data['partido'] = $partido;
-      $data['accion'] = 7; // Solicitud
-      $_SESSION['partidos'] = 0;
-      $this->view->show("_detallePartido.php",$data);
+    public function verResumenProximoPartido(){
+		$idPartido = $_GET['idPartido'];
+		$invitacion = $_GET['invitacion'];
+	      $partido = $this->Partido->getResumenPartido($idPartido);
+	      $data['partido'] = $partido;
+	      $data['invitacion'] = $invitacion; // Solicitud
+	      $data['accion'] = 7;
+	      $_SESSION['partidos'] = 0;
+	      $this->view->show("_detallePartido.php",$data);
     }
 
 

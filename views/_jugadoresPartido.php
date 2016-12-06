@@ -61,14 +61,65 @@
         <!--/div-->
       <?php
     } else {
+
       $jugadores = $vars['jugadores'];
       ?>
       <div class="modal-body">
-        <?php
-        foreach ($jugadores as $key) {
-          echo $key['nombre']." ".$key['apellido']."<br/>";
-        }
-        ?>
+
+
+        <div class="col-md-12">
+        <div class="table-responsive">
+        <table id="example6" class="table table-striped table-hover display responsive nowrap"  cellspacing="0" width="100%">
+          <thead id ="position-table">
+            <tr id="color-encabezado">
+              <th id="encabezado-especial"></th>
+              <th id="encabezado-especial">Invitado</th>
+            </tr>
+          </thead>
+          <tbody id="texto-contactos" class="center">
+            <?php
+            foreach ($jugadores as $key ) {
+            ?>
+            <tr>
+              <td>
+                <img 
+                  style="-webkit-border-radius: 5px;
+                  -moz-border-radius: 5px;
+                  border-radius: 5px;" 
+                  height="64" 
+                  width="64" 
+                  src="assets/images/usuarios/<?php echo $key['fotografia']?>"  />
+              </td>
+              <td>
+                <?php 
+                if ($key['estado'] == 3){
+                  echo "Invitado externo";
+                } else {
+                  echo $key['nombre']." ".$key['apellido'];
+                }
+                ?>
+              </td>
+
+            </tr>
+            <?php
+            }
+            ?>
+          </tbody>
+        </table>
+        </div>
+      </div>
+
+
+
+
+
+
+
+
+
+
+
+
       </div>
       <?php
     }

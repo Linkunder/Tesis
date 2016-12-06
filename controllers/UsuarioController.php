@@ -192,6 +192,15 @@ class UsuarioController{
 		$edad = $this->calcularEdad($fechaNacimiento);
 		$data['edadUsuario'] = $edad;
 		*/
+
+		if (isset($_SESSION['accion'])){
+			if ($_SESSION['accion'] == 1){
+			$data['accion'] = $_SESSION['accion'];
+		}
+		}
+
+		$_SESSION['accion'] = 0;
+
 		$this->view->show('perfilUsuario.php',$data);
 	}
 
@@ -228,8 +237,10 @@ class UsuarioController{
 		$mail= $_POST['mail'];
 		$telefono= $_POST['telefono'];
 		$this->Usuario->updateUsuario($idUsuario, $nombre, $apellido, $nickname,$mail,$telefono);
+
+		$subirImagen = $this->guardarImagen($idUsuario);
 		$_SESSION['accion'] = 1;
-		header('Location: ?controlador=Usuario&accion=modificarPerfil');
+		header('Location: ?controlador=Usuario&accion=perfilUsuario');
  	}
 
  	// Desplegar calendario de partidos activos. Opción Mi Calendario
