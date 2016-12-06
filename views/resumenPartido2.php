@@ -151,7 +151,7 @@ if (isset($vars['tercerTiempo'])){
 
       <div id="slidingDiv1" class="toggleDiv row-fluid single-project">
         <div class="span4">
-          <img src="assets/images/recintos/<?php echo $key['fotografia']; ?>" alt="project 2">
+          <img src="assets/images/recintos/<?php echo $fotoRecinto; ?>" alt="project 2">
           <button type="button" class="btn btn-primary btn-md center-block col-md-12" href="javascript:void(0);" data-toggle="modal" data-target="#modal"  onclick="carga_ajax('modal','<?php echo $idRecinto;?>' ,'mapaRecinto');">
             ¿Cómo llegar? <i class="fa fa-map-marker" aria-hidden="true"></i>
           </button>

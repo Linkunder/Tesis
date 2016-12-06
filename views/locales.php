@@ -36,7 +36,7 @@ $hora =     $_SESSION['hora'];
 //$vectorRecintos = $jefeRecintos->leerRecinto($idRecinto);
 
 $vectorLocales = $vars['locales'];
-$idPartido = $_SESSION['idPartido'];
+//$idPartido = $_SESSION['idPartido'];
 
 
 ?>
