@@ -82,7 +82,13 @@ class RecintoController{
     }
 
     public function notificarRecinto(){
-      $this->view->show("notificarRecinto.php");
+      $data['a']=0;
+      if(!empty($_GET['a'])){
+        if($_GET['a']==1){
+          $data['a']=1;
+        }
+      }
+      $this->view->show("notificarRecinto.php",$data);
     }
 
     public function ingresarRecinto(){
@@ -94,7 +100,7 @@ class RecintoController{
 
       $recinto->setSolicitud($nombre, $fono, $direccion, $idUsuario);
       
-      header('Location: ?controlador=Recinto&accion=notificarRecinto&1');
+      header('Location: ?controlador=Recinto&accion=notificarRecinto&a=1');
     }
 
     public function horariosRecinto(){
