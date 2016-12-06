@@ -86,7 +86,7 @@ $recintos = $vars['recintos'];
                     <div class="alert alert-success alert-dismissible">
                       <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                       <strong>Listo!</strong> El recinto ha sido agregado exitosamente. Para activarlo agrega un horario en el botón 
-                      <button type="button" class="btn btn-primary btn-sm col-xs-12" >
+                      <button type="button" class="btn btn-primary btn-sm " >
                       <i class="fa fa-calendar" aria-hidden="true"></i>
                                             </button>
                     </div>
@@ -143,6 +143,15 @@ $recintos = $vars['recintos'];
 
                 } 
                 ?>
+
+                <p><strong>Instrucciones: </strong>Para agregar un recinto, debes hacer click en botón <button type="button" class="btn btn-success btn-xs" >
+                            Nuevo recinto
+                            <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                        </button>. Para agregar el horario de un recinto, debes hacer click en el botón 
+                        <button type="button" class="btn btn-primary btn-xs" >
+                                               
+                                                <i class="fa fa-calendar" aria-hidden="true"></i>
+                                            </button>. Es importante que todo recinto que se agregue cuente con al menos un horario asociado.</p>
 
             <div class="row">
                 <div class="col-lg-12">
@@ -389,7 +398,6 @@ include('layout/footerAdmin.php');
         </div>
     </div>
 </div>
-
 
 
 
