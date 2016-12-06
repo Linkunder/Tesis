@@ -999,7 +999,7 @@ $headers .= 'Cc: partidomatchday@gmail.com' . "\r\n"; //
 				$aux=$message;
 			
 			//$aux .= "<h4>Para responder esta invitación, ingresa a MatchDay desde <a href='http://parra.chillan.ubiobio.cl:8070/pnsilva/Matchday?controlador=Invitado&accion=invitacionPartido&token=".$jugadoresInvitados[$i]['password']."'>aquí</a></h4>";
-			$aux .= "<h4>Para responder esta invitación, ingresa a MatchDay desde <a href='localhost/Tesis/?controlador=Invitado&accion=invitacionPartido&token=".$jugadoresInvitados[$i]['password']."'>aquí</a></h4>";
+			$aux .= "<h4>Para responder esta invitación, ingresa a MatchDay desde <a href='localhost/tesis/?controlador=Invitado&accion=invitacionPartido&token=".$jugadoresInvitados[$i]['password']."'>aquí</a></h4>";
 			send($aux, $jugadoresInvitados[$i]['mail'], $subject);
 
 			}

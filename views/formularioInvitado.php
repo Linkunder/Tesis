@@ -160,7 +160,7 @@ include('layout/header.php');
 
               <div class="form-group">
                 <label class="sr-only" for="imagen"></label>
-                <input type="file" id="imagen" name="imagen" required="required"  class="file" data-min-file-count="1">
+                <input type="file" id="imagen" name="imagen" required="required"  class="file" >
               </div>
 
               <input name="idInvitado" value="<?php echo $idInvitado?>" />
