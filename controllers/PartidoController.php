@@ -1211,7 +1211,7 @@ public function getGraficosPartidos(){
 
 public function calendarioAdmin(){
 
-	$partidos = $this->Partido->getPartidos();
+	$partidos = $this->Partido->getPartidosCalendario();
 	$data['partidosSistema'] = $partidos;
 	$this->view->show('adminCalendario.php',$data);
 }

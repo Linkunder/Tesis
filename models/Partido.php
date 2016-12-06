@@ -509,5 +509,17 @@ class Partido{
 		return $resultado;
 	}
 
+	public function getPartidosCalendario(){
+		$consulta = $this->db->prepare("
+			SELECT Partido.estado, Partido.fecha as fecha, Recinto.tipo as tipo 
+FROM Partido
+INNER JOIN Recinto ON Partido.idRecinto = Recinto.idRecinto
+			");
+		$consulta->execute();
+		$resultado = $consulta->fetchAll();
+		return $resultado;
+
+	}
+
 }
 ?>

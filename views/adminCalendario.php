@@ -157,7 +157,7 @@ include('layout/footerAdmin.php');
       <?php foreach ($vars['partidosSistema'] as $key ) {
         ?>
         {
-          title: '<?php echo $key['idPartido']?>',
+          title: '<?php echo $key['tipo']?>',
           url: 'http://google.com/',
           start: '<?php echo $key['fecha']?>',
           color: '<?php
