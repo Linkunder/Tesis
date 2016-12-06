@@ -1,0 +1,11 @@
+ErrorDocument 404 /tesis/
+ErrorDocument 400 /tesis/
+ErrorDocument 401 /tesis/
+ErrorDocument 403 /tesis/
+ErrorDocument 500 /tesis/
+
+options -Indexes
+
+
+
+DirectoryIndex /tesis/

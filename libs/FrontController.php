@@ -13,7 +13,16 @@ class FrontController
 
         require 'libs/passwordLib.php';
 
- 
+        
+        //para la exploracion de archivos
+       if($_SERVER['REQUEST_URI'] != "/tesis/"){
+           $aux = explode("/", $_SERVER['REQUEST_URI']);
+           $aux1 = explode("=", $aux[2]);
+           if($aux1[0] != "?controlador"){
+                header("Location:/tesis/?controlador=Error&accion=error");
+           }
+          
+       }
         //Con el objetivo de no repetir nombre de clases, nuestros controladores
         //terminarán todos en Controller. Por ej, la clase controladora Items, será ItemsController
  
@@ -32,20 +41,24 @@ class FrontController
         $controllerPath = $config->get('controllersFolder') . $controllerName . '.php';
  
         //Incluimos el fichero que contiene nuestra clase controladora solicitada
-        if(is_file($controllerPath))
+        if(is_file($controllerPath)){
               require $controllerPath;
-        else
-              die('El controlador no existe - 404 not found');
+        }else{
+            header("Location:?controlador=Error&accion=error");
+             
+            }
  
         //Si no existe la clase que buscamos y su acción, mostramos un error 404
         if (is_callable(array($controllerName, $actionName)) == false)
         {
-            trigger_error ($controllerName . '->' . $actionName . '` no existe', E_USER_NOTICE);
+            header("Location:?controlador=Error&accion=error");
             return false;
         }
         //Si todo esta bien, creamos una instancia del controlador y llamamos a la acción
         $controller = new $controllerName();
         $controller->$actionName();
+
+
     }
 }
 ?>

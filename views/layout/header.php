@@ -1,5 +1,19 @@
 <!DOCTYPE html>
 <html lang="es">
+<?php
+if(!isset($_SESSION)){
+  session_start();
+  if(isset($_SESSION['login_user_perfil'])){
+      if($_SESSION['login_user_perfil'] == 1)
+    header('Location:?controlador=Index&accion=indexJugador');
+  if($_SESSION['login_user_perfil'] == 2)
+    header('Location:?controlador=Index&accion=indexAdmin');
+  }
+}
+
+
+
+?>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">

@@ -158,7 +158,6 @@ include('layout/footerAdmin.php');
         ?>
         {
           title: '<?php echo $key['tipo']?>',
-          url: 'http://google.com/',
           start: '<?php echo $key['fecha']?>',
           color: '<?php
                 //activo naranjo

@@ -1,0 +1,9 @@
+ErrorDocument 404 /tesis/?controlador=Error&accion=error
+ErrorDocument 400 /tesis/?controlador=Error&accion=error
+ErrorDocument 401 /tesis/?controlador=Error&accion=error
+ErrorDocument 403 /tesis/?controlador=Error&accion=error
+ErrorDocument 500 /tesis/?controlador=Error&accion=error
+
+Options +FollowSymLinks
+RewriteEngine on
+
